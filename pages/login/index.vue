@@ -2,17 +2,17 @@
   <div>
     <div class="login">
       <div class="logo">
-        <img class="logo-img" src="../../static/hrm-logo.png" alt="">
+        <img class="logo-img" src="../../static/hrm-logo.png" alt="" />
       </div>
       <div class="login-form">
         <h2 class="login-form__header">Sign in</h2>
-        <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item>
+        <el-form ref="form" :rules="rules" :model="form" label-width="120px">
+          <el-form-item prop="username">
             <el-input v-model="form.username" placeholder="Username">
               <i slot="prefix" class="el-input__icon el-icon-user"></i>
             </el-input>
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="password">
             <el-input
               v-model="form.password"
               placeholder="Password"
@@ -23,10 +23,18 @@
           </el-form-item>
           <div class="login-form__addition">
             <el-checkbox v-model="checked">Remember me</el-checkbox>
-            <el-link class="login-form__addition-forgot" type="primary">Forgot password?</el-link>
+            <el-link class="login-form__addition-forgot" type="primary"
+              >Forgot password?</el-link
+            >
           </div>
           <div class="login-form__submit">
-            <el-button class="login-form__submit-btn" type="primary" round>Sign in</el-button>
+            <el-button
+              class="login-form__submit-btn"
+              type="primary"
+              round
+              @click="submitForm('form')"
+              >Sign in</el-button
+            >
           </div>
         </el-form>
       </div>
@@ -44,7 +52,36 @@ export default {
         username: '',
         password: '',
       },
+      rules: {
+        username: [
+          {
+            required: true,
+            message: 'Please input Username',
+            trigger: 'blur',
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: 'Please input Password',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
+  },
+
+  methods: {
+    submitForm(form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
   },
 }
 </script>
