@@ -1,13 +1,5 @@
 <template>
-  <div>
-    <el-date-picker type="date" :placeholder="$t('datepicker.chooseDay')">
-    </el-date-picker>
-    <li v-for="(locale, i) in showLocales" :key="i">
-      <nuxt-link :to="switchLocalePath(locale.code)">
-        {{ locale.name }}
-      </nuxt-link>
-    </li>
-  </div>
+  <div>{{$router.push('/login')}}</div>
 </template>
 
 <script>
