@@ -1,0 +1,117 @@
+<template>
+  <div>
+    <div class="forgot">
+      <div class="logo">
+        <img class="logo-img" src="/hrm-logo.png" alt="" />
+      </div>
+      <div class="forgot-form">
+        <h2 class="forgot-form__header">Forgot password</h2>
+        <el-form
+          ref="form"
+          :rules="rules"
+          :model="form"
+          @submit.native.prevent="submitForm('form')"
+        >
+          <el-form-item prop="email">
+            <el-input v-model="form.email" placeholder="Email">
+              <i slot="prefix" class="el-icon-message"></i>
+            </el-input>
+          </el-form-item>
+          <div class="forgot-form__submit">
+            <el-button
+              class="forgot-form__submit-btn"
+              type="primary"
+              round
+              native-type="submit"
+              >Change password</el-button
+            >
+          </div>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ForgotPasswordComponent',
+  data() {
+    return {
+      form: {
+        email: '',
+      },
+      rules: {
+        email: [
+          {
+            required: true,
+            message: 'Email is required',
+            trigger: 'blur',
+          },
+          {
+            type: 'email',
+            message: 'Email is incorrect',
+            trigger: 'blur',
+          },
+        ],
+      },
+    }
+  },
+  methods: {
+    submitForm(form) {
+      this.$refs[form].validate((valid) => {
+        if (valid) {
+          this.$message({
+            message: 'A link reset password was sent to your email.',
+            type: 'success',
+          })
+        } else {
+          alert('error submit!')
+          return false
+        }
+      })
+    },
+  },
+}
+</script>
+
+<style>
+.forgot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #08aeea;
+  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+}
+
+.forgot-form {
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  min-width: 360px;
+  background-color: #fff;
+}
+
+.forgot-form__header {
+  margin-bottom: 16px;
+  margin-top: 0;
+}
+
+.forgot-form__submit {
+  margin-top: 32px;
+}
+
+.forgot-form__submit-btn {
+  width: 50%;
+}
+
+.el-link--inner {
+  text-decoration: none !important;
+}
+
+.logo-img {
+  width: 80px;
+}
+</style>
