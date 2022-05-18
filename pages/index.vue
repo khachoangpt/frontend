@@ -1,15 +1,10 @@
 <template>
-  <div>{{$router.push('/login')}}</div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage',
-
-  computed: {
-    showLocales() {
-      return this.$i18n.locales
-    },
-  },
+  name: 'HomePage',
+  layout: 'main',
 }
 </script>
