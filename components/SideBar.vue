@@ -6,20 +6,20 @@
     </div>
     <el-menu
       class="el-menu-vertical-demo"
-      background-color="rgb(140, 26, 240)"
+      background-color="#1E90FF"
       text-color="#fff"
     >
       <el-menu-item class="sidebar-item" index="1">
         <i class="el-icon-menu sidebar-icon"></i>
-        <span>Màn hình chính</span>
+        <span>{{$i18n.t('sidebar.dashboard')}}</span>
       </el-menu-item>
       <el-menu-item class="sidebar-item" index="2">
         <i class="el-icon-s-claim sidebar-icon"></i>
-        <span>Chấm công</span>
+        <span>{{$i18n.t('sidebar.timekeeping')}}</span>
       </el-menu-item>
       <el-menu-item class="sidebar-item" index="3">
         <i class="el-icon-s-custom sidebar-icon"></i>
-        <span>Nhân sự</span>
+        <span>{{$i18n.t('sidebar.personnel')}}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -62,14 +62,14 @@ export default {
 }
 
 .sidebar-item {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .sidebar-item:hover {
-    background-color: rgb(111, 33, 220) !important;
+  background-color: #4d77ff !important;
 }
 
 .el-menu-item.is-active {
-    color: aqua;
+  color: aqua;
 }
 </style>
