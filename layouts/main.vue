@@ -8,7 +8,9 @@
         <el-header>
           <Header />
         </el-header>
-        <el-main> Home Page </el-main>
+        <el-main>
+          <Nuxt />
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -36,6 +38,6 @@ export default {
   width: 210px !important;
   color: #333;
   height: 100vh;
-  background-color: #1E90FF;
+  background-color: #1e90ff;
 }
 </style>
