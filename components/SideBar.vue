@@ -1,25 +1,31 @@
 <template>
   <div>
     <div class="avatar">
-      <div class="avatar__background"></div>
-      <span class="avatar__name">Đặng Linh Lan</span>
+      <div>
+        <div class="avatar__background"></div>
+      </div>
+      <div>
+        <p class="avatar__name">Hoàng Linh Lan</p>
+        <p class="avatar__role">Quản lý nhân sự</p>
+      </div>
     </div>
     <el-menu
       class="el-menu-vertical-demo"
-      background-color="#1E90FF"
+      background-color="#003c8a"
       text-color="#fff"
+      router="true"
     >
-      <el-menu-item class="sidebar-item" index="1">
+      <el-menu-item class="sidebar-item" :index="localePath('/')">
         <i class="el-icon-menu sidebar-icon"></i>
-        <span>{{$i18n.t('sidebar.dashboard')}}</span>
+        <span>{{ $i18n.t('sidebar.dashboard') }}</span>
       </el-menu-item>
-      <el-menu-item class="sidebar-item" index="2">
+      <el-menu-item class="sidebar-item" :index="localePath('/timekeeping')">
         <i class="el-icon-s-claim sidebar-icon"></i>
-        <span>{{$i18n.t('sidebar.timekeeping')}}</span>
+        <span>{{ $i18n.t('sidebar.timekeeping') }}</span>
       </el-menu-item>
-      <el-menu-item class="sidebar-item" index="3">
+      <el-menu-item class="sidebar-item" :index="localePath('/personnel')">
         <i class="el-icon-s-custom sidebar-icon"></i>
-        <span>{{$i18n.t('sidebar.personnel')}}</span>
+        <span>{{ $i18n.t('sidebar.personnel') }}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -33,7 +39,7 @@ export default {
 
 <style>
 .avatar {
-  height: 60px;
+  height: 68px;
   display: flex;
   align-items: center;
   padding: 0 12px;
@@ -52,9 +58,16 @@ export default {
 }
 
 .avatar__name {
-  margin-left: 12px;
+  margin: 0 0 0 12px;
   color: #fff;
   font-weight: bold;
+  font-size: 14px;
+}
+
+.avatar__role {
+  color: #8ba9cb;
+  font-size: 13px;
+  margin: 8px 0 0 12px;
 }
 
 .sidebar-icon {

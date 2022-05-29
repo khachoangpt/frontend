@@ -35,9 +35,10 @@ export default {
 }
 
 .el-aside {
-  width: 210px !important;
+  width: max-content !important;
+  max-width: 230px !important;
   color: #333;
   height: 100vh;
-  background-color: #1e90ff;
+  background-color: #003c8a;
 }
 </style>
