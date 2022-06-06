@@ -21,11 +21,15 @@
         <el-empty :image-size="80"></el-empty>
       </el-dropdown-menu>
     </el-dropdown>
-    <i class="el-icon-switch-button header__icon header__icon--hover"></i>
+    <i
+      class="el-icon-switch-button header__icon header__icon--hover"
+      @click="logout"
+    ></i>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'HeaderComponent',
   data() {
@@ -34,6 +38,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('auth', ['logout']),
     handleCommand(command) {
       this.country = command
     },

@@ -31,10 +31,9 @@
     </div>
     <div class="personnel-table">
       <vue-good-table
-        :fixed-header="true"
+        :fixed-header="false"
         :columns="columns"
-        :rows="rows"
-        :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+        :rows="personnelList"
         :sort-options="{
           enabled: true,
         }"
@@ -45,161 +44,37 @@
           dropdownAllowAll: false,
           mode: 'pages',
         }"
+        @on-row-dblclick="onRowDoubleClick"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'PersonnelPage',
   layout: 'main',
+  middleware: ['auth'],
   data() {
     return {
       searchText: '',
-      workingStatus: [
-        {
-          value: 'Đang làm việc',
-          label: 'Đang làm việc',
-        },
-        {
-          value: 'Không đi làm',
-          label: 'Không đi làm',
-        },
-      ],
       value: '',
-      columns: [
-        {
-          label: 'Nhân sự',
-          field: 'name',
-        },
-        {
-          label: 'Mã',
-          field: 'code',
-        },
-        {
-          label: 'Trạng thái',
-          field: 'status',
-        },
-        {
-          label: 'Thâm niên',
-          field: 'experience',
-        },
-        {
-          label: 'Chức danh',
-          field: 'jobTitle',
-        },
-        {
-          label: 'Chuyên môn',
-          field: 'specialize',
-        },
-        {
-          label: 'Văn phòng',
-          field: 'office',
-        },
-      ],
-      rows: [
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-        {
-          name: 'Nguyễn Khắc Hoàng',
-          code: 'HE140',
-          status: 'True',
-          experience: '1 năm',
-          jobTitle: 'Nhân viên',
-          specialize: 'Developer',
-          office: 'Hà Nội',
-        },
-      ],
     }
+  },
+
+  computed: {
+    ...mapGetters('user', ['columns', 'workingStatus', 'personnelList']),
+  },
+
+  mounted() {
+    this.getPersonnelList()
+  },
+
+  methods: {
+    ...mapActions('user', ['getPersonnelList']),
+    onRowDoubleClick() {},
   },
 }
 </script>
@@ -231,5 +106,9 @@ export default {
 
 .personnel-table {
   margin-top: 24px;
+}
+
+.table-header-center {
+  text-align: center;
 }
 </style>

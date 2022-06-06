@@ -10,9 +10,9 @@
           ref="form"
           :rules="rules"
           :model="form"
-          @submit.native.prevent="submitForm('form')"
+          @submit.native.prevent="forgot(form)"
         >
-          <el-form-item prop="email">
+          <el-form-item prop="email" :show-message="false">
             <el-input v-model="form.email" placeholder="Email">
               <i slot="prefix" class="el-icon-message"></i>
             </el-input>
@@ -23,8 +23,9 @@
               type="primary"
               round
               native-type="submit"
-              >Change password</el-button
             >
+              Change password
+            </el-button>
           </div>
         </el-form>
       </div>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   name: 'ForgotPasswordComponent',
   data() {
@@ -57,19 +59,7 @@ export default {
     }
   },
   methods: {
-    submitForm(form) {
-      this.$refs[form].validate((valid) => {
-        if (valid) {
-          this.$message({
-            message: 'A link reset password was sent to your email.',
-            type: 'success',
-          })
-        } else {
-          alert('error submit!')
-          return false
-        }
-      })
-    },
+    ...mapActions('auth',['forgot']),
   },
 }
 </script>

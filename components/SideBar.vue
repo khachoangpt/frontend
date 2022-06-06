@@ -1,19 +1,21 @@
 <template>
   <div>
-    <div class="avatar">
-      <div>
-        <div class="avatar__background"></div>
+    <nuxt-link :to="localePath('/personnel/detail')">
+      <div class="avatar">
+        <div>
+          <div class="avatar__background"></div>
+        </div>
+        <div>
+          <p class="avatar__name">Hoàng Linh Lan</p>
+          <p class="avatar__role">Quản lý nhân sự</p>
+        </div>
       </div>
-      <div>
-        <p class="avatar__name">Hoàng Linh Lan</p>
-        <p class="avatar__role">Quản lý nhân sự</p>
-      </div>
-    </div>
+    </nuxt-link>
     <el-menu
       class="el-menu-vertical-demo"
       background-color="#003c8a"
       text-color="#fff"
-      router="true"
+      :router="true"
     >
       <el-menu-item class="sidebar-item" :index="localePath('/')">
         <i class="el-icon-menu sidebar-icon"></i>

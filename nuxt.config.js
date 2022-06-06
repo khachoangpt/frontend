@@ -30,6 +30,7 @@ export default {
     '@/plugins/element-ui',
     '@/plugins/vue-country-flag',
     '@/plugins/vue-good-table',
+    '@/plugins/repository',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,12 +47,15 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     ['@nuxtjs/i18n', i18n],
+    'cookie-universal-nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'http://localhost:8080/hrm/',
+    proxyHeaders: false,
+    credentials: false,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

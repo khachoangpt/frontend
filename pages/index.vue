@@ -19,7 +19,7 @@
       <div slot="header" class="clearfix">
         <span class="box-card__header-text">Ngày nghỉ của công ty</span>
       </div>
-      <el-calendar first-day-of-week="0">
+      <el-calendar :first-day-of-week="0">
         <template slot="dateCell" slot-scope="{ date, data }">
           <p
             :class="
@@ -38,6 +38,7 @@
 export default {
   name: 'HomePage',
   layout: 'main',
+  middleware: ['auth'],
   data() {
     return {
       value: new Date(),

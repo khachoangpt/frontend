@@ -6,13 +6,19 @@
       </div>
       <div class="login-form">
         <h2 class="login-form__header">Sign in</h2>
-        <el-form ref="form" :rules="rules" :model="form">
-          <el-form-item prop="username">
-            <el-input v-model="form.username" placeholder="Username">
+        <el-form
+          id="app"
+          ref="form"
+          :rules="rules"
+          :model="form"
+          @submit.native.prevent="login(form)"
+        >
+          <el-form-item prop="email" :show-message="false">
+            <el-input v-model="form.email" placeholder="Email">
               <i slot="prefix" class="el-input__icon el-icon-user"></i>
             </el-input>
           </el-form-item>
-          <el-form-item prop="password">
+          <el-form-item prop="password" :show-message="false">
             <el-input
               v-model="form.password"
               placeholder="Password"
@@ -22,7 +28,11 @@
             </el-input>
           </el-form-item>
           <div class="login-form__addition">
-            <el-checkbox v-model="checked">Remember me</el-checkbox>
+            <!-- <el-checkbox
+              :value="isRememberMe"
+              @change="rememberMe(!isRememberMe)"
+              >Remember me</el-checkbox
+            > -->
             <nuxt-link
               class="login-form__addition-forgot"
               :to="localePath('/forgot')"
@@ -34,8 +44,8 @@
             <el-button
               class="login-form__submit-btn"
               type="primary"
+              native-type="submit"
               round
-              @click="submitForm('form')"
               >Sign in</el-button
             >
           </div>
@@ -46,45 +56,24 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'LoginComponent',
   data() {
     return {
-      checked: true,
       form: {
-        username: '',
+        email: '',
         password: '',
-      },
-      rules: {
-        username: [
-          {
-            required: true,
-            message: 'Please input Username',
-            trigger: 'blur',
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: 'Please input Password',
-            trigger: 'blur',
-          },
-        ],
       },
     }
   },
 
+  computed: {
+    ...mapGetters('auth', ['isRememberMe', 'rules']),
+  },
+
   methods: {
-    submitForm(form) {
-      this.$refs[form].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          alert('error submit!')
-          return false
-        }
-      })
-    },
+    ...mapActions('auth', ['login', 'rememberMe']),
   },
 }
 </script>
@@ -116,11 +105,11 @@ export default {
 
 .login-form__addition {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .login-form__addition-forgot {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .login-form__submit {
