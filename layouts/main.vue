@@ -35,10 +35,14 @@ export default {
 }
 
 .el-aside {
-  width: max-content !important;
-  max-width: 230px !important;
+  width: 230px !important;
   color: #333;
   height: 100vh;
   background-color: #003c8a;
+  position: fixed;
+}
+
+.el-main {
+  margin-left: 230px;
 }
 </style>

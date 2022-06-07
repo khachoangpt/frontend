@@ -99,9 +99,10 @@
           <div class="detail-right__main-info">
             <div class="main-info-header">
               <span class="main-info-header__text">Thông tin chính</span>
+              <span class="main-info-header__edit">Sửa thông tin chính</span>
             </div>
-            <el-row v-for="n in 5" :key="n" class="main-info__content">
-              <el-col :span="8">
+            <el-row class="main-info__content">
+              <el-col :span="6">
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Họ và tên</span>
@@ -109,23 +110,159 @@
                   </div>
                 </div>
               </el-col>
-              <el-col :span="8"
-                ><div class="grid-content bg-purple-light">
+              <el-col :span="6">
+                <div class="grid-content bg-purple-light">
                   <div class="main-info__content-item">
-                    <span class="content-item__head">Họ và tên</span>
-                    <span class="content-item__detail">Hoàng Linh Lan</span>
+                    <span class="content-item__head">Mã nhân sự</span>
+                    <span class="content-item__detail">EDH13</span>
                   </div>
-                </div></el-col
-              >
-              <el-col :span="8"
-                ><div class="grid-content bg-purple">
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
-                    <span class="content-item__head">Họ và tên</span>
-                    <span class="content-item__detail">Hoàng Linh Lan</span>
+                    <span class="content-item__head">Ngày bắt đầu</span>
+                    <span class="content-item__detail">28/12/2016</span>
                   </div>
-                </div></el-col
-              >
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Ngày chính thức</span>
+                    <span class="content-item__detail">28/12/2016</span>
+                  </div>
+                </div>
+              </el-col>
             </el-row>
+            <el-row class="main-info__content">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Tình trạng việc làm</span>
+                    <span class="content-item__detail working-status--active"
+                      >Active</span
+                    >
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple-light">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Hợp đồng hiện tại</span>
+                    <span class="content-item__detail"
+                      >Hoàng Linh Lan - HĐ lao động</span
+                    >
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Số điện thoại</span>
+                    <span class="content-item__detail">0385822476</span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Chức danh</span>
+                    <span class="content-item__detail">Quản lý nhân sự</span>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row class="main-info__content">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Ngày sinh</span>
+                    <span class="content-item__detail">10/11/2000</span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple-light">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Email</span>
+                    <span class="content-item__detail"
+                      >linhnguyen@gmail.com</span
+                    >
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Giới tính</span>
+                    <span class="content-item__detail">
+                      <i class="el-icon-female content-item__detail-icon"></i>
+                      Nữ
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Tình trạng hôn nhân</span>
+                    <span class="content-item__detail">Chưa kết hôn</span>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row class="main-info__content">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Văn phòng</span>
+                    <span class="content-item__detail">
+                      <i class="el-icon-office-building"></i>
+                      Hà Nội
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple-light">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Lịch làm việc</span>
+                    <span class="content-item__detail">
+                      <i class="el-icon-date"></i>
+                      Full time
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Chuyên môn</span>
+                    <span class="content-item__detail">
+                      <i class="el-icon-folder-checked"></i>
+                      Quản lý
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">Phân loại nhân sự</span>
+                    <span class="content-item__detail">
+                      <i class="el-icon-collection-tag"></i>
+                      Full time Employee
+                    </span>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <div class="main-info__protect">
+              <div class="main-info-header">
+                <span class="main-info-header__text">Thuế và bảo hiểm</span>
+              </div>
+            </div>
           </div>
         </div>
       </el-col>
@@ -270,7 +407,7 @@ export default {
 }
 
 .detail-right__header {
-  font-size: 22px;
+  font-size: 24px;
   color: #67c23a;
   border-bottom: 2px solid #ccc;
   padding-bottom: 16px;
@@ -280,8 +417,17 @@ export default {
   margin-top: 16px;
 }
 
+.main-info-header {
+  margin-top: 24px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .main-info-header__text {
-  font-size: 18px;
+  font-size: 22px;
+  font-weight: 600;
 }
 
 .main-info__content {
@@ -297,5 +443,36 @@ export default {
 .content-item__head {
   color: #8ba9cb;
   font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.content-item__detail {
+  font-weight: 600;
+}
+
+.working-status--active {
+  color: #67c23a;
+}
+
+.content-item__detail-icon {
+  font-weight: 600;
+  color: #8ba9cb;
+}
+
+.main-info__protect {
+  border-top: 2px solid #ccc;
+  margin-top: 32px;
+}
+
+.main-info-header__edit {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  margin-right: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.main-info-header__edit:hover {
+  color: #4d77ff;
 }
 </style>
