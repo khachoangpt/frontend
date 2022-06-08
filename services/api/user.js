@@ -31,7 +31,16 @@ class UserApi extends User {
 
   getPersonnelList() {
     const accessToken = getToken()
-    return this.$axios.$get('/api/get_all_employee', {
+    return this.$axios.$get('/api/get_all_employee?paging=offset:0,limit:999', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  addEmployee(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/add_employee', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

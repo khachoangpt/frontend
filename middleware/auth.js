@@ -6,8 +6,8 @@ export default function ({ app, store }) {
     app.router.push('/login')
   } else {
     const decoded = jwtDecode(getToken())
-    store.commit('auth/setId', decoded.data.sub)
-    store.commit('auth/setEmail', decoded.data.email)
-    store.commit('auth/setRoles', decoded.data.authorities)
+    store.commit('auth/setId', decoded.User_Data.sub)
+    store.commit('auth/setEmail', decoded.User_Data.email)
+    store.commit('auth/setRoles', decoded.User_Data.authorities)
   }
 }
