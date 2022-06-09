@@ -30,4 +30,20 @@ export default {
   setWorkingTypes(state, workingTypes) {
     state.workingTypes = workingTypes
   },
+
+  setListGrade(state, listGrade) {
+    state.listGrade = listGrade
+  },
+
+  setListOffice(state, listOffice) {
+    state.listOffice = listOffice
+  },
+
+  setListArea(state, listArea) {
+    state.listArea = listArea
+  },
+
+  setEmployeeTypes(state, employeeTypes) {
+    state.employeeTypes = employeeTypes
+  },
 }

@@ -22,6 +22,7 @@ import SideBar from '~/components/SideBar.vue'
 export default {
   name: 'DefaultLayout',
   components: { SideBar, Header },
+  middleware: ['auth'],
 }
 </script>
 

@@ -5,14 +5,14 @@
         <div>
           <div
             :style="{
-              backgroundImage: 'url(' + personnelDetail[0].avatar + ')',
+              backgroundImage: 'url(' + avatar + ')',
             }"
             class="avatar__background"
           ></div>
         </div>
         <div>
-          <p class="avatar__name">{{ personnelDetail[0].full_name }}</p>
-          <p class="avatar__role">{{ personnelDetail[0].grade }}</p>
+          <p class="avatar__name">{{ name }}</p>
+          <p class="avatar__role">{{ grade }}</p>
         </div>
       </div>
     </nuxt-link>
@@ -42,18 +42,17 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SideBar',
-  middleware: ['auth'],
   computed: {
-    ...mapGetters('auth', ['id']),
+    ...mapGetters('auth', ['id', 'name', 'grade', 'avatar']),
     ...mapGetters('user', ['personnelDetail']),
   },
 
-  beforeMount() {
-    this.getPersonnelDetail(this.id)
+  mounted() {
+    this.getEmployeeInfo(this.id)
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelDetail']),
+    ...mapActions('auth', ['getEmployeeInfo']),
   },
 }
 </script>

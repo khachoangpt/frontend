@@ -1,6 +1,9 @@
 export default () => ({
   id: 'a',
   email: '',
+  name: '',
+  avatar: '',
+  grade: '',
   roles: [],
   tokenType: '',
   accessToken: '',
@@ -19,4 +22,5 @@ export default () => ({
       },
     ],
   },
+
 })

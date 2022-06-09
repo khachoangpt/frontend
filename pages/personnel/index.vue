@@ -10,7 +10,7 @@
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
-        <el-select
+        <!-- <el-select
           v-model="value"
           clearable
           placeholder="Select"
@@ -24,7 +24,7 @@
             :value="item.value"
           >
           </el-option>
-        </el-select>
+        </el-select> -->
         <el-button
           class="header-actions__button"
           type="primary"
@@ -41,7 +41,6 @@
         :rows="personnelList.hrmResponse"
         :search-options="{
           enabled: true,
-          externalQuery: value,
           externalQuery: searchText,
         }"
         :sort-options="{
@@ -54,8 +53,6 @@
           dropdownAllowAll: false,
           mode: 'pages',
         }"
-        @on-row-mouseenter="onRowMouseover"
-        @on-row-mouseleave="onRowMouseleave"
         @on-row-dblclick="onRowDoubleClick"
       >
         <template slot="table-row" slot-scope="props">
@@ -66,10 +63,6 @@
             <span>
               {{ props.row.full_name }}
             </span>
-            <i
-              class="el-icon-edit"
-              :class="{ 'full-name-column__icon': isEditPersonnel }"
-            ></i>
           </span>
           <span v-else>
             {{ props.formattedRow[props.column.field] }}
@@ -159,7 +152,18 @@
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
                 <el-form-item label="Cấp bậc">
-                  <el-input v-model="addEmployeeForm.grade"></el-input>
+                  <el-select
+                    v-model="addEmployeeForm.grade"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in listGrade"
+                      :key="item.grade"
+                      :label="item.grade"
+                      :value="item.grade"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
@@ -175,14 +179,36 @@
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
                 <el-form-item label="Văn phòng làm việc">
-                  <el-input v-model="addEmployeeForm.office"></el-input>
+                  <el-select
+                    v-model="addEmployeeForm.office"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in listOffice"
+                      :key="item.name"
+                      :label="item.name"
+                      :value="item.name"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
                 <el-form-item label="Lĩnh vực">
-                  <el-input v-model="addEmployeeForm.area"></el-input>
+                  <el-select
+                    v-model="addEmployeeForm.area"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in listArea"
+                      :key="item.name"
+                      :label="item.name"
+                      :value="item.name"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
@@ -197,9 +223,9 @@
                   >
                     <el-option
                       v-for="item in workingTypes"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      :key="item.name"
+                      :label="item.name"
+                      :value="item.name"
                     >
                     </el-option>
                   </el-select>
@@ -215,8 +241,19 @@
             </el-col>
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
-                <el-form-item label="Thời gian làm việc">
-                  <el-input v-model="addEmployeeForm.employeeType"></el-input>
+                <el-form-item label="Loại nhân sự">
+                  <el-select
+                    v-model="addEmployeeForm.employeeType"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in employeeTypes"
+                      :key="item.name"
+                      :label="item.name"
+                      :value="item.name"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
@@ -270,23 +307,35 @@ export default {
       'genderList',
       'roles',
       'centerDialogVisible',
-      'workingTypes'
+      'workingTypes',
+      'listGrade',
+      'listOffice',
+      'listArea',
+      'employeeTypes',
     ]),
   },
 
   mounted() {
     this.getPersonnelList()
+    this.getListGrade()
+    this.getListOffice()
+    this.getListArea()
+    this.getEmployeeTypes()
+    this.getWorkingTypes()
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelList', 'addEmployee', 'onRowDoubleClick']),
+    ...mapActions('user', [
+      'getPersonnelList',
+      'addEmployee',
+      'onRowDoubleClick',
+      'getListGrade',
+      'getListOffice',
+      'getListArea',
+      'getEmployeeTypes',
+      'getWorkingTypes',
+    ]),
     ...mapMutations('user', ['setCenterDialogVisible']),
-    onRowMouseover() {
-      this.isEditPersonnel = false
-    },
-    onRowMouseleave() {
-      this.isEditPersonnel = true
-    },
   },
 }
 </script>

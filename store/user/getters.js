@@ -7,4 +7,8 @@ export default {
   roles: (state) => state.roles,
   centerDialogVisible: (state) => state.centerDialogVisible,
   workingTypes: (state) => state.workingTypes,
+  listGrade: (state) => state.listGrade,
+  listOffice: (state) => state.listOffice,
+  listArea: (state) => state.listArea,
+  employeeTypes: (state) => state.employeeTypes,
 }

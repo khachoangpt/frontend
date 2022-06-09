@@ -28,6 +28,13 @@ export default {
     }
   },
 
+  async getEmployeeInfo({commit}, data) {
+    const res = await this.$repository.user.getEmployeeDetail(data)
+    await commit('auth/setName', res[0].full_name, { root: true })
+    await commit('auth/setAvatar', res[0].avatar, { root: true })
+    await commit('auth/setGrade', res[0].grade, { root: true })
+  },
+
   async changePassword({ commit }, data) {
     try {
       const res = await this.$repository.user.changePassword(data)

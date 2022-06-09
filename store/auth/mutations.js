@@ -7,6 +7,18 @@ export default {
     state.email = email
   },
 
+  setName(state, name) {
+    state.name = name
+  },
+
+  setAvatar(state, avatar) {
+    state.avatar = avatar
+  },
+
+  setGrade(state, grade) {
+    state.grade = grade
+  },
+
   setRoles(state, roles) {
     state.roles = roles
   },

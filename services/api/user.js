@@ -39,7 +39,6 @@ class UserApi extends User {
   }
 
   addEmployee(data) {
-    console.log(data)
     const accessToken = getToken()
     return this.$axios.$post('/api/add_employee', data, {
       headers: {
@@ -58,6 +57,26 @@ class UserApi extends User {
         },
       }
     )
+  }
+
+  getListGrade() {
+    return this.$axios.$get('/api/list_job')
+  }
+
+  getListOffice() {
+    return this.$axios.$get('/api/list_office')
+  }
+
+  getListArea() {
+    return this.$axios.$get('/api/list_area')
+  }
+
+  getEmployeeTypes() {
+    return this.$axios.$get('/api/list_employee_type')
+  }
+
+  getWorkingTypes() {
+    return this.$axios.$get('/api/list_working_type')
   }
 }
 
