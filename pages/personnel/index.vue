@@ -267,11 +267,8 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelList', 'addEmployee']),
+    ...mapActions('user', ['getPersonnelList', 'addEmployee', 'onRowDoubleClick']),
     ...mapMutations('user', ['setCenterDialogVisible']),
-    onRowDoubleClick(params) {
-      this.$router.push(this.localePath('/personnel/detail'))
-    },
     onRowMouseover() {
       this.isEditPersonnel = false
     },

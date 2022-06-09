@@ -46,6 +46,18 @@ class UserApi extends User {
       },
     })
   }
+
+  getEmployeeDetail(employeeId) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/main?employeeID=' + employeeId,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

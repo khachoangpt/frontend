@@ -1,5 +1,6 @@
 export default () => ({
   personnelList: '',
+  personnelDetail: 'a',
   columns: [
     {
       label: 'Nhân sự',

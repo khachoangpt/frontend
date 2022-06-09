@@ -5,9 +5,29 @@
       <el-col class="detail-page-left" :span="4">
         <div class="grid-content bg-purple personnel-detail__left">
           <div class="detail-basic">
-            <div class="detail-basic__avatar"></div>
-            <span class="detail-basic__name">Hoàng Linh Lan</span>
-            <span class="detail-basic__job">Quản lý nhân sự</span>
+            <div
+              class="detail-basic__avatar"
+              :style="{
+                backgroundImage: 'url(' + personnelDetail[0].avatar + ')',
+              }"
+            >
+              <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </div>
+            <span class="detail-basic__name">{{
+              personnelDetail[0].full_name
+            }}</span>
+            <span class="detail-basic__job">{{
+              personnelDetail[0].grade
+            }}</span>
           </div>
           <div class="detail__contact">
             <ul class="detail__contact-list">
@@ -17,25 +37,29 @@
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-s-grid"></i>
-                <span> EDH13 </span>
+                <span> {{ personnelDetail[0].employee_id }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-suitcase"></i>
-                <span> COO </span>
+                <span> {{ personnelDetail[0].office_name }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-message"></i>
-                <span> linhnguyen@gmail.com </span>
+                <span> {{ personnelDetail[0].company_email }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-phone-outline"></i>
-                <span> 0385822476 </span>
+                <span> {{ personnelDetail[0].phone_number }} </span>
               </li>
             </ul>
           </div>
           <div class="detail__bookmark">
             <ul class="detail__bookmark-list">
-              <li class="detail__bookmark-item detail__bookmark-item--active">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 1 }"
+                @click="activeSubTab = 1"
+              >
                 <i class="el-icon-user bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Thông tin cá nhân</p>
@@ -44,7 +68,11 @@
                   </p>
                 </div>
               </li>
-              <li class="detail__bookmark-item">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 2 }"
+                @click="activeSubTab = 2"
+              >
                 <i class="el-icon-data-analysis bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Thông tin công việc</p>
@@ -53,7 +81,11 @@
                   </p>
                 </div>
               </li>
-              <li class="detail__bookmark-item">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 3 }"
+                @click="activeSubTab = 3"
+              >
                 <i class="el-icon-money bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Lương & phúc lợi</p>
@@ -62,14 +94,22 @@
                   </p>
                 </div>
               </li>
-              <li class="detail__bookmark-item">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 4 }"
+                @click="activeSubTab = 4"
+              >
                 <i class="el-icon-document bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Hợp đồng & văn bản</p>
                   <p class="bookmark-item__text-detail">Hợp đồng và văn bản</p>
                 </div>
               </li>
-              <li class="detail__bookmark-item">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 5 }"
+                @click="activeSubTab = 5"
+              >
                 <i class="el-icon-date bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">
@@ -80,7 +120,11 @@
                   </p>
                 </div>
               </li>
-              <li class="detail__bookmark-item">
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 6 }"
+                @click="activeSubTab = 6"
+              >
                 <i class="el-icon-warning-outline bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Vi phạm</p>
@@ -106,7 +150,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Họ và tên</span>
-                    <span class="content-item__detail">Hoàng Linh Lan</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].full_name
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -114,7 +160,9 @@
                 <div class="grid-content bg-purple-light">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Mã nhân sự</span>
-                    <span class="content-item__detail">EDH13</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].employee_id
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -122,7 +170,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Ngày bắt đầu</span>
-                    <span class="content-item__detail">28/12/2016</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].start_date
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -140,9 +190,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Tình trạng việc làm</span>
-                    <span class="content-item__detail working-status--active"
-                      >Active</span
-                    >
+                    <span class="content-item__detail working-status--active">{{
+                      personnelDetail[0].working_status
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -150,9 +200,9 @@
                 <div class="grid-content bg-purple-light">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Hợp đồng hiện tại</span>
-                    <span class="content-item__detail"
-                      >Hoàng Linh Lan - HĐ lao động</span
-                    >
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].contract_url
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -160,7 +210,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Số điện thoại</span>
-                    <span class="content-item__detail">0385822476</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].phone_number
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -168,7 +220,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Chức danh</span>
-                    <span class="content-item__detail">Quản lý nhân sự</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].grade
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -178,7 +232,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Ngày sinh</span>
-                    <span class="content-item__detail">10/11/2000</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].birth_date
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -186,9 +242,9 @@
                 <div class="grid-content bg-purple-light">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Email</span>
-                    <span class="content-item__detail"
-                      >linhnguyen@gmail.com</span
-                    >
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].personal_email
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -198,7 +254,7 @@
                     <span class="content-item__head">Giới tính</span>
                     <span class="content-item__detail">
                       <i class="el-icon-female content-item__detail-icon"></i>
-                      Nữ
+                      {{ personnelDetail[0].gender }}
                     </span>
                   </div>
                 </div>
@@ -207,7 +263,9 @@
                 <div class="grid-content bg-purple">
                   <div class="main-info__content-item">
                     <span class="content-item__head">Tình trạng hôn nhân</span>
-                    <span class="content-item__detail">Chưa kết hôn</span>
+                    <span class="content-item__detail">{{
+                      personnelDetail[0].marital_status
+                    }}</span>
                   </div>
                 </div>
               </el-col>
@@ -219,7 +277,7 @@
                     <span class="content-item__head">Văn phòng</span>
                     <span class="content-item__detail">
                       <i class="el-icon-office-building"></i>
-                      Hà Nội
+                      {{ personnelDetail[0].office_name }}
                     </span>
                   </div>
                 </div>
@@ -230,7 +288,7 @@
                     <span class="content-item__head">Lịch làm việc</span>
                     <span class="content-item__detail">
                       <i class="el-icon-date"></i>
-                      Full time
+                      {{ personnelDetail[0].working_name }}
                     </span>
                   </div>
                 </div>
@@ -271,12 +329,41 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'PersonnelDetailPage',
   layout: 'main',
+  data() {
+    return {
+      imageUrl: '',
+      activeSubTab: 1,
+    }
+  },
+  computed: {
+    ...mapGetters('user', ['personnelDetail']),
+  },
+  beforeMount() {
+    this.getPersonnelDetail(this.$route.params.employeeId)
+  },
   methods: {
+    ...mapActions('user', ['getPersonnelDetail']),
     back() {
       this.$router.go(-1)
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('Avatar picture must be JPG format!')
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!')
+      }
+      return isJPG && isLt2M
     },
   },
 }
@@ -309,12 +396,21 @@ export default {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background-image: url('static/avatar.jpg'),
-    url('https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png');
+  /* background-image: url('static/avatar.jpg'),
+    url('https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png'); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border: 2px solid #4d77ff;
+}
+
+.detail-basic__avatar:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.detail-basic__avatar:hover .avatar-uploader {
+  display: flex;
 }
 
 .detail-page-left {
@@ -474,5 +570,22 @@ export default {
 
 .main-info-header__edit:hover {
   color: #4d77ff;
+}
+
+.avatar-uploader {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-upload {
+  position: relative;
+}
+
+.avatar-uploader-icon {
+  font-size: 24px;
+  font-weight: 600;
 }
 </style>

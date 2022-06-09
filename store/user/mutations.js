@@ -3,6 +3,10 @@ export default {
     state.personnelList = personnelList
   },
 
+  setPersonnelDetail(state, personnelDetail) {
+    state.personnelDetail = personnelDetail
+  },
+
   setColumns(state, columns) {
     state.columns = columns
   },
