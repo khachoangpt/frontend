@@ -26,4 +26,8 @@ export default {
   setCenterDialogVisible(state, centerDialogVisible) {
     state.centerDialogVisible = centerDialogVisible
   },
+
+  setWorkingTypes(state, workingTypes) {
+    state.workingTypes = workingTypes
+  },
 }

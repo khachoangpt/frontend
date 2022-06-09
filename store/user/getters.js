@@ -6,4 +6,5 @@ export default {
   genderList: (state) => state.genderList,
   roles: (state) => state.roles,
   centerDialogVisible: (state) => state.centerDialogVisible,
+  workingTypes: (state) => state.workingTypes,
 }

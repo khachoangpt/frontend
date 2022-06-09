@@ -122,4 +122,18 @@ export default () => ({
     },
   ],
   centerDialogVisible: false,
+  workingTypes: [
+    {
+      value: 'Full time',
+      label: 'Full time',
+    },
+    {
+      value: 'Part time',
+      label: 'Part time',
+    },
+    {
+      value: 'Freelance',
+      label: 'Freelance',
+    },
+  ]
 })

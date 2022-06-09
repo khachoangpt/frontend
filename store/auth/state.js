@@ -1,5 +1,5 @@
 export default () => ({
-  id: '',
+  id: 'a',
   email: '',
   roles: [],
   tokenType: '',

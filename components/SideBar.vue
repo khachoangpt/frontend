@@ -1,13 +1,18 @@
 <template>
   <div>
-    <nuxt-link :to="localePath('/personnel/detail')">
+    <nuxt-link :to="localePath('/personnel/' + id)">
       <div class="avatar">
         <div>
-          <div class="avatar__background"></div>
+          <div
+            :style="{
+              backgroundImage: 'url(' + personnelDetail[0].avatar + ')',
+            }"
+            class="avatar__background"
+          ></div>
         </div>
         <div>
-          <p class="avatar__name">Hoàng Linh Lan</p>
-          <p class="avatar__role">Quản lý nhân sự</p>
+          <p class="avatar__name">{{ personnelDetail[0].full_name }}</p>
+          <p class="avatar__role">{{ personnelDetail[0].grade }}</p>
         </div>
       </div>
     </nuxt-link>
@@ -34,8 +39,22 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SideBar',
+  middleware: ['auth'],
+  computed: {
+    ...mapGetters('auth', ['id']),
+    ...mapGetters('user', ['personnelDetail']),
+  },
+
+  beforeMount() {
+    this.getPersonnelDetail(this.id)
+  },
+
+  methods: {
+    ...mapActions('user', ['getPersonnelDetail']),
+  },
 }
 </script>
 
@@ -53,7 +72,6 @@ export default {
   background-color: black;
   border-radius: 50%;
   border: 2px solid #fff;
-  background-image: url('static/avatar.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

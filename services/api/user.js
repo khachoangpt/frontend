@@ -39,6 +39,7 @@ class UserApi extends User {
   }
 
   addEmployee(data) {
+    console.log(data)
     const accessToken = getToken()
     return this.$axios.$post('/api/add_employee', data, {
       headers: {

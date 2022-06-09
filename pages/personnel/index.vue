@@ -191,7 +191,18 @@
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
                 <el-form-item label="Loại hình lao động">
-                  <el-input v-model="addEmployeeForm.workingType"></el-input>
+                  <el-select
+                    v-model="addEmployeeForm.workingType"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in workingTypes"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
@@ -259,6 +270,7 @@ export default {
       'genderList',
       'roles',
       'centerDialogVisible',
+      'workingTypes'
     ]),
   },
 

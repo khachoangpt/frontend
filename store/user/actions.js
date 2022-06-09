@@ -11,8 +11,9 @@ export default {
       const res = await this.$repository.user.addEmployee(data)
       if (res.code === 201) {
         Message.success('Thêm nhân viên mới thành công.')
-        this.getPersonnelList()
-        commit('setCenterDialogVisible', true)
+        const res = await this.$repository.user.getPersonnelList()
+        commit('setPersonnelList', res)
+        commit('setCenterDialogVisible', false)
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -31,11 +32,7 @@ export default {
   },
 
   async getPersonnelDetail({ commit, state }, employeeId) {
-    try {
-      const res = await this.$repository.user.getEmployeeDetail(employeeId)
-      await commit('setPersonnelDetail', res)
-    } catch (error) {
-      Message.error(error)
-    }
+    const res = await this.$repository.user.getEmployeeDetail(employeeId)
+    await commit('setPersonnelDetail', res)
   },
 }
