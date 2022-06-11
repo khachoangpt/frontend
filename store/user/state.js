@@ -1,6 +1,12 @@
 export default () => ({
   personnelList: '',
-  personnelDetail: 'a',
+  personnelDetail: '.',
+  taxList: '.',
+  bankInfo: '.',
+  additionInfo: '.',
+  workingHistory: '.',
+  relativeInfo: '.',
+  educationInfo: '.',
   columns: [
     {
       label: 'Nhân sự',
@@ -102,10 +108,6 @@ export default () => ({
       value: 'Female',
       label: 'Nữ',
     },
-    {
-      value: 'other',
-      label: 'Khác',
-    },
   ],
   roles: [
     {
@@ -126,5 +128,5 @@ export default () => ({
   listGrade: [],
   listOffice: [],
   listArea: [],
-  employeeTypes: []
+  employeeTypes: [],
 })

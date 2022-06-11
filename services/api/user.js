@@ -78,6 +78,72 @@ class UserApi extends User {
   getWorkingTypes() {
     return this.$axios.$get('/api/list_working_type')
   }
+
+  getTaxList(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/tax_and_insurance?employeeID=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getBankInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/employee/detail/bank?employeeID=' + data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  getAdditionInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/add_info?employeeID=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getWorkingHistory(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/working_history?employeeID=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getRelativeInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/relative?employeeID=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getEducationInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/employee/detail/edu?employeeID=' + data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

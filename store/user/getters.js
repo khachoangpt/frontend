@@ -11,4 +11,10 @@ export default {
   listOffice: (state) => state.listOffice,
   listArea: (state) => state.listArea,
   employeeTypes: (state) => state.employeeTypes,
+  taxList: (state) => state.taxList,
+  bankInfo: (state) => state.bankInfo,
+  additionInfo: (state) => state.additionInfo,
+  workingHistory: (state) => state.workingHistory,
+  relativeInfo: (state) => state.relativeInfo,
+  educationInfo: (state) => state.educationInfo,
 }

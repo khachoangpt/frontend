@@ -32,10 +32,6 @@
           <div class="detail__contact">
             <ul class="detail__contact-list">
               <li class="detail__contact-item">
-                <i class="el-icon-success"></i>
-                <span> 5 năm 4 tháng làm việc</span>
-              </li>
-              <li class="detail__contact-item">
                 <i class="el-icon-s-grid"></i>
                 <span> {{ personnelDetail[0].employee_id }} </span>
               </li>
@@ -58,78 +54,104 @@
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 1 }"
-                @click="activeSubTab = 1"
+                @click=";[(activeSubTab = 1), scrollToElement('sub-1')]"
               >
                 <i class="el-icon-user bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thông tin cá nhân</p>
+                  <p class="bookmark-item__text-head">Thông tin chính</p>
                   <p class="bookmark-item__text-detail">
-                    Thông tin cá nhân, pháp lý và lý lịch
+                    Thông tin cơ bản của nhân viên
                   </p>
                 </div>
               </li>
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 2 }"
-                @click="activeSubTab = 2"
+                @click=";[(activeSubTab = 2), scrollToElement('sub-2')]"
               >
                 <i class="el-icon-data-analysis bookmark-item__icon"></i>
                 <div>
                   <p class="bookmark-item__text-head">Thông tin công việc</p>
                   <p class="bookmark-item__text-detail">
-                    Công việc, sự nghiệp, tuyển dụng
+                    Lương, công việc, sự nghiệp
                   </p>
                 </div>
               </li>
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 3 }"
-                @click="activeSubTab = 3"
+                @click=";[(activeSubTab = 3), scrollToElement('sub-3')]"
               >
                 <i class="el-icon-money bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Lương & phúc lợi</p>
+                  <p class="bookmark-item__text-head">Thuế & bảo hiểm</p>
                   <p class="bookmark-item__text-detail">
-                    Bảng lương và phúc lợi
+                    Thông tin thuế và bảo hiểm
                   </p>
                 </div>
               </li>
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 4 }"
-                @click="activeSubTab = 4"
+                @click=";[(activeSubTab = 4), scrollToElement('sub-4')]"
               >
-                <i class="el-icon-document bookmark-item__icon"></i>
+                <i class="el-icon-bank-card bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Hợp đồng & văn bản</p>
-                  <p class="bookmark-item__text-detail">Hợp đồng và văn bản</p>
+                  <p class="bookmark-item__text-head">Thông tin ngân hàng</p>
+                  <p class="bookmark-item__text-detail">
+                    Ngân hàng, địa chỉ, số tài khoản
+                  </p>
                 </div>
               </li>
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 5 }"
-                @click="activeSubTab = 5"
+                @click=";[(activeSubTab = 5), scrollToElement('sub-5')]"
               >
-                <i class="el-icon-date bookmark-item__icon"></i>
+                <i class="el-icon-more-outline bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">
-                    Lịch làm việc & nghỉ phép
-                  </p>
+                  <p class="bookmark-item__text-head">Thông tin thêm</p>
                   <p class="bookmark-item__text-detail">
-                    Timesheets, Checkins & Timeoffs
+                    Địa chỉ, CCCD, LinkedIn, Facebook
                   </p>
                 </div>
               </li>
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 6 }"
-                @click="activeSubTab = 6"
+                @click=";[(activeSubTab = 6), scrollToElement('sub-6')]"
               >
-                <i class="el-icon-warning-outline bookmark-item__icon"></i>
+                <i class="el-icon-school bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Vi phạm</p>
+                  <p class="bookmark-item__text-head">Lịch sử làm việc</p>
                   <p class="bookmark-item__text-detail">
-                    Các vi phạm quy định làm việc
+                    Công ty, vị trí, khoảng thời gian
+                  </p>
+                </div>
+              </li>
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 7 }"
+                @click=";[(activeSubTab = 7), scrollToElement('sub-7')]"
+              >
+                <i class="el-icon-coordinate bookmark-item__icon"></i>
+                <div>
+                  <p class="bookmark-item__text-head">Người phụ thuộc</p>
+                  <p class="bookmark-item__text-detail">
+                    Họ và tên, ngày sinh, quan hệ
+                  </p>
+                </div>
+              </li>
+              <li
+                class="detail__bookmark-item"
+                :class="{ 'detail__bookmark-item--active': activeSubTab === 8 }"
+                @click=";[(activeSubTab = 8), scrollToElement('sub-8')]"
+              >
+                <i class="el-icon-reading bookmark-item__icon"></i>
+                <div>
+                  <p class="bookmark-item__text-head">Học vấn</p>
+                  <p class="bookmark-item__text-detail">
+                    Trường, thời gian, bằng cấp
                   </p>
                 </div>
               </li>
@@ -141,186 +163,14 @@
         <div class="grid-content bg-purple personnel-detail__right">
           <h2 class="detail-right__header">Thông tin cá nhân</h2>
           <div class="detail-right__main-info">
-            <div class="main-info-header">
-              <span class="main-info-header__text">Thông tin chính</span>
-              <span class="main-info-header__edit">Sửa thông tin chính</span>
-            </div>
-            <el-row class="main-info__content">
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Họ và tên</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].full_name
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple-light">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Mã nhân sự</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].employee_id
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Ngày bắt đầu</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].start_date
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Ngày chính thức</span>
-                    <span class="content-item__detail">28/12/2016</span>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="main-info__content">
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Tình trạng việc làm</span>
-                    <span class="content-item__detail working-status--active">{{
-                      personnelDetail[0].working_status
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple-light">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Hợp đồng hiện tại</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].contract_url
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Số điện thoại</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].phone_number
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Chức danh</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].grade
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="main-info__content">
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Ngày sinh</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].birth_date
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple-light">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Email</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].personal_email
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Giới tính</span>
-                    <span class="content-item__detail">
-                      <i class="el-icon-female content-item__detail-icon"></i>
-                      {{ personnelDetail[0].gender }}
-                    </span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Tình trạng hôn nhân</span>
-                    <span class="content-item__detail">{{
-                      personnelDetail[0].marital_status
-                    }}</span>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-            <el-row class="main-info__content">
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Văn phòng</span>
-                    <span class="content-item__detail">
-                      <i class="el-icon-office-building"></i>
-                      {{ personnelDetail[0].office_name }}
-                    </span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple-light">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Lịch làm việc</span>
-                    <span class="content-item__detail">
-                      <i class="el-icon-date"></i>
-                      {{ personnelDetail[0].working_name }}
-                    </span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Chuyên môn</span>
-                    <span class="content-item__detail">
-                      <i class="el-icon-folder-checked"></i>
-                      Quản lý
-                    </span>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <div class="main-info__content-item">
-                    <span class="content-item__head">Phân loại nhân sự</span>
-                    <span class="content-item__detail">
-                      <i class="el-icon-collection-tag"></i>
-                      Full time Employee
-                    </span>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-            <div class="main-info__protect">
-              <div class="main-info-header">
-                <span class="main-info-header__text">Thuế và bảo hiểm</span>
-              </div>
-            </div>
+            <detail-main-info />
+            <detail-work-info />
+            <detail-tax />
+            <detail-bank-info />
+            <detail-addition-info />
+            <detail-working-history />
+            <detail-relative-info />
+            <detail-education-info />
           </div>
         </div>
       </el-col>
@@ -329,9 +179,27 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+import DetailWorkInfo from '~/components/DetailWorkInfo.vue'
+import DetailMainInfo from '~/components/DetailMainInfo.vue'
+import DetailTax from '~/components/DetailTax.vue'
+import DetailBankInfo from '~/components/DetailBankInfo.vue'
+import DetailAdditionInfo from '~/components/DetailAdditionInfo.vue'
+import DetailWorkingHistory from '~/components/DetailWorkingHistory.vue'
+import DetailRelativeInfo from '~/components/DetailRelativeInfo.vue'
+import DetailEducationInfo from '~/components/DetailEducationInfo.vue'
 export default {
   name: 'PersonnelDetailPage',
+  components: {
+    DetailWorkInfo,
+    DetailMainInfo,
+    DetailTax,
+    DetailBankInfo,
+    DetailAdditionInfo,
+    DetailWorkingHistory,
+    DetailRelativeInfo,
+    DetailEducationInfo,
+  },
   layout: 'main',
   data() {
     return {
@@ -340,13 +208,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', ['personnelDetail']),
-  },
-  beforeMount() {
-    this.getPersonnelDetail(this.$route.params.employeeId)
+    ...mapGetters('user', [
+      'taxList',
+      'personnelDetail',
+      'bankInfo',
+      'additionInfo',
+      'workingHistory',
+      'relativeInfo',
+      'educationInfo',
+    ]),
   },
   methods: {
-    ...mapActions('user', ['getPersonnelDetail']),
+    scrollToElement(el) {
+      const element = document.getElementById(el)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    },
     back() {
       this.$router.go(-1)
     },
@@ -555,7 +433,7 @@ export default {
   color: #8ba9cb;
 }
 
-.main-info__protect {
+.main-info__work-info {
   border-top: 2px solid #ccc;
   margin-top: 32px;
 }
@@ -587,5 +465,14 @@ export default {
 .avatar-uploader-icon {
   font-size: 24px;
   font-weight: 600;
+}
+
+.main-info__content-item-action {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.edit-input {
+  width: 80%;
 }
 </style>

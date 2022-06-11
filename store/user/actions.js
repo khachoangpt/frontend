@@ -60,4 +60,34 @@ export default {
     const res = await this.$repository.user.getWorkingTypes()
     await commit('setWorkingTypes', res)
   },
+
+  async getTaxList({ commit }, data) {
+    const res = await this.$repository.user.getTaxList(data)
+    await commit('setTaxList', res)
+  },
+
+  async getBankInfo({ commit }, data) {
+    const res = await this.$repository.user.getBankInfo(data)
+    await commit('setBankInfo', res)
+  },
+
+  async getAdditionInfo({ commit }, data) {
+    const res = await this.$repository.user.getAdditionInfo(data)
+    await commit('setAdditionInfo', res)
+  },
+
+  async getWorkingHistory({ commit }, data) {
+    const res = await this.$repository.user.getWorkingHistory(data)
+    await commit('setWorkingHistory', res)
+  },
+
+  async getRelativeInfo({ commit }, data) {
+    const res = await this.$repository.user.getRelativeInfo(data)
+    await commit('setRelativeInfo', res)
+  },
+
+  async getEducationInfo({ commit }, data) {
+    const res = await this.$repository.user.getEducationInfo(data)
+    await commit('setEducationInfo', res)
+  },
 }

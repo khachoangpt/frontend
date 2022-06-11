@@ -31,6 +31,7 @@ export default {
     '@/plugins/vue-country-flag',
     '@/plugins/vue-good-table',
     '@/plugins/repository',
+    '@/plugins/vue-scrollto',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,6 +49,7 @@ export default {
     '@nuxtjs/axios',
     ['@nuxtjs/i18n', i18n],
     'cookie-universal-nuxt',
+    'vue-scrollto/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

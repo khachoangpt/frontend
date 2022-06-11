@@ -46,4 +46,32 @@ export default {
   setEmployeeTypes(state, employeeTypes) {
     state.employeeTypes = employeeTypes
   },
+
+  setTaxList(state, taxList) {
+    state.taxList = taxList
+  },
+
+  setBankInfo(state, bankInfo) {
+    state.bankInfo = bankInfo
+  },
+
+  setAdditionInfo(state, additionInfo) {
+    state.additionInfo = additionInfo
+  },
+
+  setWorkingHistory(state, workingHistory) {
+    state.workingHistory = workingHistory
+  },
+
+  setRelativeInfo(state, relativeInfo) {
+    state.relativeInfo = relativeInfo
+  },
+
+  setEducationInfo(state, educationInfo) {
+    state.educationInfo = educationInfo
+  },
+
+  updateAddress(state, address) {
+    state.additionInfo[0].address = address
+  },
 }
