@@ -158,9 +158,9 @@
                   >
                     <el-option
                       v-for="item in listGrade"
-                      :key="item.grade"
-                      :label="item.grade"
-                      :value="item.grade"
+                      :key="item.grade_id"
+                      :label="item.name"
+                      :value="item.name"
                     >
                     </el-option>
                   </el-select>
@@ -172,7 +172,18 @@
             <el-col :span="8">
               <div class="grid-content bg-purple-light">
                 <el-form-item label="Vị trí">
-                  <el-input v-model="addEmployeeForm.position"></el-input>
+                  <el-select
+                    v-model="addEmployeeForm.position"
+                    placeholder="Select"
+                  >
+                    <el-option
+                      v-for="item in listPositions"
+                      :key="item.job_id"
+                      :label="item.position"
+                      :value="item.position"
+                    >
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </div>
             </el-col>
@@ -312,6 +323,7 @@ export default {
       'listOffice',
       'listArea',
       'employeeTypes',
+      'listPositions',
     ]),
   },
 
@@ -322,6 +334,7 @@ export default {
     this.getListArea()
     this.getEmployeeTypes()
     this.getWorkingTypes()
+    this.getListPositions()
   },
 
   methods: {
@@ -334,6 +347,7 @@ export default {
       'getListArea',
       'getEmployeeTypes',
       'getWorkingTypes',
+      'getListPositions',
     ]),
     ...mapMutations('user', ['setCenterDialogVisible']),
   },

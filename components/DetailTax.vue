@@ -3,15 +3,15 @@
     <div class="main-info-header">
       <span id="sub-3" class="main-info-header__text"> Thuế và bảo hiểm </span>
       <span
-        v-if="isEditMainInfo"
+        v-if="isEditTaxInfo"
         class="main-info-header__edit"
-        @click="isEditMainInfo = false"
+        @click="setIsEditTaxInfo(false)"
       >
         Sửa thông tin pháp lý
       </span>
       <span v-else>
-        <el-button type="info" @click="isEditMainInfo = true">Đóng</el-button>
-        <el-button type="primary">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">Đóng</el-button>
+        <el-button type="primary" @click="updateTaxInfo">Xác nhận</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
@@ -19,7 +19,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số thuế</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ taxList[0].tax_code }}
             </span>
             <el-input
@@ -27,6 +27,7 @@
               size="medium"
               :value="taxList[0].tax_code"
               class="edit-input"
+              @input="updateTaxCode"
             ></el-input>
           </div>
         </div>
@@ -37,7 +38,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số BHXH</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ taxList[0].insurance_id }}
             </span>
             <el-input
@@ -45,6 +46,7 @@
               size="medium"
               :value="taxList[0].insurance_id"
               class="edit-input"
+              @input="updateInsuranceId"
             ></el-input>
           </div>
         </div>
@@ -53,7 +55,7 @@
         <div class="grid-content bg-purple-light">
           <div class="main-info__content-item">
             <span class="content-item__head"> Bảo hiểm </span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ taxList[0].insurance_name }}
             </span>
             <el-input
@@ -61,6 +63,7 @@
               size="medium"
               :value="taxList[0].insurance_name"
               class="edit-input"
+              @input="updateInsuranceName"
             ></el-input>
           </div>
         </div>
@@ -69,7 +72,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi đăng ký BHXH</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ taxList[0].address }}
             </span>
             <el-input
@@ -77,6 +80,7 @@
               size="medium"
               :value="taxList[0].address"
               class="edit-input"
+              @input="updateTaxAddress"
             ></el-input>
           </div>
         </div>
@@ -86,16 +90,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {
-      isEditMainInfo: true,
-    }
+    return {}
   },
 
   computed: {
-    ...mapGetters('user', ['taxList']),
+    ...mapGetters('user', ['taxList', 'isEditTaxInfo']),
   },
 
   async mounted() {
@@ -103,7 +105,19 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getTaxList']),
+    ...mapActions('user', ['getTaxList', 'updateTaxInfo']),
+    ...mapMutations('user', [
+      'updateTaxCode',
+      'updateInsuranceId',
+      'updateInsuranceName',
+      'updateTaxAddress',
+      'setIsEditTaxInfo',
+    ]),
+
+    async closeEdit() {
+      this.setIsEditTaxInfo(true)
+      await this.getTaxList(this.$route.params.employeeId)
+    },
   },
 }
 </script>

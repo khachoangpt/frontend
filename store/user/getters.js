@@ -17,4 +17,10 @@ export default {
   workingHistory: (state) => state.workingHistory,
   relativeInfo: (state) => state.relativeInfo,
   educationInfo: (state) => state.educationInfo,
+  listPositions: (state) => state.listPositions,
+  isEditTaxInfo: (state) => state.isEditTaxInfo,
+  isEditBankInfo: (state) => state.isEditBankInfo,
+  isEditLine: (state) => state.isEditLine,
+  isEditLineRelative: (state) => state.isEditLineRelative,
+  isEditLineEducation: (state) => state.isEditLineEducation,
 }

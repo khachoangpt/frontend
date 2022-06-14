@@ -10,8 +10,8 @@
         Sửa thông tin chính
       </span>
       <span v-else>
-        <el-button type="info" @click="isEditMainInfo = true">Đóng</el-button>
-        <el-button type="primary">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">Đóng</el-button>
+        <el-button type="primary" @click="updateMainInfo">Xác nhận</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
@@ -27,6 +27,7 @@
               size="medium"
               :value="personnelDetail[0].full_name"
               class="edit-input"
+              @input="updatePersonnelFullName"
             ></el-input>
           </div>
         </div>
@@ -43,6 +44,7 @@
               size="medium"
               :value="personnelDetail[0].employee_id"
               class="edit-input"
+              @input="updatePersonnelEmployeeId"
             ></el-input>
           </div>
         </div>
@@ -54,12 +56,16 @@
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail[0].start_date }}
             </span>
-            <el-input
+            <el-date-picker
               v-else
               size="medium"
               :value="personnelDetail[0].start_date"
+              type="date"
               class="edit-input"
-            ></el-input>
+              placeholder="Pick a day"
+              @input="updatePersonnelStartDate"
+            >
+            </el-date-picker>
           </div>
         </div>
       </el-col>
@@ -72,12 +78,17 @@
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail[0].working_status }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].working_status"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].working_status"
+              placeholder="Select"
+              @input="updatePersonnelWorkingStatus"
+            >
+              <el-option label="Active" :value="1"> </el-option>
+              <el-option label="Deactivate" :value="0"> </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -93,6 +104,7 @@
               size="medium"
               :value="personnelDetail[0].contract_url"
               class="edit-input"
+              @input="updatePersonnelContractUrl"
             ></el-input>
           </div>
         </div>
@@ -109,6 +121,7 @@
               size="medium"
               :value="personnelDetail[0].phone_number"
               class="edit-input"
+              @input="updatePersonnelPhoneNumber"
             ></el-input>
           </div>
         </div>
@@ -120,12 +133,22 @@
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail[0].grade }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].grade"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].grade"
+              placeholder="Select"
+              @input="updatePersonnelGrade"
+            >
+              <el-option
+                v-for="grade in listGrade"
+                :key="grade.grade_id"
+                :label="grade.name"
+                :value="grade.name"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -138,12 +161,16 @@
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail[0].birth_date }}
             </span>
-            <el-input
+            <el-date-picker
               v-else
-              size="medium"
               :value="personnelDetail[0].birth_date"
+              size="medium"
+              type="date"
               class="edit-input"
-            ></el-input>
+              placeholder="Pick a day"
+              @input="updatePersonnelBirthDate"
+            >
+            </el-date-picker>
           </div>
         </div>
       </el-col>
@@ -159,6 +186,7 @@
               size="medium"
               :value="personnelDetail[0].company_email"
               class="edit-input"
+              @input="updatePersonnelCompanyEmail"
             ></el-input>
           </div>
         </div>
@@ -171,12 +199,17 @@
               <i class="el-icon-female content-item__detail-icon"></i>
               {{ personnelDetail[0].gender }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].gender"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].gender"
+              placeholder="Select"
+              @input="updatePersonnelGender"
+            >
+              <el-option label="Nam" value="Male"> </el-option>
+              <el-option label="Nữ" value="Female"> </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -187,12 +220,17 @@
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail[0].marital_status }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].marital_status"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].marital_status"
+              placeholder="Select"
+              @input="updatePersonnelMaritalStatus"
+            >
+              <el-option label="Độc thân" value="Single"> </el-option>
+              <el-option label="Đã có gia đình" value="Marriage"> </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -206,12 +244,22 @@
               <i class="el-icon-office-building"></i>
               {{ personnelDetail[0].office_name }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].office_name"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].office_name"
+              placeholder="Select"
+              @input="updatePersonnelOfficeName"
+            >
+              <el-option
+                v-for="office in listOffice"
+                :key="office.office_id"
+                :label="office.name"
+                :value="office.office_id"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -223,12 +271,22 @@
               <i class="el-icon-date"></i>
               {{ personnelDetail[0].working_name }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].working_name"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].working_name"
+              placeholder="Select"
+              @input="updatePersonnelWorkingName"
+            >
+              <el-option
+                v-for="workingType in workingTypes"
+                :key="workingType.type_id"
+                :label="workingType.name"
+                :value="workingType.type_id"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -240,12 +298,22 @@
               <i class="el-icon-folder-checked"></i>
               {{ personnelDetail[0].position_name }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].position_name"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].position_name"
+              placeholder="Select"
+              @input="updatePersonnelPositionName"
+            >
+              <el-option
+                v-for="position in listPositions"
+                :key="position.job_id"
+                :label="position.position"
+                :value="position.job_id"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -257,12 +325,22 @@
               <i class="el-icon-collection-tag"></i>
               {{ personnelDetail[0].area_name }}
             </span>
-            <el-input
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail[0].area_name"
               class="edit-input"
-            ></el-input>
+              :value="personnelDetail[0].area_name"
+              placeholder="Select"
+              @input="updatePersonnelAreaName"
+            >
+              <el-option
+                v-for="area in listArea"
+                :key="area.area_id"
+                :label="area.name"
+                :value="area.area_id"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
@@ -271,7 +349,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -280,15 +358,57 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['personnelDetail']),
+    ...mapGetters('user', [
+      'personnelDetail',
+      'listGrade',
+      'listOffice',
+      'workingTypes',
+      'listPositions',
+      'listArea',
+    ]),
   },
 
   async mounted() {
     await this.getPersonnelDetail(this.$route.params.employeeId)
+    await this.getListGrade()
+    await this.getListOffice()
+    await this.getWorkingTypes()
+    await this.getListPositions()
+    await this.getListArea()
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelDetail']),
+    ...mapActions('user', [
+      'getPersonnelDetail',
+      'getListGrade',
+      'getListOffice',
+      'getWorkingTypes',
+      'getListPositions',
+      'getListArea',
+      'updateMainInfo',
+    ]),
+    ...mapMutations('user', [
+      'updatePersonnelFullName',
+      'updatePersonnelEmployeeId',
+      'updatePersonnelStartDate',
+      'updatePersonnelWorkingStatus',
+      'updatePersonnelContractUrl',
+      'updatePersonnelPhoneNumber',
+      'updatePersonnelGrade',
+      'updatePersonnelBirthDate',
+      'updatePersonnelCompanyEmail',
+      'updatePersonnelGender',
+      'updatePersonnelMaritalStatus',
+      'updatePersonnelOfficeName',
+      'updatePersonnelWorkingName',
+      'updatePersonnelPositionName',
+      'updatePersonnelAreaName',
+    ]),
+
+    async closeEdit() {
+      this.isEditMainInfo = true
+      await this.getPersonnelDetail(this.$route.params.employeeId)
+    },
   },
 }
 </script>

@@ -27,7 +27,7 @@
               size="medium"
               class="edit-input"
               :value="additionInfo[0].address"
-              @input="updateAddress"
+              @input="updateAdditionAddress"
             ></el-input>
           </div>
         </div>
@@ -44,6 +44,7 @@
               size="medium"
               :value="additionInfo[0].place_of_origin"
               class="edit-input"
+              @input="updateAdditionPlaceOfOrigin"
             ></el-input>
           </div>
         </div>
@@ -60,6 +61,7 @@
               size="medium"
               :value="additionInfo[0].place_of_residence"
               class="edit-input"
+              @input="updateAdditionPlaceOfResidence"
             ></el-input>
           </div>
         </div>
@@ -78,6 +80,7 @@
               size="medium"
               :value="additionInfo[0].card_id"
               class="edit-input"
+              @input="updateAdditionCardId"
             ></el-input>
           </div>
         </div>
@@ -94,6 +97,7 @@
               size="medium"
               :value="additionInfo[0].provideDate"
               class="edit-input"
+              @input="updateAdditionProvideDate"
             ></el-input>
           </div>
         </div>
@@ -110,6 +114,7 @@
               size="medium"
               :value="additionInfo[0].providePlace"
               class="edit-input"
+              @input="updateAdditionProvidePlace"
             ></el-input>
           </div>
         </div>
@@ -128,6 +133,7 @@
               size="medium"
               :value="additionInfo[0].nationality"
               class="edit-input"
+              @input="updateAdditionNationality"
             ></el-input>
           </div>
         </div>
@@ -144,6 +150,7 @@
               size="medium"
               :value="additionInfo[0].personal_email"
               class="edit-input"
+              @input="updateAdditionPersonalEmail"
             ></el-input>
           </div>
         </div>
@@ -160,6 +167,7 @@
               size="medium"
               :value="additionInfo[0].phone_number"
               class="edit-input"
+              @input="updateAdditionPhoneNumber"
             ></el-input>
           </div>
         </div>
@@ -178,6 +186,7 @@
               size="medium"
               :value="additionInfo[0].nick_name"
               class="edit-input"
+              @input="updateAdditionNickname"
             ></el-input>
           </div>
         </div>
@@ -194,6 +203,7 @@
               size="medium"
               :value="additionInfo[0].facebook"
               class="edit-input"
+              @input="updateAdditionFacebook"
             ></el-input>
           </div>
         </div>
@@ -221,11 +231,23 @@ export default {
 
   methods: {
     ...mapActions('user', ['getAdditionInfo']),
-    ...mapMutations('user', ['updateAddress']),
+    ...mapMutations('user', [
+      'updateAdditionAddress',
+      'updateAdditionPlaceOfOrigin',
+      'updateAdditionPlaceOfResidence',
+      'updateAdditionCardId',
+      'updateAdditionProvideDate',
+      'updateAdditionProvidePlace',
+      'updateAdditionNationality',
+      'updateAdditionPersonalEmail',
+      'updateAdditionPhoneNumber',
+      'updateAdditionNickname',
+      'updateAdditionFacebook',
+    ]),
     async closeEdit() {
       this.isEditMainInfo = true
       await this.getAdditionInfo(this.$route.params.employeeId)
-    }
+    },
   },
 }
 </script>

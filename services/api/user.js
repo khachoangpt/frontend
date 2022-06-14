@@ -60,23 +60,57 @@ class UserApi extends User {
   }
 
   getListGrade() {
-    return this.$axios.$get('/api/list_job')
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_grade/1', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  getListPositions() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_job', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getListOffice() {
-    return this.$axios.$get('/api/list_office')
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_office', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getListArea() {
-    return this.$axios.$get('/api/list_area')
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_area', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getEmployeeTypes() {
-    return this.$axios.$get('/api/list_employee_type')
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_employee_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getWorkingTypes() {
-    return this.$axios.$get('/api/list_working_type')
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_working_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getTaxList(data) {
@@ -139,6 +173,68 @@ class UserApi extends User {
   getEducationInfo(data) {
     const accessToken = getToken()
     return this.$axios.$get('/api/employee/detail/edu?employeeID=' + data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  editBankInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/bank/update', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  updateMainInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/employee/detail/main/update', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  updateTaxInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put(
+      '/api/employee/detail/tax_and_insurance/update',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  updateWorkingHistory(data) {
+    const accessToken = getToken()
+    return this.$axios.$put(
+      '/api/employee/detail/working_history/update',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  updateRelativeInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/relative/update', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  updateEducationInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/education/update', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

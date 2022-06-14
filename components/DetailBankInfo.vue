@@ -5,15 +5,15 @@
         Thông tin ngân hàng
       </span>
       <span
-        v-if="isEditMainInfo"
+        v-if="isEditBankInfo"
         class="main-info-header__edit"
-        @click="isEditMainInfo = false"
+        @click="setIsEditBankInfo(false)"
       >
         Sửa thông tin ngân hàng
       </span>
       <span v-else>
-        <el-button type="info" @click="isEditMainInfo = true">Đóng</el-button>
-        <el-button type="primary">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">Đóng</el-button>
+        <el-button type="primary" @click="editBankInfo">Xác nhận</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
@@ -21,14 +21,15 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Tên chủ tài khoản</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ bankInfo[0].accountName }}
+            <span v-if="isEditBankInfo" class="content-item__detail">
+              {{ bankInfo[0].account_name }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].accountName"
+              :value="bankInfo[0].account_name"
               class="edit-input"
+              @input="updateBankAccountName"
             ></el-input>
           </div>
         </div>
@@ -37,14 +38,15 @@
         <div class="grid-content bg-purple-light">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngân hàng</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ bankInfo[0].nameBank }}
+            <span v-if="isEditBankInfo" class="content-item__detail">
+              {{ bankInfo[0].name_bank }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].nameBank"
+              :value="bankInfo[0].name_bank"
               class="edit-input"
+              @input="updateBankNameBank"
             ></el-input>
           </div>
         </div>
@@ -53,7 +55,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditBankInfo" class="content-item__detail">
               {{ bankInfo[0].address }}
             </span>
             <el-input
@@ -61,6 +63,7 @@
               size="medium"
               :value="bankInfo[0].address"
               class="edit-input"
+              @input="updateBankAddress"
             ></el-input>
           </div>
         </div>
@@ -69,14 +72,15 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Số tài khoản</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ bankInfo[0].accountNumber }}
+            <span v-if="isEditBankInfo" class="content-item__detail">
+              {{ bankInfo[0].account_number }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].accountNumber"
+              :value="bankInfo[0].account_number"
               class="edit-input"
+              @input="updateBankAccountNumber"
             ></el-input>
           </div>
         </div>
@@ -86,16 +90,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {
-      isEditMainInfo: true,
-    }
+    return {}
   },
 
   computed: {
-    ...mapGetters('user', ['bankInfo']),
+    ...mapGetters('user', ['bankInfo', 'isEditBankInfo']),
   },
 
   async mounted() {
@@ -103,7 +105,19 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getBankInfo']),
+    ...mapActions('user', ['getBankInfo', 'editBankInfo']),
+    ...mapMutations('user', [
+      'updateBankAccountName',
+      'updateBankNameBank',
+      'updateBankAddress',
+      'updateBankAccountNumber',
+      'setIsEditBankInfo',
+    ]),
+
+    async closeEdit() {
+      this.setIsEditBankInfo(true)
+      await this.getBankInfo(this.$route.params.employeeId)
+    },
   },
 }
 </script>
