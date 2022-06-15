@@ -64,6 +64,6 @@ export default {
   },
 
   generate: {
-    routes: ['/personnel/*'],
+    fallback: true,
   },
 }
