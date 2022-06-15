@@ -62,4 +62,8 @@ export default {
   build: {
     transpile: [/^element-ui/],
   },
+
+  generate: {
+    routes: ['/personnel/*'],
+  },
 }

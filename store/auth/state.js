@@ -1,5 +1,5 @@
 export default () => ({
-  id: 'a',
+  id: '',
   email: '',
   name: '',
   avatar: '',
