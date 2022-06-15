@@ -14,7 +14,7 @@
       </span>
       <span
         v-else-if="
-          isEditBankInfo === false &&
+          isEditMainInfo === false &&
           roles.find((role) => role.authority === 'ROLE_ADMIN')
         "
       >
