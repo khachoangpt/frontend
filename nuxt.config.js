@@ -48,7 +48,6 @@ export default {
     '@nuxtjs/axios',
     ['@nuxtjs/i18n', i18n],
     'cookie-universal-nuxt',
-    'vue-scrollto/nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
