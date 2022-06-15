@@ -2,7 +2,11 @@
   <div class="main-info__work-info">
     <div class="main-info-header">
       <span id="sub-6" class="main-info-header__text"> Lịch sử làm việc </span>
-      <span class="main-info-header__edit" @click="centerDialogVisible = true">
+      <span
+        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        class="main-info-header__edit"
+        @click="centerDialogVisible = true"
+      >
         Thêm lịch sử làm việc
       </span>
     </div>
@@ -68,7 +72,10 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col
+        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        :span="6"
+      >
         <div class="grid-content bg-purple">
           <div
             v-if="isEditLine !== working"
@@ -136,6 +143,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['workingHistory', 'isEditLine']),
   },
 
@@ -144,12 +152,12 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getWorkingHistory','updateWorkingHistory']),
+    ...mapActions('user', ['getWorkingHistory', 'updateWorkingHistory']),
     ...mapMutations('user', [
       'updateWorkingHistoryCompanyName',
       'updateWorkingHistoryPosition',
       'updateWorkingHistoryDate',
-      'setIsEditLine'
+      'setIsEditLine',
     ]),
 
     async closeEdit() {

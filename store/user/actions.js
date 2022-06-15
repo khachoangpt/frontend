@@ -33,6 +33,11 @@ export default {
 
   async getPersonnelDetail({ commit }, employeeId) {
     const res = await this.$repository.user.getEmployeeDetail(employeeId)
+    if (res[0].working_status === 'Active') {
+      res[0].working_status = true
+    } else if (res[0].working_status === 'Deactivate') {
+      res[0].working_status = false
+    }
     await commit('setPersonnelDetail', res)
   },
 
@@ -120,22 +125,38 @@ export default {
     try {
       const mainInfo = {
         employee_id: state.personnelDetail[0].employee_id,
+        company_email: state.personnelDetail[0].company_email,
         full_name: state.personnelDetail[0].full_name,
-        start_date: state.personnelDetail[0].start_date,
-        working_status: state.personnelDetail[0].working_status,
-        contract_url: state.personnelDetail[0].contract_url,
+        gender: state.personnelDetail[0].gender,
         phone_number: state.personnelDetail[0].phone_number,
         birth_date: state.personnelDetail[0].birth_date,
-        company_email: state.personnelDetail[0].company_email,
-        gender: state.personnelDetail[0].gender,
         marital_status: state.personnelDetail[0].marital_status,
-        office_id: state.personnelDetail[0].office_name,
-        working_type_id: state.personnelDetail[0].working_name,
-        job_id: state.personnelDetail[0].position_name,
-        area_id: state.personnelDetail[0].area_name,
+        working_status: state.personnelDetail[0].working_status,
+        avatar: state.personnelDetail[0].avatar,
+        working_contract_id: state.personnelDetail[0].working_contract_id,
+        company_name: state.personnelDetail[0].company_name,
+        start_date: state.personnelDetail[0].start_date,
+        contract_url: state.personnelDetail[0].contract_url,
+        area_id: state.listArea.find(
+          (area) => area.name === state.personnelDetail[0].area_name
+        ).area_id,
+        office_id: state.listOffice.find(
+          (office) => office.name === state.personnelDetail[0].office_name
+        ).office_id,
+        job_id: state.listPositions.find(
+          (position) =>
+            position.position === state.personnelDetail[0].position_name
+        ).job_id,
+        grade_id: state.listGrade.find(
+          (grade) => grade.name === state.personnelDetail[0].grade
+        ).grade_id,
       }
-      // const res = await this.$repository.user.updateMainInfo(mainInfo)
-      await console.log(mainInfo)
+      console.log(mainInfo)
+      const res = await this.$repository.user.updateMainInfo(mainInfo)
+      if (res.code === 202) {
+        Message.success('Thay đổi thông tin thành công.')
+        await commit('setIsEditMainInfo', true)
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }

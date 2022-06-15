@@ -309,7 +309,7 @@ export default {
 
 .detail-basic__job {
   font-size: 13px;
-  color: #8ba9cb;
+  color: #768fab;
 }
 
 .detail__contact {
@@ -362,7 +362,7 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   width: 160px;
-  color: #8ba9cb;
+  color: #768fab;
 }
 
 .detail__bookmark-item--active {
@@ -415,7 +415,7 @@ export default {
 }
 
 .content-item__head {
-  color: #8ba9cb;
+  color: #768fab;
   font-size: 14px;
   margin-bottom: 8px;
 }
@@ -430,7 +430,7 @@ export default {
 
 .content-item__detail-icon {
   font-weight: 600;
-  color: #8ba9cb;
+  color: #768fab;
 }
 
 .main-info__work-info {

@@ -4,9 +4,13 @@
       <span id="sub-7" class="main-info-header__text">
         Danh sách người phụ thuộc
       </span>
-      <span class="main-info-header__edit" @click="centerDialogVisible = true"
-        >Thêm người phụ thuộc</span
+      <span
+        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        class="main-info-header__edit"
+        @click="centerDialogVisible = true"
       >
+        Thêm người phụ thuộc
+      </span>
     </div>
     <el-row
       v-for="(relative, index) in relativeInfo"
@@ -74,7 +78,10 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col
+        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        :span="6"
+      >
         <div class="grid-content bg-purple">
           <div
             v-if="isEditLineRelative !== relative"
@@ -138,6 +145,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['relativeInfo', 'isEditLineRelative']),
   },
 

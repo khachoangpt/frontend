@@ -5,13 +5,21 @@
         Thông tin ngân hàng
       </span>
       <span
-        v-if="isEditBankInfo"
+        v-if="
+          isEditBankInfo &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
         class="main-info-header__edit"
         @click="setIsEditBankInfo(false)"
       >
         Sửa thông tin ngân hàng
       </span>
-      <span v-else>
+      <span
+        v-else-if="
+          isEditBankInfo === false &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
+      >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
         <el-button type="primary" @click="editBankInfo">Xác nhận</el-button>
       </span>
@@ -97,6 +105,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['bankInfo', 'isEditBankInfo']),
   },
 

@@ -249,4 +249,7 @@ export default {
   setIsEditLineEducation(state, data) {
     state.isEditLineEducation = data
   },
+  setIsEditMainInfo(state, data) {
+    state.isEditMainInfo = data
+  },
 }

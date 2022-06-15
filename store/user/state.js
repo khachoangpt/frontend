@@ -143,6 +143,7 @@ export default () => ({
   listPositions: [],
   isEditTaxInfo: true,
   isEditBankInfo: true,
+  isEditMainInfo: true,
   isEditLine: '',
   isEditLineRelative: '',
   isEditLineEducation: '',

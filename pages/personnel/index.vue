@@ -51,7 +51,7 @@
           perPage: 10,
           perPageDropdownEnabled: false,
           dropdownAllowAll: false,
-          mode: 'pages',
+          mode: 'records',
         }"
         @on-row-dblclick="onRowDoubleClick"
       >
@@ -287,7 +287,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'PersonnelPage',
   layout: 'main',
-  middleware: ['auth'],
+  middleware: ['auth', 'admin'],
   data() {
     return {
       searchText: '',

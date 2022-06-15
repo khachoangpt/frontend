@@ -3,13 +3,21 @@
     <div class="main-info-header">
       <span id="sub-1" class="main-info-header__text">Thông tin chính</span>
       <span
-        v-if="isEditMainInfo"
+        v-if="
+          isEditMainInfo &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
         class="main-info-header__edit"
-        @click="isEditMainInfo = false"
+        @click="setIsEditMainInfo(false)"
       >
         Sửa thông tin chính
       </span>
-      <span v-else>
+      <span
+        v-else-if="
+          isEditBankInfo === false &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
+      >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
         <el-button type="primary" @click="updateMainInfo">Xác nhận</el-button>
       </span>
@@ -76,18 +84,26 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Tình trạng việc làm</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].working_status }}
+              {{
+                personnelDetail[0].working_status === true
+                  ? 'Active'
+                  : 'Deactivate'
+              }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].working_status"
+              :value="
+                personnelDetail[0].working_status === true
+                  ? 'Active'
+                  : 'Deactivate'
+              "
               placeholder="Select"
               @input="updatePersonnelWorkingStatus"
             >
-              <el-option label="Active" :value="1"> </el-option>
-              <el-option label="Deactivate" :value="0"> </el-option>
+              <el-option label="Active" :value="true"> </el-option>
+              <el-option label="Deactivate" :value="false"> </el-option>
             </el-select>
           </div>
         </div>
@@ -228,8 +244,9 @@
               placeholder="Select"
               @input="updatePersonnelMaritalStatus"
             >
-              <el-option label="Độc thân" value="Single"> </el-option>
-              <el-option label="Đã có gia đình" value="Marriage"> </el-option>
+              <el-option label="Độc thân" value="Độc thân"> </el-option>
+              <el-option label="Đã có gia đình" value="Đã có gia đình">
+              </el-option>
             </el-select>
           </div>
         </div>
@@ -352,12 +369,11 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {
-      isEditMainInfo: true,
-    }
+    return {}
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', [
       'personnelDetail',
       'listGrade',
@@ -365,6 +381,7 @@ export default {
       'workingTypes',
       'listPositions',
       'listArea',
+      'isEditMainInfo',
     ]),
   },
 
@@ -403,10 +420,11 @@ export default {
       'updatePersonnelWorkingName',
       'updatePersonnelPositionName',
       'updatePersonnelAreaName',
+      'setIsEditMainInfo',
     ]),
 
     async closeEdit() {
-      this.isEditMainInfo = true
+      this.setIsEditMainInfo(true)
       await this.getPersonnelDetail(this.$route.params.employeeId)
     },
   },

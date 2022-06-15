@@ -1,36 +1,52 @@
 <template>
   <div class="dashboard">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span class="box-card__header-text">Thông tin</span>
-      </div>
-      <Line />
-    </el-card>
-    <el-card class="box-card box-card__attendance">
-      <div slot="header" class="clearfix">
-        <span class="box-card__header-text">Dữ liệu giờ làm</span>
-      </div>
-      <div class="box-card__attendance-body">
-        <p>Giờ làm trong tháng: 60</p>
-        <p>Giờ làm còn thiếu: 100</p>
-      </div>
-    </el-card>
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span class="box-card__header-text">Ngày nghỉ của công ty</span>
-      </div>
-      <el-calendar :first-day-of-week="0">
-        <template slot="dateCell" slot-scope="{ date, data }">
-          <p
-            :class="
-              date.getDay() === 0 || date.getDay() === 6 ? 'is-weekend' : ''
-            "
-          >
-            {{ data.day.split('-').slice(2).join('-') }}
-          </p>
-        </template>
-      </el-calendar>
-    </el-card>
+    <el-row :gutter="40">
+      <el-col :span="8">
+        <div class="grid-content bg-purple">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Thông tin</span>
+            </div>
+            <Line />
+          </el-card>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content bg-purple-light">
+          <el-card class="box-card box-card__attendance">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Dữ liệu giờ làm</span>
+            </div>
+            <div class="box-card__attendance-body">
+              <p>Giờ làm trong tháng: 60</p>
+              <p>Giờ làm còn thiếu: 100</p>
+            </div>
+          </el-card>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content bg-purple">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Ngày nghỉ của công ty</span>
+            </div>
+            <el-calendar :first-day-of-week="0">
+              <template slot="dateCell" slot-scope="{ date, data }">
+                <p
+                  :class="
+                    date.getDay() === 0 || date.getDay() === 6
+                      ? 'is-weekend'
+                      : ''
+                  "
+                >
+                  {{ data.day.split('-').slice(2).join('-') }}
+                </p>
+              </template>
+            </el-calendar>
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -49,12 +65,11 @@ export default {
 
 <style>
 .dashboard {
-  display: flex;
+  width: 100%;
 }
 
 .box-card {
   width: 300px;
-  margin-right: 10%;
 }
 
 .el-calendar__header {

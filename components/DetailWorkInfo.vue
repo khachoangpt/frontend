@@ -6,13 +6,21 @@
           >Thông tin công việc</span
         >
         <span
-          v-if="isEditMainInfo"
+          v-if="
+            isEditMainInfo &&
+            roles.find((role) => role.authority === 'ROLE_ADMIN')
+          "
           class="main-info-header__edit"
           @click="isEditMainInfo = false"
         >
           Sửa thông tin công việc
         </span>
-        <span v-else>
+        <span
+          v-else-if="
+            isEditMainInfo === false &&
+            roles.find((role) => role.authority === 'ROLE_ADMIN')
+          "
+        >
           <el-button type="info" @click="closeEdit">Đóng</el-button>
           <el-button type="primary">Xác nhận</el-button>
         </span>
@@ -136,9 +144,9 @@
           <div class="grid-content bg-purple-light">
             <div class="main-info__content-item">
               <span class="content-item__head">Phân loại nhân sự</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
-                >Probationary Staff</span
-              >
+              <span v-if="isEditMainInfo" class="content-item__detail">
+                Probationary Staff
+              </span>
               <el-input
                 v-else
                 size="medium"
@@ -163,6 +171,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['personnelDetail']),
   },
 

@@ -6,8 +6,8 @@ export default function ({ app, store }) {
     app.router.push('/login')
   } else {
     const decoded = jwtDecode(getToken())
-    const timeExp = new Date(decoded.exp)
-    if (new Date() > timeExp) {
+    const timeExp = new Date(decoded.exp) * 1000
+    if (timeExp > new Date()) {
       store.commit('auth/setId', decoded.User_Data.id)
       store.commit('auth/setEmail', decoded.User_Data.email)
       store.commit('auth/setRoles', decoded.User_Data.authorities)

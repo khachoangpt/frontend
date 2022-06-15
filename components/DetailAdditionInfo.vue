@@ -3,13 +3,20 @@
     <div class="main-info-header">
       <span id="sub-5" class="main-info-header__text"> Thông tin thêm </span>
       <span
-        v-if="isEditMainInfo"
+        v-if="
+          isEditMainInfo && roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
         class="main-info-header__edit"
         @click="isEditMainInfo = false"
       >
         Sửa thông tin thêm
       </span>
-      <span v-else>
+      <span
+        v-else-if="
+          isEditMainInfo === false &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
+      >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
         <el-button type="primary">Xác nhận</el-button>
       </span>
@@ -222,6 +229,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['additionInfo']),
   },
 

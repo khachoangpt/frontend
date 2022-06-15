@@ -3,13 +3,20 @@
     <div class="main-info-header">
       <span id="sub-3" class="main-info-header__text"> Thuế và bảo hiểm </span>
       <span
-        v-if="isEditTaxInfo"
+        v-if="
+          isEditTaxInfo && roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
         class="main-info-header__edit"
         @click="setIsEditTaxInfo(false)"
       >
         Sửa thông tin pháp lý
       </span>
-      <span v-else>
+      <span
+        v-else-if="
+          isEditTaxInfo === false &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
+        "
+      >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
         <el-button type="primary" @click="updateTaxInfo">Xác nhận</el-button>
       </span>
@@ -97,6 +104,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['taxList', 'isEditTaxInfo']),
   },
 

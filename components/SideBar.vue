@@ -30,7 +30,11 @@
         <i class="el-icon-s-claim sidebar-icon"></i>
         <span>{{ $i18n.t('sidebar.timekeeping') }}</span>
       </el-menu-item>
-      <el-menu-item class="sidebar-item" :index="localePath('/personnel')">
+      <el-menu-item
+        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        class="sidebar-item"
+        :index="localePath('/personnel')"
+      >
         <i class="el-icon-s-custom sidebar-icon"></i>
         <span>{{ $i18n.t('sidebar.personnel') }}</span>
       </el-menu-item>
@@ -43,12 +47,12 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SideBar',
   computed: {
-    ...mapGetters('auth', ['id', 'name', 'grade', 'avatar']),
+    ...mapGetters('auth', ['id', 'name', 'grade', 'avatar', 'roles']),
     ...mapGetters('user', ['personnelDetail']),
   },
 
-  mounted() {
-    this.getEmployeeInfo(this.id)
+  async mounted() {
+    await this.getEmployeeInfo(this.id)
   },
 
   methods: {

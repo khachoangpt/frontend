@@ -190,7 +190,7 @@ class UserApi extends User {
 
   updateMainInfo(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/employee/detail/main/update', data, {
+    return this.$axios.$put('/api/employee/detail/main/update', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
