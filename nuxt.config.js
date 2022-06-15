@@ -31,7 +31,6 @@ export default {
     '@/plugins/vue-country-flag',
     '@/plugins/vue-good-table',
     '@/plugins/repository',
-    '@/plugins/vue-scrollto',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
