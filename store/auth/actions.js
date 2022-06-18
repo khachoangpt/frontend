@@ -30,9 +30,9 @@ export default {
 
   async getEmployeeInfo({commit}, data) {
     const res = await this.$repository.user.getEmployeeDetail(data)
-    await commit('auth/setName', res[0].full_name, { root: true })
-    await commit('auth/setAvatar', res[0].avatar, { root: true })
-    await commit('auth/setGrade', res[0].grade, { root: true })
+    await commit('auth/setName', res.full_name, { root: true })
+    await commit('auth/setAvatar', res.avatar, { root: true })
+    await commit('auth/setGrade', res.grade, { root: true })
   },
 
   async changePassword({ commit }, data) {

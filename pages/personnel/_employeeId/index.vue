@@ -8,7 +8,7 @@
             <div
               class="detail-basic__avatar"
               :style="{
-                backgroundImage: 'url(' + personnelDetail[0].avatar + ')',
+                backgroundImage: 'url(' + personnelDetail.avatar + ')',
               }"
             >
               <el-upload
@@ -23,29 +23,29 @@
               </el-upload>
             </div>
             <span class="detail-basic__name">{{
-              personnelDetail[0].full_name
+              personnelDetail.full_name
             }}</span>
             <span class="detail-basic__job">{{
-              personnelDetail[0].grade
+              personnelDetail.grade
             }}</span>
           </div>
           <div class="detail__contact">
             <ul class="detail__contact-list">
               <li class="detail__contact-item">
                 <i class="el-icon-s-grid"></i>
-                <span> {{ personnelDetail[0].employee_id }} </span>
+                <span> {{ personnelDetail.employee_id }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-suitcase"></i>
-                <span> {{ personnelDetail[0].office_name }} </span>
+                <span> {{ personnelDetail.office_name }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-message"></i>
-                <span> {{ personnelDetail[0].company_email }} </span>
+                <span> {{ personnelDetail.company_email }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-phone-outline"></i>
-                <span> {{ personnelDetail[0].phone_number }} </span>
+                <span> {{ personnelDetail.phone_number }} </span>
               </li>
             </ul>
           </div>

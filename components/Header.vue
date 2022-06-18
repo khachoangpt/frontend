@@ -21,10 +21,17 @@
         <el-empty :image-size="80"></el-empty>
       </el-dropdown-menu>
     </el-dropdown>
-    <i
-      class="el-icon-switch-button header__icon header__icon--hover"
-      @click="logout"
-    ></i>
+    <el-tooltip
+      class="item"
+      effect="light"
+      content="Đăng xuất"
+      placement="bottom-start"
+    >
+      <i
+        class="el-icon-switch-button header__icon header__icon--hover"
+        @click="logout"
+      ></i>
+    </el-tooltip>
   </div>
 </template>
 

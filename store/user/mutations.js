@@ -76,63 +76,63 @@ export default {
   },
 
   updateAdditionAddress(state, address) {
-    state.additionInfo[0].address = address
+    state.additionInfo.address = address
   },
 
   updateAdditionPlaceOfOrigin(state, placeOfOrigin) {
-    state.additionInfo[0].place_of_origin = placeOfOrigin
+    state.additionInfo.place_of_origin = placeOfOrigin
   },
 
   updateAdditionPlaceOfResidence(state, placeOfResidence) {
-    state.additionInfo[0].place_of_residence = placeOfResidence
+    state.additionInfo.place_of_residence = placeOfResidence
   },
 
   updateAdditionCardId(state, cardId) {
-    state.additionInfo[0].card_id = cardId
+    state.additionInfo.card_id = cardId
   },
 
   updateAdditionProvideDate(state, provideDate) {
-    state.additionInfo[0].provideDate = provideDate
+    state.additionInfo.provideDate = provideDate
   },
 
   updateAdditionProvidePlace(state, providePlace) {
-    state.additionInfo[0].providePlace = providePlace
+    state.additionInfo.providePlace = providePlace
   },
 
   updateAdditionNationality(state, nationality) {
-    state.additionInfo[0].nationality = nationality
+    state.additionInfo.nationality = nationality
   },
 
   updateAdditionPersonalEmail(state, personalEmail) {
-    state.additionInfo[0].personal_email = personalEmail
+    state.additionInfo.personal_email = personalEmail
   },
 
   updateAdditionPhoneNumber(state, phoneNumber) {
-    state.additionInfo[0].phone_number = phoneNumber
+    state.additionInfo.phone_number = phoneNumber
   },
 
   updateAdditionNickname(state, nickname) {
-    state.additionInfo[0].nick_name = nickname
+    state.additionInfo.nick_name = nickname
   },
 
   updateAdditionFacebook(state, facebook) {
-    state.additionInfo[0].facebook = facebook
+    state.additionInfo.facebook = facebook
   },
 
   updateBankAccountName(state, accountName) {
-    state.bankInfo[0].account_name = accountName
+    state.bankInfo.account_name = accountName
   },
 
   updateBankNameBank(state, nameBank) {
-    state.bankInfo[0].name_bank = nameBank
+    state.bankInfo.name_bank = nameBank
   },
 
   updateBankAddress(state, address) {
-    state.bankInfo[0].address = address
+    state.bankInfo.address = address
   },
 
   updateBankAccountNumber(state, accountNumber) {
-    state.bankInfo[0].account_number = accountNumber
+    state.bankInfo.account_number = accountNumber
   },
 
   updateEducationNameSchool(state, data) {
@@ -190,49 +190,49 @@ export default {
   },
 
   updatePersonnelFullName(state, data) {
-    state.personnelDetail[0].full_name = data
+    state.personnelDetail.full_name = data
   },
   updatePersonnelEmployeeId(state, data) {
-    state.personnelDetail[0].employee_id = data
+    state.personnelDetail.employee_id = data
   },
   updatePersonnelStartDate(state, data) {
-    state.personnelDetail[0].start_date = data
+    state.personnelDetail.start_date = data
   },
   updatePersonnelWorkingStatus(state, data) {
-    state.personnelDetail[0].working_status = data
+    state.personnelDetail.working_status = data
   },
   updatePersonnelContractUrl(state, data) {
-    state.personnelDetail[0].contract_url = data
+    state.personnelDetail.contract_url = data
   },
   updatePersonnelPhoneNumber(state, data) {
-    state.personnelDetail[0].phone_number = data
+    state.personnelDetail.phone_number = data
   },
   updatePersonnelGrade(state, data) {
-    state.personnelDetail[0].grade = data
+    state.personnelDetail.grade = data
   },
   updatePersonnelBirthDate(state, data) {
-    state.personnelDetail[0].birth_date = data
+    state.personnelDetail.birth_date = data
   },
   updatePersonnelCompanyEmail(state, data) {
-    state.personnelDetail[0].company_email = data
+    state.personnelDetail.company_email = data
   },
   updatePersonnelGender(state, data) {
-    state.personnelDetail[0].gender = data
+    state.personnelDetail.gender = data
   },
   updatePersonnelMaritalStatus(state, data) {
-    state.personnelDetail[0].marital_status = data
+    state.personnelDetail.marital_status = data
   },
   updatePersonnelOfficeName(state, data) {
-    state.personnelDetail[0].office_name = data
+    state.personnelDetail.office_name = data
   },
   updatePersonnelWorkingName(state, data) {
-    state.personnelDetail[0].working_name = data
+    state.personnelDetail.working_name = data
   },
   updatePersonnelPositionName(state, data) {
-    state.personnelDetail[0].position_name = data
+    state.personnelDetail.position_name = data
   },
   updatePersonnelAreaName(state, data) {
-    state.personnelDetail[0].area_name = data
+    state.personnelDetail.area_name = data
   },
   setIsEditTaxInfo(state, data) {
     state.isEditTaxInfo = data

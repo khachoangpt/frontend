@@ -34,7 +34,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -50,7 +50,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -66,7 +66,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -82,7 +82,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -100,7 +100,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -116,7 +116,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -127,12 +127,12 @@
             <div class="main-info__content-item">
               <span class="content-item__head">Ngày bắt đầu</span>
               <span v-if="isEditMainInfo" class="content-item__detail">{{
-                personnelDetail[0].start_date
+                personnelDetail.start_date
               }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>
@@ -150,7 +150,7 @@
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail[0].full_name"
+                :value="personnelDetail.full_name"
                 class="edit-input"
               ></el-input>
             </div>

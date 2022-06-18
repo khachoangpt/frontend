@@ -27,13 +27,13 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ hiện tại</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].address }}
+              {{ additionInfo.address }}
             </span>
             <el-input
               v-else
               size="medium"
               class="edit-input"
-              :value="additionInfo[0].address"
+              :value="additionInfo.address"
               @input="updateAdditionAddress"
             ></el-input>
           </div>
@@ -44,12 +44,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi sinh</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].place_of_origin }}
+              {{ additionInfo.place_of_origin }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].place_of_origin"
+              :value="additionInfo.place_of_origin"
               class="edit-input"
               @input="updateAdditionPlaceOfOrigin"
             ></el-input>
@@ -61,12 +61,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head"> Hộ khẩu thường trú </span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].place_of_residence }}
+              {{ additionInfo.place_of_residence }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].place_of_residence"
+              :value="additionInfo.place_of_residence"
               class="edit-input"
               @input="updateAdditionPlaceOfResidence"
             ></el-input>
@@ -80,12 +80,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">CMT / CCCD</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].card_id }}
+              {{ additionInfo.card_id }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].card_id"
+              :value="additionInfo.card_id"
               class="edit-input"
               @input="updateAdditionCardId"
             ></el-input>
@@ -97,12 +97,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày cấp</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].provideDate }}
+              {{ additionInfo.provideDate }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].provideDate"
+              :value="additionInfo.provideDate"
               class="edit-input"
               @input="updateAdditionProvideDate"
             ></el-input>
@@ -114,12 +114,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head"> Nơi cấp </span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].providePlace }}
+              {{ additionInfo.providePlace }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].providePlace"
+              :value="additionInfo.providePlace"
               class="edit-input"
               @input="updateAdditionProvidePlace"
             ></el-input>
@@ -133,12 +133,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Quốc tịch</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].nationality }}
+              {{ additionInfo.nationality }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].nationality"
+              :value="additionInfo.nationality"
               class="edit-input"
               @input="updateAdditionNationality"
             ></el-input>
@@ -150,12 +150,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Email khác</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].personal_email }}
+              {{ additionInfo.personal_email }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].personal_email"
+              :value="additionInfo.personal_email"
               class="edit-input"
               @input="updateAdditionPersonalEmail"
             ></el-input>
@@ -167,12 +167,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Số điện thoại khác</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].phone_number }}
+              {{ additionInfo.phone_number }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].phone_number"
+              :value="additionInfo.phone_number"
               class="edit-input"
               @input="updateAdditionPhoneNumber"
             ></el-input>
@@ -186,12 +186,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head"> Nickname </span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].nick_name }}
+              {{ additionInfo.nick_name }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].nick_name"
+              :value="additionInfo.nick_name"
               class="edit-input"
               @input="updateAdditionNickname"
             ></el-input>
@@ -203,12 +203,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Facebook</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ additionInfo[0].facebook }}
+              {{ additionInfo.facebook }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="additionInfo[0].facebook"
+              :value="additionInfo.facebook"
               class="edit-input"
               @input="updateAdditionFacebook"
             ></el-input>

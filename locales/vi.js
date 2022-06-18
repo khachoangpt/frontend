@@ -4,7 +4,8 @@ const vi = {
   sidebar: {
     dashboard: 'Màn hình chính',
     timekeeping: 'Chấm công',
-    personnel: 'Nhân sự'
+    personnel: 'Nhân sự',
+    request: 'Yêu cầu'
   },
   datepicker: {
     chooseDay: 'Chọn một ngày',

@@ -28,12 +28,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Họ và tên</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].full_name }}
+              {{ personnelDetail.full_name }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="personnelDetail[0].full_name"
+              :value="personnelDetail.full_name"
               class="edit-input"
               @input="updatePersonnelFullName"
             ></el-input>
@@ -45,12 +45,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Mã nhân sự</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].employee_id }}
+              {{ personnelDetail.employee_id }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="personnelDetail[0].employee_id"
+              :value="personnelDetail.employee_id"
               class="edit-input"
               @input="updatePersonnelEmployeeId"
             ></el-input>
@@ -62,12 +62,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày bắt đầu</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].start_date }}
+              {{ personnelDetail.start_date }}
             </span>
             <el-date-picker
               v-else
               size="medium"
-              :value="personnelDetail[0].start_date"
+              :value="personnelDetail.start_date"
               type="date"
               class="edit-input"
               placeholder="Pick a day"
@@ -85,7 +85,7 @@
             <span class="content-item__head">Tình trạng việc làm</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{
-                personnelDetail[0].working_status === true
+                personnelDetail.working_status === true
                   ? 'Active'
                   : 'Deactivate'
               }}
@@ -95,7 +95,7 @@
               size="medium"
               class="edit-input"
               :value="
-                personnelDetail[0].working_status === true
+                personnelDetail.working_status === true
                   ? 'Active'
                   : 'Deactivate'
               "
@@ -113,12 +113,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Hợp đồng hiện tại</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].contract_url }}
+              {{ personnelDetail.contract_url }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="personnelDetail[0].contract_url"
+              :value="personnelDetail.contract_url"
               class="edit-input"
               @input="updatePersonnelContractUrl"
             ></el-input>
@@ -130,12 +130,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Số điện thoại</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].phone_number }}
+              {{ personnelDetail.phone_number }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="personnelDetail[0].phone_number"
+              :value="personnelDetail.phone_number"
               class="edit-input"
               @input="updatePersonnelPhoneNumber"
             ></el-input>
@@ -147,13 +147,13 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Cấp bậc</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].grade }}
+              {{ personnelDetail.grade }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].grade"
+              :value="personnelDetail.grade"
               placeholder="Select"
               @input="updatePersonnelGrade"
             >
@@ -175,11 +175,11 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày sinh</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].birth_date }}
+              {{ personnelDetail.birth_date }}
             </span>
             <el-date-picker
               v-else
-              :value="personnelDetail[0].birth_date"
+              :value="personnelDetail.birth_date"
               size="medium"
               type="date"
               class="edit-input"
@@ -195,12 +195,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Email</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].company_email }}
+              {{ personnelDetail.company_email }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="personnelDetail[0].company_email"
+              :value="personnelDetail.company_email"
               class="edit-input"
               @input="updatePersonnelCompanyEmail"
             ></el-input>
@@ -213,13 +213,13 @@
             <span class="content-item__head">Giới tính</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-female content-item__detail-icon"></i>
-              {{ personnelDetail[0].gender }}
+              {{ personnelDetail.gender }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].gender"
+              :value="personnelDetail.gender"
               placeholder="Select"
               @input="updatePersonnelGender"
             >
@@ -234,13 +234,13 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Tình trạng hôn nhân</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail[0].marital_status }}
+              {{ personnelDetail.marital_status }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].marital_status"
+              :value="personnelDetail.marital_status"
               placeholder="Select"
               @input="updatePersonnelMaritalStatus"
             >
@@ -259,13 +259,13 @@
             <span class="content-item__head">Văn phòng</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-office-building"></i>
-              {{ personnelDetail[0].office_name }}
+              {{ personnelDetail.office_name }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].office_name"
+              :value="personnelDetail.office_name"
               placeholder="Select"
               @input="updatePersonnelOfficeName"
             >
@@ -286,13 +286,13 @@
             <span class="content-item__head">Lịch làm việc</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-date"></i>
-              {{ personnelDetail[0].working_name }}
+              {{ personnelDetail.working_name }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].working_name"
+              :value="personnelDetail.working_name"
               placeholder="Select"
               @input="updatePersonnelWorkingName"
             >
@@ -313,13 +313,13 @@
             <span class="content-item__head">Vị trí</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-folder-checked"></i>
-              {{ personnelDetail[0].position_name }}
+              {{ personnelDetail.position_name }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].position_name"
+              :value="personnelDetail.position_name"
               placeholder="Select"
               @input="updatePersonnelPositionName"
             >
@@ -340,13 +340,13 @@
             <span class="content-item__head">Lĩnh vực</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-collection-tag"></i>
-              {{ personnelDetail[0].area_name }}
+              {{ personnelDetail.area_name }}
             </span>
             <el-select
               v-else
               size="medium"
               class="edit-input"
-              :value="personnelDetail[0].area_name"
+              :value="personnelDetail.area_name"
               placeholder="Select"
               @input="updatePersonnelAreaName"
             >

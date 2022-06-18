@@ -25,12 +25,8 @@
           >
           </el-option>
         </el-select> -->
-        <el-button
-          class="header-actions__button"
-          type="primary"
-          @click="setCenterDialogVisible(true)"
-        >
-          Tạo mới
+        <el-button class="header-actions__button" type="primary">
+          <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')">Tạo mới</nuxt-link>
         </el-button>
       </div>
     </div>
@@ -70,219 +66,11 @@
         </template>
       </vue-good-table>
     </div>
-    <el-dialog
-      title="Tạo mới nhân sự"
-      :visible.sync="centerDialogVisible"
-      width="70%"
-      top="5vh"
-      :show-close="false"
-    >
-      <div class="add-personnel-dialog__content">
-        <el-form
-          ref="form"
-          label-position="top"
-          :model="addEmployeeForm"
-          label-width="120px"
-        >
-          <el-row :gutter="40">
-            <el-col :span="8">
-              <div class="grid-content bg-purple">
-                <el-form-item label="Họ và tên">
-                  <el-input v-model="addEmployeeForm.fullName"></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Ngày sinh">
-                  <el-date-picker
-                    v-model="addEmployeeForm.birthDate"
-                    type="date"
-                    placeholder="Ngày sinh"
-                  >
-                  </el-date-picker>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Số điện thoại">
-                  <el-input v-model="addEmployeeForm.phone"></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row :gutter="40">
-            <el-col :span="8">
-              <div class="grid-content bg-purple">
-                <el-form-item label="Giới tính">
-                  <el-select
-                    v-model="addEmployeeForm.gender"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in genderList"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Phân quyền">
-                  <el-select
-                    v-model="addEmployeeForm.role"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in roles"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Cấp bậc">
-                  <el-select
-                    v-model="addEmployeeForm.grade"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in listGrade"
-                      :key="item.grade_id"
-                      :label="item.name"
-                      :value="item.name"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row :gutter="40">
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Vị trí">
-                  <el-select
-                    v-model="addEmployeeForm.position"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in listPositions"
-                      :key="item.job_id"
-                      :label="item.position"
-                      :value="item.position"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Văn phòng làm việc">
-                  <el-select
-                    v-model="addEmployeeForm.office"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in listOffice"
-                      :key="item.name"
-                      :label="item.name"
-                      :value="item.name"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Lĩnh vực">
-                  <el-select
-                    v-model="addEmployeeForm.area"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in listArea"
-                      :key="item.name"
-                      :label="item.name"
-                      :value="item.name"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row :gutter="40">
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Loại hình lao động">
-                  <el-select
-                    v-model="addEmployeeForm.workingType"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in workingTypes"
-                      :key="item.name"
-                      :label="item.name"
-                      :value="item.name"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Quản lý">
-                  <el-input v-model="addEmployeeForm.managerId"></el-input>
-                </el-form-item>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content bg-purple-light">
-                <el-form-item label="Loại nhân sự">
-                  <el-select
-                    v-model="addEmployeeForm.employeeType"
-                    placeholder="Select"
-                  >
-                    <el-option
-                      v-for="item in employeeTypes"
-                      :key="item.name"
-                      :label="item.name"
-                      :value="item.name"
-                    >
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-              </div>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="setCenterDialogVisible(false)">Cancel</el-button>
-        <el-button type="primary" @click="addEmployee(addEmployeeForm)"
-          >Confirm</el-button
-        >
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'PersonnelPage',
@@ -293,63 +81,19 @@ export default {
       searchText: '',
       value: '',
       isEditPersonnel: '',
-      addEmployeeForm: {
-        fullName: '',
-        role: '',
-        phone: '',
-        gender: '',
-        birthDate: '',
-        grade: '',
-        position: '',
-        office: '',
-        area: '',
-        workingType: '',
-        managerId: '',
-        employeeType: '',
-      },
     }
   },
 
   computed: {
-    ...mapGetters('user', [
-      'columns',
-      'workingStatus',
-      'personnelList',
-      'genderList',
-      'roles',
-      'centerDialogVisible',
-      'workingTypes',
-      'listGrade',
-      'listOffice',
-      'listArea',
-      'employeeTypes',
-      'listPositions',
-    ]),
+    ...mapGetters('user', ['columns', 'workingStatus', 'personnelList']),
   },
 
   mounted() {
     this.getPersonnelList()
-    this.getListGrade()
-    this.getListOffice()
-    this.getListArea()
-    this.getEmployeeTypes()
-    this.getWorkingTypes()
-    this.getListPositions()
   },
 
   methods: {
-    ...mapActions('user', [
-      'getPersonnelList',
-      'addEmployee',
-      'onRowDoubleClick',
-      'getListGrade',
-      'getListOffice',
-      'getListArea',
-      'getEmployeeTypes',
-      'getWorkingTypes',
-      'getListPositions',
-    ]),
-    ...mapMutations('user', ['setCenterDialogVisible']),
+    ...mapActions('user', ['getPersonnelList', 'onRowDoubleClick']),
   },
 }
 </script>
@@ -402,7 +146,8 @@ export default {
   color: #204ee7;
 }
 
-.add-personnel-dialog__content {
-  padding: 0 48px;
+.btn-add-employee {
+  text-decoration: none;
+  color: #fff !important; 
 }
 </style>

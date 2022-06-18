@@ -5,6 +5,7 @@ const en = {
     dashboard: 'Dashboard',
     timekeeping: 'Timekeeping',
     personnel: 'Personnel',
+    request: 'Request',
   },
   datepicker: {
     chooseDay: 'Pick a day',

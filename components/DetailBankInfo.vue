@@ -30,12 +30,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Tên chủ tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
-              {{ bankInfo[0].account_name }}
+              {{ bankInfo.account_name }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].account_name"
+              :value="bankInfo.account_name"
               class="edit-input"
               @input="updateBankAccountName"
             ></el-input>
@@ -47,12 +47,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Ngân hàng</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
-              {{ bankInfo[0].name_bank }}
+              {{ bankInfo.name_bank }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].name_bank"
+              :value="bankInfo.name_bank"
               class="edit-input"
               @input="updateBankNameBank"
             ></el-input>
@@ -64,12 +64,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
-              {{ bankInfo[0].address }}
+              {{ bankInfo.address }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].address"
+              :value="bankInfo.address"
               class="edit-input"
               @input="updateBankAddress"
             ></el-input>
@@ -81,12 +81,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Số tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
-              {{ bankInfo[0].account_number }}
+              {{ bankInfo.account_number }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="bankInfo[0].account_number"
+              :value="bankInfo.account_number"
               class="edit-input"
               @input="updateBankAccountNumber"
             ></el-input>

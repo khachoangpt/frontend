@@ -1,9 +1,9 @@
 import jwtDecode from 'jwt-decode'
 import { getToken } from '~/helper/jwt'
 
-export default function ({ app, store }) {
+export default function ({ app, store, redirect }) {
   if (!getToken()) {
-    app.router.push('/login')
+    return redirect('/login')
   } else {
     const decoded = jwtDecode(getToken())
     const timeExp = new Date(decoded.exp) * 1000
@@ -12,7 +12,7 @@ export default function ({ app, store }) {
       store.commit('auth/setEmail', decoded.User_Data.email)
       store.commit('auth/setRoles', decoded.User_Data.authorities)
     } else {
-      app.router.push('/login')
+      return redirect('/login')
     }
   }
 }

@@ -33,10 +33,10 @@ export default {
 
   async getPersonnelDetail({ commit }, employeeId) {
     const res = await this.$repository.user.getEmployeeDetail(employeeId)
-    if (res[0].working_status === 'Active') {
-      res[0].working_status = true
-    } else if (res[0].working_status === 'Deactivate') {
-      res[0].working_status = false
+    if (res.working_status === 'Active') {
+      res.working_status = true
+    } else if (res.working_status === 'Deactivate') {
+      res.working_status = false
     }
     await commit('setPersonnelDetail', res)
   },
@@ -88,28 +88,40 @@ export default {
 
   async getWorkingHistory({ commit }, data) {
     const res = await this.$repository.user.getWorkingHistory(data)
-    await commit('setWorkingHistory', res)
+    if(res.length === 1 && res[0].working_history_id === null){
+      await commit('setWorkingHistory', [])
+    }else {
+      await commit('setWorkingHistory', res)
+    }
   },
 
   async getRelativeInfo({ commit }, data) {
     const res = await this.$repository.user.getRelativeInfo(data)
-    await commit('setRelativeInfo', res)
+    if(res.length === 1 && res[0].relative_id === null){
+      await commit('setRelativeInfo', [])
+    }else {
+      await commit('setRelativeInfo', res)
+    }
   },
 
   async getEducationInfo({ commit }, data) {
     const res = await this.$repository.user.getEducationInfo(data)
-    await commit('setEducationInfo', res)
+    if(res.length === 1 && res[0].education_id === null){
+      await commit('setEducationInfo', [])
+    }else {
+      await commit('setEducationInfo', res)
+    }
   },
 
   async editBankInfo({ commit, state }, data) {
     try {
       const bankInfoUpdate = {
-        id: state.bankInfo[0].bank_id,
-        nameBank: state.bankInfo[0].name_bank,
-        address: state.bankInfo[0].address,
-        accountNumber: state.bankInfo[0].account_number,
-        accountName: state.bankInfo[0].account_name,
-        employeeId: state.personnelDetail[0].employee_id,
+        id: state.bankInfo.bank_id === null ? null : state.bankInfo.bank_id,
+        nameBank: state.bankInfo.name_bank,
+        address: state.bankInfo.address,
+        accountNumber: state.bankInfo.account_number,
+        accountName: state.bankInfo.account_name,
+        employeeId: state.personnelDetail.employee_id,
       }
       const res = await this.$repository.user.editBankInfo(bankInfoUpdate)
       if (res.code === 202) {
@@ -124,34 +136,33 @@ export default {
   async updateMainInfo({ commit, state }, data) {
     try {
       const mainInfo = {
-        employee_id: state.personnelDetail[0].employee_id,
-        company_email: state.personnelDetail[0].company_email,
-        full_name: state.personnelDetail[0].full_name,
-        gender: state.personnelDetail[0].gender,
-        phone_number: state.personnelDetail[0].phone_number,
-        birth_date: state.personnelDetail[0].birth_date,
-        marital_status: state.personnelDetail[0].marital_status,
-        working_status: state.personnelDetail[0].working_status,
-        avatar: state.personnelDetail[0].avatar,
-        working_contract_id: state.personnelDetail[0].working_contract_id,
-        company_name: state.personnelDetail[0].company_name,
-        start_date: state.personnelDetail[0].start_date,
-        contract_url: state.personnelDetail[0].contract_url,
+        employee_id: state.personnelDetail.employee_id,
+        company_email: state.personnelDetail.company_email,
+        full_name: state.personnelDetail.full_name,
+        gender: state.personnelDetail.gender,
+        phone_number: state.personnelDetail.phone_number,
+        birth_date: state.personnelDetail.birth_date,
+        marital_status: state.personnelDetail.marital_status,
+        working_status: state.personnelDetail.working_status,
+        avatar: state.personnelDetail.avatar,
+        working_contract_id: state.personnelDetail.working_contract_id,
+        company_name: state.personnelDetail.company_name,
+        start_date: state.personnelDetail.start_date,
+        contract_url: state.personnelDetail.contract_url,
         area_id: state.listArea.find(
-          (area) => area.name === state.personnelDetail[0].area_name
+          (area) => area.name === state.personnelDetail.area_name
         ).area_id,
         office_id: state.listOffice.find(
-          (office) => office.name === state.personnelDetail[0].office_name
+          (office) => office.name === state.personnelDetail.office_name
         ).office_id,
         job_id: state.listPositions.find(
           (position) =>
-            position.position === state.personnelDetail[0].position_name
+            position.position === state.personnelDetail.position_name
         ).job_id,
         grade_id: state.listGrade.find(
-          (grade) => grade.name === state.personnelDetail[0].grade
+          (grade) => grade.name === state.personnelDetail.grade
         ).grade_id,
       }
-      console.log(mainInfo)
       const res = await this.$repository.user.updateMainInfo(mainInfo)
       if (res.code === 202) {
         Message.success('Thay đổi thông tin thành công.')
@@ -165,11 +176,11 @@ export default {
   async updateTaxInfo({ commit, state }) {
     try {
       const taxInfo = {
-        taxCode: state.taxList[0].tax_code,
-        insuranceId: state.taxList[0].insurance_id,
-        employeeId: state.personnelDetail[0].employee_id,
-        insuranceName: state.taxList[0].insurance_name,
-        insuranceAddress: state.taxList[0].address,
+        taxCode: state.taxList.tax_code,
+        insuranceId: state.taxList.insurance_id,
+        employeeId: state.personnelDetail.employee_id,
+        insuranceName: state.taxList.insurance_name,
+        insuranceAddress: state.taxList.address,
       }
       const res = await this.$repository.user.updateTaxInfo(taxInfo)
       if (res.code === 202) {
@@ -185,7 +196,7 @@ export default {
     try {
       const workingHistory = {
         id: state.workingHistory[index].working_history_id,
-        employeeId: state.personnelDetail[0].employee_id,
+        employeeId: state.personnelDetail.employee_id,
         companyName: state.workingHistory[index].company_name,
         position: state.workingHistory[index].position,
         startDate: state.workingHistory[index].start_date,
@@ -197,7 +208,7 @@ export default {
       if (res.code === 202) {
         Message.success('Thay đổi thông tin thành công.')
         const res = await this.$repository.user.getWorkingHistory(
-          state.personnelDetail[0].employee_id
+          state.personnelDetail.employee_id
         )
         await commit('setWorkingHistory', res)
         await commit('setIsEditLine', '')
@@ -211,18 +222,18 @@ export default {
     try {
       const relativeInfo = {
         id: state.relativeInfo[index].relative_id,
-        parentName: state.relativeInfo[0].parent_name,
+        parentName: state.relativeInfo[index].parent_name,
         birthDate: state.relativeInfo[index].birth_date,
         relativeTypeId: state.relativeInfo[index].type_id,
         status: state.relativeInfo[index].status,
         contact: state.relativeInfo[index].contact,
-        employeeId: state.personnelDetail[0].employee_id,
+        employeeId: state.personnelDetail.employee_id,
       }
       const res = await this.$repository.user.updateRelativeInfo(relativeInfo)
       if (res.code === 202) {
         Message.success('Thay đổi thông tin thành công.')
         const res = await this.$repository.user.getRelativeInfo(
-          state.personnelDetail[0].employee_id
+          state.personnelDetail.employee_id
         )
         await commit('setRelativeInfo', res)
         await commit('setIsEditLineRelative', '')
@@ -236,18 +247,18 @@ export default {
     try {
       const educationInfo = {
         id: state.educationInfo[index].education_id,
-        nameSchool: state.educationInfo[0].name_school,
+        nameSchool: state.educationInfo[index].name_school,
         startDate: state.educationInfo[index].start_date,
         endDate: state.educationInfo[index].end_date,
         certificate: state.educationInfo[index].certificate,
         status: state.educationInfo[index].status,
-        employeeId: state.personnelDetail[0].employee_id,
+        employeeId: state.personnelDetail.employee_id,
       }
       const res = await this.$repository.user.updateEducationInfo(educationInfo)
       if (res.code === 202) {
         Message.success('Thay đổi thông tin thành công.')
         const res = await this.$repository.user.getEducationInfo(
-          state.personnelDetail[0].employee_id
+          state.personnelDetail.employee_id
         )
         await commit('setEducationInfo', res)
         await commit('setIsEditLineEducation', '')
