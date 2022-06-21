@@ -24,19 +24,47 @@
     >
       <el-menu-item class="sidebar-item" :index="localePath('/')">
         <i class="el-icon-menu sidebar-icon"></i>
-        <span>{{ $i18n.t('sidebar.dashboard') }}</span>
+        <span class="sidebar-item__text">{{
+          $i18n.t('sidebar.dashboard')
+        }}</span>
       </el-menu-item>
       <el-menu-item class="sidebar-item" :index="localePath('/timekeeping')">
         <i class="el-icon-s-claim sidebar-icon"></i>
-        <span>{{ $i18n.t('sidebar.timekeeping') }}</span>
+        <span class="sidebar-item__text">{{
+          $i18n.t('sidebar.timekeeping')
+        }}</span>
       </el-menu-item>
       <el-menu-item
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
+        class="sidebar-item"
+        :index="localePath('/working-data')"
+      >
+        <i class="el-icon-time sidebar-icon"></i>
+        <span class="sidebar-item__text">{{
+          $i18n.t('sidebar.workingData')
+        }}</span>
+      </el-menu-item>
+      <el-menu-item
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         class="sidebar-item"
         :index="localePath('/personnel')"
       >
         <i class="el-icon-s-custom sidebar-icon"></i>
-        <span>{{ $i18n.t('sidebar.personnel') }}</span>
+        <span class="sidebar-item__text">{{
+          $i18n.t('sidebar.personnel')
+        }}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -94,11 +122,12 @@ export default {
 }
 
 .sidebar-icon {
+  font-size: 24px !important;
   color: #fff !important;
 }
 
 .sidebar-item {
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
 .sidebar-item:hover {
@@ -107,5 +136,9 @@ export default {
 
 .el-menu-item.is-active {
   color: aqua;
+}
+
+.sidebar-item__text {
+  font-size: 15px;
 }
 </style>

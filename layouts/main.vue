@@ -33,6 +33,10 @@ export default {
   line-height: 60px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  position: fixed;
+  left: 230px;
+  right: 0;
+  z-index: 100;
 }
 
 .el-aside {
@@ -45,5 +49,6 @@ export default {
 
 .el-main {
   margin-left: 230px;
+  margin-top: 60px;
 }
 </style>

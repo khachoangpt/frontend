@@ -313,7 +313,7 @@ export default {
 .add-personnel__footer {
   margin-top: 24px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .add-employee-form__input {

@@ -31,6 +31,7 @@ export default {
     '@/plugins/vue-country-flag',
     '@/plugins/vue-good-table',
     '@/plugins/repository',
+    '@/plugins/v-calendar',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
