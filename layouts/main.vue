@@ -30,7 +30,8 @@ export default {
 .el-header {
   background-color: #fff;
   color: #333;
-  line-height: 60px;
+  line-height: 50px;
+  height: 50px !important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   position: fixed;
@@ -49,6 +50,6 @@ export default {
 
 .el-main {
   margin-left: 230px;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 </style>

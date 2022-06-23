@@ -24,6 +24,64 @@ class UserApi extends TimeKeeping {
       },
     })
   }
+
+  getEmployeeTimekeepingList(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/list_all_timekeeping?filter=employeeId:AEQ' +
+        data.employeeId +
+        ',date:ABT' +
+        data.startDate +
+        '-' +
+        data.endDate,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getDetailTimekeeping(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/list_detail_timekeeping?employeeID=' +
+        data.employeeId +
+        '&date=' +
+        data.date,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getAllTimeKeeping(data) {
+    let officeFilter = ''
+    let areaFilter = ''
+    for (let i = 0; i < data.filterOffice.length; i++) {
+      officeFilter += ',office:AEQ' + data.filterOffice[i]
+    }
+    for (let i = 0; i < data.filterArea.length; i++) {
+      areaFilter += ',area:AEQ' + data.filterArea[i]
+    }
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/list_all_timekeeping?filter=date:ABT' +
+        data.startDate +
+        '-' +
+        data.endDate +
+        officeFilter +
+        areaFilter +
+        '&paging=offset:0,limit:2',
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

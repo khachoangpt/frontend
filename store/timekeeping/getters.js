@@ -1,3 +1,9 @@
 export default {
-  attributes: (state) => state.attributes,
+  selectedTimeRange: (state) => state.selectedTimeRange,
+  listEmployeeTimekeeping: (state) => state.listEmployeeTimekeeping,
+  timekeepingInDay: (state) => state.timekeepingInDay,
+  allTimeKeeping: (state) => state.allTimeKeeping,
+  listEmployeeId: (state) => state.listEmployeeId,
+  listOfficeFilter: (state) => state.listOfficeFilter,
+  listAreaFilter: (state) => state.listAreaFilter,
 }

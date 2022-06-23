@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="19">
+    <el-col :span="20">
       <div class="time-keeping__header">
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-finished custom-calendar__status-finished"></i>
@@ -39,10 +39,11 @@
         class="custom-calendar"
         :locale="$i18n.locale"
         :masks="masks"
-        :attributes="attributes"
+        :attributes="listEmployeeTimekeeping"
         :is-expanded="true"
         :first-day-of-week="1"
         disable-page-swipe
+        @update:from-page="onChangeMonth"
       >
         <div
           slot="day-content"
@@ -58,7 +59,7 @@
               class="custom-calendar__status"
               :class="attr.customData.class"
             ></i>
-            <span v-for="(at, index) in attributes" :key="index">
+            <span v-for="(at, index) in attributes" :key="'key' + index">
               <el-tag
                 v-if="at.customData.status !== ''"
                 class="custom-calendar__status-success"
@@ -73,7 +74,7 @@
           <div class="custom-calendar__date-check">
             <span
               v-for="(at, index) in attributes"
-              :key="index"
+              :key="'index' + index"
               class="date-check__text"
             >
               <span class="date-check__text-in">IN</span>
@@ -87,7 +88,7 @@
         </div>
       </v-calendar>
     </el-col>
-    <el-col :span="5"></el-col>
+    <el-col :span="4"></el-col>
     <el-dialog
       :title="
         'Dữ liệu giờ làm ngày ' +
@@ -104,7 +105,7 @@
       <div class="dialog-timekeeping-detail__content">
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
           <el-col :span="10"> Tổng giờ làm: </el-col>
-          <el-col :span="14">08 giờ 12 phút</el-col>
+          <el-col :span="14">{{ timekeepingInDay.total_working_time }}</el-col>
         </el-row>
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
           <el-col :span="10"> Checkin lần đầu: </el-col>
@@ -119,18 +120,49 @@
           </el-col>
         </el-row>
       </div>
+      <div class="dialog-timekeeping-detail__history-head">
+        Lịch sử checkin/checkout
+      </div>
       <div class="dialog-timekeeping-detail__history">
-        <div class="detail-history__checkin">Checkin lúc - 08:30</div>
-        <div class="detail-history__checkout">Checkout lúc - 12:30</div>
-        <div class="detail-history__checkin">Checkin lúc - 12:30</div>
-        <div class="detail-history__checkout">Checkout lúc - 17:32</div>
+        <el-row>
+          <el-col :span="10">
+            <div class="detail-history__checkin">Checkin</div>
+            <div
+              v-for="(time, index) in timekeepingInDay.check_in_check_outs"
+              :key="index"
+              class="detail-history__checkin"
+            >
+              {{ time.checkin }}
+            </div>
+          </el-col>
+          <el-col :span="4">
+            <div class="detail-history__separate">------------</div>
+            <div
+              v-for="(time, index) in timekeepingInDay.check_in_check_outs"
+              :key="index"
+              class="detail-history__separate"
+            >
+              ------------
+            </div>
+          </el-col>
+          <el-col :span="10">
+            <div class="detail-history__checkout">Checkout</div>
+            <div
+              v-for="(time, index) in timekeepingInDay.check_in_check_outs"
+              :key="index"
+              class="detail-history__checkout"
+            >
+              {{ time.checkout }}
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </el-dialog>
   </el-row>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'TimekeepingPage',
   layout: 'main',
@@ -145,20 +177,38 @@ export default {
   },
 
   computed: {
-    ...mapGetters('timekeeping', ['attributes']),
+    ...mapGetters('timekeeping', [
+      'selectedTimeRange',
+      'listEmployeeTimekeeping',
+      'timekeepingInDay',
+    ]),
   },
 
   methods: {
-    dayClick(selectedDay) {
+    ...mapActions('timekeeping', [
+      'getEmployeeTimekeepingList',
+      'getDetailTimekeeping',
+    ]),
+
+    async dayClick(selectedDay) {
       if (selectedDay.attributes.length !== 0) {
         if (
           selectedDay.attributes[0].customData.status !== 'off' &&
           selectedDay.attributes[0].customData.status !== 'PL'
         ) {
+          await this.getDetailTimekeeping(selectedDay.id)
           this.dialogTimekeepingDetailVisible = true
           this.selectedDay = selectedDay
         }
       }
+    },
+
+    async onChangeMonth(time) {
+      const data = {
+        startDate: Date.parse(new Date(time.year, time.month - 1, 1)),
+        endDate: Date.parse(new Date(time.year, time.month, 0)),
+      }
+      await this.getEmployeeTimekeepingList(data)
     },
   },
 }
@@ -347,6 +397,7 @@ export default {
   font-weight: 600;
   max-height: 150px;
   overflow: scroll;
+  text-align: center;
 }
 
 .dialog-timekeeping-detail__history::-webkit-scrollbar {
@@ -360,6 +411,17 @@ export default {
 
 .detail-history__checkout {
   color: #f56c6c;
+  margin-bottom: 16px;
+}
+
+.dialog-timekeeping-detail__history-head {
+  text-align: left;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.detail-history__separate {
   margin-bottom: 16px;
 }
 </style>
