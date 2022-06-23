@@ -28,9 +28,10 @@ export default {
         startDate: selectedTimeRange.startDate,
         endDate: selectedTimeRange.endDate,
       }
-      const res = await this.$repository.timekeeping.getEmployeeTimekeepingList(
+      let res = await this.$repository.timekeeping.getEmployeeTimekeepingList(
         data
       )
+      res = res.timekeepingResponsesList
       const response = []
       for (let i = 0; i < res[0].timekeepingResponses.length; i++) {
         const attribute = {
@@ -45,8 +46,8 @@ export default {
                 ? 'soon'
                 : res[0].timekeepingResponses[i].timekeeping_status === 'off'
                 ? 'off'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'OL'
-                ? 'OL'
+                : res[0].timekeepingResponses[i].timekeeping_status === 'PL'
+                ? 'PL'
                 : '',
             type:
               res[0].timekeepingResponses[i].timekeeping_status === 'late'
@@ -55,7 +56,7 @@ export default {
                 ? 'warning'
                 : res[0].timekeepingResponses[i].timekeeping_status === 'off'
                 ? 'info'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'OL'
+                : res[0].timekeepingResponses[i].timekeeping_status === 'PL'
                 ? 'success'
                 : '',
             class:
@@ -102,12 +103,15 @@ export default {
   async getAllTimeKeeping({ commit, state }, selectedTimeRange) {
     try {
       const data = {
-        startDate: selectedTimeRange.startDate,
-        endDate: selectedTimeRange.endDate,
+        startDate: selectedTimeRange[0].startDate,
+        endDate: selectedTimeRange[0].endDate,
         filterOffice: state.listOfficeFilter,
         filterArea: state.listAreaFilter,
+        page: selectedTimeRange[1],
       }
-      const res = await this.$repository.timekeeping.getAllTimeKeeping(data)
+      let res = await this.$repository.timekeeping.getAllTimeKeeping(data)
+      await commit('setTotalPage', res.total)
+      res = res.timekeepingResponsesList
       const response = []
       for (let i = 0; i < res.length; i++) {
         const dayList = {}

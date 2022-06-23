@@ -26,4 +26,8 @@ export default {
   setListAreaFilter(state, listAreaFilter) {
     state.listAreaFilter = listAreaFilter
   },
+
+  setTotalPage(state, totalPage) {
+    state.totalPage = totalPage
+  },
 }

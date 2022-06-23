@@ -74,7 +74,9 @@ class UserApi extends TimeKeeping {
         data.endDate +
         officeFilter +
         areaFilter +
-        '&paging=offset:0,limit:2',
+        '&paging=offset:' +
+        (data.page - 1) +
+        ',limit:2',
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,

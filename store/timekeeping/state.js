@@ -12,6 +12,7 @@ export default () => ({
   timekeepingInDay: '',
   allTimeKeeping: '',
   listEmployeeId: [],
-  listOfficeFilter:[],
-  listAreaFilter:[],
+  listOfficeFilter: [],
+  listAreaFilter: [],
+  totalPage: 1,
 })

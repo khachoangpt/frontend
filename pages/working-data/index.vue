@@ -35,11 +35,12 @@
             }"
             @on-selected-rows-change="onSelectedRowsChange"
           >
-            <template slot="pagination-bottom" slot-scope="props">
+            <template slot="pagination-bottom">
               <el-pagination
                 background
                 layout="prev, pager, next"
-                :total="props.total"
+                :page-size="2"
+                :total="totalPage"
                 @current-change="currentChange"
               >
               </el-pagination>
@@ -75,6 +76,7 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { EOffice, EArea } from '~/constants/enums'
 export default {
   name: 'WorkingData',
   layout: 'main',
@@ -106,6 +108,7 @@ export default {
       'selectedTimeRange',
       'listOfficeFilter',
       'listAreaFilter',
+      'totalPage',
     ]),
     ...mapGetters('user', ['listOffice', 'listArea']),
   },
@@ -115,7 +118,7 @@ export default {
       this.monthSearch.getMonth() + 1,
       this.monthSearch.getFullYear()
     )
-    await this.getAllTimeKeeping(this.selectedTimeRange)
+    await this.getAllTimeKeeping([this.selectedTimeRange, 1])
     await this.getListOffice()
     await this.getListArea()
   },
@@ -141,7 +144,7 @@ export default {
           width: '150px',
         },
         {
-          label: 'mã',
+          label: 'Mã',
           field: 'employee_id',
           width: '50px',
         },
@@ -187,10 +190,12 @@ export default {
         ),
       }
       await this.setSelectedTimeRange(timeRange)
-      await this.getAllTimeKeeping(this.selectedTimeRange)
+      await this.getAllTimeKeeping([this.selectedTimeRange, 1])
     },
 
-    currentChange(page) {},
+    async currentChange(page) {
+      await this.getAllTimeKeeping([this.selectedTimeRange, page])
+    },
 
     onSelectedRowsChange() {
       const employeeIdSelectedList = []
@@ -202,30 +207,32 @@ export default {
     },
 
     async onChangeCheckboxOffice(data) {
+      data = EOffice[data]
       const parsedobj = JSON.parse(JSON.stringify(this.listOfficeFilter))
       if (parsedobj.includes(data) === false) {
         await parsedobj.push(data)
         await this.setListOfficeFilter(parsedobj)
-        await this.getAllTimeKeeping(this.selectedTimeRange)
+        await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       } else {
         const index = parsedobj.indexOf(data)
         await parsedobj.splice(index, 1)
         await this.setListOfficeFilter(parsedobj)
-        await this.getAllTimeKeeping(this.selectedTimeRange)
+        await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       }
     },
 
     async onChangeCheckboxArea(data) {
+      data = EArea[data]
       const parsedobj = JSON.parse(JSON.stringify(this.listAreaFilter))
       if (parsedobj.includes(data) === false) {
         await parsedobj.push(data)
         await this.setListAreaFilter(parsedobj)
-        await this.getAllTimeKeeping(this.selectedTimeRange)
+        await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       } else {
         const index = parsedobj.indexOf(data)
         await parsedobj.splice(index, 1)
         await this.setListAreaFilter(parsedobj)
-        await this.getAllTimeKeeping(this.selectedTimeRange)
+        await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       }
     },
   },

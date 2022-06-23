@@ -6,4 +6,5 @@ export default {
   listEmployeeId: (state) => state.listEmployeeId,
   listOfficeFilter: (state) => state.listOfficeFilter,
   listAreaFilter: (state) => state.listAreaFilter,
+  totalPage: (state) => state.totalPage,
 }
