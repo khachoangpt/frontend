@@ -66,6 +66,12 @@
           $i18n.t('sidebar.personnel')
         }}</span>
       </el-menu-item>
+      <el-menu-item class="sidebar-item" :index="localePath('/request')">
+        <i class="el-icon-s-order sidebar-icon"></i>
+        <span class="sidebar-item__text">{{
+          $i18n.t('sidebar.request')
+        }}</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

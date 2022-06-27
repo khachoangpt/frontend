@@ -7,7 +7,7 @@ export default () => ({
   roles: [],
   tokenType: '',
   accessToken: '',
-  isRememberMe: true,
+  isRememberMe: false,
   rules: {
     email: [
       {

@@ -5,7 +5,7 @@
         <img class="logo-img" src="/hrm-logo.png" alt="" />
       </div>
       <div class="login-form">
-        <h2 class="login-form__header">Sign in</h2>
+        <h2 class="login-form__header">Đăng nhập</h2>
         <el-form
           id="app"
           ref="form"
@@ -14,14 +14,19 @@
           @submit.native.prevent="login(form)"
         >
           <el-form-item prop="email" :show-message="false">
-            <el-input v-model="form.email" placeholder="Email">
+            <el-input
+              v-model="form.email"
+              class="login-form__input"
+              placeholder="Email"
+            >
               <i slot="prefix" class="el-input__icon el-icon-user"></i>
             </el-input>
           </el-form-item>
           <el-form-item prop="password" :show-message="false">
             <el-input
               v-model="form.password"
-              placeholder="Password"
+              class="login-form__input"
+              placeholder="Mật khẩu"
               show-password
             >
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -37,7 +42,7 @@
               class="login-form__addition-forgot"
               :to="localePath('/forgot')"
             >
-              <el-link type="primary">Forgot password?</el-link>
+              <el-link type="primary">Quên mật khẩu?</el-link>
             </nuxt-link>
           </div>
           <div class="login-form__submit">
@@ -46,7 +51,7 @@
               type="primary"
               native-type="submit"
               round
-              >Sign in</el-button
+              >Đăng nhập</el-button
             >
           </div>
         </el-form>
@@ -78,7 +83,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .login {
   display: flex;
   flex-direction: column;
@@ -87,7 +92,10 @@ export default {
   height: 100vh;
   text-align: center;
   background-color: #08aeea;
-  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('~/static/background-login.jpg');
+  color: #fff;
 }
 
 .login-form {
@@ -95,7 +103,7 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   min-width: 360px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .login-form__header {
@@ -120,11 +128,20 @@ export default {
   width: 50%;
 }
 
-.el-link--inner {
-  text-decoration: none !important;
-}
-
 .logo-img {
   width: 80px;
+}
+
+.login-form__input input {
+  background-color: rgba(255, 255, 255, 0) !important;
+  color: #fff !important;
+}
+
+.el-link.el-link--primary {
+  color: #fff;
+}
+
+.el-link.el-link--primary:hover {
+  color: #fff;
 }
 </style>

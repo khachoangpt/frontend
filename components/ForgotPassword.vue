@@ -13,7 +13,11 @@
           @submit.native.prevent="forgot(form)"
         >
           <el-form-item prop="email" :show-message="false">
-            <el-input v-model="form.email" placeholder="Email">
+            <el-input
+              v-model="form.email"
+              class="forgot-form__input"
+              placeholder="Email"
+            >
               <i slot="prefix" class="el-icon-message"></i>
             </el-input>
           </el-form-item>
@@ -34,7 +38,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'ForgotPasswordComponent',
   data() {
@@ -59,7 +63,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth',['forgot']),
+    ...mapActions('auth', ['forgot']),
   },
 }
 </script>
@@ -73,7 +77,10 @@ export default {
   height: 100vh;
   text-align: center;
   background-color: #08aeea;
-  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('~/static/background-login.jpg');
+  color: #fff !important;
 }
 
 .forgot-form {
@@ -81,7 +88,7 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   min-width: 360px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .forgot-form__header {
@@ -103,5 +110,10 @@ export default {
 
 .logo-img {
   width: 80px;
+}
+
+.forgot-form__input input {
+  background-color: rgba(255, 255, 255, 0) !important;
+  color: #fff !important;
 }
 </style>

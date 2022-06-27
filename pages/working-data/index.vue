@@ -29,7 +29,7 @@
             ref="my-table"
             :columns="columns"
             :rows="allTimeKeeping"
-            :select-options="{ enabled: true }"
+            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
             :pagination-options="{
               enabled: true,
             }"
@@ -39,7 +39,7 @@
               <el-pagination
                 background
                 layout="prev, pager, next"
-                :page-size="2"
+                :page-size="5"
                 :total="totalPage"
                 @current-change="currentChange"
               >

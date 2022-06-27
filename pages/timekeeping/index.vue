@@ -424,4 +424,10 @@ export default {
 .detail-history__separate {
   margin-bottom: 16px;
 }
+
+.el-dialog__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #204ee7;
+}
 </style>
