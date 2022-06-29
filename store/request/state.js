@@ -65,4 +65,5 @@ export default () => ({
   requestListReceive: [],
   totalPageRequestListSend: 2,
   totalPageRequestListReceive: 2,
+  listRequestType: [],
 })

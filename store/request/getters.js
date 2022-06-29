@@ -4,4 +4,5 @@ export default {
   totalPageRequestListSend: (state) => state.totalPageRequestListSend,
   requestListReceive: (state) => state.requestListReceive,
   totalPageRequestListReceive: (state) => state.totalPageRequestListReceive,
+  listRequestType: (state) => state.listRequestType,
 }

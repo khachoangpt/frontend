@@ -18,4 +18,8 @@ export default {
   setTotalPageRequestListReceive(state, totalPageRequestListReceive) {
     state.totalPageRequestListReceive = totalPageRequestListReceive
   },
+
+  setListRequestType(state, listRequestType) {
+    state.listRequestType = listRequestType
+  },
 }

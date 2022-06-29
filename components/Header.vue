@@ -36,18 +36,17 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'HeaderComponent',
-  data() {
-    return {
-      country: 'vn',
-    }
+  computed: {
+    ...mapGetters('auth', ['country']),
   },
   methods: {
     ...mapActions('auth', ['logout']),
+    ...mapMutations('auth', ['setCountry']),
     handleCommand(command) {
-      this.country = command
+      this.setCountry(command)
     },
   },
 }

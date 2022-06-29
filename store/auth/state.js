@@ -8,6 +8,7 @@ export default () => ({
   tokenType: '',
   accessToken: '',
   isRememberMe: false,
+  country: 'vn',
   rules: {
     email: [
       {
@@ -22,5 +23,4 @@ export default () => ({
       },
     ],
   },
-
 })

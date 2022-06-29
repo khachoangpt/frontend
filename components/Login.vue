@@ -1,11 +1,24 @@
 <template>
-  <div>
+  <div class="login-page">
+    <el-dropdown class="login-page__language" @command="handleCommand">
+      <i class="header__icon">
+        <country-flag class="header__language" :country="country" />
+      </i>
+      <el-dropdown-menu slot="dropdown">
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('vi')">
+          <el-dropdown-item command="vn">Tiếng Việt</el-dropdown-item>
+        </nuxt-link>
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('en')">
+          <el-dropdown-item command="us">English</el-dropdown-item>
+        </nuxt-link>
+      </el-dropdown-menu>
+    </el-dropdown>
     <div class="login">
       <div class="logo">
         <img class="logo-img" src="/hrm-logo.png" alt="" />
       </div>
       <div class="login-form">
-        <h2 class="login-form__header">Đăng nhập</h2>
+        <h2 class="login-form__header">{{ $i18n.t('login.signIn') }}</h2>
         <el-form
           id="app"
           ref="form"
@@ -26,7 +39,7 @@
             <el-input
               v-model="form.password"
               class="login-form__input"
-              placeholder="Mật khẩu"
+              :placeholder="$i18n.t('login.password')"
               show-password
             >
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -42,7 +55,9 @@
               class="login-form__addition-forgot"
               :to="localePath('/forgot')"
             >
-              <el-link type="primary">Quên mật khẩu?</el-link>
+              <el-link type="primary">{{
+                $i18n.t('login.forgotPassword')
+              }}</el-link>
             </nuxt-link>
           </div>
           <div class="login-form__submit">
@@ -51,8 +66,9 @@
               type="primary"
               native-type="submit"
               round
-              >Đăng nhập</el-button
             >
+              {{ $i18n.t('login.signIn') }}
+            </el-button>
           </div>
         </el-form>
       </div>
@@ -61,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'LoginComponent',
   data() {
@@ -74,16 +90,34 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['isRememberMe', 'rules']),
+    ...mapGetters('auth', ['isRememberMe', 'rules', 'country']),
   },
 
   methods: {
     ...mapActions('auth', ['login', 'rememberMe']),
+    ...mapMutations('auth', ['setCountry']),
+    handleCommand(command) {
+      this.setCountry(command)
+    },
   },
 }
 </script>
 
 <style>
+.login-page {
+  background-color: #08aeea;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('~/static/background-login.jpg');
+  position: relative;
+}
+
+.login-page__language {
+  float: right;
+  position: absolute;
+  right: 5%;
+}
+
 .login {
   display: flex;
   flex-direction: column;
@@ -91,10 +125,6 @@ export default {
   align-items: center;
   height: 100vh;
   text-align: center;
-  background-color: #08aeea;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('~/static/background-login.jpg');
   color: #fff;
 }
 

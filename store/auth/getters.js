@@ -9,4 +9,5 @@ export default {
   name: (state) => state.name,
   avatar: (state) => state.avatar,
   grade: (state) => state.grade,
+  country: (state) => state.country,
 }

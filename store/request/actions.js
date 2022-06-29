@@ -30,4 +30,13 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async getListRequestType({ commit }) {
+    try {
+      const res = await this.$repository.request.getListRequestType()
+      commit('setListRequestType', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

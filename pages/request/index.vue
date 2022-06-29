@@ -33,10 +33,12 @@
               Tạo yêu cầu
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>Tạo yêu cầu 1</el-dropdown-item>
-              <el-dropdown-item>Tạo yêu cầu 2</el-dropdown-item>
-              <el-dropdown-item>Tạo yêu cầu 3</el-dropdown-item>
-              <el-dropdown-item>Tạo yêu cầu 4</el-dropdown-item>
+              <el-dropdown-item
+                v-for="requestType in listRequestType"
+                :key="requestType.request_type_id"
+              >
+                {{ requestType.request_type_name }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
           <!-- <el-button
@@ -106,7 +108,7 @@
         type="border-card"
         @tab-click="handleClickTab"
       >
-        <el-tab-pane label="Yêu cầu gửi" name="first">
+        <el-tab-pane label="Yêu cầu đi" name="first">
           <vue-good-table
             :fixed-header="false"
             :columns="requestTableHeader"
@@ -141,7 +143,7 @@
             </template>
           </vue-good-table>
         </el-tab-pane>
-        <el-tab-pane label="Yêu cầu nhận" name="second">
+        <el-tab-pane label="Yêu cầu đến" name="second">
           <vue-good-table
             :fixed-header="false"
             :columns="requestTableHeader"
@@ -620,15 +622,21 @@ export default {
       'totalPageRequestListSend',
       'totalPageRequestListReceive',
       'requestListReceive',
+      'listRequestType',
     ]),
   },
 
   async mounted() {
     await this.getListRequestSend(1)
+    await this.getListRequestType()
   },
 
   methods: {
-    ...mapActions('request', ['getListRequestSend', 'getListRequestReceive']),
+    ...mapActions('request', [
+      'getListRequestSend',
+      'getListRequestReceive',
+      'getListRequestType',
+    ]),
     async currentChangePageSend(page) {
       await this.getListRequestSend(page)
     },

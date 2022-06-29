@@ -5,7 +5,9 @@
         <img class="logo-img" src="/hrm-logo.png" alt="" />
       </div>
       <div class="change-password-form">
-        <h2 class="change-password-form__header">Change password</h2>
+        <h2 class="change-password-form__header">
+          {{ $i18n.t('changePassword.changePassword') }}
+        </h2>
         <el-form
           ref="form"
           status-icon
@@ -14,14 +16,19 @@
           @submit.native.prevent="changePassword(form)"
         >
           <el-form-item prop="email" :show-message="false">
-            <el-input v-model="form.email" placeholder="Email">
+            <el-input
+              v-model="form.email"
+              class="change-password-form__input"
+              placeholder="Email"
+            >
               <i slot="prefix" class="el-input__icon el-icon-user"></i>
             </el-input>
           </el-form-item>
           <el-form-item prop="old_password" :show-message="false">
             <el-input
               v-model="form.old_password"
-              placeholder="Old password"
+              class="change-password-form__input"
+              :placeholder="$i18n.t('changePassword.oldPassword')"
               show-password
             >
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -30,7 +37,8 @@
           <el-form-item prop="new_password" :show-message="false">
             <el-input
               v-model="form.new_password"
-              placeholder="New password"
+              class="change-password-form__input"
+              :placeholder="$i18n.t('changePassword.newPassword')"
               show-password
             >
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -39,7 +47,8 @@
           <el-form-item prop="re_password" :show-message="false">
             <el-input
               v-model="form.re_password"
-              placeholder="Confirm new password"
+              class="change-password-form__input"
+              :placeholder="$i18n.t('changePassword.confirmPassword')"
               show-password
             >
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
@@ -51,8 +60,9 @@
               type="primary"
               round
               native-type="submit"
-              >Change password</el-button
             >
+              {{$i18n.t('changePassword.changePassword')}}
+            </el-button>
           </div>
         </el-form>
       </div>
@@ -135,7 +145,10 @@ export default {
   height: 100vh;
   text-align: center;
   background-color: #08aeea;
-  background-image: linear-gradient(0deg, #08aeea 0%, #2af598 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('~/static/background-login.jpg');
+  color: #fff;
 }
 
 .change-password-form {
@@ -143,7 +156,7 @@ export default {
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   min-width: 360px;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .change-password-form__header {
@@ -165,5 +178,10 @@ export default {
 
 .logo-img {
   width: 80px;
+}
+
+.change-password-form__input input {
+  background-color: rgba(255, 255, 255, 0) !important;
+  color: #fff !important;
 }
 </style>

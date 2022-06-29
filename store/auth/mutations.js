@@ -1,4 +1,8 @@
 export default {
+  setCountry(state, country) {
+    state.country = country
+  },
+
   setId(state, id) {
     state.id = id
   },

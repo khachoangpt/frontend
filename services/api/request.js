@@ -32,7 +32,7 @@ class UserApi extends Request {
   getListRequestReceive(page) {
     const accessToken = getToken()
     return this.$axios.$get(
-      'api/list_all_application_request_receive?paging=offset:' +
+      '/api/list_all_application_request_receive?paging=offset:' +
         (page - 1) +
         ',limit:5',
       {
@@ -41,6 +41,15 @@ class UserApi extends Request {
         },
       }
     )
+  }
+
+  getListRequestType() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_all_request_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 }
 

@@ -5,7 +5,9 @@
         <img class="logo-img" src="/hrm-logo.png" alt="" />
       </div>
       <div class="forgot-form">
-        <h2 class="forgot-form__header">Forgot password</h2>
+        <h2 class="forgot-form__header">
+          {{ $i18n.t('forgot.forgotPassword') }}
+        </h2>
         <el-form
           ref="form"
           :rules="rules"
@@ -28,7 +30,7 @@
               round
               native-type="submit"
             >
-              Change password
+              {{ $i18n.t('forgot.changePassword') }}
             </el-button>
           </div>
         </el-form>
