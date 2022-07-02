@@ -153,4 +153,72 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async getDaysInMonth({ commit, state }, data) {
+    commit('setColumns', [
+      {
+        label: 'Nhân viên',
+        field: 'full_name',
+        width: '150px',
+      },
+      {
+        label: 'Mã',
+        field: 'employee_id',
+        width: '50px',
+      },
+    ])
+    const date = new Date(data.year, data.month - 1, 1)
+    const days = [
+      {
+        label: 'Nhân viên',
+        field: 'full_name',
+        width: '150px',
+      },
+      {
+        label: 'Mã',
+        field: 'employee_id',
+        width: '50px',
+      },
+    ]
+    while (date.getMonth() === data.month - 1) {
+      const day = {
+        label: date.getDate() + '/' + (date.getMonth() + 1),
+        field: date.getDate().toString(),
+        width: '50px',
+        sortable: false,
+        thClass: 'table-header-center',
+        tdClass: 'day-status',
+        html: true,
+      }
+      days.push(day)
+      date.setDate(date.getDate() + 1)
+    }
+    await commit('setColumns', days)
+    return days
+  },
+
+  async onChangeMonth({ dispatch, state, commit }) {
+    dispatch('getDaysInMonth', {
+      month: state.monthSearch.getMonth() + 1,
+      year: state.monthSearch.getFullYear(),
+    })
+    const timeRange = {
+      startDate: Date.parse(
+        new Date(
+          state.monthSearch.getFullYear(),
+          state.monthSearch.getMonth(),
+          1
+        )
+      ),
+      endDate: Date.parse(
+        new Date(
+          state.monthSearch.getFullYear(),
+          state.monthSearch.getMonth() + 1,
+          0
+        )
+      ),
+    }
+    await commit('setSelectedTimeRange', timeRange)
+    await dispatch('getAllTimeKeeping', [state.selectedTimeRange, 1])
+  },
 }

@@ -26,74 +26,36 @@
           </el-option>
         </el-select> -->
         <el-button class="header-actions__button" type="primary">
-          <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')">Tạo mới</nuxt-link>
+          <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')"
+            >Tạo mới</nuxt-link
+          >
         </el-button>
       </div>
     </div>
     <div class="personnel-table">
-      <vue-good-table
-        :fixed-header="false"
-        :columns="columns"
-        :rows="personnelList.hrmResponse"
-        :search-options="{
-          enabled: true,
-          externalQuery: searchText,
-        }"
-        :sort-options="{
-          enabled: true,
-        }"
-        :pagination-options="{
-          enabled: true,
-          perPage: 10,
-          perPageDropdownEnabled: false,
-          dropdownAllowAll: false,
-          mode: 'records',
-        }"
-        @on-row-dblclick="onRowDoubleClick"
-      >
-        <template slot="table-row" slot-scope="props">
-          <span
-            v-if="props.column.field == 'full_name'"
-            class="full-name-column"
-          >
-            <span>
-              {{ props.row.full_name }}
-            </span>
-          </span>
-          <span v-else>
-            {{ props.formattedRow[props.column.field] }}
-          </span>
-        </template>
-      </vue-good-table>
+      <personnel-information-table />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import PersonnelInformationTable from '~/components/table/PersonnelInformationTable.vue'
 
 export default {
   name: 'PersonnelPage',
+  components: { PersonnelInformationTable },
   layout: 'main',
   middleware: ['auth', 'admin'],
   data() {
     return {
-      searchText: '',
       value: '',
       isEditPersonnel: '',
     }
   },
 
   computed: {
-    ...mapGetters('user', ['columns', 'workingStatus', 'personnelList']),
-  },
-
-  mounted() {
-    this.getPersonnelList()
-  },
-
-  methods: {
-    ...mapActions('user', ['getPersonnelList', 'onRowDoubleClick']),
+    ...mapGetters('user', ['workingStatus']),
   },
 }
 </script>
@@ -148,6 +110,6 @@ export default {
 
 .btn-add-employee {
   text-decoration: none;
-  color: #fff !important; 
+  color: #fff !important;
 }
 </style>

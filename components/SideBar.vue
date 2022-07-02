@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sidebar">
     <nuxt-link :to="localePath('/personnel/' + id)">
       <div class="avatar">
         <div>
@@ -62,15 +62,13 @@
         :index="localePath('/personnel')"
       >
         <i class="el-icon-s-custom sidebar-icon"></i>
-        <span class="sidebar-item__text">{{
-          $i18n.t('sidebar.personnel')
-        }}</span>
+        <span class="sidebar-item__text">
+          {{ $i18n.t('sidebar.personnel') }}
+        </span>
       </el-menu-item>
       <el-menu-item class="sidebar-item" :index="localePath('/request')">
         <i class="el-icon-s-order sidebar-icon"></i>
-        <span class="sidebar-item__text">{{
-          $i18n.t('sidebar.request')
-        }}</span>
+        <span class="sidebar-item__text">{{ $i18n.t('sidebar.request') }}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -96,6 +94,16 @@ export default {
 </script>
 
 <style>
+.sidebar {
+  position: relative;
+}
+
+.sidebar-collapse {
+  position: absolute;
+  right: 0;
+  top: 16px;
+}
+
 .avatar {
   height: 68px;
   display: flex;

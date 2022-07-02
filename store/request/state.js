@@ -66,4 +66,8 @@ export default () => ({
   totalPageRequestListSend: 2,
   totalPageRequestListReceive: 2,
   listRequestType: [],
+  activeTable: 'first',
+  requestTypeSearch: '',
+  requestStatusSearch: '',
+  requestDateSearch: '',
 })

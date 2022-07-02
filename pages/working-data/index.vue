@@ -4,16 +4,17 @@
       <div class="time-keeping__header-text">Dữ liệu giờ làm</div>
       <div>
         <el-date-picker
-          v-model="monthSearch"
+          :value="monthSearch"
           type="month"
           placeholder="Tìm kiếm"
           format="MMM - yyyy"
           :clearable="false"
+          @input="selectMonth"
           @change="onChangeMonth"
         >
         </el-date-picker>
         <el-button
-          :disabled="employeeList <= 0"
+          :disabled="workingDataList <= 0"
           class="time-keeping__export"
           type="success"
           @click="exportTimekeeping"
@@ -25,27 +26,7 @@
     <el-row :gutter="20">
       <el-col :span="20">
         <el-card>
-          <vue-good-table
-            ref="my-table"
-            :columns="columns"
-            :rows="allTimeKeeping"
-            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-            :pagination-options="{
-              enabled: true,
-            }"
-            @on-selected-rows-change="onSelectedRowsChange"
-          >
-            <template slot="pagination-bottom">
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :page-size="5"
-                :total="totalPage"
-                @current-change="currentChange"
-              >
-              </el-pagination>
-            </template>
-          </vue-good-table>
+          <working-data-table />
         </el-card>
       </el-col>
       <el-col :span="4">
@@ -76,27 +57,15 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex'
+import WorkingDataTable from '~/components/table/WorkingDataTable.vue'
 import { EOffice, EArea } from '~/constants/enums'
 export default {
   name: 'WorkingData',
+  components: { WorkingDataTable },
   layout: 'main',
   middleware: ['auth', 'admin'],
   data() {
     return {
-      monthSearch: new Date(),
-      columns: [
-        {
-          label: 'Nhân viên',
-          field: 'full_name',
-          width: '150px',
-        },
-        {
-          label: 'mã',
-          field: 'employee_id',
-          width: '50px',
-        },
-      ],
-      employeeList: [],
       filterOffice: [],
       filterArea: [],
     }
@@ -104,20 +73,16 @@ export default {
 
   computed: {
     ...mapGetters('timekeeping', [
-      'allTimeKeeping',
-      'selectedTimeRange',
       'listOfficeFilter',
       'listAreaFilter',
-      'totalPage',
+      'workingDataList',
+      'selectedTimeRange',
+      'monthSearch',
     ]),
     ...mapGetters('user', ['listOffice', 'listArea']),
   },
 
   async mounted() {
-    await this.getDaysInMonth(
-      this.monthSearch.getMonth() + 1,
-      this.monthSearch.getFullYear()
-    )
     await this.getAllTimeKeeping([this.selectedTimeRange, 1])
     await this.getListOffice()
     await this.getListArea()
@@ -129,109 +94,46 @@ export default {
       'getAllTimeKeeping',
       'getListOffice',
       'getListArea',
+      'getDaysInMonth',
+      'onChangeMonth',
     ]),
     ...mapMutations('timekeeping', [
-      'setSelectedTimeRange',
-      'setListEmployeeId',
       'setListOfficeFilter',
       'setListAreaFilter',
+      'setMonthSearch',
     ]),
-    getDaysInMonth(month, year) {
-      this.columns = [
-        {
-          label: 'Nhân viên',
-          field: 'full_name',
-          width: '150px',
-        },
-        {
-          label: 'Mã',
-          field: 'employee_id',
-          width: '50px',
-        },
-      ]
-      const date = new Date(year, month - 1, 1)
-      const days = []
-      while (date.getMonth() === month - 1) {
-        days.push(new Date(date))
-        const day = {
-          label: date.getDate() + '/' + (date.getMonth() + 1),
-          field: date.getDate().toString(),
-          width: '50px',
-          sortable: false,
-          thClass: 'table-header-center',
-          tdClass: 'day-status',
-          html: true,
-        }
-        this.columns.push(day)
-        date.setDate(date.getDate() + 1)
-      }
-      return days
-    },
 
-    async onChangeMonth() {
-      this.getDaysInMonth(
-        this.monthSearch.getMonth() + 1,
-        this.monthSearch.getFullYear()
-      )
-      const timeRange = {
-        startDate: Date.parse(
-          new Date(
-            this.monthSearch.getFullYear(),
-            this.monthSearch.getMonth(),
-            1
-          )
-        ),
-        endDate: Date.parse(
-          new Date(
-            this.monthSearch.getFullYear(),
-            this.monthSearch.getMonth() + 1,
-            0
-          )
-        ),
-      }
-      await this.setSelectedTimeRange(timeRange)
-      await this.getAllTimeKeeping([this.selectedTimeRange, 1])
-    },
-
-    async currentChange(page) {
-      await this.getAllTimeKeeping([this.selectedTimeRange, page])
-    },
-
-    onSelectedRowsChange() {
-      const employeeIdSelectedList = []
-      this.employeeList = this.$refs['my-table'].selectedRows
-      for (let i = 0; i < this.employeeList.length; i++) {
-        employeeIdSelectedList.push(this.employeeList[i].employee_id)
-      }
-      this.setListEmployeeId(employeeIdSelectedList)
+    selectMonth(e) {
+      this.$emit('input', e)
+      this.setMonthSearch(e)
     },
 
     async onChangeCheckboxOffice(data) {
       data = EOffice[data]
-      const parsedobj = JSON.parse(JSON.stringify(this.listOfficeFilter))
-      if (parsedobj.includes(data) === false) {
-        await parsedobj.push(data)
-        await this.setListOfficeFilter(parsedobj)
+      const parsedObj = JSON.parse(JSON.stringify(this.listOfficeFilter))
+      if (parsedObj.includes(data) === false) {
+        await parsedObj.push(data)
+        this.setListOfficeFilter(parsedObj)
         await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       } else {
-        const index = parsedobj.indexOf(data)
-        await parsedobj.splice(index, 1)
-        await this.setListOfficeFilter(parsedobj)
+        const index = parsedObj.indexOf(data)
+        await parsedObj.splice(index, 1)
+        this.setListOfficeFilter(parsedObj)
         await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       }
     },
 
     async onChangeCheckboxArea(data) {
       data = EArea[data]
-      const parsedobj = JSON.parse(JSON.stringify(this.listAreaFilter))
-      if (parsedobj.includes(data) === false) {
-        await parsedobj.push(data)
-        await this.setListAreaFilter(parsedobj)
+      const parsedObj = JSON.parse(JSON.stringify(this.listAreaFilter))
+      if (parsedObj.includes(data) === false) {
+        await parsedObj.push(data)
+        this.setListAreaFilter(parsedObj)
         await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       } else {
-        const index = parsedobj.indexOf(data)
-        await parsedobj.splice(index, 1)
-        await this.setListAreaFilter(parsedobj)
+        const index = parsedObj.indexOf(data)
+        await parsedObj.splice(index, 1)
+        this.setListAreaFilter(parsedObj)
         await this.getAllTimeKeeping([this.selectedTimeRange, 1])
       }
     },

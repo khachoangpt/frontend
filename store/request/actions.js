@@ -39,4 +39,20 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async currentChangePageSend(state, page) {
+    await this.getListRequestSend(page)
+  },
+
+  async currentChangePageReceive(state, page) {
+    await this.getListRequestReceive(page)
+  },
+
+  async handleClickTab({ dispatch }, tab) {
+    if (tab.name === 'first') {
+      await dispatch('getListRequestSend', 1)
+    } else if (tab.name === 'second') {
+      await dispatch('getListRequestReceive', 1)
+    }
+  },
 }

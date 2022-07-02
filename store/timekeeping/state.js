@@ -1,7 +1,6 @@
 const now = new Date()
 const month = now.getMonth()
 const year = now.getFullYear()
-// const day = now.getDate()
 
 export default () => ({
   selectedTimeRange: {
@@ -15,4 +14,18 @@ export default () => ({
   listOfficeFilter: [],
   listAreaFilter: [],
   totalPage: 1,
+  workingDataList: [],
+  columns: [
+    {
+      label: 'Nhân viên',
+      field: 'full_name',
+      width: '150px',
+    },
+    {
+      label: 'mã',
+      field: 'employee_id',
+      width: '50px',
+    },
+  ],
+  monthSearch: new Date(),
 })

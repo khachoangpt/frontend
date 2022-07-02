@@ -30,4 +30,16 @@ export default {
   setTotalPage(state, totalPage) {
     state.totalPage = totalPage
   },
+
+  setWorkingDataList(state, workingDataList) {
+    state.workingDataList = workingDataList
+  },
+
+  setMonthSearch(state, monthSearch) {
+    state.monthSearch = monthSearch
+  },
+
+  setColumns(state, columns) {
+    state.columns = columns
+  },
 }

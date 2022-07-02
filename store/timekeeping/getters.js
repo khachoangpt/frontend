@@ -7,4 +7,7 @@ export default {
   listOfficeFilter: (state) => state.listOfficeFilter,
   listAreaFilter: (state) => state.listAreaFilter,
   totalPage: (state) => state.totalPage,
+  workingDataList: (state) => state.workingDataList,
+  monthSearch: (state) => state.monthSearch,
+  columns: (state) => state.columns,
 }

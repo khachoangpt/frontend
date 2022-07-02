@@ -22,4 +22,20 @@ export default {
   setListRequestType(state, listRequestType) {
     state.listRequestType = listRequestType
   },
+
+  setActiveTable(state, activeTable) {
+    state.activeTable = activeTable
+  },
+
+  setRequestTypeSearch(state, requestTypeSearch) {
+    state.requestTypeSearch = requestTypeSearch
+  },
+
+  setRequestStatusSearch(state, requestStatusSearch) {
+    state.requestStatusSearch = requestStatusSearch
+  },
+
+  setRequestDateSearch(state, requestDateSearch) {
+    state.requestDateSearch = requestDateSearch
+  },
 }
