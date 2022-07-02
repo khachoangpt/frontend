@@ -1,17 +1,21 @@
 import { Message } from 'element-ui'
 
 export default {
-  async getPersonnelList({ commit }) {
-    const res = await this.$repository.user.getPersonnelList()
-    commit('setPersonnelList', res)
+  async getPersonnelList({ commit }, data) {
+    const res = await this.$repository.user.getPersonnelList(data)
+    await commit('setTotalPage', res.total)
+    await commit('setPersonnelList', res)
   },
 
-  async addEmployee({ commit }, data) {
+  async addEmployee({ commit, state }, data) {
     try {
       const res = await this.$repository.user.addEmployee(data)
       if (res.code === 201) {
         Message.success('Thêm nhân viên mới thành công.')
-        const res = await this.$repository.user.getPersonnelList()
+        const res = await this.$repository.user.getPersonnelList({
+          searchText: state.searchText,
+          page: 1,
+        })
         commit('setPersonnelList', res)
         commit('setCenterDialogVisible', false)
       }
@@ -88,27 +92,27 @@ export default {
 
   async getWorkingHistory({ commit }, data) {
     const res = await this.$repository.user.getWorkingHistory(data)
-    if(res.length === 1 && res[0].working_history_id === null){
+    if (res.length === 1 && res[0].working_history_id === null) {
       await commit('setWorkingHistory', [])
-    }else {
+    } else {
       await commit('setWorkingHistory', res)
     }
   },
 
   async getRelativeInfo({ commit }, data) {
     const res = await this.$repository.user.getRelativeInfo(data)
-    if(res.length === 1 && res[0].relative_id === null){
+    if (res.length === 1 && res[0].relative_id === null) {
       await commit('setRelativeInfo', [])
-    }else {
+    } else {
       await commit('setRelativeInfo', res)
     }
   },
 
   async getEducationInfo({ commit }, data) {
     const res = await this.$repository.user.getEducationInfo(data)
-    if(res.length === 1 && res[0].education_id === null){
+    if (res.length === 1 && res[0].education_id === null) {
       await commit('setEducationInfo', [])
-    }else {
+    } else {
       await commit('setEducationInfo', res)
     }
   },

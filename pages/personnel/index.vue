@@ -4,9 +4,10 @@
       <div class="personnel__header-text">Danh sách nhân sự</div>
       <div class="personnel__header-actions">
         <el-input
-          v-model="searchText"
+          :value="searchText"
           class="header-actions__search"
           placeholder="Search"
+          @input="inputSearch"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import PersonnelInformationTable from '~/components/table/PersonnelInformationTable.vue'
 
 export default {
@@ -55,7 +56,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['workingStatus']),
+    ...mapGetters('user', ['workingStatus', 'searchText']),
+  },
+
+  methods: {
+    ...mapMutations('user', ['setSearchText']),
+    inputSearch(e) {
+      this.$emit('input', e)
+      this.setSearchText(e)
+    },
   },
 }
 </script>

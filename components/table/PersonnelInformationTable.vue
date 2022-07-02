@@ -12,10 +12,6 @@
     }"
     :pagination-options="{
       enabled: true,
-      perPage: 10,
-      perPageDropdownEnabled: false,
-      dropdownAllowAll: false,
-      mode: 'records',
     }"
     @on-row-dblclick="onRowDoubleClick"
   >
@@ -29,6 +25,16 @@
         {{ props.formattedRow[props.column.field] }}
       </span>
     </template>
+    <template slot="pagination-bottom">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="5"
+        :total="totalPage"
+        @current-change="currentChange"
+      >
+      </el-pagination>
+    </template>
   </vue-good-table>
 </template>
 
@@ -37,23 +43,42 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'PersonnelInformationTable',
   data() {
-    return {
-      searchText: '',
-    }
+    return {}
   },
 
   computed: {
-    ...mapGetters('user', ['columns', 'personnelList']),
+    ...mapGetters('user', [
+      'columns',
+      'personnelList',
+      'searchText',
+      'totalPage',
+    ]),
   },
 
   mounted() {
-    this.getPersonnelList()
+    this.getPersonnelList({
+      searchText: this.searchText,
+      page: 1,
+    })
   },
 
   methods: {
     ...mapActions('user', ['getPersonnelList', 'onRowDoubleClick']),
+
+    async currentChange(page) {
+      await this.getPersonnelList({
+        searchText: this.searchText,
+        page,
+      })
+    },
   },
 }
 </script>
 
-<style></style>
+<style>
+.el-pagination {
+  margin-top: 16px;
+  text-align: center;
+  padding-bottom: 16px;
+}
+</style>

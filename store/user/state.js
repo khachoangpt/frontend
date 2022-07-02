@@ -147,4 +147,6 @@ export default () => ({
   isEditLine: '',
   isEditLineRelative: '',
   isEditLineEducation: '',
+  searchText: '',
+  totalPage: 1,
 })

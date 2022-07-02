@@ -24,4 +24,6 @@ export default {
   isEditLineRelative: (state) => state.isEditLineRelative,
   isEditLineEducation: (state) => state.isEditLineEducation,
   isEditMainInfo: (state) => state.isEditMainInfo,
+  searchText: (state) => state.searchText,
+  totalPage: (state) => state.totalPage,
 }

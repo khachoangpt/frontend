@@ -29,13 +29,20 @@ class UserApi extends User {
     return this.$axios.$put('/api/change_password', data)
   }
 
-  getPersonnelList() {
+  getPersonnelList(data) {
     const accessToken = getToken()
-    return this.$axios.$get('/api/get_all_employee?paging=offset:0,limit:999', {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    })
+    return this.$axios.$get(
+      '/api/get_all_employee?filter=fullName:ALK' +
+        data.searchText +
+        '&paging=offset:' +
+        (data.page - 1) +
+        ',limit:5',
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
   }
 
   addEmployee(data) {

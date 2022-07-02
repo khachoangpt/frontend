@@ -252,4 +252,12 @@ export default {
   setIsEditMainInfo(state, data) {
     state.isEditMainInfo = data
   },
+
+  setSearchText(state, searchText) {
+    state.searchText = searchText
+  },
+
+  setTotalPage(state, totalPage) {
+    state.totalPage = totalPage
+  },
 }
