@@ -1,30 +1,26 @@
 <template>
   <div class="dashboard">
     <el-row :gutter="40">
-      <el-col :span="8">
+      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Thông tin</span>
             </div>
-            <Line />
           </el-card>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
         <div class="grid-content bg-purple-light">
           <el-card class="box-card box-card__attendance">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Dữ liệu giờ làm</span>
             </div>
-            <div class="box-card__attendance-body">
-              <p>Giờ làm trong tháng: 60</p>
-              <p>Giờ làm còn thiếu: 100</p>
-            </div>
+            <doughnut />
           </el-card>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -51,8 +47,10 @@
 </template>
 
 <script>
+import Doughnut from '~/components/chart/Doughnut.vue'
 export default {
   name: 'HomePage',
+  components: { Doughnut },
   layout: 'main',
   middleware: ['auth'],
   data() {
@@ -66,6 +64,10 @@ export default {
 <style>
 .dashboard {
   width: 100%;
+}
+
+.dashboard__col {
+  margin-bottom: 24px;
 }
 
 .box-card {
@@ -110,9 +112,5 @@ export default {
 
 .el-card {
   border-radius: 10px;
-}
-
-.box-card__attendance {
-  height: 200px;
 }
 </style>
