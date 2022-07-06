@@ -42,4 +42,8 @@ export default {
   setRules(state, rules) {
     state.rules = rules
   },
+
+  setIsCollapse(state, isCollapse) {
+    state.isCollapse = isCollapse
+  },
 }

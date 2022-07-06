@@ -1,10 +1,8 @@
 <template>
   <div>
     <el-container>
-      <el-aside>
-        <SideBar />
-      </el-aside>
-      <el-container>
+      <SideBar />
+      <el-container class="content" :class="{ 'content-collapse': !isCollapse }">
         <el-header>
           <Header />
         </el-header>
@@ -17,12 +15,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Header from '~/components/Header.vue'
 import SideBar from '~/components/SideBar.vue'
 export default {
   name: 'DefaultLayout',
   components: { SideBar, Header },
   middleware: ['auth'],
+
+  computed: {
+    ...mapGetters('auth', ['isCollapse']),
+  },
 }
 </script>
 
@@ -35,21 +38,20 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   position: fixed;
-  left: 230px;
+  left: 0;
   right: 0;
   z-index: 100;
 }
 
-.el-aside {
-  width: 230px !important;
-  color: #333;
-  height: 100vh;
-  background-color: #003c8a;
-  position: fixed;
+.el-main {
+  margin-top: 50px;
 }
 
-.el-main {
+.content {
+  margin-left: 64px;
+}
+
+.content-collapse {
   margin-left: 230px;
-  margin-top: 50px;
 }
 </style>

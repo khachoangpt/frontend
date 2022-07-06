@@ -25,6 +25,7 @@ const en = {
     timekeeping: 'Timekeeping',
     personnel: 'Personnel',
     request: 'Request',
+    policy: 'Policy',
   },
   datepicker: {
     chooseDay: 'Pick a day',

@@ -25,6 +25,7 @@ const vi = {
     timekeeping: 'Chấm công',
     personnel: 'Nhân sự',
     request: 'Yêu cầu',
+    policy: 'Chính sách'
   },
   datepicker: {
     chooseDay: 'Chọn một ngày',
