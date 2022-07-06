@@ -94,7 +94,7 @@
       <el-menu-item :index="localePath('/policy/working-rule')">
         Chính sách làm việc
       </el-menu-item>
-      <el-menu-item :index="localePath('/policy/welfare')">
+      <el-menu-item :index="localePath('/policy/benefit')">
         Phúc lợi
       </el-menu-item>
       <el-menu-item :index="localePath('/policy/tax')"> Thuế </el-menu-item>

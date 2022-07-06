@@ -27,12 +27,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số thuế</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList[0].tax_code }}
+              {{ taxList.tax_code }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList[0].tax_code"
+              :value="taxList.tax_code"
               class="edit-input"
               @input="updateTaxCode"
             ></el-input>
@@ -46,12 +46,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList[0].insurance_id }}
+              {{ taxList.insurance_id }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList[0].insurance_id"
+              :value="taxList.insurance_id"
               class="edit-input"
               @input="updateInsuranceId"
             ></el-input>
@@ -63,12 +63,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head"> Bảo hiểm </span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList[0].insurance_name }}
+              {{ taxList.insurance_name }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList[0].insurance_name"
+              :value="taxList.insurance_name"
               class="edit-input"
               @input="updateInsuranceName"
             ></el-input>
@@ -80,12 +80,12 @@
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi đăng ký BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList[0].address }}
+              {{ taxList.address }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList[0].address"
+              :value="taxList.address"
               class="edit-input"
               @input="updateTaxAddress"
             ></el-input>

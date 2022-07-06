@@ -3,6 +3,7 @@ import { ErrorType } from '~/constants'
 import userRepository from '~/services/api/user'
 import timekeepingRepository from '~/services/api/timekeeping'
 import requestRepository from '~/services/api/request'
+import policyRepository from '~/services/api/policy'
 
 const createRepository = ({ app, $axios, redirect, $config }) => {
   $axios.onError((error) => {
@@ -33,6 +34,7 @@ const createRepository = ({ app, $axios, redirect, $config }) => {
     user: userRepository($config.environment, { $axios }),
     timekeeping: timekeepingRepository($config.environment, { $axios }),
     request: requestRepository($config.environment, { $axios }),
+    policy: policyRepository($config.environment, { $axios }),
   }
 }
 

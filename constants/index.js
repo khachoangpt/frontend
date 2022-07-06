@@ -6,3 +6,5 @@ export const ErrorType = {
   Unprocessable: 422,
   InternalServerError: 500,
 }
+
+export const PageLimit = 10

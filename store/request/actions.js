@@ -3,7 +3,8 @@ import { Message } from 'element-ui'
 export default {
   async getListRequestSend({ commit }, page) {
     try {
-      const res = await this.$repository.request.getListRequestSend(page)
+      let res = await this.$repository.request.getListRequestSend(page)
+      res = res.applicationsRequestResponseList
       for (let i = 0; i < res.length; i++) {
         res[i].create_date = new Date(res[i].create_date).toLocaleDateString(
           'vi-VN'
@@ -18,7 +19,8 @@ export default {
 
   async getListRequestReceive({ commit }, page) {
     try {
-      const res = await this.$repository.request.getListRequestReceive(page)
+      let res = await this.$repository.request.getListRequestReceive(page)
+      res = res.applicationsRequestResponseList
       for (let i = 0; i < res.length; i++) {
         res[i].create_date = new Date(res[i].create_date).toLocaleDateString(
           'vi-VN'
