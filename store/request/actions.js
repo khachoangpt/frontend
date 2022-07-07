@@ -57,4 +57,24 @@ export default {
       await dispatch('getListRequestReceive', 1)
     }
   },
+
+  async exportRequest({ state }) {
+    try {
+      let res = await this.$repository.timekeeping.exportRequest(
+        state.listEmployeeId
+      )
+      if (!res.match(/^data:text\/csv/i)) {
+        res = 'data:text/csv;charset=utf-8,' + res
+      }
+
+      const data1 = encodeURI(res)
+
+      const link = document.createElement('a')
+      link.setAttribute('href', data1)
+      link.setAttribute('download', 'request')
+      link.click()
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

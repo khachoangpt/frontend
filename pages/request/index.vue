@@ -2,53 +2,81 @@
   <div>
     <div class="request__header">
       <div class="request__header-text">Danh sách yêu cầu</div>
-      <div class="request__search">
-        <el-date-picker
-          class="request-search__date-range request-search__input"
-          type="daterange"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date"
-          :v-model="requestDateSearch"
-        >
-        </el-date-picker>
-        <el-select
-          class="request-search__request-type request-search__input"
-          placeholder="Loại yêu cầu"
-          value=""
-          :v-model="requestTypeSearch"
-        >
-          <el-option label="Xin nghỉ" value="dayoff"> </el-option>
-        </el-select>
-        <el-select
-          class="request-search__status request-search__input"
-          placeholder="Trạng thái"
-          value=""
-          :v-model="requestStatusSearch"
-        >
-          <el-option label="Chờ duyệt" value="pending"> </el-option>
-        </el-select>
-        <div>
-          <el-dropdown>
-            <el-button
-              class="header-actions__button"
-              type="primary"
-              @click="centerDialogVisible = true"
+      <div>
+        <el-dropdown>
+          <el-button
+            class="header-actions__button"
+            type="primary"
+            @click="centerDialogVisible = true"
+          >
+            Tạo yêu cầu
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="requestType in listRequestType"
+              :key="requestType.request_type_id"
+              @click="createRequest(requestType)"
             >
-              Tạo yêu cầu
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item
-                v-for="requestType in listRequestType"
-                :key="requestType.request_type_id"
-                @click="createRequest(requestType)"
-              >
-                {{ requestType.request_type_name }}
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+              {{ requestType.request_type_name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <el-button class="header-actions__button" type="success">
+          Export
+        </el-button>
       </div>
+    </div>
+    <div class="request__search">
+      <el-date-picker
+        v-model="requestDateRange"
+        class="request-search__date-range request-search__input"
+        type="daterange"
+        range-separator="To"
+        start-placeholder="Từ ngày"
+        end-placeholder="Đến ngày"
+        format="dd-MM-yyyy"
+        value-format="timestamp"
+      >
+      </el-date-picker>
+      <el-select
+        v-model="requestTypeSearch"
+        class="request-search__request-type request-search__input"
+        placeholder="Loại yêu cầu"
+        value=""
+      >
+        <el-option
+          v-for="(requestType, index) in listRequestType"
+          :key="index"
+          :label="requestType.request_type_name"
+          :value="requestType.request_type_name"
+        >
+        </el-option>
+      </el-select>
+      <el-select
+        v-model="requestStatusSearch"
+        class="request-search__status request-search__input"
+        placeholder="Trạng thái"
+        value=""
+      >
+        <el-option
+          class="request-status-select__pending"
+          label="Chờ duyệt"
+          value="pending"
+        >
+        </el-option>
+        <el-option
+          class="request-status-select__rejected"
+          label="Từ chối"
+          value="rejected"
+        >
+        </el-option>
+        <el-option
+          class="request-status-select__approved"
+          label="Chấp nhận"
+          value="approved"
+        >
+        </el-option>
+      </el-select>
     </div>
     <div class="request-table">
       <el-tabs
@@ -76,17 +104,15 @@ export default {
   components: { RequestReceiveTable, RequestSendTable },
   layout: 'main',
   data() {
-    return {}
+    return {
+      requestDateRange: '',
+      requestTypeSearch: '',
+      requestStatusSearch: '',
+    }
   },
 
   computed: {
-    ...mapGetters('request', [
-      'listRequestType',
-      'activeTable',
-      'requestTypeSearch',
-      'requestStatusSearch',
-      'requestDateSearch',
-    ]),
+    ...mapGetters('request', ['listRequestType', 'activeTable']),
   },
 
   async mounted() {
@@ -117,11 +143,12 @@ export default {
 
 .request__search {
   display: flex;
-  margin-bottom: 16px;
+  margin-top: 16px;
+  justify-content: end;
 }
 
 .request-search__input {
-  margin-right: 16px;
+  margin-left: 16px;
 }
 
 .request-search__date-range {
@@ -186,5 +213,21 @@ export default {
 
 .request-table-header__center {
   text-align: center;
+}
+
+.header-actions__button {
+  margin-left: 16px;
+}
+
+.request-status-select__pending {
+  color: #e6a23c;
+}
+
+.request-status-select__approved {
+  color: #67c23a;
+}
+
+.request-status-select__rejected {
+  color: #f56c6c;
 }
 </style>

@@ -6,7 +6,4 @@ export default {
   totalPageRequestListReceive: (state) => state.totalPageRequestListReceive,
   listRequestType: (state) => state.listRequestType,
   activeTable: (state) => state.activeTable,
-  requestTypeSearch: (state) => state.requestTypeSearch,
-  requestStatusSearch: (state) => state.setRequestStatusSearch,
-  requestDateSearch: (state) => state.requestDateSearch,
 }

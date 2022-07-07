@@ -3,7 +3,8 @@
 // Setup a socket.io server on port 3001 that has CORS disabled
 // (do not set this to port 3000 as port 3000 is where
 // the nuxt dev server serves your nuxt application)
-const io = require('socket.io')(3001, {
+const port = process.env.PORT || 3001
+const io = require('socket.io')(port, {
   cors: {
     // No CORS at all
     origin: '*',
