@@ -8,8 +8,29 @@ export default {
         page: 1,
       }
       const res = await this.$repository.policy.getListPolicyByCategory(data)
-      commit('setPolicyList', res.policyResponseList)
-      commit('setTotalPage', res.total)
+      const policyList = res.policyResponseList
+      for (let i = 0; i < policyList.length; i++) {
+        if (policyList[i].policy_status === true) {
+          policyList[i].policy_status = 'Đang áp dụng'
+        } else {
+          policyList[i].policy_status = 'Không áp dụng'
+        }
+      }
+      await commit('setPolicyList', policyList)
+      await commit('setTotalPage', res.total)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getDetailPolicy({ commit }, policyId) {
+    try {
+      const data = {
+        policyId,
+        page: 1,
+      }
+      const res = await this.$repository.policy.getDetailPolicy(data)
+      await commit('setPolicyDetail', res.policyResponseList)
     } catch (error) {
       Message.error(error.response.data.message)
     }

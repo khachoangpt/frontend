@@ -5,7 +5,7 @@
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Thông tin</span>
+              <span class="box-card__header-text">{{ latestTickId }}</span>
             </div>
           </el-card>
         </div>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Doughnut from '~/components/chart/Doughnut.vue'
 export default {
   name: 'HomePage',
@@ -56,7 +57,26 @@ export default {
   data() {
     return {
       value: new Date(),
+      latestTickId: 0,
     }
+  },
+
+  mounted() {
+    const vm = this
+
+    // use "main" socket defined in nuxt.config.js
+    vm.socket = this.$nuxtSocket({
+      name: 'main', // select "main" socket from nuxt.config.js - we could also skip this because "main" is the default socket
+    })
+
+    vm.socket.on('tick', (tickId) => {
+      vm.latestTickId = tickId
+      // vm.getPersonnelList({ searchText: '', page: 1 })
+    })
+  },
+
+  methods: {
+    ...mapActions('user', ['getPersonnelList']),
   },
 }
 </script>

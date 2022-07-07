@@ -10,4 +10,8 @@ export default {
   setTotalPage(state, totalPage) {
     state.totalPage = totalPage
   },
+
+  setPolicyDetail(state, policyDetail) {
+    state.policyDetail = policyDetail
+  },
 }

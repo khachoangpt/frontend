@@ -33,4 +33,5 @@ export default () => ({
     },
   ],
   totalPage: 1,
+  policyDetail: [''],
 })

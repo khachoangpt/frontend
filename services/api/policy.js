@@ -24,6 +24,23 @@ class UserApi extends Policy {
       }
     )
   }
+
+  getDetailPolicy(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/get_list_policy?filter=policyID:AEQ' +
+        data.policyId +
+        '&paging=offset:' +
+        (data.page - 1) +
+        ',limit:' +
+        PageLimit,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)
