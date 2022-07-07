@@ -62,16 +62,14 @@ export default {
   },
 
   mounted() {
-    const vm = this
-
     // use "main" socket defined in nuxt.config.js
-    vm.socket = this.$nuxtSocket({
+    this.socket = this.$nuxtSocket({
       name: 'main', // select "main" socket from nuxt.config.js - we could also skip this because "main" is the default socket
     })
 
-    vm.socket.on('tick', (tickId) => {
-      vm.latestTickId = tickId
-      // vm.getPersonnelList({ searchText: '', page: 1 })
+    this.socket.on('tick', (tickId) => {
+      this.latestTickId = tickId
+      this.getPersonnelList({ searchText: '', page: 1 })
     })
   },
 
