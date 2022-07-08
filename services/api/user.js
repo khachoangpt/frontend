@@ -247,6 +247,15 @@ class UserApi extends User {
       },
     })
   }
+
+  getListRoleType() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_role_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

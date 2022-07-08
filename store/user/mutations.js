@@ -23,10 +23,6 @@ export default {
     state.roles = roles
   },
 
-  setCenterDialogVisible(state, centerDialogVisible) {
-    state.centerDialogVisible = centerDialogVisible
-  },
-
   setWorkingTypes(state, workingTypes) {
     state.workingTypes = workingTypes
   },
@@ -259,5 +255,9 @@ export default {
 
   setTotalPage(state, totalPage) {
     state.totalPage = totalPage
+  },
+
+  setFullscreenLoading(state, fullscreenLoading) {
+    state.fullscreenLoading = fullscreenLoading
   },
 }

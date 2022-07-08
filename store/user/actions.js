@@ -16,8 +16,8 @@ export default {
           searchText: state.searchText,
           page: 1,
         })
-        commit('setPersonnelList', res)
-        commit('setCenterDialogVisible', false)
+        await commit('setPersonnelList', res)
+        await commit('setFullscreenLoading', false)
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -137,7 +137,7 @@ export default {
     }
   },
 
-  async updateMainInfo({ commit, state }, data) {
+  async updateMainInfo({ commit, state }) {
     try {
       const mainInfo = {
         employee_id: state.personnelDetail.employee_id,
@@ -267,6 +267,15 @@ export default {
         await commit('setEducationInfo', res)
         await commit('setIsEditLineEducation', '')
       }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getListRoleType({ commit }) {
+    try {
+      const res = await this.$repository.user.getListRoleType()
+      await commit('setRoles', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }

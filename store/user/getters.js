@@ -5,7 +5,6 @@ export default {
   workingStatus: (state) => state.workingStatus,
   genderList: (state) => state.genderList,
   roles: (state) => state.roles,
-  centerDialogVisible: (state) => state.centerDialogVisible,
   workingTypes: (state) => state.workingTypes,
   listGrade: (state) => state.listGrade,
   listOffice: (state) => state.listOffice,
@@ -26,4 +25,5 @@ export default {
   isEditMainInfo: (state) => state.isEditMainInfo,
   searchText: (state) => state.searchText,
   totalPage: (state) => state.totalPage,
+  fullscreenLoading: (state) => state.fullscreenLoading,
 }

@@ -5,15 +5,16 @@
     </div>
     <div class="add-personnel__content">
       <el-form
-        ref="form"
+        ref="addEmployeeForm"
         label-position="top"
         :model="addEmployeeForm"
         label-width="120px"
+        :rules="rules"
       >
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <el-form-item label="Họ và tên">
+              <el-form-item label="Họ và tên" prop="fullName">
                 <el-input
                   v-model="addEmployeeForm.fullName"
                   class="add-employee-form__input"
@@ -23,7 +24,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Ngày sinh">
+              <el-form-item label="Ngày sinh" prop="birthDate">
                 <el-date-picker
                   v-model="addEmployeeForm.birthDate"
                   type="date"
@@ -36,7 +37,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <el-form-item label="Giới tính">
+              <el-form-item label="Giới tính" prop="gender">
                 <el-select
                   v-model="addEmployeeForm.gender"
                   placeholder="Select"
@@ -55,7 +56,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Số điện thoại">
+              <el-form-item label="Số điện thoại" prop="phone">
                 <el-input
                   v-model="addEmployeeForm.phone"
                   class="add-employee-form__input"
@@ -67,7 +68,7 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Email cá nhân">
+              <el-form-item label="Email cá nhân" prop="personalEmail">
                 <el-input
                   v-model="addEmployeeForm.personalEmail"
                   class="add-employee-form__input"
@@ -77,7 +78,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Phân quyền">
+              <el-form-item label="Phân quyền" prop="role">
                 <el-select
                   v-model="addEmployeeForm.role"
                   placeholder="Select"
@@ -85,9 +86,9 @@
                 >
                   <el-option
                     v-for="item in roles"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    :key="item.type_id"
+                    :label="item.role"
+                    :value="item.type_id"
                   >
                   </el-option>
                 </el-select>
@@ -96,7 +97,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Vị trí">
+              <el-form-item label="Vị trí" prop="position">
                 <el-select
                   v-model="addEmployeeForm.position"
                   placeholder="Select"
@@ -106,7 +107,7 @@
                     v-for="item in listPositions"
                     :key="item.job_id"
                     :label="item.position"
-                    :value="item.position"
+                    :value="item.job_id"
                   >
                   </el-option>
                 </el-select>
@@ -115,7 +116,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Cấp bậc">
+              <el-form-item label="Cấp bậc" prop="grade">
                 <el-select
                   v-model="addEmployeeForm.grade"
                   placeholder="Select"
@@ -125,7 +126,7 @@
                     v-for="item in listGrade"
                     :key="item.grade_id"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.grade_id"
                   >
                   </el-option>
                 </el-select>
@@ -136,7 +137,7 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Lĩnh vực">
+              <el-form-item label="Lĩnh vực" prop="area">
                 <el-select
                   v-model="addEmployeeForm.area"
                   placeholder="Select"
@@ -144,9 +145,9 @@
                 >
                   <el-option
                     v-for="item in listArea"
-                    :key="item.name"
+                    :key="item.area_id"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.area_id"
                   >
                   </el-option>
                 </el-select>
@@ -155,7 +156,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Loại hình lao động">
+              <el-form-item label="Loại hình lao động" prop="workingType">
                 <el-select
                   v-model="addEmployeeForm.workingType"
                   placeholder="Select"
@@ -163,9 +164,9 @@
                 >
                   <el-option
                     v-for="item in workingTypes"
-                    :key="item.name"
+                    :key="item.type_id"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.type_id"
                   >
                   </el-option>
                 </el-select>
@@ -174,7 +175,7 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Quản lý">
+              <el-form-item label="Quản lý" prop="managerId">
                 <el-input
                   v-model="addEmployeeForm.managerId"
                   class="add-employee-form__input"
@@ -184,16 +185,17 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Loại nhân sự">
+              <el-form-item label="Loại nhân sự" prop="employeeType">
                 <el-select
                   v-model="addEmployeeForm.employeeType"
                   placeholder="Select"
+                  class="add-employee-form__input"
                 >
                   <el-option
                     v-for="item in employeeTypes"
-                    :key="item.name"
+                    :key="item.type_id"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.type_id"
                   >
                   </el-option>
                 </el-select>
@@ -204,7 +206,7 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Văn phòng làm việc">
+              <el-form-item label="Văn phòng làm việc" prop="office">
                 <el-select
                   v-model="addEmployeeForm.office"
                   placeholder="Select"
@@ -212,12 +214,38 @@
                 >
                   <el-option
                     v-for="item in listOffice"
-                    :key="item.name"
+                    :key="item.office_id"
                     :label="item.name"
-                    :value="item.name"
+                    :value="item.office_id"
                   >
                   </el-option>
                 </el-select>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple-light">
+              <el-form-item label="Ngày bắt đầu" prop="startDate">
+                <el-date-picker
+                  v-model="addEmployeeForm.startDate"
+                  type="date"
+                  placeholder="Ngày bắt đầu"
+                  class="add-employee-form__input"
+                >
+                </el-date-picker>
+              </el-form-item>
+            </div>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content bg-purple-light">
+              <el-form-item label="Ngày kết thúc" prop="endDate">
+                <el-date-picker
+                  v-model="addEmployeeForm.endDate"
+                  type="date"
+                  placeholder="Ngày kết thúc"
+                  class="add-employee-form__input"
+                >
+                </el-date-picker>
               </el-form-item>
             </div>
           </el-col>
@@ -226,7 +254,13 @@
     </div>
     <div class="add-personnel__footer">
       <el-button type="info" @click="$router.go(-1)">Quay lại</el-button>
-      <el-button type="primary">Xác nhận</el-button>
+      <el-button
+        v-loading.fullscreen.lock="fullscreenLoading"
+        type="primary"
+        @click="addNewEmployee('addEmployeeForm')"
+      >
+        Thêm
+      </el-button>
     </div>
   </div>
 </template>
@@ -253,6 +287,116 @@ export default {
         managerId: '',
         employeeType: '',
         personalEmail: '',
+        startDate: '',
+        endDate: '',
+      },
+
+      rules: {
+        fullName: [
+          {
+            required: true,
+            message: 'Tên không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        birthDate: [
+          {
+            required: true,
+            message: 'Ngày sinh không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        gender: [
+          {
+            required: true,
+            message: 'Giới tính không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        phone: [
+          {
+            required: true,
+            message: 'Số điện thoại không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        personalEmail: [
+          {
+            required: true,
+            message: 'Email không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        role: [
+          {
+            required: true,
+            message: 'Phân quyền không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        position: [
+          {
+            required: true,
+            message: 'Vị trí không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        grade: [
+          {
+            required: true,
+            message: 'Cấp bậc không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        area: [
+          {
+            required: true,
+            message: 'Lĩnh vực không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        workingType: [
+          {
+            required: true,
+            message: 'Loại hình lao động không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        managerId: [
+          {
+            required: true,
+            message: 'Quản lý không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        employeeType: [
+          {
+            required: true,
+            message: 'Loại nhân viên không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        office: [
+          {
+            required: true,
+            message: 'Văn phòng không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        startDate: [
+          {
+            required: true,
+            message: 'Ngày bắt đầu không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        endDate: [
+          {
+            required: true,
+            message: 'Ngày kết thúc không được để trống',
+            trigger: 'blur',
+          },
+        ],
       },
     }
   },
@@ -270,16 +414,18 @@ export default {
       'listArea',
       'employeeTypes',
       'listPositions',
+      'fullscreenLoading',
     ]),
   },
 
-  mounted() {
-    this.getListGrade()
-    this.getListOffice()
-    this.getListArea()
-    this.getEmployeeTypes()
-    this.getWorkingTypes()
-    this.getListPositions()
+  async mounted() {
+    await this.getListGrade()
+    await this.getListOffice()
+    await this.getListArea()
+    await this.getEmployeeTypes()
+    await this.getWorkingTypes()
+    await this.getListPositions()
+    await this.getListRoleType()
   },
 
   methods: {
@@ -292,8 +438,21 @@ export default {
       'getEmployeeTypes',
       'getWorkingTypes',
       'getListPositions',
+      'getListRoleType',
     ]),
-    ...mapMutations('user', ['setCenterDialogVisible']),
+
+    ...mapMutations('user', ['setFullscreenLoading']),
+    
+    addNewEmployee(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          this.setFullscreenLoading(true)
+          await this.addEmployee(this.addEmployeeForm)
+        } else {
+          return false
+        }
+      })
+    },
   },
 }
 </script>
@@ -317,6 +476,6 @@ export default {
 }
 
 .add-employee-form__input {
-  width: 80%;
+  width: 80% !important;
 }
 </style>

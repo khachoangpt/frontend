@@ -21,7 +21,11 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button class="header-actions__button" type="success">
+        <el-button
+          class="header-actions__button"
+          type="success"
+          :disabled="requestListSelected <= 0"
+        >
           Export
         </el-button>
       </div>
@@ -112,7 +116,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters('request', ['listRequestType', 'activeTable']),
+    ...mapGetters('request', [
+      'listRequestType',
+      'activeTable',
+      'requestListSelected',
+    ]),
   },
 
   async mounted() {

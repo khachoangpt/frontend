@@ -7,7 +7,7 @@
           :value="monthSearch"
           type="month"
           placeholder="Tìm kiếm"
-          format="MMM - yyyy"
+          format="MMMM - yyyy"
           :clearable="false"
           @input="selectMonth"
           @change="onChangeMonth"

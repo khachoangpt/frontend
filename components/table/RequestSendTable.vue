@@ -1,6 +1,7 @@
 <template>
   <div>
     <vue-good-table
+      ref="request-table"
       :fixed-header="false"
       :columns="requestTableHeader"
       :rows="requestListSend"
@@ -18,6 +19,7 @@
         enabled: true,
       }"
       @on-row-dblclick="onRowDoubleClick"
+      @on-selected-rows-change="onSelectedRowsChange"
     >
       <template slot="pagination-bottom">
         <el-pagination
@@ -112,7 +114,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'RequestSendTable',
   data() {
@@ -125,14 +127,23 @@ export default {
       'requestTableHeader',
       'requestListSend',
       'totalPageRequestListSend',
+      'requestListSelected',
     ]),
   },
 
   methods: {
     ...mapActions('request', ['currentChangePageSend']),
 
+    ...mapMutations('request', ['setRequestListSelected']),
+
     onRowDoubleClick() {
       this.detailRequestVisible = true
+    },
+
+    onSelectedRowsChange() {
+      this.setRequestListSelected(
+        this.$refs['request-table'].selectedRows.length
+      )
     },
   },
 }

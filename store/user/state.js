@@ -120,21 +120,7 @@ export default () => ({
       label: 'Nữ',
     },
   ],
-  roles: [
-    {
-      value: 'USER',
-      label: 'Nhân viên',
-    },
-    {
-      value: 'MANAGER',
-      label: 'Quản lý',
-    },
-    {
-      value: 'ADMIN',
-      label: 'Quản trị viên',
-    },
-  ],
-  centerDialogVisible: false,
+  roles: [],
   workingTypes: [],
   listGrade: [],
   listOffice: [],
@@ -149,4 +135,5 @@ export default () => ({
   isEditLineEducation: '',
   searchText: '',
   totalPage: 1,
+  fullscreenLoading: false,
 })

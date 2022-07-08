@@ -50,7 +50,8 @@ export default {
     await this.getListRequestReceive(page)
   },
 
-  async handleClickTab({ dispatch }, tab) {
+  async handleClickTab({ dispatch, commit }, tab) {
+    await commit('setRequestListSelected', 0)
     if (tab.name === 'first') {
       await dispatch('getListRequestSend', 1)
     } else if (tab.name === 'second') {

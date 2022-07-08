@@ -3,7 +3,13 @@
     ref="my-table"
     :columns="columns"
     :rows="allTimeKeeping"
-    :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+    :select-options="{
+      enabled: true,
+      selectOnCheckboxOnly: true,
+      selectionInfoClass: 'select-info-class',
+      selectionText: 'hàng đã chọn',
+      clearSelectionText: 'Bỏ chọn tất cả',
+    }"
     :pagination-options="{
       enabled: true,
     }"
@@ -13,7 +19,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :page-size="5"
+        :page-size="10"
         :total="totalPage"
         @current-change="currentChange"
       >
@@ -42,8 +48,8 @@ export default {
 
   async mounted() {
     await this.getDaysInMonth({
-      month: this.monthSearch.getMonth() + 1,
-      year: this.monthSearch.getFullYear(),
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
     })
   },
 
@@ -66,4 +72,13 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.select-info-class {
+  font-size: 14px !important;
+  color: #67c23a !important;
+}
+
+.select-info-class a {
+  color: #f56c6c;
+}
+</style>

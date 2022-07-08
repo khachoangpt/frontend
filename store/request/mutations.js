@@ -26,4 +26,8 @@ export default {
   setActiveTable(state, activeTable) {
     state.activeTable = activeTable
   },
+
+  setRequestListSelected(state, requestListSelected) {
+    state.requestListSelected = requestListSelected
+  },
 }

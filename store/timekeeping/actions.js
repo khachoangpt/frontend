@@ -123,10 +123,13 @@ export default {
           ).getDate()
           dayList[day] =
             '<span class="checkin-color">' +
-            res[i].timekeepingResponses[j].first_check_in +
-            '</span><br/><span>--</span><br/><span class="checkout-color">' +
-            res[i].timekeepingResponses[j].last_check_out +
-            '</span>'
+            res[i].timekeepingResponses[j].first_check_in
+              ? res[i].timekeepingResponses[j].first_check_in
+              : '' +
+                '</span><br/><span>--</span><br/><span class="checkout-color">' +
+                res[i].timekeepingResponses[j].last_check_out
+              ? res[i].timekeepingResponses[j].last_check_out
+              : '' + '</span>'
         }
         response.push(dayList)
       }

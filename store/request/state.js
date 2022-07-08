@@ -69,4 +69,5 @@ export default () => ({
   totalPageRequestListReceive: 2,
   listRequestType: [],
   activeTable: 'first',
+  requestListSelected: 0,
 })
