@@ -26,11 +26,11 @@
           >
           </el-option>
         </el-select> -->
-        <el-button class="header-actions__button" type="primary">
-          <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')"
-            >Tạo mới</nuxt-link
-          >
-        </el-button>
+        <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')">
+          <el-button class="header-actions__button" type="primary">
+            Tạo mới
+          </el-button>
+        </nuxt-link>
       </div>
     </div>
     <div class="personnel-table">
