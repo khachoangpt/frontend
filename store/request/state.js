@@ -44,7 +44,7 @@ export default () => ({
     {
       label: 'Ngày hết hạn',
       field: 'duration',
-      width: '80px',
+      width: '100px',
       sortable: false,
       thClass: 'request-table-header__center',
     },
@@ -70,4 +70,7 @@ export default () => ({
   listRequestType: [],
   activeTable: 'first',
   requestListSelected: 0,
+  requestOvertimeDialogVisible: false,
+  requestSendDetail: [],
+  requestReceiveDetail: [],
 })

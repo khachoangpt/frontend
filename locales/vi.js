@@ -25,10 +25,28 @@ const vi = {
     timekeeping: 'Chấm công',
     personnel: 'Nhân sự',
     request: 'Yêu cầu',
-    policy: 'Chính sách'
+    policy: 'Chính sách',
   },
+
   datepicker: {
     chooseDay: 'Chọn một ngày',
+  },
+
+  timekeeping: {
+    status: {
+      normal: 'Bình thường',
+      late: 'Đi muộn',
+      soon: 'Về sớm',
+      off: 'Nghỉ',
+      paidLeave: 'Nghỉ có phép',
+      half: 'Nửa ngày',
+      holiday: 'Nghỉ theo lịch',
+      overtime: 'Tăng ca',
+    },
+    dialog: {
+      title: 'Dữ liệu giờ làm ngày ',
+      totalTime: 'Tổng giờ làm:'
+    },
   },
 }
 

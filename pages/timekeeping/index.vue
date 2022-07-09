@@ -4,35 +4,35 @@
       <div class="time-keeping__header">
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-finished custom-calendar__status-finished"></i>
-          <span>Đủ</span>
+          <span>{{ $i18n.t('timekeeping.status.normal') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
           <el-tag type="danger" effect="dark" size="mini"> late </el-tag>
-          <span>Đi muộn</span>
+          <span>{{ $i18n.t('timekeeping.status.late') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
           <el-tag type="warning" effect="dark" size="mini"> soon </el-tag>
-          <span>Đi sớm</span>
-        </div>
-        <div class="time-keeping__header-bookmark">
-          <el-tag type="info" effect="dark" size="mini"> off </el-tag>
-          <span>Nghỉ không phép</span>
-        </div>
-        <div class="time-keeping__header-bookmark">
-          <el-tag type="success" effect="dark" size="mini"> OL </el-tag>
-          <span>Nghỉ có phép</span>
+          <span>{{ $i18n.t('timekeeping.status.soon') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-sunrise-1 custom-calendar__status-half"></i>
-          <span>Nửa ngày</span>
+          <span>{{ $i18n.t('timekeeping.status.half') }}</span>
+        </div>
+        <div class="time-keeping__header-bookmark">
+          <el-tag type="info" effect="dark" size="mini"> off </el-tag>
+          <span>{{ $i18n.t('timekeeping.status.off') }}</span>
+        </div>
+        <div class="time-keeping__header-bookmark">
+          <el-tag type="success" effect="dark" size="mini"> OL </el-tag>
+          <span>{{ $i18n.t('timekeeping.status.paidLeave') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-date custom-calendar__status-holiday"></i>
-          <span>Ngày nghỉ</span>
+          <span>{{ $i18n.t('timekeeping.status.holiday') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-moon custom-calendar__status-overnight"></i>
-          <span>Tăng ca</span>
+          <span>{{ $i18n.t('timekeeping.status.overtime') }}</span>
         </div>
       </div>
       <v-calendar
@@ -58,17 +58,20 @@
               :key="attr.key"
               class="custom-calendar__status"
               :class="attr.customData.class"
-            ></i>
+            >
+            </i>
             <span v-for="(at, index) in attributes" :key="'key' + index">
-              <el-tag
-                v-if="at.customData.status !== ''"
-                class="custom-calendar__status-success"
-                :type="at.customData.type"
-                effect="dark"
-                size="mini"
-              >
-                {{ at.customData.status }}
-              </el-tag>
+              <span v-for="(type, i) in at.customData.status" :key="i">
+                <el-tag
+                  v-if="type !== ''"
+                  class="custom-calendar__status-success"
+                  :type="at.customData.type[i]"
+                  effect="dark"
+                  size="mini"
+                >
+                  {{ type }}
+                </el-tag>
+              </span>
             </span>
           </span>
           <div class="custom-calendar__date-check">
@@ -91,7 +94,7 @@
     <el-col :span="4"></el-col>
     <el-dialog
       :title="
-        'Dữ liệu giờ làm ngày ' +
+        $i18n.t('timekeeping.dialog.title') +
         new Date(selectedDay.date).getDate() +
         '-' +
         (new Date(selectedDay.date).getMonth() + 1) +
@@ -290,6 +293,7 @@ export default {
 .custom-calendar__status-success {
   float: right;
   margin-top: 4px;
+  margin-left: 4px;
 }
 
 .custom-calendar__status-holiday {

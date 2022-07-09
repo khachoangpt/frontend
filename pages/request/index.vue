@@ -3,19 +3,15 @@
     <div class="request__header">
       <div class="request__header-text">Danh sách yêu cầu</div>
       <div>
-        <el-dropdown>
-          <el-button
-            class="header-actions__button"
-            type="primary"
-            @click="centerDialogVisible = true"
-          >
+        <el-dropdown @command="createRequest">
+          <el-button class="header-actions__button" type="primary">
             Tạo yêu cầu
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               v-for="requestType in listRequestType"
               :key="requestType.request_type_id"
-              @click="createRequest(requestType)"
+              :command="requestType.request_type_id"
             >
               {{ requestType.request_type_name }}
             </el-dropdown-item>
@@ -96,6 +92,7 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+    <request-working-schedule />
   </div>
 </template>
 
@@ -103,9 +100,10 @@
 import { mapGetters, mapActions } from 'vuex'
 import RequestReceiveTable from '~/components/table/RequestReceiveTable.vue'
 import RequestSendTable from '~/components/table/RequestSendTable.vue'
+import RequestWorkingSchedule from '~/components/dialog/RequestWorkingSchedule.vue'
 export default {
   name: 'ViewRequestPage',
-  components: { RequestReceiveTable, RequestSendTable },
+  components: { RequestReceiveTable, RequestSendTable, RequestWorkingSchedule },
   layout: 'main',
   data() {
     return {
@@ -120,6 +118,7 @@ export default {
       'listRequestType',
       'activeTable',
       'requestListSelected',
+      'requestOvertimeDialogVisible',
     ]),
   },
 
@@ -135,6 +134,8 @@ export default {
       'getListRequestType',
       'handleClickTab',
     ]),
+
+    createRequest(command) {},
   },
 }
 </script>
@@ -152,7 +153,7 @@ export default {
 .request__search {
   display: flex;
   margin-top: 16px;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .request-search__input {

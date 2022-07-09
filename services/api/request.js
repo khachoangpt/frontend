@@ -15,11 +15,13 @@ class Request extends BaseClass {
 class UserMock extends Request {}
 // api
 class UserApi extends Request {
-  getListRequestSend(page) {
+  getListRequestSend(data) {
     const accessToken = getToken()
     return this.$axios.$get(
-      '/api/list_all_application_request_send?paging=offset:' +
-        (page - 1) +
+      '/api/list_all_application_request_send?filter=employeeId:AEQ' +
+        data.employeeId +
+        '&paging=offset:' +
+        (data.page - 1) +
         ',limit:5',
       {
         headers: {
@@ -29,11 +31,13 @@ class UserApi extends Request {
     )
   }
 
-  getListRequestReceive(page) {
+  getListRequestReceive(data) {
     const accessToken = getToken()
     return this.$axios.$get(
-      '/api/list_all_application_request_receive?paging=offset:' +
-        (page - 1) +
+      '/api/list_all_application_request_receive?filter=employeeId:AEQ' +
+        data.employeeId +
+        '&paging=offset:' +
+        (data.page - 1) +
         ',limit:5',
       {
         headers: {
@@ -50,6 +54,32 @@ class UserApi extends Request {
         Authorization: 'Bearer ' + accessToken,
       },
     })
+  }
+
+  getDetailSendRequest(requestId) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/list_all_application_request_send?filter=requestId:AEQ' +
+        requestId,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  getDetailReceiveRequest(requestId) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/list_all_application_request_receive?filter=requestId:AEQ' +
+        requestId,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
   }
 }
 

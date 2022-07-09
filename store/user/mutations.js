@@ -260,4 +260,12 @@ export default {
   setFullscreenLoading(state, fullscreenLoading) {
     state.fullscreenLoading = fullscreenLoading
   },
+
+  setIsEditAdditionInfo(state, isEditAdditionInfo) {
+    state.isEditAdditionInfo = isEditAdditionInfo
+  },
+
+  setIsEditWorkInfo(state, isEditWorkInfo) {
+    state.isEditWorkInfo = isEditWorkInfo
+  },
 }

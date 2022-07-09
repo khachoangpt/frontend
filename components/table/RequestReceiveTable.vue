@@ -54,51 +54,73 @@
       custom-class="request-detail-dialog"
     >
       <el-row class="request-detail-dialog__row" :gutter="20">
-        <el-col :span="12"
+        <el-col :span="14"
           >Nhân viên:
-          <span class="request-detail-dialog__value">Trương Tuấn Khang</span>
+          <span class="request-detail-dialog__value">
+            {{ requestReceiveDetail.full_name }}
+          </span>
         </el-col>
-        <el-col :span="12"
-          >Mã NV: <span class="request-detail-dialog__value">TK01</span>
-        </el-col>
-      </el-row>
-      <el-row class="request-detail-dialog__row" :gutter="20">
-        <el-col :span="12"
-          >Yêu cầu: <span class="request-detail-dialog__value">Xin nghỉ</span>
-        </el-col>
-        <el-col :span="12"
-          >Ngày xin nghỉ:
-          <span class="request-detail-dialog__value">14-6-2022</span>
+        <el-col :span="10">
+          Mã NV:
+          <span class="request-detail-dialog__value">
+            {{ requestReceiveDetail.employee_id }}
+          </span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
-        <el-col :span="12"
-          >Ngày tạo: <span class="request-detail-dialog__value">13-6-2022</span>
+        <el-col :span="14">
+          Yêu cầu:
+          <span class="request-detail-dialog__value">
+            {{ requestReceiveDetail.request_title }}
+          </span>
         </el-col>
-        <el-col :span="12"
-          >Thời hạn:
-          <span class="request-detail-dialog__value">15-06-2022</span>
+        <el-col :span="10">
+          Trạng thái:
+          <span class="request-detail-dialog__value">
+            {{ requestReceiveDetail.request_status }}
+          </span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
-        <el-col :span="12"
-          >Trạng thái: <span class="request-detail-dialog__value">Pending</span>
+        <el-col :span="14">
+          Ngày tạo:
+          <span class="request-detail-dialog__value">
+            {{ new Date(requestReceiveDetail.create_date).getDate() }}/{{
+              new Date(requestReceiveDetail.create_date).getMonth() + 1
+            }}/{{ new Date(requestReceiveDetail.create_date).getFullYear() }}
+          </span>
         </el-col>
-        <el-col :span="12"
-          >Đã xem bởi:
+        <el-col :span="10">
+          Thời hạn:
+          <span class="request-detail-dialog__value">
+            {{ new Date(requestReceiveDetail.duration).getDate() }}/{{
+              new Date(requestReceiveDetail.duration).getMonth() + 1
+            }}/{{ new Date(requestReceiveDetail.duration).getFullYear() }}
+          </span>
+        </el-col>
+      </el-row>
+      <el-row class="request-detail-dialog__row" :gutter="20">
+        <el-col :span="14">
+          Đã xem bởi:
           <span class="request-detail-dialog__value">Nguyễn Khắc Hoàng</span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
           Mô tả
-          <el-input type="textarea" :rows="4" readonly> </el-input>
+          <el-input
+            type="textarea"
+            :rows="4"
+            readonly
+            :value="requestReceiveDetail.description"
+          >
+          </el-input>
         </el-col>
       </el-row>
       <span slot="footer" class="dialog-footer">
-        <el-button type="success" @click="detailRequestVisible = false"
-          >Chấp nhận</el-button
-        >
+        <el-button type="success" @click="detailRequestVisible = false">
+          Chấp nhận
+        </el-button>
         <el-button type="danger" @click="detailRequestVisible = false">
           Từ chối
         </el-button>
@@ -123,15 +145,20 @@ export default {
       'requestListReceive',
       'totalPageRequestListReceive',
       'requestListSelected',
+      'requestReceiveDetail',
     ]),
   },
 
   methods: {
-    ...mapActions('request', ['currentChangePageReceive']),
+    ...mapActions('request', [
+      'currentChangePageReceive',
+      'getDetailReceiveRequest',
+    ]),
     ...mapMutations('request', ['setRequestListSelected']),
 
-    onRowDoubleClick() {
+    onRowDoubleClick(data) {
       this.detailRequestVisible = true
+      this.getDetailReceiveRequest(data.row.application_request_id)
     },
 
     onSelectedRowsChange() {

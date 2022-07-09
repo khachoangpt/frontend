@@ -15,17 +15,15 @@
       >
         <i class="el-icon-s-unfold collapse-icon" @click="collapseSidebar"></i>
       </el-tooltip>
-      <el-tooltip
-        v-else
-        content="Thu nhỏ"
-        placement="bottom"
-        effect="light"
-      >
+      <el-tooltip v-else content="Thu nhỏ" placement="bottom" effect="light">
         <i class="el-icon-s-fold collapse-icon" @click="collapseSidebar"></i>
       </el-tooltip>
     </el-card>
     <el-menu-item class="avatar" :index="localePath('/personnel/' + id)">
-      <div class="avatar__background"></div>
+      <div
+        class="avatar__background"
+        :style="{ backgroundImage: 'url(' + avatar + ')' }"
+      ></div>
       <div v-if="!isCollapse">
         <p class="avatar__name">{{ name }}</p>
         <p class="avatar__role">{{ grade }}</p>
@@ -91,20 +89,39 @@
         <i class="el-icon-s-claim sidebar-icon"></i>
         <span slot="title">{{ $i18n.t('sidebar.policy') }}</span>
       </template>
-      <el-menu-item :index="localePath('/policy/working-rule')">
+      <el-menu-item
+        class="sub-title-policy"
+        :index="localePath('/policy/working-rule')"
+      >
         Chính sách làm việc
       </el-menu-item>
-      <el-menu-item :index="localePath('/policy/benefit')">
+      <el-menu-item
+        class="sub-title-policy"
+        :index="localePath('/policy/benefit')"
+      >
         Phúc lợi
       </el-menu-item>
-      <el-menu-item :index="localePath('/policy/tax')"> Thuế </el-menu-item>
-      <el-menu-item :index="localePath('/policy/insurance')">
+      <el-menu-item class="sub-title-policy" :index="localePath('/policy/tax')">
+        Thuế
+      </el-menu-item>
+      <el-menu-item
+        class="sub-title-policy"
+        :index="localePath('/policy/insurance')"
+      >
         Bảo hiểm
       </el-menu-item>
-      <el-menu-item :index="localePath('/policy/leave')">
+      <el-menu-item
+        class="sub-title-policy"
+        :index="localePath('/policy/leave')"
+      >
         Nghỉ phép
       </el-menu-item>
-      <el-menu-item :index="localePath('/policy/salary')"> Lương </el-menu-item>
+      <el-menu-item
+        class="sub-title-policy"
+        :index="localePath('/policy/salary')"
+      >
+        Lương
+      </el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
@@ -235,5 +252,18 @@ export default {
 .collapse-icon {
   font-size: 24px;
   color: #003c8a;
+}
+
+.el-submenu__title:hover {
+  background-color: #4d77ff !important;
+  border-radius: 4px;
+}
+
+.sub-title-policy {
+  width: 100%;
+}
+
+.sub-title-policy:hover {
+  background-color: #4d77ff !important;
 }
 </style>

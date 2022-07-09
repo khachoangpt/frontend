@@ -4,16 +4,17 @@
       <span id="sub-5" class="main-info-header__text"> Thông tin thêm </span>
       <span
         v-if="
-          isEditMainInfo && roles.find((role) => role.authority === 'ROLE_ADMIN')
+          isEditAdditionInfo &&
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
         "
         class="main-info-header__edit"
-        @click="isEditMainInfo = false"
+        @click="editAdditionInfo"
       >
         Sửa thông tin thêm
       </span>
       <span
         v-else-if="
-          isEditMainInfo === false &&
+          isEditAdditionInfo === false &&
           roles.find((role) => role.authority === 'ROLE_ADMIN')
         "
       >
@@ -26,7 +27,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ hiện tại</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.address }}
             </span>
             <el-input
@@ -43,7 +44,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi sinh</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.place_of_origin }}
             </span>
             <el-input
@@ -60,7 +61,7 @@
         <div class="grid-content bg-purple-light">
           <div class="main-info__content-item">
             <span class="content-item__head"> Hộ khẩu thường trú </span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.place_of_residence }}
             </span>
             <el-input
@@ -79,7 +80,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">CMT / CCCD</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.card_id }}
             </span>
             <el-input
@@ -96,7 +97,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày cấp</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.provideDate }}
             </span>
             <el-input
@@ -113,7 +114,7 @@
         <div class="grid-content bg-purple-light">
           <div class="main-info__content-item">
             <span class="content-item__head"> Nơi cấp </span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.providePlace }}
             </span>
             <el-input
@@ -132,7 +133,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Quốc tịch</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.nationality }}
             </span>
             <el-input
@@ -149,7 +150,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Email khác</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.personal_email }}
             </span>
             <el-input
@@ -166,7 +167,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Số điện thoại khác</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.phone_number }}
             </span>
             <el-input
@@ -185,7 +186,7 @@
         <div class="grid-content bg-purple-light">
           <div class="main-info__content-item">
             <span class="content-item__head"> Nickname </span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.nick_name }}
             </span>
             <el-input
@@ -202,7 +203,7 @@
         <div class="grid-content bg-purple">
           <div class="main-info__content-item">
             <span class="content-item__head">Facebook</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
+            <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.facebook }}
             </span>
             <el-input
@@ -223,14 +224,12 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {
-      isEditMainInfo: true,
-    }
+    return {}
   },
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['additionInfo']),
+    ...mapGetters('user', ['additionInfo', 'isEditAdditionInfo']),
   },
 
   async mounted() {
@@ -251,10 +250,15 @@ export default {
       'updateAdditionPhoneNumber',
       'updateAdditionNickname',
       'updateAdditionFacebook',
+      'setIsEditAdditionInfo',
     ]),
     async closeEdit() {
-      this.isEditMainInfo = true
+      this.setIsEditAdditionInfo(true)
       await this.getAdditionInfo(this.$route.params.employeeId)
+    },
+
+    editAdditionInfo() {
+      this.setIsEditAdditionInfo(false)
     },
   },
 }

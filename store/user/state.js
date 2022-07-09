@@ -127,6 +127,8 @@ export default () => ({
   listArea: [],
   employeeTypes: [],
   listPositions: [],
+  isEditAdditionInfo: true,
+  isEditWorkInfo: true,
   isEditTaxInfo: true,
   isEditBankInfo: true,
   isEditMainInfo: true,

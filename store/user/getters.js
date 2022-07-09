@@ -26,4 +26,6 @@ export default {
   searchText: (state) => state.searchText,
   totalPage: (state) => state.totalPage,
   fullscreenLoading: (state) => state.fullscreenLoading,
+  isEditAdditionInfo: (state) => state.isEditAdditionInfo,
+  isEditWorkInfo: (state) => state.isEditWorkInfo,
 }

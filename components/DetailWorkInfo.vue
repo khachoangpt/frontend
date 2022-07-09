@@ -7,17 +7,17 @@
         >
         <span
           v-if="
-            isEditMainInfo &&
+            isEditWorkInfo &&
             roles.find((role) => role.authority === 'ROLE_ADMIN')
           "
           class="main-info-header__edit"
-          @click="isEditMainInfo = false"
+          @click="editWorkInfo"
         >
           Sửa thông tin công việc
         </span>
         <span
           v-else-if="
-            isEditMainInfo === false &&
+            isEditWorkInfo === false &&
             roles.find((role) => role.authority === 'ROLE_ADMIN')
           "
         >
@@ -30,7 +30,7 @@
           <div class="grid-content bg-purple">
             <div class="main-info__content-item">
               <span class="content-item__head">Vị trí</span>
-              <span v-if="isEditMainInfo" class="content-item__detail">IT</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
               <el-input
                 v-else
                 size="medium"
@@ -44,7 +44,7 @@
           <div class="grid-content bg-purple-light">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
+              <span v-if="isEditWorkInfo" class="content-item__detail"
                 >10.000.000</span
               >
               <el-input
@@ -60,7 +60,7 @@
           <div class="grid-content bg-purple">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương cơ bản</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
+              <span v-if="isEditWorkInfo" class="content-item__detail"
                 >3.000.000</span
               >
               <el-input
@@ -76,7 +76,7 @@
           <div class="grid-content bg-purple">
             <div class="main-info__content-item">
               <span class="content-item__head">Văn phòng</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
+              <span v-if="isEditWorkInfo" class="content-item__detail"
                 >Ha Noi Office</span
               >
               <el-input
@@ -94,7 +94,7 @@
           <div class="grid-content bg-purple">
             <div class="main-info__content-item">
               <span class="content-item__head">Lịch làm việc</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
+              <span v-if="isEditWorkInfo" class="content-item__detail"
                 >Part Time</span
               >
               <el-input
@@ -110,7 +110,7 @@
           <div class="grid-content bg-purple-light">
             <div class="main-info__content-item">
               <span class="content-item__head">Lĩnh vực / Chuyên môn</span>
-              <span v-if="isEditMainInfo" class="content-item__detail"
+              <span v-if="isEditWorkInfo" class="content-item__detail"
                 >Back Office</span
               >
               <el-input
@@ -126,7 +126,7 @@
           <div class="grid-content bg-purple">
             <div class="main-info__content-item">
               <span class="content-item__head">Ngày bắt đầu</span>
-              <span v-if="isEditMainInfo" class="content-item__detail">{{
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 personnelDetail.start_date
               }}</span>
               <el-input
@@ -144,7 +144,7 @@
           <div class="grid-content bg-purple-light">
             <div class="main-info__content-item">
               <span class="content-item__head">Phân loại nhân sự</span>
-              <span v-if="isEditMainInfo" class="content-item__detail">
+              <span v-if="isEditWorkInfo" class="content-item__detail">
                 Probationary Staff
               </span>
               <el-input
@@ -162,29 +162,32 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {
-      isEditMainInfo: true,
-    }
+    return {}
   },
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['personnelDetail']),
+    ...mapGetters('user', ['personnelDetail', 'isEditWorkInfo']),
   },
 
-  async beforeMount() {
+  async mounted() {
     await this.getPersonnelDetail(this.$route.params.employeeId)
   },
 
   methods: {
     ...mapActions('user', ['getPersonnelDetail']),
+    ...mapMutations('user', ['setIsEditWorkInfo']),
 
     async closeEdit() {
-      this.isEditMainInfo = true
+      await this.setIsEditWorkInfo(true)
       await this.getPersonnelDetail(this.$route.params.employeeId)
+    },
+
+    editWorkInfo() {
+      this.setIsEditWorkInfo(false)
     },
   },
 }

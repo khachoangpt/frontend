@@ -7,4 +7,7 @@ export default {
   listRequestType: (state) => state.listRequestType,
   activeTable: (state) => state.activeTable,
   requestListSelected: (state) => state.requestListSelected,
+  requestOvertimeDialogVisible: (state) => state.requestOvertimeDialogVisible,
+  requestSendDetail: (state) => state.requestSendDetail,
+  requestReceiveDetail: (state) => state.requestReceiveDetail,
 }

@@ -58,9 +58,11 @@ export default {
     ...mapMutations('timekeeping', ['setListEmployeeId', 'setWorkingDataList']),
     onSelectedRowsChange() {
       const employeeIdSelectedList = []
-      this.setWorkingDataList(this.$refs['my-table'].selectedRows)
-      for (let i = 0; i < this.workingDataList.length; i++) {
-        employeeIdSelectedList.push(this.workingDataList[i].employee_id)
+      this.setWorkingDataList(this.$refs['my-table'].selectedRows.length)
+      for (let i = 0; i < this.workingDataList; i++) {
+        employeeIdSelectedList.push(
+          this.$refs['my-table'].selectedRows[i].employee_id
+        )
       }
       this.setListEmployeeId(employeeIdSelectedList)
     },

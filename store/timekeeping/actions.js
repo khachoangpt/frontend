@@ -31,48 +31,57 @@ export default {
       let res = await this.$repository.timekeeping.getEmployeeTimekeepingList(
         data
       )
-      res = res.timekeepingResponsesList
+      res = res.timekeepingResponsesList[0].timekeepingResponses
       const response = []
-      for (let i = 0; i < res[0].timekeepingResponses.length; i++) {
+      for (let i = 0; i < res.length; i++) {
+        const timekeepingStatus = []
+        const types = []
+        const classes = []
+        for (let j = 0; j < res[i].timekeeping_status.length; j++) {
+          timekeepingStatus.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'late'
+              ? 'late'
+              : res[i].timekeeping_status[j].timekeeping_status === 'soon'
+              ? 'soon'
+              : res[i].timekeeping_status[j].timekeeping_status === 'off'
+              ? 'off'
+              : res[i].timekeeping_status[j].timekeeping_status === 'PL'
+              ? 'PL'
+              : ''
+          )
+          types.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'late'
+              ? 'danger'
+              : res[i].timekeeping_status[j].timekeeping_status === 'soon'
+              ? 'warning'
+              : res[i].timekeeping_status[j].timekeeping_status === 'off'
+              ? 'info'
+              : res[i].timekeeping_status[j].timekeeping_status === 'PL'
+              ? 'success'
+              : ''
+          )
+          classes.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'normal'
+              ? 'el-icon-finished custom-calendar__status-finished'
+              : res[i].timekeeping_status[j].timekeeping_status === 'haft'
+              ? 'el-icon-sunrise-1 custom-calendar__status-half'
+              : res[i].timekeeping_status[j].timekeeping_status === 'holiday'
+              ? 'el-icon-date custom-calendar__status-holiday'
+              : res[i].timekeeping_status[j].timekeeping_status === 'overtime'
+              ? 'el-icon-moon custom-calendar__status-overnight'
+              : ''
+          )
+        }
         const attribute = {
           key: i,
           customData: {
-            checkIn: res[0].timekeepingResponses[i].first_check_in,
-            checkOut: res[0].timekeepingResponses[i].last_check_out,
-            status:
-              res[0].timekeepingResponses[i].timekeeping_status === 'late'
-                ? 'late'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'soon'
-                ? 'soon'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'off'
-                ? 'off'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'PL'
-                ? 'PL'
-                : '',
-            type:
-              res[0].timekeepingResponses[i].timekeeping_status === 'late'
-                ? 'danger'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'soon'
-                ? 'warning'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'off'
-                ? 'info'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'PL'
-                ? 'success'
-                : '',
-            class:
-              res[0].timekeepingResponses[i].timekeeping_status === 'normal'
-                ? 'el-icon-finished custom-calendar__status-finished'
-                : res[0].timekeepingResponses[i].timekeeping_status === 'haft'
-                ? 'el-icon-sunrise-1 custom-calendar__status-half'
-                : res[0].timekeepingResponses[i].timekeeping_status ===
-                  'holiday'
-                ? 'el-icon-date custom-calendar__status-holiday'
-                : res[0].timekeepingResponses[i].timekeeping_status ===
-                  'overtime'
-                ? 'el-icon-moon custom-calendar__status-overnight'
-                : '',
+            checkIn: res[i].first_check_in,
+            checkOut: res[i].last_check_out,
+            status: timekeepingStatus,
+            type: types,
+            class: classes,
           },
-          dates: new Date(res[0].timekeepingResponses[i].current_date),
+          dates: new Date(res[i].current_date),
         }
         response.push(attribute)
       }
@@ -123,13 +132,14 @@ export default {
           ).getDate()
           dayList[day] =
             '<span class="checkin-color">' +
-            res[i].timekeepingResponses[j].first_check_in
+            (res[i].timekeepingResponses[j].first_check_in
               ? res[i].timekeepingResponses[j].first_check_in
-              : '' +
-                '</span><br/><span>--</span><br/><span class="checkout-color">' +
-                res[i].timekeepingResponses[j].last_check_out
+              : '') +
+            '</span><br/><span>--</span><br/><span class="checkout-color">' +
+            (res[i].timekeepingResponses[j].last_check_out
               ? res[i].timekeepingResponses[j].last_check_out
-              : '' + '</span>'
+              : '') +
+            '</span>'
         }
         response.push(dayList)
       }

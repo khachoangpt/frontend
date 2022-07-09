@@ -30,4 +30,16 @@ export default {
   setRequestListSelected(state, requestListSelected) {
     state.requestListSelected = requestListSelected
   },
+
+  setRequestOvertimeDialogVisible(state, requestOvertimeDialogVisible) {
+    state.requestOvertimeDialogVisible = requestOvertimeDialogVisible
+  },
+
+  setRequestSendDetail(state, requestSendDetail) {
+    state.requestSendDetail = requestSendDetail
+  },
+
+  setRequestReceiveDetail(state, requestReceiveDetail) {
+    state.requestReceiveDetail = requestReceiveDetail
+  },
 }

@@ -25,9 +25,7 @@
             <span class="detail-basic__name">{{
               personnelDetail.full_name
             }}</span>
-            <span class="detail-basic__job">{{
-              personnelDetail.grade
-            }}</span>
+            <span class="detail-basic__job">{{ personnelDetail.grade }}</span>
           </div>
           <div class="detail__contact">
             <ul class="detail__contact-list">
@@ -179,7 +177,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import DetailWorkInfo from '~/components/DetailWorkInfo.vue'
 import DetailMainInfo from '~/components/DetailMainInfo.vue'
 import DetailTax from '~/components/DetailTax.vue'
@@ -218,7 +216,30 @@ export default {
       'educationInfo',
     ]),
   },
+
+  async mounted() {
+    await this.setIsEditLineRelative('')
+    await this.setIsEditAdditionInfo(true)
+    await this.setIsEditBankInfo(true)
+    await this.setIsEditLineEducation('')
+    await this.setIsEditMainInfo(true)
+    await this.setIsEditTaxInfo(true)
+    await this.setIsEditWorkInfo(true)
+    await this.setIsEditLine('')
+  },
+
   methods: {
+    ...mapMutations('user', [
+      'setIsEditLineRelative',
+      'setIsEditAdditionInfo',
+      'setIsEditBankInfo',
+      'setIsEditLineEducation',
+      'setIsEditMainInfo',
+      'setIsEditTaxInfo',
+      'setIsEditWorkInfo',
+      'setIsEditLine',
+    ]),
+
     scrollToElement(el) {
       const element = document.getElementById(el)
       if (element) {

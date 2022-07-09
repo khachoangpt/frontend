@@ -1,6 +1,7 @@
 import makeFactoryClass from '../class_factory'
 import BaseClass from './base_class'
 import { getToken } from '~/helper/jwt'
+import { PageLimit } from '~/constants/index'
 
 class User extends BaseClass {
   login() {
@@ -36,7 +37,8 @@ class UserApi extends User {
         data.searchText +
         '&paging=offset:' +
         (data.page - 1) +
-        ',limit:5',
+        ',limit:' +
+        PageLimit,
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,

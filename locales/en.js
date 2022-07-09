@@ -30,6 +30,23 @@ const en = {
   datepicker: {
     chooseDay: 'Pick a day',
   },
+
+  timekeeping: {
+    status: {
+      normal: 'Normal',
+      late: 'Late',
+      soon: 'Leave soon',
+      off: 'Off',
+      paidLeave: 'Paid leave',
+      half: 'Half day',
+      holiday: 'Holiday',
+      overtime: 'Overtime',
+    },
+    dialog: {
+      title: 'Working data at ',
+      totalTime: 'Total working time:'
+    }
+  },
 }
 
 export default {
