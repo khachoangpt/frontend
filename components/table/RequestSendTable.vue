@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
     <vue-good-table
@@ -55,6 +56,7 @@
     <el-dialog
       title="Chi tiết yêu cầu"
       :visible.sync="detailRequestVisible"
+      top="10vh"
       width="40%"
       center
       custom-class="request-detail-dialog"
@@ -82,7 +84,10 @@
         </el-col>
         <el-col :span="10">
           Trạng thái:
-          <span class="request-detail-dialog__value">
+          <span
+            class="request-detail-dialog__value"
+            :class="'request-status__' + requestSendDetail.request_status"
+          >
             {{ requestSendDetail.request_status }}
           </span>
         </el-col>
@@ -113,14 +118,11 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
-          Mô tả
-          <el-input
-            type="textarea"
-            :rows="4"
-            readonly
-            :value="requestSendDetail.description"
-          >
-          </el-input>
+          Chi tiết
+          <div
+            class="request-detail-dialog__description"
+            v-html="requestSendDetail.description"
+          ></div>
         </el-col>
       </el-row>
       <span slot="footer" class="dialog-footer">
@@ -190,6 +192,13 @@ export default {
   font-weight: 600;
 }
 
+.request-detail-dialog__value-status {
+  background-color: #e6a23c;
+  color: #fff;
+  padding: 6px;
+  border-radius: 5px;
+}
+
 .bookmark-column {
   width: 100%;
   display: block;
@@ -212,5 +221,17 @@ export default {
 
 .select-info-class a {
   color: #f56c6c;
+}
+
+.request-detail-dialog__description {
+  height: 140px;
+  overflow: scroll;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.request-detail-dialog__description::-webkit-scrollbar {
+  display: none;
 }
 </style>

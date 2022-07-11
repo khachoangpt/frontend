@@ -9,9 +9,12 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
-              v-for="requestType in listRequestType"
-              :key="requestType.request_type_id"
-              :command="requestType.request_type_id"
+              v-for="(requestType, index) in listRequestType"
+              :key="'type' + index"
+              :command="[
+                requestType.request_type_id,
+                requestType.request_type_name,
+              ]"
             >
               {{ requestType.request_type_name }}
             </el-dropdown-item>
@@ -36,17 +39,20 @@
         end-placeholder="Đến ngày"
         format="dd-MM-yyyy"
         value-format="timestamp"
+        @change="onChangeDate"
       >
       </el-date-picker>
       <el-select
         v-model="requestTypeSearch"
         class="request-search__request-type request-search__input"
         placeholder="Loại yêu cầu"
-        value=""
+        :clearable="true"
+        @clear="onClearRequestType"
+        @change="onRequestTypeChange"
       >
         <el-option
           v-for="(requestType, index) in listRequestType"
-          :key="index"
+          :key="'requestType' + index"
           :label="requestType.request_type_name"
           :value="requestType.request_type_name"
         >
@@ -56,24 +62,16 @@
         v-model="requestStatusSearch"
         class="request-search__status request-search__input"
         placeholder="Trạng thái"
-        value=""
+        :clearable="true"
+        @clear="onClearRequestStatus"
+        @change="onRequestStatusChange"
       >
         <el-option
-          class="request-status-select__pending"
-          label="Chờ duyệt"
-          value="pending"
-        >
-        </el-option>
-        <el-option
-          class="request-status-select__rejected"
-          label="Từ chối"
-          value="rejected"
-        >
-        </el-option>
-        <el-option
-          class="request-status-select__approved"
-          label="Chấp nhận"
-          value="approved"
+          v-for="requestStatus in listRequestStatus"
+          :key="'status_' + requestStatus.request_status_id"
+          :class="'request-status-select__' + requestStatus.request_status_name"
+          :label="requestStatus.request_status_name"
+          :value="requestStatus.request_status_name"
         >
         </el-option>
       </el-select>
@@ -92,22 +90,47 @@
         </el-tab-pane>
       </el-tabs>
     </div>
-    <request-working-schedule />
+    <request-advance-dialog />
+    <request-behaviour-dialog />
+    <request-company-asset-dialog />
+    <request-integrity-dialog />
+    <request-nomination-dialog />
+    <request-paid-leave-dialog />
+    <request-tax-enrollment-dialog />
+    <request-working-schedule-dialod />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RequestReceiveTable from '~/components/table/RequestReceiveTable.vue'
 import RequestSendTable from '~/components/table/RequestSendTable.vue'
-import RequestWorkingSchedule from '~/components/dialog/RequestWorkingSchedule.vue'
+import RequestAdvanceDialog from '~/components/dialog/RequestAdvanceDialog.vue'
+import RequestBehaviourDialog from '~/components/dialog/RequestBehaviourDialog.vue'
+import RequestCompanyAssetDialog from '~/components/dialog/RequestCompanyAssetDialog.vue'
+import RequestIntegrityDialog from '~/components/dialog/RequestIntegrityDialog.vue'
+import RequestNominationDialog from '~/components/dialog/RequestNominationDialog.vue'
+import RequestPaidLeaveDialog from '~/components/dialog/RequestPaidLeaveDialog.vue'
+import RequestTaxEnrollmentDialog from '~/components/dialog/RequestTaxEnrollmentDialog.vue'
+import RequestWorkingScheduleDialod from '~/components/dialog/RequestWorkingScheduleDialod.vue'
 export default {
   name: 'ViewRequestPage',
-  components: { RequestReceiveTable, RequestSendTable, RequestWorkingSchedule },
+  components: {
+    RequestReceiveTable,
+    RequestSendTable,
+    RequestAdvanceDialog,
+    RequestBehaviourDialog,
+    RequestCompanyAssetDialog,
+    RequestIntegrityDialog,
+    RequestNominationDialog,
+    RequestPaidLeaveDialog,
+    RequestTaxEnrollmentDialog,
+    RequestWorkingScheduleDialod,
+  },
   layout: 'main',
   data() {
     return {
-      requestDateRange: '',
+      requestDateRange: [],
       requestTypeSearch: '',
       requestStatusSearch: '',
     }
@@ -116,6 +139,7 @@ export default {
   computed: {
     ...mapGetters('request', [
       'listRequestType',
+      'listRequestStatus',
       'activeTable',
       'requestListSelected',
       'requestOvertimeDialogVisible',
@@ -125,6 +149,7 @@ export default {
   async mounted() {
     await this.getListRequestSend(1)
     await this.getListRequestType()
+    await this.getListRequestStatus()
   },
 
   methods: {
@@ -133,9 +158,43 @@ export default {
       'getListRequestReceive',
       'getListRequestType',
       'handleClickTab',
+      'onChangeDateRangeSend',
+      'getListRequestStatus',
+      'createRequest',
     ]),
+    ...mapMutations('request', ['setRequestAdvanceDialogVisible']),
 
-    createRequest(command) {},
+    async onChangeDate(dateRange) {
+      await this.onChangeDateRangeSend({
+        dateRange: dateRange === null ? [] : dateRange,
+        requestTypeSearch: this.requestTypeSearch,
+        requestStatusSearch: this.requestStatusSearch,
+      })
+    },
+
+    async onRequestTypeChange() {
+      await this.onChangeDateRangeSend({
+        dateRange: this.requestDateRange,
+        requestTypeSearch: this.requestTypeSearch,
+        requestStatusSearch: this.requestStatusSearch,
+      })
+    },
+
+    async onRequestStatusChange() {
+      await this.onChangeDateRangeSend({
+        dateRange: this.requestDateRange,
+        requestTypeSearch: this.requestTypeSearch,
+        requestStatusSearch: this.requestStatusSearch,
+      })
+    },
+
+    onClearRequestType() {
+      this.requestTypeSearch = ''
+    },
+
+    onClearRequestStatus() {
+      this.requestStatusSearch = ''
+    },
   },
 }
 </script>
@@ -228,15 +287,15 @@ export default {
   margin-left: 16px;
 }
 
-.request-status-select__pending {
+.request-status-select__Pending {
   color: #e6a23c;
 }
 
-.request-status-select__approved {
+.request-status-select__Approved {
   color: #67c23a;
 }
 
-.request-status-select__rejected {
+.request-status-select__Rejected {
   color: #f56c6c;
 }
 </style>

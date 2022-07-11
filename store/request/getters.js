@@ -7,7 +7,23 @@ export default {
   listRequestType: (state) => state.listRequestType,
   activeTable: (state) => state.activeTable,
   requestListSelected: (state) => state.requestListSelected,
-  requestOvertimeDialogVisible: (state) => state.requestOvertimeDialogVisible,
   requestSendDetail: (state) => state.requestSendDetail,
   requestReceiveDetail: (state) => state.requestReceiveDetail,
+  listRequestStatus: (state) => state.listRequestStatus,
+  requestAdvanceDialogVisible: (state) => state.requestAdvanceDialogVisible,
+  requestBehaviourDialogVisible: (state) => state.requestBehaviourDialogVisible,
+  requestCompanyAssetDialogVisible: (state) =>
+    state.requestCompanyAssetDialogVisible,
+  requestIntegrityDialogVisible: (state) => state.requestIntegrityDialogVisible,
+  requestNominationDialogVisible: (state) =>
+    state.requestNominationDialogVisible,
+  requestPaidLeaveDialogVisible: (state) => state.requestPaidLeaveDialogVisible,
+  requestTaxEnrollmentDialogVisible: (state) =>
+    state.requestTaxEnrollmentDialogVisible,
+  requestWorkingScheduleDialogVisible: (state) =>
+    state.requestWorkingScheduleDialogVisible,
+  listRequestName: (state) => state.listRequestName,
+  currentRequestTypeId: (state) => state.currentRequestTypeId,
+  currentRequestNameId: (state) => state.currentRequestNameId,
+  fullscreenLoading: (state) => state.fullscreenLoading,
 }
