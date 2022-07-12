@@ -150,7 +150,7 @@ class UserApi extends Request {
     )
   }
 
-  createRequestTimekeeping(data) {
+  createRequest(data) {
     const accessToken = getToken()
     return this.$axios.$post('/api/create_request', data, {
       headers: {

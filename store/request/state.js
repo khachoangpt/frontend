@@ -85,4 +85,7 @@ export default () => ({
   currentRequestTypeId: '',
   currentRequestNameId: '',
   fullscreenLoading: false,
+  dateRangeFilter: '',
+  requestTypeFilter: '',
+  requestStatusFilter: '',
 })

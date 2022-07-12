@@ -23,7 +23,7 @@
       </li>
     </ul>
     <el-form
-      ref="workingScheduleForm"
+      ref="paidLeaveForm"
       :model="paidLeaveForm"
       :rules="rules"
       label-position="left"
@@ -37,6 +37,7 @@
         <el-select
           v-model="paidLeaveForm.requestName"
           class="request-form__input"
+          @change="onChangeRequestName"
         >
           <el-option
             v-for="(requestName, index) in listRequestName"
@@ -68,7 +69,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog"> Đóng </el-button>
-      <el-button type="primary" @click="createRequestPaidLeave">
+      <el-button type="primary" @click="submitForm('paidLeaveForm')">
         Tạo yêu cầu
       </el-button>
     </span>
@@ -76,7 +77,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'RequestPaidLeaveDialog',
 
@@ -125,28 +126,39 @@ export default {
     ...mapGetters('request', [
       'requestPaidLeaveDialogVisible',
       'listRequestName',
+      'fullscreenLoading',
     ]),
   },
 
   methods: {
-    ...mapMutations('request', ['setRequestPaidLeaveDialogVisible']),
+    ...mapActions('request', ['createRequestPaidLeave']),
+    ...mapMutations('request', [
+      'setRequestPaidLeaveDialogVisible',
+      'setCurrentRequestNameId',
+      'setFullscreenLoading',
+    ]),
 
     closeDialog() {
-      this.setRequestPaidLeaveDialogVisible(false)
-    },
-
-    createRequestPaidLeave() {
       this.setRequestPaidLeaveDialogVisible(false)
     },
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.createRequestPaidLeave(this.paidLeaveForm)
+          this.setFullscreenLoading(true)
         } else {
           return false
         }
       })
+    },
+
+    onChangeRequestName(data) {
+      for (let i = 0; i < this.listRequestName.length; i++) {
+        if (this.listRequestName[i].request_name_name === data) {
+          this.setCurrentRequestNameId(this.listRequestName[i].request_name_id)
+        }
+      }
     },
   },
 }

@@ -26,4 +26,7 @@ export default {
   currentRequestTypeId: (state) => state.currentRequestTypeId,
   currentRequestNameId: (state) => state.currentRequestNameId,
   fullscreenLoading: (state) => state.fullscreenLoading,
+  dateRangeFilter: (state) => state.dateRangeFilter,
+  requestTypeFilter: (state) => state.requestTypeFilter,
+  requestStatusFilter: (state) => state.requestStatusFilter,
 }

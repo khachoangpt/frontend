@@ -97,4 +97,16 @@ export default {
   setFullscreenLoading(state, fullscreenLoading) {
     state.fullscreenLoading = fullscreenLoading
   },
+
+  setDateRangeFilter(state, dateRangeFilter) {
+    state.dateRangeFilter = dateRangeFilter
+  },
+
+  setRequestTypeFilter(state, requestTypeFilter) {
+    state.requestTypeFilter = requestTypeFilter
+  },
+
+  setRequestStatusFilter(state, requestStatusFilter) {
+    state.requestStatusFilter = requestStatusFilter
+  },
 }

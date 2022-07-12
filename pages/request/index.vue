@@ -162,30 +162,32 @@ export default {
       'getListRequestStatus',
       'createRequest',
     ]),
-    ...mapMutations('request', ['setRequestAdvanceDialogVisible']),
+    ...mapMutations('request', [
+      'setRequestAdvanceDialogVisible',
+      'setDateRangeFilter',
+      'setRequestTypeFilter',
+      'setRequestStatusFilter',
+    ]),
 
     async onChangeDate(dateRange) {
-      await this.onChangeDateRangeSend({
-        dateRange: dateRange === null ? [] : dateRange,
-        requestTypeSearch: this.requestTypeSearch,
-        requestStatusSearch: this.requestStatusSearch,
-      })
+      this.setDateRangeFilter(dateRange)
+      this.setRequestTypeFilter(this.requestTypeSearch)
+      this.setRequestStatusFilter(this.requestStatusSearch)
+      await this.onChangeDateRangeSend(1)
     },
 
     async onRequestTypeChange() {
-      await this.onChangeDateRangeSend({
-        dateRange: this.requestDateRange,
-        requestTypeSearch: this.requestTypeSearch,
-        requestStatusSearch: this.requestStatusSearch,
-      })
+      this.setDateRangeFilter(this.requestDateRange)
+      this.setRequestTypeFilter(this.requestTypeSearch)
+      this.setRequestStatusFilter(this.requestStatusSearch)
+      await this.onChangeDateRangeSend(1)
     },
 
     async onRequestStatusChange() {
-      await this.onChangeDateRangeSend({
-        dateRange: this.requestDateRange,
-        requestTypeSearch: this.requestTypeSearch,
-        requestStatusSearch: this.requestStatusSearch,
-      })
+      this.setDateRangeFilter(this.requestDateRange)
+      this.setRequestTypeFilter(this.requestTypeSearch)
+      this.setRequestStatusFilter(this.requestStatusSearch)
+      await this.onChangeDateRangeSend(1)
     },
 
     onClearRequestType() {

@@ -151,7 +151,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('request', ['createRequestTimekeeping']),
+    ...mapActions('request', ['createRequestTimekeeping', 'createRequestOT']),
     ...mapMutations('request', [
       'setRequestWorkingScheduleDialogVisible',
       'setCurrentRequestNameId',
@@ -162,14 +162,13 @@ export default {
       this.setRequestWorkingScheduleDialogVisible(false)
     },
 
-    createRequestWorkingSchedule() {
-      this.setRequestWorkingScheduleDialogVisible(false)
-    },
-
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
+        if (valid && this.workingScheduleForm.requestName === 'Working Time') {
           this.createRequestTimekeeping(this.workingScheduleForm)
+          this.setFullscreenLoading(true)
+        } else if (valid && this.workingScheduleForm.requestName === 'OT') {
+          this.createRequestOT(this.workingScheduleForm)
           this.setFullscreenLoading(true)
         } else {
           return false

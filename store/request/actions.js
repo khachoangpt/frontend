@@ -50,11 +50,11 @@ export default {
   },
 
   async currentChangePageSend({ dispatch }, page) {
-    await dispatch('getListRequestSend', page)
+    await dispatch('onChangeDateRangeSend', page)
   },
 
   async currentChangePageReceive({ dispatch }, page) {
-    await dispatch('getListRequestReceive', page)
+    await dispatch('onChangeDateRangeReceive', page)
   },
 
   async handleClickTab({ dispatch, commit }, tab) {
@@ -106,16 +106,17 @@ export default {
     }
   },
 
-  async onChangeDateRangeSend({ rootState, commit }, value) {
+  async onChangeDateRangeSend({ rootState, commit, state }, page) {
     const data = {
       employeeId: rootState.auth.id,
-      page: 1,
-      dateRange: value.dateRange,
-      requestTypeId: ERequestType[value.requestTypeSearch],
-      requestStatusSearch: ERequestStatus[value.requestStatusSearch],
+      page,
+      dateRange: state.dateRangeFilter,
+      requestTypeId: ERequestType[state.requestTypeFilter],
+      requestStatusSearch: ERequestStatus[state.requestStatusFilter],
     }
     try {
       let res = await this.$repository.request.getListRequestSendOnFilter(data)
+      await commit('setTotalPageRequestListSend', res.total)
       res = res.applicationsRequestResponseList
       for (let i = 0; i < res.length; i++) {
         res[i].create_date = new Date(res[i].create_date).toLocaleDateString(
@@ -129,18 +130,19 @@ export default {
     }
   },
 
-  async onChangeDateRangeReceive({ rootState, commit }, value) {
+  async onChangeDateRangeReceive({ rootState, commit, state }) {
     const data = {
       employeeId: rootState.auth.id,
       page: 1,
-      dateRange: value.dateRange,
-      requestTypeId: ERequestType[value.requestTypeSearch],
-      requestStatusSearch: ERequestStatus[value.requestStatusSearch],
+      dateRange: state.dateRangeFilter,
+      requestTypeId: ERequestType[state.requestTypeFilter],
+      requestStatusSearch: ERequestStatus[state.requestStatusFilter],
     }
     try {
       let res = await this.$repository.request.getListRequestReceiveOnFilter(
         data
       )
+      await commit('setTotalPageRequestListReceive', res.total)
       res = res.applicationsRequestResponseList
       for (let i = 0; i < res.length; i++) {
         res[i].create_date = new Date(res[i].create_date).toLocaleDateString(
@@ -199,10 +201,110 @@ export default {
         employeeName: rootState.auth.name,
         date: form.requestDate,
       }
-      const res = await this.$repository.request.createRequestTimekeeping(data)
+      const res = await this.$repository.request.createRequest(data)
       if (res.code === 202) {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestWorkingScheduleDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async createRequestOT({ rootState, state, commit, dispatch }, form) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        startDate:
+          form.requestTimeOT[0].getFullYear() +
+          '-' +
+          (form.requestTimeOT[0].getMonth() + 1 < 10
+            ? '0' + (form.requestTimeOT[0].getMonth() + 1)
+            : form.requestTimeOT[0].getMonth() + 1) +
+          '-' +
+          (form.requestTimeOT[0].getDate() < 10
+            ? '0' + form.requestTimeOT[0].getDate()
+            : form.requestTimeOT[0].getDate()),
+        endDate:
+          form.requestTimeOT[1].getFullYear() +
+          '-' +
+          (form.requestTimeOT[1].getMonth() + 1 < 10
+            ? '0' + (form.requestTimeOT[1].getMonth() + 1)
+            : form.requestTimeOT[1].getMonth() + 1) +
+          '-' +
+          (form.requestTimeOT[1].getDate() < 10
+            ? '0' + form.requestTimeOT[1].getDate()
+            : form.requestTimeOT[1].getDate()),
+        startTime:
+          (form.requestTimeOT[0].getHours() < 10
+            ? '0' + form.requestTimeOT[0].getHours()
+            : form.requestTimeOT[0].getHours()) +
+          ':' +
+          (form.requestTimeOT[0].getMinutes() < 10
+            ? '0' + form.requestTimeOT[0].getMinutes()
+            : form.requestTimeOT[0].getMinutes()),
+        endTime:
+          (form.requestTimeOT[1].getHours() < 10
+            ? '0' + form.requestTimeOT[1].getHours()
+            : form.requestTimeOT[1].getHours()) +
+          ':' +
+          (form.requestTimeOT[1].getMinutes() < 10
+            ? '0' + form.requestTimeOT[1].getMinutes()
+            : form.requestTimeOT[1].getMinutes()),
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestWorkingScheduleDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async createRequestPaidLeave({ rootState, state, commit, dispatch }, form) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        startDate:
+          form.requestDateRange[0].getFullYear() +
+          '-' +
+          (form.requestDateRange[0].getMonth() + 1 < 10
+            ? '0' + (form.requestDateRange[0].getMonth() + 1)
+            : form.requestDateRange[0].getMonth() + 1) +
+          '-' +
+          (form.requestDateRange[0].getDate() < 10
+            ? '0' + form.requestDateRange[0].getDate()
+            : form.requestDateRange[0].getDate()),
+        endDate:
+          form.requestDateRange[1].getFullYear() +
+          '-' +
+          (form.requestDateRange[1].getMonth() + 1 < 10
+            ? '0' + (form.requestDateRange[1].getMonth() + 1)
+            : form.requestDateRange[1].getMonth() + 1) +
+          '-' +
+          (form.requestDateRange[1].getDate() < 10
+            ? '0' + form.requestDateRange[1].getDate()
+            : form.requestDateRange[1].getDate()),
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestPaidLeaveDialogVisible', false)
         await commit('setFullscreenLoading', false)
         Message.success('Gửi yêu cầu thành công.')
       }
