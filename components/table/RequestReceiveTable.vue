@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
     <vue-good-table
@@ -48,10 +49,11 @@
     </vue-good-table>
     <el-dialog
       title="Chi tiết yêu cầu"
-      :visible.sync="detailRequestVisible"
+      :visible.sync="detailRequestReceiveVisible"
       width="40%"
       center
       custom-class="request-detail-dialog"
+      :before-close="closeDialog"
     >
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14"
@@ -107,23 +109,25 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
-          Mô tả
-          <el-input
-            type="textarea"
-            :rows="4"
-            readonly
-            :value="requestReceiveDetail.description"
-          >
-          </el-input>
+          Chi tiết
+          <div
+            class="request-detail-dialog__description"
+            v-html="requestReceiveDetail.description"
+          ></div>
         </el-col>
       </el-row>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="success" @click="detailRequestVisible = false">
+      <span v-if="isAction" slot="footer" class="dialog-footer">
+        <el-button v-if="isEnoughLevel" type="success" @click="approveRequest">
           Chấp nhận
         </el-button>
-        <el-button type="danger" @click="detailRequestVisible = false">
-          Từ chối
+        <el-button
+          v-if="!isEnoughLevel"
+          type="primary"
+          @click="reviewedRequest"
+        >
+          Chuyển tiếp
         </el-button>
+        <el-button type="danger" @click="rejectRequest"> Từ chối </el-button>
       </span>
     </el-dialog>
   </div>
@@ -135,7 +139,8 @@ export default {
   name: 'RequestReceiveTable',
   data() {
     return {
-      detailRequestVisible: false,
+      isAction: true,
+      isEnoughLevel: true,
     }
   },
 
@@ -146,6 +151,7 @@ export default {
       'totalPageRequestListReceive',
       'requestListSelected',
       'requestReceiveDetail',
+      'detailRequestReceiveVisible',
     ]),
   },
 
@@ -153,19 +159,63 @@ export default {
     ...mapActions('request', [
       'currentChangePageReceive',
       'getDetailReceiveRequest',
+      'updateRejectRequest',
+      'updateApproveRequest',
     ]),
-    ...mapMutations('request', ['setRequestListSelected']),
+    ...mapMutations('request', [
+      'setRequestListSelected',
+      'setDetailRequestReceiveVisible',
+      'setListRequestId',
+    ]),
 
     onRowDoubleClick(data) {
-      this.detailRequestVisible = true
+      console.log(data)
+      if (data.row.is_enough_level === 'True') {
+        this.isEnoughLevel = true
+      } else {
+        this.isEnoughLevel = false
+      }
+      if (data.row.request_status === 'PENDING') {
+        this.isAction = true
+      } else {
+        this.isAction = false
+      }
+      this.setDetailRequestReceiveVisible(true)
       this.getDetailReceiveRequest(data.row.application_request_id)
     },
 
     onSelectedRowsChange() {
+      const requestIdSelectedList = []
       this.setRequestListSelected(
         this.$refs['request-table'].selectedRows.length
       )
+      for (let i = 0; i < this.requestListSelected; i++) {
+        requestIdSelectedList.push(
+          this.$refs['request-table'].selectedRows[i].application_request_id
+        )
+      }
+      this.setListRequestId(requestIdSelectedList)
     },
+
+    closeDialog() {
+      this.setDetailRequestReceiveVisible(false)
+    },
+
+    async rejectRequest() {
+      await this.updateRejectRequest(
+        this.requestReceiveDetail.application_request_id
+      )
+      this.setDetailRequestReceiveVisible(false)
+    },
+
+    async approveRequest() {
+      await this.updateApproveRequest(
+        this.requestReceiveDetail.application_request_id
+      )
+      this.setDetailRequestReceiveVisible(false)
+    },
+
+    reviewedRequest() {},
   },
 }
 </script>
@@ -199,5 +249,17 @@ export default {
 }
 .vgt-left-align {
   text-align: center !important;
+}
+
+.request-detail-dialog__description {
+  height: 140px;
+  overflow: scroll;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.request-detail-dialog__description::-webkit-scrollbar {
+  display: none;
 }
 </style>

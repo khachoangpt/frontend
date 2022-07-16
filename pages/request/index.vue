@@ -24,6 +24,7 @@
           class="header-actions__button"
           type="success"
           :disabled="requestListSelected <= 0"
+          @click="exportRequestSend"
         >
           Export
         </el-button>
@@ -77,11 +78,7 @@
       </el-select>
     </div>
     <div class="request-table">
-      <el-tabs
-        :value="activeTable"
-        type="border-card"
-        @tab-click="handleClickTab"
-      >
+      <el-tabs :value="activeTable" type="border-card" @tab-click="clickTab">
         <el-tab-pane label="Yêu cầu đi" name="first">
           <request-send-table />
         </el-tab-pane>
@@ -159,8 +156,10 @@ export default {
       'getListRequestType',
       'handleClickTab',
       'onChangeDateRangeSend',
+      'onChangeDateRangeReceive',
       'getListRequestStatus',
       'createRequest',
+      'exportRequestSend',
     ]),
     ...mapMutations('request', [
       'setRequestAdvanceDialogVisible',
@@ -174,6 +173,7 @@ export default {
       this.setRequestTypeFilter(this.requestTypeSearch)
       this.setRequestStatusFilter(this.requestStatusSearch)
       await this.onChangeDateRangeSend(1)
+      await this.onChangeDateRangeReceive(1)
     },
 
     async onRequestTypeChange() {
@@ -181,6 +181,7 @@ export default {
       this.setRequestTypeFilter(this.requestTypeSearch)
       this.setRequestStatusFilter(this.requestStatusSearch)
       await this.onChangeDateRangeSend(1)
+      await this.onChangeDateRangeReceive(1)
     },
 
     async onRequestStatusChange() {
@@ -188,6 +189,7 @@ export default {
       this.setRequestTypeFilter(this.requestTypeSearch)
       this.setRequestStatusFilter(this.requestStatusSearch)
       await this.onChangeDateRangeSend(1)
+      await this.onChangeDateRangeReceive(1)
     },
 
     onClearRequestType() {
@@ -196,6 +198,13 @@ export default {
 
     onClearRequestStatus() {
       this.requestStatusSearch = ''
+    },
+
+    clickTab(tab) {
+      this.requestDateRange = []
+      this.requestTypeSearch = ''
+      this.requestStatusSearch = ''
+      this.handleClickTab(tab)
     },
   },
 }

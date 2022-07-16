@@ -26,6 +26,7 @@ const vi = {
     personnel: 'Nhân sự',
     request: 'Yêu cầu',
     policy: 'Chính sách',
+    salary:'Tiền lương'
   },
 
   datepicker: {

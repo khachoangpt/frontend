@@ -2,7 +2,7 @@
   <div>
     <el-page-header @back="back"> </el-page-header>
     <el-row>
-      <el-col class="detail-page-left" :span="4">
+      <el-col class="detail-page-left hidden-xs-only" :lg="4">
         <div class="grid-content bg-purple personnel-detail__left">
           <div class="detail-basic">
             <div
@@ -40,6 +40,10 @@
               <li class="detail__contact-item">
                 <i class="el-icon-message"></i>
                 <span> {{ personnelDetail.company_email }} </span>
+              </li>
+              <li class="detail__contact-item">
+                <i class="el-icon-time"></i>
+                <span> {{ personnelDetail.seniority }} </span>
               </li>
               <li class="detail__contact-item">
                 <i class="el-icon-phone-outline"></i>
@@ -157,8 +161,11 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="20">
-        <div class="grid-content bg-purple personnel-detail__right">
+      <el-col :lg="20">
+        <div
+          id="detail-right"
+          class="grid-content bg-purple personnel-detail__right"
+        >
           <h2 class="detail-right__header">Thông tin cá nhân</h2>
           <div class="detail-right__main-info">
             <detail-main-info />
@@ -186,6 +193,7 @@ import DetailAdditionInfo from '~/components/DetailAdditionInfo.vue'
 import DetailWorkingHistory from '~/components/DetailWorkingHistory.vue'
 import DetailRelativeInfo from '~/components/DetailRelativeInfo.vue'
 import DetailEducationInfo from '~/components/DetailEducationInfo.vue'
+import 'element-ui/lib/theme-chalk/display.css'
 export default {
   name: 'PersonnelDetailPage',
   components: {
@@ -203,6 +211,7 @@ export default {
     return {
       imageUrl: '',
       activeSubTab: 1,
+      scrollPosition: null,
     }
   },
   computed: {
@@ -226,6 +235,13 @@ export default {
     await this.setIsEditTaxInfo(true)
     await this.setIsEditWorkInfo(true)
     await this.setIsEditLine('')
+    document
+      .getElementById('detail-right')
+      .addEventListener('scroll', this.updateScroll)
+  },
+
+  destroy() {
+    window.removeEventListener('scroll', this.updateScroll)
   },
 
   methods: {
@@ -263,6 +279,19 @@ export default {
         this.$message.error('Avatar picture size can not exceed 2MB!')
       }
       return isJPG && isLt2M
+    },
+
+    updateScroll(evt) {
+      console.log(evt.target.scrollTop)
+      if (evt.target.scrollTop > 0 && evt.target.scrollTop <= 529) {
+        this.activeSubTab = 1
+      }
+      if (
+        evt.target.scrollTop > 529 &&
+        evt.target.scrollTop <= 889.5999755859375
+      ) {
+        this.activeSubTab = 2
+      }
     },
   },
 }

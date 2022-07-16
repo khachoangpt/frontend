@@ -109,4 +109,16 @@ export default {
   setRequestStatusFilter(state, requestStatusFilter) {
     state.requestStatusFilter = requestStatusFilter
   },
+
+  setDetailRequestVisible(state, detailRequestVisible) {
+    state.detailRequestVisible = detailRequestVisible
+  },
+
+  setDetailRequestReceiveVisible(state, detailRequestReceiveVisible) {
+    state.detailRequestReceiveVisible = detailRequestReceiveVisible
+  },
+
+  setListRequestId(state, listRequestId) {
+    state.listRequestId = listRequestId
+  },
 }

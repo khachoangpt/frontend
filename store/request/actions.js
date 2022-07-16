@@ -32,7 +32,7 @@ export default {
         )
         res[i].duration = new Date(res[i].duration).toLocaleDateString('vi-VN')
       }
-      commit('setRequestListReceive', res)
+      await commit('setRequestListReceive', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -110,9 +110,14 @@ export default {
     const data = {
       employeeId: rootState.auth.id,
       page,
-      dateRange: state.dateRangeFilter,
+      dateRange: state.dateRangeFilter === null ? [] : state.dateRangeFilter,
       requestTypeId: ERequestType[state.requestTypeFilter],
       requestStatusSearch: ERequestStatus[state.requestStatusFilter],
+    }
+    if (data.dateRange.length > 0) {
+      const dateFrom = new Date(data.dateRange[0]).setHours(0, 0, 1)
+      const dateTo = new Date(data.dateRange[1]).setHours(23, 59, 59)
+      data.dateRange = [dateFrom, dateTo]
     }
     try {
       let res = await this.$repository.request.getListRequestSendOnFilter(data)
@@ -130,13 +135,18 @@ export default {
     }
   },
 
-  async onChangeDateRangeReceive({ rootState, commit, state }) {
+  async onChangeDateRangeReceive({ rootState, commit, state }, page) {
     const data = {
       employeeId: rootState.auth.id,
-      page: 1,
-      dateRange: state.dateRangeFilter,
+      page,
+      dateRange: state.dateRangeFilter === null ? [] : state.dateRangeFilter,
       requestTypeId: ERequestType[state.requestTypeFilter],
       requestStatusSearch: ERequestStatus[state.requestStatusFilter],
+    }
+    if (data.dateRange.length > 0) {
+      const dateFrom = new Date(data.dateRange[0]).setHours(0, 0, 1)
+      const dateTo = new Date(data.dateRange[1]).setHours(23, 59, 59)
+      data.dateRange = [dateFrom, dateTo]
     }
     try {
       let res = await this.$repository.request.getListRequestReceiveOnFilter(
@@ -184,8 +194,8 @@ export default {
     } else if (requestType[1] === 'Paid Leave') {
       await commit('setRequestPaidLeaveDialogVisible', true)
     } else if (requestType[1] === 'Tax Enrollment') {
-      await commit('setRequestTax EnrollmentDialogVisible', true)
-    } else if (requestType[1] === 'Working Schedule') {
+      await commit('setRequestTaxEnrollmentDialogVisible', true)
+    } else if (requestType[1] === 'Working Time') {
       await commit('setRequestWorkingScheduleDialogVisible', true)
     }
   },
@@ -210,6 +220,7 @@ export default {
       }
     } catch (error) {
       Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
     }
   },
 
@@ -268,6 +279,7 @@ export default {
       }
     } catch (error) {
       Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
     }
   },
 
@@ -308,6 +320,204 @@ export default {
         await commit('setFullscreenLoading', false)
         Message.success('Gửi yêu cầu thành công.')
       }
+    } catch (error) {
+      Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
+    }
+  },
+
+  async createRequestBonus({ rootState, state, commit, dispatch }, form) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        date:
+          form.requestDate.getFullYear() +
+          '-' +
+          (form.requestDate.getMonth() + 1 < 10
+            ? '0' + (form.requestDate.getMonth() + 1)
+            : form.requestDate.getMonth() + 1) +
+          '-' +
+          (form.requestDate.getDate() < 10
+            ? '0' + form.requestDate.getDate()
+            : form.requestDate.getDate()),
+        currentTitle: 'DEV 1',
+        currentArea: 'IT',
+        currentOffice: 'HaNoi',
+        value: form.bonusValue,
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestNominationDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
+    }
+  },
+
+  async createRequestSalaryIncrement(
+    { rootState, state, commit, dispatch },
+    form
+  ) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        date:
+          form.requestDate.getFullYear() +
+          '-' +
+          (form.requestDate.getMonth() + 1 < 10
+            ? '0' + (form.requestDate.getMonth() + 1)
+            : form.requestDate.getMonth() + 1) +
+          '-' +
+          (form.requestDate.getDate() < 10
+            ? '0' + form.requestDate.getDate()
+            : form.requestDate.getDate()),
+        currentTitle: 'DEV 1',
+        currentArea: 'IT',
+        value: form.bonusValue,
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestNominationDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
+    }
+  },
+
+  async createRequestAdvance({ rootState, state, commit, dispatch }, form) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        date:
+          form.requestDate.getFullYear() +
+          '-' +
+          (form.requestDate.getMonth() + 1 < 10
+            ? '0' + (form.requestDate.getMonth() + 1)
+            : form.requestDate.getMonth() + 1) +
+          '-' +
+          (form.requestDate.getDate() < 10
+            ? '0' + form.requestDate.getDate()
+            : form.requestDate.getDate()),
+        value: form.requestAdvance,
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestAdvanceDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
+    }
+  },
+
+  async createRequestTaxEnrollment(
+    { rootState, state, commit, dispatch },
+    form
+  ) {
+    try {
+      const data = {
+        createEmployeeId: rootState.auth.id,
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
+        description: form.requestDescription,
+        employeeId: rootState.auth.id,
+        employeeName: rootState.auth.name,
+        taxType: form.checkList,
+      }
+      const res = await this.$repository.request.createRequest(data)
+      if (res.code === 202) {
+        await dispatch('getListRequestSend', 1)
+        await commit('setRequestTaxEnrollmentDialogVisible', false)
+        await commit('setFullscreenLoading', false)
+        Message.success('Gửi yêu cầu thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
+    }
+  },
+
+  async updateRejectRequest({ commit, dispatch }, data) {
+    try {
+      const res = await this.$repository.request.updateRejectRequest(data)
+      if (res.code === 201) {
+        await dispatch('getListRequestReceive', 1)
+        Message.success('Đã từ chối yêu cầu.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async updateApproveRequest({ commit, dispatch }, data) {
+    try {
+      const res = await this.$repository.request.updateApproveRequest(data)
+      if (res.code === 201) {
+        await dispatch('getListRequestReceive', 1)
+        Message.success('Đã chấp nhận yêu cầu.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async exportRequestSend({ state }) {
+    try {
+      let res = await this.$repository.request.exportRequestSend(
+        state.listRequestId
+      )
+      if (!res.match(/^data:text\/csv/i)) {
+        res = 'data:text/csv;charset=utf-8,' + res
+      }
+      const data1 = encodeURI(res)
+      const link = document.createElement('a')
+      link.setAttribute('href', data1)
+      link.setAttribute('download', 'request')
+      link.click()
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async exportRequestReceive({ state }) {
+    try {
+      let res = await this.$repository.request.exportRequestReceive(
+        state.listRequestId
+      )
+      if (!res.match(/^data:text\/csv/i)) {
+        res = 'data:text/csv;charset=utf-8,' + res
+      }
+      const data1 = encodeURI(res)
+      const link = document.createElement('a')
+      link.setAttribute('href', data1)
+      link.setAttribute('download', 'request')
+      link.click()
     } catch (error) {
       Message.error(error.response.data.message)
     }

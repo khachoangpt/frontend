@@ -26,6 +26,7 @@ const en = {
     personnel: 'Personnel',
     request: 'Request',
     policy: 'Policy',
+    salary: 'Salary',
   },
   datepicker: {
     chooseDay: 'Pick a day',

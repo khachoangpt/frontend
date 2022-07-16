@@ -60,6 +60,7 @@
       width="40%"
       center
       custom-class="request-detail-dialog"
+      :before-close="closeDialog"
     >
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14"
@@ -125,14 +126,12 @@
           ></div>
         </el-col>
       </el-row>
-      <span slot="footer" class="dialog-footer">
+      <!-- <span slot="footer" class="dialog-footer">
         <el-button type="success" @click="detailRequestVisible = false">
           Chấp nhận
         </el-button>
-        <el-button type="danger" @click="detailRequestVisible = false">
-          Từ chối
-        </el-button>
-      </span>
+        <el-button type="danger" @click="rejectRequest"> Từ chối </el-button>
+      </span> -->
     </el-dialog>
   </div>
 </template>
@@ -142,9 +141,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'RequestSendTable',
   data() {
-    return {
-      detailRequestVisible: false,
-    }
+    return {}
   },
   computed: {
     ...mapGetters('request', [
@@ -153,23 +150,50 @@ export default {
       'totalPageRequestListSend',
       'requestListSelected',
       'requestSendDetail',
+      'detailRequestVisible',
     ]),
   },
 
   methods: {
-    ...mapActions('request', ['currentChangePageSend', 'getDetailSendRequest']),
+    ...mapActions('request', [
+      'currentChangePageSend',
+      'getDetailSendRequest',
+      'updateRejectRequest',
+    ]),
 
-    ...mapMutations('request', ['setRequestListSelected']),
+    ...mapMutations('request', [
+      'setRequestListSelected',
+      'setDetailRequestVisible',
+      'setListRequestId',
+    ]),
+
+    closeDialog() {
+      this.setDetailRequestVisible(false)
+    },
 
     onRowDoubleClick(data) {
-      this.detailRequestVisible = true
+      this.setDetailRequestVisible(true)
       this.getDetailSendRequest(data.row.application_request_id)
     },
 
     onSelectedRowsChange() {
+      const requestIdSelectedList = []
       this.setRequestListSelected(
         this.$refs['request-table'].selectedRows.length
       )
+      for (let i = 0; i < this.requestListSelected; i++) {
+        requestIdSelectedList.push(
+          this.$refs['request-table'].selectedRows[i].application_request_id
+        )
+      }
+      this.setListRequestId(requestIdSelectedList)
+    },
+
+    async rejectRequest() {
+      await this.updateRejectRequest(
+        this.requestSendDetail.application_request_id
+      )
+      this.setDetailRequestVisible(false)
     },
   },
 }

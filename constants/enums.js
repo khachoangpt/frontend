@@ -16,8 +16,8 @@ export const ERequestStatus = {
 }
 
 export const ERequestType = {
-  'Working Schedule': 'WORKING_SCHEDULE',
-  'Paid Leave': 'PAIR_LEAVE',
+  'Working Time': 'WORKING_TIME',
+  'Paid Leave': 'PAID_LEAVE',
   Nomination: 'NOMINATION',
   Integrity: 'INTEGRITY',
   'Company Asset': 'COMPANY_ASSET',

@@ -14,16 +14,16 @@ export default () => ({
       thClass: 'request-table-header__center',
     },
     {
-      label: 'Ngày tạo',
-      field: 'create_date',
-      width: '80px',
+      label: 'Yêu cầu',
+      field: 'request_name',
+      width: '180px',
+      sortable: false,
       thClass: 'request-table-header__center',
     },
     {
-      label: 'Loại yêu cầu',
-      field: 'request_title',
-      width: '180px',
-      sortable: false,
+      label: 'Ngày tạo',
+      field: 'create_date',
+      width: '80px',
       thClass: 'request-table-header__center',
     },
     {
@@ -88,4 +88,7 @@ export default () => ({
   dateRangeFilter: '',
   requestTypeFilter: '',
   requestStatusFilter: '',
+  detailRequestVisible: false,
+  detailRequestReceiveVisible: false,
+  listRequestId: [],
 })

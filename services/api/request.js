@@ -33,17 +33,21 @@ class UserApi extends Request {
 
   getListRequestSendOnFilter(data) {
     const accessToken = getToken()
-    let url =
-      '/api/list_all_application_request_send?filter=employeeId:AEQ' +
-      data.employeeId
+    let url = '/api/list_all_application_request_send?filter='
     if (data.dateRange.length > 0) {
-      url += ',createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
+      url += 'createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
     }
-    if (data.requestTypeId !== '') {
+    if (data.requestTypeId !== '' && data.dateRange.length > 0) {
       url += ',requestType:AEQ' + data.requestTypeId
+    } else if (data.requestTypeId !== '' && data.dateRange.length <= 0) {
+      url += 'requestType:AEQ' + data.requestTypeId
     }
-    if (data.requestStatusSearch !== '') {
+    if (data.requestStatusSearch !== '' && data.requestTypeId !== '') {
       url += ',requestStatus:AEQ' + data.requestStatusSearch
+    } else if (data.requestStatusSearch !== '' && data.dateRange.length > 0) {
+      url += ',requestStatus:AEQ' + data.requestStatusSearch
+    } else if (data.requestStatusSearch !== '' && data.dateRange.length <= 0) {
+      url += 'requestStatus:AEQ' + data.requestStatusSearch
     }
     return this.$axios.$get(
       url + '&paging=offset:' + (data.page - 1) + ',limit:5',
@@ -58,9 +62,8 @@ class UserApi extends Request {
   getListRequestReceive(data) {
     const accessToken = getToken()
     return this.$axios.$get(
-      '/api/list_all_application_request_receive?filter=employeeId:AEQ' +
-        data.employeeId +
-        '&paging=offset:' +
+      '/api/list_all_application_request_receive?' +
+        'paging=offset:' +
         (data.page - 1) +
         ',limit:5',
       {
@@ -73,17 +76,21 @@ class UserApi extends Request {
 
   getListRequestReceiveOnFilter(data) {
     const accessToken = getToken()
-    let url =
-      '/api/list_all_application_request_receive?filter=employeeId:AEQ' +
-      data.employeeId
-    if (data.dateRange !== []) {
-      url += ',createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
+    let url = '/api/list_all_application_request_receive?filter='
+    if (data.dateRange.length > 0) {
+      url += 'createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
     }
-    if (data.requestTypeId !== '') {
+    if (data.requestTypeId !== '' && data.dateRange.length > 0) {
       url += ',requestType:AEQ' + data.requestTypeId
+    } else if (data.requestTypeId !== '' && data.dateRange.length <= 0) {
+      url += 'requestType:AEQ' + data.requestTypeId
     }
-    if (data.requestStatusSearch !== '') {
+    if (data.requestStatusSearch !== '' && data.requestTypeId !== '') {
       url += ',requestStatus:AEQ' + data.requestStatusSearch
+    } else if (data.requestStatusSearch !== '' && data.dateRange.length > 0) {
+      url += ',requestStatus:AEQ' + data.requestStatusSearch
+    } else if (data.requestStatusSearch !== '' && data.dateRange.length <= 0) {
+      url += 'requestStatus:AEQ' + data.requestStatusSearch
     }
     return this.$axios.$get(
       url + '&paging=offset:' + (data.page - 1) + ',limit:5',
@@ -153,6 +160,50 @@ class UserApi extends Request {
   createRequest(data) {
     const accessToken = getToken()
     return this.$axios.$post('/api/create_request', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  updateRejectRequest(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/update_reject_application_request?requestId=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  updateApproveRequest(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/update_approve_application_request?requestId=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  exportRequestSend(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/download_csv_request_send', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  exportRequestReceive(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/download_csv_request_receive', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

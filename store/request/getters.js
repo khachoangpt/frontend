@@ -29,4 +29,7 @@ export default {
   dateRangeFilter: (state) => state.dateRangeFilter,
   requestTypeFilter: (state) => state.requestTypeFilter,
   requestStatusFilter: (state) => state.requestStatusFilter,
+  detailRequestVisible: (state) => state.detailRequestVisible,
+  detailRequestReceiveVisible: (state) => state.detailRequestReceiveVisible,
+  listRequestId: (state) => state.listRequestId,
 }
