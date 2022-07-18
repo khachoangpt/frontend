@@ -299,11 +299,13 @@ export default {
 .custom-calendar__status-finished {
   color: #67c23a;
   font-weight: 600;
+  margin-left: 4px;
 }
 
 .custom-calendar__status-overnight {
   color: goldenrod;
   font-weight: 600;
+  margin-left: 4px;
 }
 
 .custom-calendar__status-success {
@@ -314,6 +316,7 @@ export default {
 
 .custom-calendar__status-holiday {
   font-weight: 600;
+  margin-left: 4px;
 }
 
 .custom-calendar__date-text {
@@ -342,6 +345,7 @@ export default {
   font-weight: 600;
   font-size: 20px;
   color: coral;
+  margin-left: 4px;
 }
 
 .vc-h-full {

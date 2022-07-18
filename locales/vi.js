@@ -26,7 +26,7 @@ const vi = {
     personnel: 'Nhân sự',
     request: 'Yêu cầu',
     policy: 'Chính sách',
-    salary:'Tiền lương'
+    salary: 'Tiền lương',
   },
 
   datepicker: {
@@ -46,7 +46,11 @@ const vi = {
     },
     dialog: {
       title: 'Dữ liệu giờ làm ngày ',
-      totalTime: 'Tổng giờ làm:'
+      totalTime: 'Tổng giờ làm:',
+    },
+    message: {
+      checkInSuccess: 'Check in thành công.',
+      checkOutSuccess: 'Check out thành công.',
     },
   },
 }

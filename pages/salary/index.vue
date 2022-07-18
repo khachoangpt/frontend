@@ -185,4 +185,8 @@ export default {
   text-align: center;
   padding-bottom: 16px;
 }
+
+.vgt-left-align {
+  text-align: center;
+}
 </style>

@@ -237,11 +237,11 @@ export default {
 
   async checkIn({ commit }) {
     await commit('setIsCheckIn', false)
-    Message.success('Check in thành công.')
+    Message.success(this.$i18n.t('timekeeping.message.checkInSuccess'))
   },
 
   async checkOut({ commit }) {
     await commit('setIsCheckIn', true)
-    Message.success('Check out thành công')
+    Message.success(this.$i18n.t('timekeeping.message.checkOutSuccess'))
   },
 }

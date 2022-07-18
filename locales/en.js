@@ -45,8 +45,12 @@ const en = {
     },
     dialog: {
       title: 'Working data at ',
-      totalTime: 'Total working time:'
-    }
+      totalTime: 'Total working time:',
+    },
+    message: {
+      checkInSuccess: 'Check in successfully.',
+      checkOutSuccess: 'Check out successfully.',
+    },
   },
 }
 
