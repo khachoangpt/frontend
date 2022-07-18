@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    title="Xin nghỉ"
     top="8vh"
     :visible.sync="requestPaidLeaveDialogVisible"
     width="36%"
@@ -8,6 +7,7 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
+    <span slot="title" class="request-dialog__title">Xin nghỉ</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Paid Leave for only official employee.
@@ -193,5 +193,10 @@ export default {
 .request-form__day-off {
   font-weight: 600;
   color: #e6a23c;
+}
+
+.request-dialog__title {
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

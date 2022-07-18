@@ -1,4 +1,4 @@
-// import { Message } from 'element-ui'
+import { Message } from 'element-ui'
 
 export default {
   async onChangeMonth({ dispatch, state, commit }) {
@@ -19,5 +19,16 @@ export default {
       ),
     }
     await commit('setSelectedTimeRange', timeRange)
+  },
+
+  async onRowDoubleClick({ commit }, data) {
+    try {
+      const employeeId = data.row.employee_id
+      const res = await this.$repository.user.getEmployeeDetail(employeeId)
+      commit('user/setPersonnelDetail', res, { root: true })
+      this.$router.push(this.localePath('/salary/' + employeeId))
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
   },
 }

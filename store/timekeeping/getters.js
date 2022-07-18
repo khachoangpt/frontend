@@ -10,4 +10,5 @@ export default {
   workingDataList: (state) => state.workingDataList,
   monthSearch: (state) => state.monthSearch,
   columns: (state) => state.columns,
+  isCheckIn: (state) => state.isCheckIn,
 }

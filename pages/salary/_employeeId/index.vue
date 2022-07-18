@@ -1,199 +1,165 @@
 <template>
-  <div class="personnel">
-    <div class="statusPaidLeave">
-      <label> Truong Tuan Khang - HE141566 </label>
-      <br />
-      <label> BA </label>
+  <div>
+    <div class="salary-detail__header">
+      <div class="salary-detail__header-text">Chi tiết tiền lương</div>
     </div>
 
-    <div class="content">
-      <el-form ref="form" label-position="top" label-width="120px">
-        <div class="col_1">
-          <el-row :gutter="40">
-            <div class="actual_point">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="1">
-                  <template slot="title">
-                    <b style="">Actual Point</b>
-                  </template>
-                  <div class="block">
-                    <h4>Actual Working Hours:</h4>
-                    <h4>Unpaid Leave Hours:</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-          <el-row :gutter="40">
-            <div class="ot_point">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="2">
-                  <template slot="title">
-                    <b style="">OT Point</b>
-                  </template>
-
-                  <div class="col_status">
-                    <el-col :span="24">
-                      <div class="lb_status">
-                        <h4>In week:</h4>
-                        <div class="block">
-                          <el-date-picker
-                            v-model="value1"
-                            type="date"
-                            placeholder="Pick a date"
-                            default-value="2010-10-01"
-                          >
-                          </el-date-picker>
-                        </div>
-                      </div>
-                    </el-col>
-                  </div>
-                  <div class="col_status">
-                    <el-col :span="24">
-                      <div class="lb_status">
-                        <h4>Weeken:</h4>
-                        <div class="block">
-                          <el-date-picker
-                            v-model="value1"
-                            type="date"
-                            placeholder="Pick a date"
-                            default-value="2010-10-01"
-                          >
-                          </el-date-picker>
-                        </div>
-                      </div>
-                    </el-col>
-                  </div>
-                  <div class="col_status">
-                    <el-col :span="24">
-                      <div class="lb_status">
-                        <h4>Holiday:</h4>
-                        <div class="block">
-                          <el-date-picker
-                            v-model="value1"
-                            type="date"
-                            placeholder="Pick a date"
-                            default-value="2010-10-01"
-                          >
-                          </el-date-picker>
-                        </div>
-                      </div>
-                    </el-col>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="total_deduction">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="3">
-                  <template slot="title">
-                    <b style="">Total Deduction</b>
-                  </template>
-                  <div class="block">
-                    <h4>Working Time:</h4>
-                    <h4>Working Late:</h4>
-                    <h4>Leave Soon:</h4>
-                    <h4>Company Asset:</h4>
-                    <h4>Integrity:</h4>
-                    <h4>Behaviour:</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="insurance_payment">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="4">
-                  <template slot="title">
-                    <b style="">Insurance Payment</b>
-                  </template>
-                  <div class="block">
-                    <h4>Health Insurance (1.5%):</h4>
-                    <h4>Social Insurance (8%):</h4>
-                    <h4>Unemployment Insurance (1%):</h4>
-                    <h4>Pension Insurance (8%):</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="tax_payment">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="5">
-                  <template slot="title">
-                    <b style="">Tax Payment</b>
-                  </template>
-                  <div class="block">
-                    <h4>VN Progressive (By law):</h4>
-                    <h4>Fixed Percentage Tax (10%):</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="bonus">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="6">
-                  <template slot="title">
-                    <b style="">Bonus</b>
-                  </template>
-                  <div class="block">
-                    <h4>Project Bonus:</h4>
-                    <h4>Reward Bonus:</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="advances">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="7">
-                  <template slot="title">
-                    <b style="">Advances</b>
-                  </template>
-                  <div class="block">
-                    <h4>Advances:</h4>
-                  </div>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
-
-          <el-row :gutter="40">
-            <div class="actual_income">
-              <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item name="8">
-                  <template slot="title">
-                    <b style="">Actual Income</b>
-                  </template>
-                </el-collapse-item>
-              </el-collapse>
-            </div>
-          </el-row>
+    <div class="salary-detail__content">
+      <div class="salary-detail__employee">
+        <div
+          class="salary-avatar__background"
+          :style="{ backgroundImage: 'url(' + personnelDetail.avatar + ')' }"
+        ></div>
+        <div>
+          <p class="salary-avatar__name">{{ personnelDetail.full_name }}</p>
+          <p class="salary-avatar__role">{{ personnelDetail.grade }}</p>
         </div>
-      </el-form>
+      </div>
+      <el-row class="salary-detail__row">
+        <el-col :span="9" :offset="1">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item name="1">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">
+                    Actual Point
+                  </span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <div class="salary-detail__actual-point">
+                    <h3>
+                      Actual Working Hours:
+                      <span>160 hours</span>
+                    </h3>
+                    <i
+                      class="salary-detail__actual-point-icon el-icon-edit-outline"
+                    ></i>
+                  </div>
+                  <div class="salary-detail__actual-point">
+                    <h3>
+                      Unpaid Leave Hours:
+                      <span>2 hours</span>
+                    </h3>
+                    <i
+                      class="salary-detail__actual-point-icon el-icon-edit-outline"
+                    ></i>
+                  </div>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="2">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">OT Point</span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <el-collapse-item name="9">
+                    <template slot="title">
+                      <h3>In week: 1</h3>
+                    </template>
+                  </el-collapse-item>
+                  <el-collapse-item name="10">
+                    <template slot="title">
+                      <h3>Weekend: 2</h3>
+                    </template>
+                  </el-collapse-item>
+                  <el-collapse-item name="11">
+                    <template slot="title">
+                      <h3>Holiday: 2</h3>
+                    </template>
+                  </el-collapse-item>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="3">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">
+                    Total Deduction
+                  </span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3>Working Time:</h3>
+                  <div class="salary-detail__working-time">
+                    <h4 class="salary-detail__flex">
+                      <span>Working Late - 50.000</span>
+                      <span class="salary-detail__date-deduction">
+                        05-07-2022
+                      </span>
+                    </h4>
+                    <h4 class="salary-detail__flex">
+                      <span>Leave Soon - 50.000</span>
+                      <span class="salary-detail__date-deduction">
+                        05-07-2022
+                      </span>
+                    </h4>
+                  </div>
+                  <h3>Company Asset:</h3>
+                  <h3>Integrity:</h3>
+                  <h3>Behaviour:</h3>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="4">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">Advances</span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3>Advances:</h3>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </el-card>
+        </el-col>
+        <el-col :span="9" :offset="4">
+          <el-card>
+            <el-collapse v-model="activeNames" @change="handleChange">
+              <el-collapse-item name="5">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">Tax Payment</span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3>VN Progressive (By law):</h3>
+                  <h3>Fixed Percentage Tax (10%):</h3>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="6">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">
+                    Insurance Payment
+                  </span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3>Health Insurance (1.5%):</h3>
+                  <h3>Social Insurance (8%):</h3>
+                  <h3>Unemployment Insurance (1%):</h3>
+                  <h3>Pension Insurance (8%):</h3>
+                </div>
+              </el-collapse-item>
+              <el-collapse-item name="7">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">Bonus</span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3>Project Bonus:</h3>
+                  <h3>Reward Bonus:</h3>
+                </div>
+              </el-collapse-item>
+              <p class="salary-detail-content__detail">
+                Actual Income:
+                <span class="salary-detail__actual-income">12.000.000</span>
+              </p>
+            </el-collapse>
+          </el-card>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'PersonnelPage',
   layout: 'main',
   data() {
     return {
-      activeNames: [''],
+      activeNames: [],
       isOpenModalDetailPayroll: false,
       searchText: '',
       pickerOptions: {
@@ -257,7 +223,16 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('user', ['personnelDetail']),
+  },
+
+  async mounted() {
+    await this.getPersonnelDetail(this.$route.params.employeeId)
+  },
+
   methods: {
+    ...mapActions('user', ['getPersonnelDetail']),
     handleChange(val) {
       console.log(val)
     },
@@ -266,12 +241,112 @@ export default {
 </script>
 
 <style>
-.block {
+.salary-detail__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.salary-detail__header-text {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.salary-detail__content {
+  margin-top: 16px;
+}
+
+.el-page-header__left::after {
+  display: none;
+}
+
+.el-page-header__title {
+  color: #4d77ff;
+}
+
+.el-icon-back {
+  color: #4d77ff;
+}
+
+.salary-detail__row {
+  margin-bottom: 20px;
+}
+
+.salary-detail-content__detail {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.salary-avatar__background {
+  width: 56px;
+  height: 56px;
+  background-color: black;
+  border-radius: 50%;
+  border: 2px solid #000;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.salary-avatar__name {
+  margin: 0 0 0 12px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+.salary-avatar__role {
+  color: #8ba9cb;
+  font-size: 14px;
+  margin: 8px 0 0 12px;
+  line-height: 16px;
+}
+
+.salary-detail__employee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.salary-detail-content__sub-detail {
   padding-left: 30px;
 }
 
-.content {
-  padding: 20px;
+.salary-detail__actual-point {
+  display: flex;
+  align-items: center;
+}
+
+.salary-detail__actual-point-icon {
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 12px;
+  color: #4d77ff;
+  cursor: pointer;
+}
+
+.salary-detail__date-deduction {
+  background-color: #4d77ff;
+  color: #fff;
+  padding: 0px 4px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+.salary-detail__working-time {
+  margin-left: 30px;
+}
+
+.salary-detail__flex {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.salary-detail__actual-income {
+  font-size: 20px;
+  margin-left: 8px;
+  color: #4d77ff;
 }
 
 .col_status {
@@ -304,5 +379,9 @@ export default {
 
 .personnel-table {
   margin-top: 30px;
+}
+
+.el-collapse-item__arrow {
+  font-weight: 600;
 }
 </style>

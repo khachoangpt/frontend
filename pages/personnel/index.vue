@@ -111,12 +111,6 @@ export default {
   display: none;
 }
 
-.el-dialog__title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #204ee7;
-}
-
 .btn-add-employee {
   text-decoration: none;
   color: #fff !important;

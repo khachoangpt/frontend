@@ -27,6 +27,7 @@
         :pagination-options="{
           enabled: true,
         }"
+        @on-row-dblclick="onRowDoubleClick"
       >
         <template slot="pagination-bottom">
           <el-pagination
@@ -52,13 +53,13 @@ export default {
       columns: [
         {
           label: 'Nhân viên',
-          field: 'empName',
+          field: 'full_name',
           width: '150px',
           sortable: false,
         },
         {
           label: 'Mã',
-          field: 'empId',
+          field: 'employee_id',
           width: '50px',
           sortable: false,
         },
@@ -70,7 +71,7 @@ export default {
         },
         {
           label: 'Ngày công tiêu chuẩn',
-          field: 'standardPoint',
+          field: 'base_salary',
           width: '168px',
           sortable: false,
         },
@@ -87,42 +88,46 @@ export default {
           sortable: false,
         },
         {
-          label: 'Total Deduction',
+          label: 'Khấu trừ',
           field: 'totalDeduction',
+          width: '68px',
           sortable: false,
         },
         {
-          label: 'Insurance Payment',
+          label: 'Bảo hiểm',
           field: 'insurancePayment',
+          width: '74px',
           sortable: false,
         },
         {
-          label: 'Tax Payment',
+          label: 'Thuế',
           field: 'taxPayment',
           sortable: false,
         },
         {
-          label: 'Total Bonus',
+          label: 'Thưởng',
           field: 'totalBonus',
           sortable: false,
         },
         {
-          label: 'Advance',
+          label: 'Tạm ứng',
           field: 'advance',
+          width: '70px',
           sortable: false,
         },
         {
-          label: 'Actual income',
+          label: 'Lương thực nhận',
           field: 'actualIncome',
+          width: '140px',
           sortable: false,
         },
       ],
       rows: [
         {
-          empId: 'He13131',
-          empName: 'Nguyễn Khắc Hoàng',
+          employee_id: 'huynq100',
+          full_name: 'Nguyễn Khắc Hoàng',
           position: 'BA',
-          standardPoint: '26',
+          base_salary: '26',
           actualPoint: '24',
           OTPoint: '5',
           totalDeduction: '700000',
@@ -140,7 +145,7 @@ export default {
     ...mapGetters('salary', ['monthSearch']),
   },
   methods: {
-    ...mapActions('salary', ['onChangeMonth']),
+    ...mapActions('salary', ['onChangeMonth', 'onRowDoubleClick']),
     ...mapMutations('salary', ['setMonthSearch']),
     selectMonth(e) {
       this.$emit('input', e)

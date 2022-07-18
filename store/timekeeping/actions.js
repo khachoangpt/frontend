@@ -234,4 +234,14 @@ export default {
     await commit('setSelectedTimeRange', timeRange)
     await dispatch('getAllTimeKeeping', [state.selectedTimeRange, 1])
   },
+
+  async checkIn({ commit }) {
+    await commit('setIsCheckIn', false)
+    Message.success('Check in thành công.')
+  },
+
+  async checkOut({ commit }) {
+    await commit('setIsCheckIn', true)
+    Message.success('Check out thành công')
+  },
 }

@@ -80,7 +80,7 @@
         <el-col :span="14">
           Yêu cầu:
           <span class="request-detail-dialog__value">
-            {{ requestSendDetail.request_title }}
+            {{ requestSendDetail.request_name }}
           </span>
         </el-col>
         <el-col :span="10">
@@ -113,8 +113,16 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          Đã xem bởi:
-          <span class="request-detail-dialog__value">Nguyễn Khắc Hoàng</span>
+          <span>Đã xem bởi:</span>
+          <div class="request-detail-dialog__tags">
+            <el-tag
+              v-for="(name, index) in requestSendDetail.checked_by"
+              :key="'name' + index"
+              class="request-detail-dialog__value request-detail-dialog__tag"
+            >
+              {{ name }}
+            </el-tag>
+          </div>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
@@ -257,5 +265,14 @@ export default {
 
 .request-detail-dialog__description::-webkit-scrollbar {
   display: none;
+}
+
+.request-detail-dialog__tags {
+  display: flex;
+  margin-top: 4px;
+}
+
+.request-detail-dialog__tag {
+  margin-left: 8px;
 }
 </style>

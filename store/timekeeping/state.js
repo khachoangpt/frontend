@@ -28,4 +28,5 @@ export default () => ({
     },
   ],
   monthSearch: new Date(),
+  isCheckIn: true,
 })

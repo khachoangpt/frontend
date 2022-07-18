@@ -91,7 +91,20 @@
         </div>
       </v-calendar>
     </el-col>
-    <el-col :span="4"></el-col>
+    <el-col :span="4">
+      <div class="timekeeping-check">
+        <div v-if="isCheckIn" class="timekeeping-check-in-btn" @click="checkIn">
+          IN
+        </div>
+        <div
+          v-if="!isCheckIn"
+          class="timekeeping-check-out-btn"
+          @click="checkOut"
+        >
+          OUT
+        </div>
+      </div>
+    </el-col>
     <el-dialog
       :title="
         $i18n.t('timekeeping.dialog.title') +
@@ -184,6 +197,7 @@ export default {
       'selectedTimeRange',
       'listEmployeeTimekeeping',
       'timekeepingInDay',
+      'isCheckIn',
     ]),
   },
 
@@ -191,6 +205,8 @@ export default {
     ...mapActions('timekeeping', [
       'getEmployeeTimekeepingList',
       'getDetailTimekeeping',
+      'checkIn',
+      'checkOut',
     ]),
 
     async dayClick(selectedDay) {
@@ -429,9 +445,45 @@ export default {
   margin-bottom: 16px;
 }
 
-.el-dialog__title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #204ee7;
+.timekeeping-check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 80vh;
+}
+
+.timekeeping-check-in-btn {
+  width: 130px;
+  height: 130px;
+  background-color: #409eff;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 72px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.timekeeping-check-in-btn:hover {
+  background-color: #0080ff;
+}
+
+.timekeeping-check-out-btn {
+  width: 130px;
+  height: 130px;
+  background-color: #f56c6c;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 54px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.timekeeping-check-out-btn:hover {
+  background-color: #f54747;
 }
 </style>

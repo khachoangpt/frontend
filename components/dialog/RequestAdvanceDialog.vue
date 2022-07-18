@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    title="Yêu cầu tạm ứng"
     top="8vh"
     :visible.sync="requestAdvanceDialogVisible"
     width="36%"
@@ -8,6 +7,7 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
+    <span slot="title" class="request-dialog__title">Yêu cầu tạm ứng</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Advance for only official staff.
@@ -191,5 +191,10 @@ export default {
 
 .request-form__input-area {
   width: 100%;
+}
+
+.request-dialog__title {
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

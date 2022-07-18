@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    title="Yêu cầu giờ làm"
     top="8vh"
     :visible.sync="requestWorkingScheduleDialogVisible"
     width="36%"
@@ -8,6 +7,7 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
+    <span slot="title" class="request-dialog__title">Yêu cầu giờ làm</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Working schedule for all employees.
@@ -211,5 +211,10 @@ export default {
 
 .request-form__input-area {
   width: 100%;
+}
+
+.request-dialog__title {
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>

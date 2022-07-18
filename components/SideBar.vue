@@ -270,4 +270,9 @@ export default {
 .sub-title-policy:hover {
   background-color: #4d77ff !important;
 }
+
+.el-submenu .el-menu {
+  height: 250px;
+  overflow-y: scroll;
+}
 </style>

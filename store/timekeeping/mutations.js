@@ -42,4 +42,8 @@ export default {
   setColumns(state, columns) {
     state.columns = columns
   },
+
+  setIsCheckIn(state, isCheckIn) {
+    state.isCheckIn = isCheckIn
+  },
 }

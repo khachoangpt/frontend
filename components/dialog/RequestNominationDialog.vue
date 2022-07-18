@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    title="Warning"
     top="4vh"
     :visible.sync="requestNominationDialogVisible"
     width="50%"
@@ -8,6 +7,7 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
+    <span slot="title" class="request-dialog__title">Đề cử</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Nomination for all employees.
@@ -209,7 +209,6 @@ export default {
     },
 
     querySearch(queryString, cb) {
-      console.log(queryString)
       const links = this.links
       const results = queryString
         ? links.filter(this.createFilter(queryString))
@@ -287,5 +286,10 @@ export default {
 
 .request-form__input {
   width: 90%;
+}
+
+.request-dialog__title {
+  font-size: 20px;
+  font-weight: 600;
 }
 </style>
