@@ -178,3 +178,11 @@ export default {
   margin-top: 30px;
 }
 </style>
+
+<style>
+.el-pagination {
+  margin-top: 16px;
+  text-align: center;
+  padding-bottom: 16px;
+}
+</style>
