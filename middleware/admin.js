@@ -7,7 +7,7 @@ export default function ({ app, store, redirect }) {
   } else {
     const decoded = jwtDecode(getToken())
     const roleList = decoded.User_Data.authorities
-    if(roleList.find(role => role.authority !== 'ROLE_ADMIN')) {
+    if (roleList.find((role) => role.authority !== 'ROLE_ADMIN')) {
       return redirect('/')
     }
   }

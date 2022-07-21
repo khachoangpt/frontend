@@ -18,8 +18,8 @@
     </div>
     <div class="salary-table">
       <vue-good-table
-        :columns="columns"
-        :rows="rows"
+        :columns="salaryListHeader"
+        :rows="salaryList"
         :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
         sort-options="{
           enabled: true,
@@ -34,7 +34,7 @@
             background
             layout="prev, pager, next"
             :page-size="5"
-            :total="5"
+            :total="totalPage"
           >
           </el-pagination>
         </template>
@@ -49,111 +49,32 @@ export default {
   name: 'SalaryPage',
   layout: 'main',
   data() {
-    return {
-      columns: [
-        {
-          label: 'Nhân viên',
-          field: 'full_name',
-          width: '150px',
-          sortable: false,
-        },
-        {
-          label: 'Mã',
-          field: 'employee_id',
-          width: '50px',
-          sortable: false,
-        },
-        {
-          label: 'Vị trí',
-          field: 'position',
-          width: '80px',
-          sortable: false,
-        },
-        {
-          label: 'Ngày công tiêu chuẩn',
-          field: 'base_salary',
-          width: '168px',
-          sortable: false,
-        },
-        {
-          label: 'Ngày công thực tế',
-          field: 'actualPoint',
-          width: '144px',
-          sortable: false,
-        },
-        {
-          label: 'Điểm OT',
-          field: 'OTPoint',
-          width: '70px',
-          sortable: false,
-        },
-        {
-          label: 'Khấu trừ',
-          field: 'totalDeduction',
-          width: '68px',
-          sortable: false,
-        },
-        {
-          label: 'Bảo hiểm',
-          field: 'insurancePayment',
-          width: '74px',
-          sortable: false,
-        },
-        {
-          label: 'Thuế',
-          field: 'taxPayment',
-          sortable: false,
-        },
-        {
-          label: 'Thưởng',
-          field: 'totalBonus',
-          sortable: false,
-        },
-        {
-          label: 'Tạm ứng',
-          field: 'advance',
-          width: '70px',
-          sortable: false,
-        },
-        {
-          label: 'Lương thực nhận',
-          field: 'actualIncome',
-          width: '140px',
-          sortable: false,
-        },
-      ],
-      rows: [
-        {
-          employee_id: 'huynq100',
-          full_name: 'Nguyễn Khắc Hoàng',
-          position: 'BA',
-          base_salary: '26',
-          actualPoint: '24',
-          OTPoint: '5',
-          totalDeduction: '700000',
-          insurancePayment: '700000',
-          taxPayment: '45456345',
-          totalBonus: '123123412',
-          advance: '123423',
-          actualIncome: '1234585',
-        },
-      ],
-    }
+    return {}
   },
 
   computed: {
-    ...mapGetters('salary', ['monthSearch']),
+    ...mapGetters('salary', [
+      'monthSearch',
+      'salaryListHeader',
+      'salaryList',
+      'totalPage',
+    ]),
   },
+
+  async mounted() {
+    await this.getListSalary(1)
+  },
+
   methods: {
-    ...mapActions('salary', ['onChangeMonth', 'onRowDoubleClick']),
+    ...mapActions('salary', [
+      'onChangeMonth',
+      'onRowDoubleClick',
+      'getListSalary',
+    ]),
     ...mapMutations('salary', ['setMonthSearch']),
     selectMonth(e) {
       this.$emit('input', e)
       this.setMonthSearch(e)
-    },
-
-    handleChange(val) {
-      console.log(val)
     },
   },
 }

@@ -180,7 +180,6 @@ export default {
     ]),
 
     onRowDoubleClick(data) {
-      console.log(data)
       if (data.row.is_enough_level === 'True') {
         this.isEnoughLevel = true
       } else {

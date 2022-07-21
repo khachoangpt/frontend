@@ -29,7 +29,7 @@
                   <div class="salary-detail__actual-point">
                     <h3>
                       Actual Working Hours:
-                      <span>160 hours</span>
+                      <span>{{ salaryDetail.standardPoint }}</span>
                     </h3>
                     <i
                       class="salary-detail__actual-point-icon el-icon-edit-outline"
@@ -51,20 +51,30 @@
                   <span class="salary-detail-content__detail">OT Point</span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <el-collapse-item name="9">
+                  <el-collapse-item
+                    v-for="(ot, index) in salaryDetail.otResponseList
+                      .otResponseList"
+                    :key="'ot' + index"
+                  >
                     <template slot="title">
-                      <h3>In week: 1</h3>
+                      <h3>
+                        {{ ot.overtime_type }}: {{ ot.totalOTPointByType }}
+                      </h3>
                     </template>
-                  </el-collapse-item>
-                  <el-collapse-item name="10">
-                    <template slot="title">
-                      <h3>Weekend: 2</h3>
-                    </template>
-                  </el-collapse-item>
-                  <el-collapse-item name="11">
-                    <template slot="title">
-                      <h3>Holiday: 2</h3>
-                    </template>
+                    <div class="salary-detail__flex">
+                      <h4
+                        v-for="(overtime, i) in ot.otDetailResponseList"
+                        :key="'overtime' + i"
+                      >
+                        <span
+                          >From {{ overtime.start_time }} to
+                          {{ overtime.end_time }}</span
+                        >
+                        <span class="salary-detail__date-deduction">
+                          {{ overtime.date }}
+                        </span>
+                      </h4>
+                    </div>
                   </el-collapse-item>
                 </div>
               </el-collapse-item>
@@ -77,22 +87,22 @@
                 <div class="salary-detail-content__sub-detail">
                   <h3>Working Time:</h3>
                   <div class="salary-detail__working-time">
-                    <h4 class="salary-detail__flex">
-                      <span>Working Late - 50.000</span>
+                    <h4
+                      v-for="(deduction, index) in salaryDetail
+                        .deductionSalaryResponseList
+                        .deductionSalaryResponseList"
+                      :key="'deduction' + index"
+                      class="salary-detail__flex"
+                    >
+                      <span
+                        >{{ deduction.deduction_name }} -
+                        {{ deduction.value }}</span
+                      >
                       <span class="salary-detail__date-deduction">
-                        05-07-2022
-                      </span>
-                    </h4>
-                    <h4 class="salary-detail__flex">
-                      <span>Leave Soon - 50.000</span>
-                      <span class="salary-detail__date-deduction">
-                        05-07-2022
+                        {{ deduction.date }}
                       </span>
                     </h4>
                   </div>
-                  <h3>Company Asset:</h3>
-                  <h3>Integrity:</h3>
-                  <h3>Behaviour:</h3>
                 </div>
               </el-collapse-item>
               <el-collapse-item name="4">
@@ -100,7 +110,19 @@
                   <span class="salary-detail-content__detail">Advances</span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <h3>Advances:</h3>
+                  <div>
+                    <h3
+                      v-for="(advance, index) in salaryDetail
+                        .advanceSalaryResponseList.advanceSalaryResponseList"
+                      :key="'advance' + index"
+                      class="salary-detail__flex"
+                    >
+                      <span> {{ advance.value }}</span>
+                      <span class="salary-detail__date-deduction">
+                        {{ advance.date }}
+                      </span>
+                    </h3>
+                  </div>
                 </div>
               </el-collapse-item>
             </el-collapse>
@@ -114,8 +136,13 @@
                   <span class="salary-detail-content__detail">Tax Payment</span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <h3>VN Progressive (By law):</h3>
-                  <h3>Fixed Percentage Tax (10%):</h3>
+                  <h3
+                    v-for="(tax, index) in salaryDetail.employeeTaxResponseList
+                      .employeeTaxResponseList"
+                    :key="'tax' + index"
+                  >
+                    {{ tax.tax_name }}({{ tax.tax_value }}): {{ tax.value }}
+                  </h3>
                 </div>
               </el-collapse-item>
               <el-collapse-item name="6">
@@ -125,10 +152,16 @@
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <h3>Health Insurance (1.5%):</h3>
-                  <h3>Social Insurance (8%):</h3>
-                  <h3>Unemployment Insurance (1%):</h3>
-                  <h3>Pension Insurance (8%):</h3>
+                  <h3
+                    v-for="(insurance, index) in salaryDetail
+                      .employeeInsuranceResponseList
+                      .employeeInsuranceResponseList"
+                    :key="'insurance' + index"
+                  >
+                    {{ insurance.insurance_name }}({{
+                      insurance.insurance_value
+                    }}%): {{ insurance.value }} $
+                  </h3>
                 </div>
               </el-collapse-item>
               <el-collapse-item name="7">
@@ -136,13 +169,24 @@
                   <span class="salary-detail-content__detail">Bonus</span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <h3>Project Bonus:</h3>
-                  <h3>Reward Bonus:</h3>
+                  <h3
+                    v-for="(bonus, index) in salaryDetail
+                      .bonusSalaryResponseList.bonusSalaryResponseList"
+                    :key="'bonus' + index"
+                    class="salary-detail__flex"
+                  >
+                    <span> {{ bonus.value }}</span>
+                    <span class="salary-detail__date-deduction">
+                      {{ bonus.date }}
+                    </span>
+                  </h3>
                 </div>
               </el-collapse-item>
               <p class="salary-detail-content__detail">
                 Actual Income:
-                <span class="salary-detail__actual-income">12.000.000</span>
+                <span class="salary-detail__actual-income">{{
+                  salaryDetail.final_salary
+                }}</span>
               </p>
             </el-collapse>
           </el-card>
@@ -160,82 +204,21 @@ export default {
   data() {
     return {
       activeNames: [],
-      isOpenModalDetailPayroll: false,
-      searchText: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now()
-        },
-      },
-
-      value: '',
-      value1: '',
-      columns: [
-        {
-          label: 'Employee Id',
-          field: 'empId',
-        },
-        {
-          label: 'Employee Name',
-          field: 'empName',
-        },
-        {
-          label: 'Position',
-          field: 'position',
-        },
-        {
-          label: 'Standard Point',
-          field: 'standardPoint',
-        },
-        {
-          label: 'Actual Point',
-          field: 'actualPoint',
-        },
-        {
-          label: 'OT Point',
-          field: 'OTPoint',
-        },
-        {
-          label: 'Total Deduction',
-          field: 'totalDeduction',
-        },
-        {
-          label: 'Insurance Payment',
-          field: 'insurancePayment',
-        },
-        {
-          label: 'Tax Payment',
-          field: 'taxPayment',
-        },
-        {
-          label: 'Total Bonus',
-          field: 'totalBonus',
-        },
-        {
-          label: 'Advance',
-          field: 'advance',
-        },
-        {
-          label: 'Actual income',
-          field: 'actualIncome',
-        },
-      ],
     }
   },
 
   computed: {
     ...mapGetters('user', ['personnelDetail']),
+    ...mapGetters('salary', ['salaryDetail']),
   },
 
-  async mounted() {
-    await this.getPersonnelDetail(this.$route.params.employeeId)
+  async beforeMount() {
+    await this.getSalaryDetail(this.$route.params.employeeId)
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelDetail']),
-    handleChange(val) {
-      console.log(val)
-    },
+    ...mapActions('salary', ['getSalaryDetail']),
+    handleChange(val) {},
   },
 }
 </script>
@@ -338,7 +321,7 @@ export default {
 }
 
 .salary-detail__flex {
-  width: 60%;
+  width: 70%;
   display: flex;
   justify-content: space-between;
 }

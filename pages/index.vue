@@ -61,18 +61,6 @@ export default {
     }
   },
 
-  mounted() {
-    // use "main" socket defined in nuxt.config.js
-    this.socket = this.$nuxtSocket({
-      name: 'main', // select "main" socket from nuxt.config.js - we could also skip this because "main" is the default socket
-    })
-
-    this.socket.on('tick', (tickId) => {
-      this.latestTickId = tickId
-      this.getPersonnelList({ searchText: '', page: 1 })
-    })
-  },
-
   methods: {
     ...mapActions('user', ['getPersonnelList']),
   },

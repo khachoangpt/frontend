@@ -26,3 +26,9 @@ export const ERequestType = {
   'Tax Enrollment': 'TAX_ENROLLMENT',
   '': '',
 }
+
+export const EOvertime = {
+  'In Week': 'IN_WEEK',
+  Weekend: 'WEEKEND',
+  Holiday: 'HOLIDAY',
+}

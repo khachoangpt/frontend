@@ -282,7 +282,6 @@ export default {
     },
 
     updateScroll(evt) {
-      console.log(evt.target.scrollTop)
       if (evt.target.scrollTop > 0 && evt.target.scrollTop <= 529) {
         this.activeSubTab = 1
       }
