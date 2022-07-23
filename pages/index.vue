@@ -42,6 +42,84 @@
           </el-card>
         </div>
       </el-col>
+      <el-col
+        class="dashboard__col -max-width"
+        :lg="8"
+        :md="12"
+        :sm="24"
+        :xs="24"
+      >
+        <div class="grid-content bg-purple">
+          <el-card class="box-card -max-width">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Lịch sử lương</span>
+              <el-select v-model="option" placeholder="Năm">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <line-chart />
+          </el-card>
+        </div>
+      </el-col>
+      <el-col
+        class="dashboard__col -max-width"
+        :lg="8"
+        :md="12"
+        :sm="24"
+        :xs="24"
+      >
+        <div class="grid-content bg-purple">
+          <el-card class="box-card -max-width">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Cơ cấu lương</span>
+              <el-select v-model="option" placeholder="Tháng">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <doughnut-chart />
+          </el-card>
+        </div>
+      </el-col>
+      <el-col
+        class="dashboard__col -max-width"
+        :lg="8"
+        :md="12"
+        :sm="24"
+        :xs="24"
+      >
+        <div class="grid-content bg-purple">
+          <el-card class="box-card -max-width">
+            <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Cơ cấu tổ chức</span>
+              <el-select v-model="option" placeholder="Khu vực">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <tree-chart />
+          </el-card>
+        </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -49,15 +127,42 @@
 <script>
 import { mapActions } from 'vuex'
 import Doughnut from '~/components/chart/Doughnut.vue'
+import LineChart from '~/components/chart/LineChart.vue'
+import DoughnutChart from '~/components/chart/DoughnutChart.vue'
+import TreeChart from '~/components/chart/TreeChart.vue'
 export default {
   name: 'HomePage',
-  components: { Doughnut },
+  components: { Doughnut, LineChart, TreeChart, DoughnutChart },
   layout: 'main',
   middleware: ['auth'],
   data() {
     return {
       value: new Date(),
       latestTickId: 0,
+      options: [
+        {
+          value: 'Option1',
+          label: 'Option1',
+        },
+        {
+          value: 'Option2',
+          label: 'Option2',
+          disabled: true,
+        },
+        {
+          value: 'Option3',
+          label: 'Option3',
+        },
+        {
+          value: 'Option4',
+          label: 'Option4',
+        },
+        {
+          value: 'Option5',
+          label: 'Option5',
+        },
+      ],
+      option: '',
     }
   },
 
@@ -75,9 +180,15 @@ export default {
 .dashboard__col {
   margin-bottom: 24px;
 }
+.dashboard__col.-max-width {
+  width: 100%;
+}
 
 .box-card {
   width: 300px;
+}
+.box-card.-max-width {
+  width: 100%;
 }
 
 .el-calendar__header {
@@ -96,14 +207,14 @@ export default {
   text-align: center;
 }
 
-.clearfix:before,
+/* .clearfix:before,
 .clearfix:after {
   display: table;
   content: '';
 }
 .clearfix:after {
   clear: both;
-}
+} */
 
 .box-card__header-text {
   font-weight: 600;
@@ -118,5 +229,10 @@ export default {
 
 .el-card {
   border-radius: 10px;
+}
+
+.clearfix {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -109,7 +109,7 @@ export default {
   },
 
   async mounted() {
-    await this.getTaxList(this.$route.params.employeeId)
+    // await this.getTaxList(this.$route.params.employeeId)
   },
 
   methods: {
