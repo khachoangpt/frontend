@@ -28,4 +28,5 @@ export default {
   fullscreenLoading: (state) => state.fullscreenLoading,
   isEditAdditionInfo: (state) => state.isEditAdditionInfo,
   isEditWorkInfo: (state) => state.isEditWorkInfo,
+  listManager: (state) => state.listManager,
 }

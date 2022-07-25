@@ -9,6 +9,8 @@ export default {
 
   async addEmployee({ commit, state }, data) {
     try {
+      const regexEmpId = /\((.+)\)/i
+      data.managerId = data.managerId.match(regexEmpId)[1]
       const res = await this.$repository.user.addEmployee(data)
       if (res.code === 201) {
         Message.success('Thêm nhân viên mới thành công.')
@@ -18,6 +20,7 @@ export default {
         })
         await commit('setPersonnelList', res)
         await commit('setFullscreenLoading', false)
+        this.$router.push(this.localePath('/personnel'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -46,7 +49,7 @@ export default {
   },
 
   async getListGrade({ commit }, data) {
-    const res = await this.$repository.user.getListGrade()
+    const res = await this.$repository.user.getListGrade(data)
     await commit('setListGrade', res)
   },
 
@@ -279,5 +282,22 @@ export default {
     } catch (error) {
       Message.error(error.response.data.message)
     }
+  },
+
+  async searchManager({ commit }, data) {
+    try {
+      const result = []
+      const res = await this.$repository.user.searchManager(data)
+      for (let i = 0; i < res.length; i++) {
+        result.push({ value: res[i] })
+      }
+      await commit('setListManager', result)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async onChangePosition({ commit, dispatch }, data) {
+    await dispatch('getListGrade', data)
   },
 }

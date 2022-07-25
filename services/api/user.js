@@ -68,9 +68,9 @@ class UserApi extends User {
     )
   }
 
-  getListGrade() {
+  getListGrade(data) {
     const accessToken = getToken()
-    return this.$axios.$get('/api/list_grade/1', {
+    return this.$axios.$get('/api/list_grade/' + data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
@@ -253,6 +253,15 @@ class UserApi extends User {
   getListRoleType() {
     const accessToken = getToken()
     return this.$axios.$get('/api/list_role_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  searchManager(data) {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/list_manager?name=' + data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

@@ -17,6 +17,7 @@
               <el-form-item label="Họ và tên" prop="fullName">
                 <el-input
                   v-model="addEmployeeForm.fullName"
+                  placeholder="Họ và tên"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -40,7 +41,7 @@
               <el-form-item label="Giới tính" prop="gender">
                 <el-select
                   v-model="addEmployeeForm.gender"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -59,6 +60,7 @@
               <el-form-item label="Số điện thoại" prop="phone">
                 <el-input
                   v-model="addEmployeeForm.phone"
+                  placeholder="Số điện thoại"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -71,6 +73,7 @@
               <el-form-item label="Email cá nhân" prop="personalEmail">
                 <el-input
                   v-model="addEmployeeForm.personalEmail"
+                  placeholder="Email cá nhân"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -81,7 +84,7 @@
               <el-form-item label="Phân quyền" prop="role">
                 <el-select
                   v-model="addEmployeeForm.role"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -100,8 +103,9 @@
               <el-form-item label="Vị trí" prop="position">
                 <el-select
                   v-model="addEmployeeForm.position"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
+                  @change="onChangePosition"
                 >
                   <el-option
                     v-for="item in listPositions"
@@ -119,8 +123,9 @@
               <el-form-item label="Cấp bậc" prop="grade">
                 <el-select
                   v-model="addEmployeeForm.grade"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
+                  :disabled="addEmployeeForm.position === ''"
                 >
                   <el-option
                     v-for="item in listGrade"
@@ -140,7 +145,7 @@
               <el-form-item label="Lĩnh vực" prop="area">
                 <el-select
                   v-model="addEmployeeForm.area"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -159,7 +164,7 @@
               <el-form-item label="Loại hình lao động" prop="workingType">
                 <el-select
                   v-model="addEmployeeForm.workingType"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -176,10 +181,12 @@
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
               <el-form-item label="Quản lý" prop="managerId">
-                <el-input
+                <el-autocomplete
                   v-model="addEmployeeForm.managerId"
                   class="add-employee-form__input"
-                ></el-input>
+                  :fetch-suggestions="querySearch"
+                  placeholder="Please Input"
+                ></el-autocomplete>
               </el-form-item>
             </div>
           </el-col>
@@ -188,7 +195,7 @@
               <el-form-item label="Loại nhân sự" prop="employeeType">
                 <el-select
                   v-model="addEmployeeForm.employeeType"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -209,7 +216,7 @@
               <el-form-item label="Văn phòng làm việc" prop="office">
                 <el-select
                   v-model="addEmployeeForm.office"
-                  placeholder="Select"
+                  placeholder="Chọn"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -256,6 +263,7 @@
       <el-button type="info" @click="$router.go(-1)">Quay lại</el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
         type="primary"
         @click="addNewEmployee('addEmployeeForm')"
       >
@@ -273,6 +281,7 @@ export default {
   middleware: ['auth', 'admin'],
   data() {
     return {
+      state1: '',
       addEmployeeForm: {
         fullName: '',
         role: '',
@@ -362,13 +371,6 @@ export default {
             trigger: 'blur',
           },
         ],
-        managerId: [
-          {
-            required: true,
-            message: 'Quản lý không được để trống',
-            trigger: 'blur',
-          },
-        ],
         employeeType: [
           {
             required: true,
@@ -415,17 +417,18 @@ export default {
       'employeeTypes',
       'listPositions',
       'fullscreenLoading',
+      'listManager',
     ]),
   },
 
   async mounted() {
-    await this.getListGrade()
     await this.getListOffice()
     await this.getListArea()
     await this.getEmployeeTypes()
     await this.getWorkingTypes()
     await this.getListPositions()
     await this.getListRoleType()
+    await this.searchManager('')
   },
 
   methods: {
@@ -439,10 +442,12 @@ export default {
       'getWorkingTypes',
       'getListPositions',
       'getListRoleType',
+      'searchManager',
+      'onChangePosition'
     ]),
 
     ...mapMutations('user', ['setFullscreenLoading']),
-    
+
     addNewEmployee(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
@@ -452,6 +457,18 @@ export default {
           return false
         }
       })
+    },
+
+    querySearch(queryString, cb) {
+      const results = queryString
+        ? this.listManager.filter(this.createFilter(queryString))
+        : this.listManager
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
     },
   },
 }
@@ -477,5 +494,9 @@ export default {
 
 .add-employee-form__input {
   width: 80% !important;
+}
+
+.el-autocomplete-suggestion {
+  width: fit-content !important;
 }
 </style>

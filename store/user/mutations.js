@@ -268,4 +268,8 @@ export default {
   setIsEditWorkInfo(state, isEditWorkInfo) {
     state.isEditWorkInfo = isEditWorkInfo
   },
+
+  setListManager(state, listManager) {
+    state.listManager = listManager
+  },
 }

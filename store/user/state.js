@@ -138,4 +138,5 @@ export default () => ({
   searchText: '',
   totalPage: 1,
   fullscreenLoading: false,
+  listManager: [],
 })

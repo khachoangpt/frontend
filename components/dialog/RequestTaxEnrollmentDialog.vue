@@ -65,6 +65,7 @@
       <el-button @click="closeDialog"> Đóng </el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
         type="primary"
         @click="submitForm('taxEnrollmentForm')"
       >
