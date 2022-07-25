@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="add-personnel__header">
-      <div class="add-personnel__header-text">Thêm mới nhân viên</div>
+      <div class="add-personnel__header-text">
+        {{ $i18n.t('personnel.addNewEmployee') }}
+      </div>
     </div>
     <div class="add-personnel__content">
       <el-form
@@ -14,10 +16,13 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <el-form-item label="Họ và tên" prop="fullName">
+              <el-form-item
+                :label="$i18n.t('personnel.fullName')"
+                prop="fullName"
+              >
                 <el-input
                   v-model="addEmployeeForm.fullName"
-                  placeholder="Họ và tên"
+                  :placeholder="$i18n.t('personnel.fullName')"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -25,11 +30,14 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Ngày sinh" prop="birthDate">
+              <el-form-item
+                :label="$i18n.t('personnel.dateOfBirth')"
+                prop="birthDate"
+              >
                 <el-date-picker
                   v-model="addEmployeeForm.birthDate"
                   type="date"
-                  placeholder="Ngày sinh"
+                  :placeholder="$i18n.t('personnel.dateOfBirth')"
                   class="add-employee-form__input"
                 >
                 </el-date-picker>
@@ -38,16 +46,16 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple">
-              <el-form-item label="Giới tính" prop="gender">
+              <el-form-item :label="$i18n.t('personnel.gender')" prop="gender">
                 <el-select
                   v-model="addEmployeeForm.gender"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
                     v-for="item in genderList"
                     :key="item.value"
-                    :label="item.label"
+                    :label="$i18n.t('personnel.genderList.' + item.label)"
                     :value="item.value"
                   >
                   </el-option>
@@ -57,10 +65,10 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Số điện thoại" prop="phone">
+              <el-form-item :label="$i18n.t('personnel.phone')" prop="phone">
                 <el-input
                   v-model="addEmployeeForm.phone"
-                  placeholder="Số điện thoại"
+                  :placeholder="$i18n.t('personnel.phone')"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -70,10 +78,13 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Email cá nhân" prop="personalEmail">
+              <el-form-item
+                :label="$i18n.t('personnel.personalEmail')"
+                prop="personalEmail"
+              >
                 <el-input
                   v-model="addEmployeeForm.personalEmail"
-                  placeholder="Email cá nhân"
+                  :placeholder="$i18n.t('personnel.personalEmail')"
                   class="add-employee-form__input"
                 ></el-input>
               </el-form-item>
@@ -81,16 +92,16 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Phân quyền" prop="role">
+              <el-form-item :label="$i18n.t('personnel.role')" prop="role">
                 <el-select
                   v-model="addEmployeeForm.role"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
                     v-for="item in roles"
                     :key="item.type_id"
-                    :label="item.role"
+                    :label="$i18n.t('personnel.roles.' + item.role)"
                     :value="item.type_id"
                   >
                   </el-option>
@@ -100,10 +111,13 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Vị trí" prop="position">
+              <el-form-item
+                :label="$i18n.t('personnel.position')"
+                prop="position"
+              >
                 <el-select
                   v-model="addEmployeeForm.position"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                   @change="onChangePosition"
                 >
@@ -120,10 +134,10 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Cấp bậc" prop="grade">
+              <el-form-item :label="$i18n.t('personnel.grade')" prop="grade">
                 <el-select
                   v-model="addEmployeeForm.grade"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                   :disabled="addEmployeeForm.position === ''"
                 >
@@ -142,10 +156,10 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Lĩnh vực" prop="area">
+              <el-form-item :label="$i18n.t('personnel.area')" prop="area">
                 <el-select
                   v-model="addEmployeeForm.area"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -161,10 +175,13 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Loại hình lao động" prop="workingType">
+              <el-form-item
+                :label="$i18n.t('personnel.workingType')"
+                prop="workingType"
+              >
                 <el-select
                   v-model="addEmployeeForm.workingType"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -180,28 +197,36 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Quản lý" prop="managerId">
+              <el-form-item
+                :label="$i18n.t('personnel.manager')"
+                prop="managerId"
+              >
                 <el-autocomplete
                   v-model="addEmployeeForm.managerId"
                   class="add-employee-form__input"
                   :fetch-suggestions="querySearch"
-                  placeholder="Please Input"
+                  :placeholder="$i18n.t('personnel.manager')"
                 ></el-autocomplete>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Loại nhân sự" prop="employeeType">
+              <el-form-item
+                :label="$i18n.t('personnel.employeeType')"
+                prop="employeeType"
+              >
                 <el-select
                   v-model="addEmployeeForm.employeeType"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
                     v-for="item in employeeTypes"
                     :key="item.type_id"
-                    :label="item.name"
+                    :label="
+                      $i18n.t('personnel.employeeTypes[\'' + item.name + '\']')
+                    "
                     :value="item.type_id"
                   >
                   </el-option>
@@ -213,10 +238,10 @@
         <el-row :gutter="40">
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Văn phòng làm việc" prop="office">
+              <el-form-item :label="$i18n.t('personnel.office')" prop="office">
                 <el-select
                   v-model="addEmployeeForm.office"
-                  placeholder="Chọn"
+                  :placeholder="$i18n.t('personnel.select')"
                   class="add-employee-form__input"
                 >
                   <el-option
@@ -232,11 +257,14 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Ngày bắt đầu" prop="startDate">
+              <el-form-item
+                :label="$i18n.t('personnel.startDate')"
+                prop="startDate"
+              >
                 <el-date-picker
                   v-model="addEmployeeForm.startDate"
                   type="date"
-                  placeholder="Ngày bắt đầu"
+                  :placeholder="$i18n.t('personnel.startDate')"
                   class="add-employee-form__input"
                 >
                 </el-date-picker>
@@ -245,11 +273,14 @@
           </el-col>
           <el-col :span="6">
             <div class="grid-content bg-purple-light">
-              <el-form-item label="Ngày kết thúc" prop="endDate">
+              <el-form-item
+                :label="$i18n.t('personnel.endDate')"
+                prop="endDate"
+              >
                 <el-date-picker
                   v-model="addEmployeeForm.endDate"
                   type="date"
-                  placeholder="Ngày kết thúc"
+                  :placeholder="$i18n.t('personnel.endDate')"
                   class="add-employee-form__input"
                 >
                 </el-date-picker>
@@ -260,14 +291,16 @@
       </el-form>
     </div>
     <div class="add-personnel__footer">
-      <el-button type="info" @click="$router.go(-1)">Quay lại</el-button>
+      <el-button type="info" @click="$router.go(-1)">{{
+        $i18n.t('personnel.back')
+      }}</el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         element-loading-background="rgba(0, 0, 0, 0.8)"
         type="primary"
         @click="addNewEmployee('addEmployeeForm')"
       >
-        Thêm
+        {{ $i18n.t('personnel.addEmployee') }}
       </el-button>
     </div>
   </div>
@@ -304,98 +337,98 @@ export default {
         fullName: [
           {
             required: true,
-            message: 'Tên không được để trống',
+            message: this.$i18n.t('personnel.validation.fullName'),
             trigger: 'blur',
           },
         ],
         birthDate: [
           {
             required: true,
-            message: 'Ngày sinh không được để trống',
+            message: this.$i18n.t('personnel.validation.birthDate'),
             trigger: 'blur',
           },
         ],
         gender: [
           {
             required: true,
-            message: 'Giới tính không được để trống',
+            message: this.$i18n.t('personnel.validation.gender'),
             trigger: 'blur',
           },
         ],
         phone: [
           {
             required: true,
-            message: 'Số điện thoại không được để trống',
+            message: this.$i18n.t('personnel.validation.phone'),
             trigger: 'blur',
           },
         ],
         personalEmail: [
           {
             required: true,
-            message: 'Email không được để trống',
+            message: this.$i18n.t('personnel.validation.personalEmail'),
             trigger: 'blur',
           },
         ],
         role: [
           {
             required: true,
-            message: 'Phân quyền không được để trống',
+            message: this.$i18n.t('personnel.validation.role'),
             trigger: 'blur',
           },
         ],
         position: [
           {
             required: true,
-            message: 'Vị trí không được để trống',
+            message: this.$i18n.t('personnel.validation.position'),
             trigger: 'blur',
           },
         ],
         grade: [
           {
             required: true,
-            message: 'Cấp bậc không được để trống',
+            message: this.$i18n.t('personnel.validation.grade'),
             trigger: 'blur',
           },
         ],
         area: [
           {
             required: true,
-            message: 'Lĩnh vực không được để trống',
+            message: this.$i18n.t('personnel.validation.area'),
             trigger: 'blur',
           },
         ],
         workingType: [
           {
             required: true,
-            message: 'Loại hình lao động không được để trống',
+            message: this.$i18n.t('personnel.validation.workingType'),
             trigger: 'blur',
           },
         ],
         employeeType: [
           {
             required: true,
-            message: 'Loại nhân viên không được để trống',
+            message: this.$i18n.t('personnel.validation.employeeType'),
             trigger: 'blur',
           },
         ],
         office: [
           {
             required: true,
-            message: 'Văn phòng không được để trống',
+            message: this.$i18n.t('personnel.validation.office'),
             trigger: 'blur',
           },
         ],
         startDate: [
           {
             required: true,
-            message: 'Ngày bắt đầu không được để trống',
+            message: this.$i18n.t('personnel.validation.startDate'),
             trigger: 'blur',
           },
         ],
         endDate: [
           {
             required: true,
-            message: 'Ngày kết thúc không được để trống',
+            message: this.$i18n.t('personnel.validation.endDate'),
             trigger: 'blur',
           },
         ],
@@ -443,7 +476,7 @@ export default {
       'getListPositions',
       'getListRoleType',
       'searchManager',
-      'onChangePosition'
+      'onChangePosition',
     ]),
 
     ...mapMutations('user', ['setFullscreenLoading']),

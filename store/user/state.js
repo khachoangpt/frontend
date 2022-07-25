@@ -113,11 +113,11 @@ export default () => ({
   genderList: [
     {
       value: 'Male',
-      label: 'Nam',
+      label: 'male',
     },
     {
       value: 'Female',
-      label: 'Nữ',
+      label: 'female',
     },
   ],
   roles: [],
