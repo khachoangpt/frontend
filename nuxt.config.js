@@ -20,7 +20,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
       {
         'http-equiv': 'Content-Security-Policy',
-        content: '',
+        content: 'upgrade-insecure-requests',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/hrm-logo.png' }],
