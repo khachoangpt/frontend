@@ -28,7 +28,7 @@ export default {
     }
   },
 
-  async getEmployeeInfo({commit}, data) {
+  async getEmployeeInfo({ commit }, data) {
     const res = await this.$repository.user.getEmployeeDetail(data)
     await commit('auth/setName', res.full_name, { root: true })
     await commit('auth/setAvatar', res.avatar, { root: true })
