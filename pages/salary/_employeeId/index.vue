@@ -32,7 +32,7 @@
                       <span>{{ salaryDetail.standardPoint }}</span>
                     </h3>
                     <i
-                      class="salary-detail__actual-point-icon el-icon-edit-outline"
+                      class="salary-detail__edit-icon el-icon-edit-outline"
                     ></i>
                   </div>
                   <div class="salary-detail__actual-point">
@@ -41,7 +41,7 @@
                       <span>2 hours</span>
                     </h3>
                     <i
-                      class="salary-detail__actual-point-icon el-icon-edit-outline"
+                      class="salary-detail__edit-icon el-icon-edit-outline"
                     ></i>
                   </div>
                 </div>
@@ -85,23 +85,32 @@
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
-                  <h3>Working Time:</h3>
                   <div class="salary-detail__working-time">
-                    <h4
+                    <h3
                       v-for="(deduction, index) in salaryDetail
                         .deductionSalaryResponseList
                         .deductionSalaryResponseList"
                       :key="'deduction' + index"
                       class="salary-detail__flex"
                     >
-                      <span
-                        >{{ deduction.deduction_name }} -
-                        {{ deduction.value }}</span
-                      >
                       <span class="salary-detail__date-deduction">
                         {{ deduction.date }}
                       </span>
-                    </h4>
+                      <span>
+                        {{ deduction.deduction_name }} (-{{ deduction.value }}
+                        đồng)
+                      </span>
+                      <div>
+                        <i
+                          class="salary-detail__edit-icon el-icon-edit-outline"
+                          @click="openEditDeductionDialog"
+                        ></i>
+                        <i
+                          class="salary-detail__delete-icon el-icon-delete"
+                          @click="confirmDeleteDeduction"
+                        ></i>
+                      </div>
+                    </h3>
                   </div>
                 </div>
               </el-collapse-item>
@@ -117,10 +126,18 @@
                       :key="'advance' + index"
                       class="salary-detail__flex"
                     >
-                      <span> {{ advance.value }}</span>
                       <span class="salary-detail__date-deduction">
                         {{ advance.date }}
                       </span>
+                      <span> {{ advance.value }} đồng</span>
+                      <div>
+                        <i
+                          class="salary-detail__edit-icon el-icon-edit-outline"
+                        ></i>
+                        <i
+                          class="salary-detail__delete-icon el-icon-delete"
+                        ></i>
+                      </div>
                     </h3>
                   </div>
                 </div>
@@ -175,10 +192,16 @@
                     :key="'bonus' + index"
                     class="salary-detail__flex"
                   >
-                    <span> {{ bonus.value }}</span>
                     <span class="salary-detail__date-deduction">
                       {{ bonus.date }}
                     </span>
+                    <span> {{ bonus.value }}</span>
+                    <div>
+                      <i
+                        class="salary-detail__edit-icon el-icon-edit-outline"
+                      ></i>
+                      <i class="salary-detail__delete-icon el-icon-delete"></i>
+                    </div>
                   </h3>
                 </div>
               </el-collapse-item>
@@ -193,14 +216,18 @@
         </el-col>
       </el-row>
     </div>
+    <edit-deduction-dialog />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+import EditDeductionDialog from '~/components/dialog/EditDeductionDialog.vue'
 export default {
   name: 'PersonnelPage',
+  components: { EditDeductionDialog },
   layout: 'main',
+
   data() {
     return {
       activeNames: [],
@@ -209,7 +236,7 @@ export default {
 
   computed: {
     ...mapGetters('user', ['personnelDetail']),
-    ...mapGetters('salary', ['salaryDetail']),
+    ...mapGetters('salary', ['salaryDetail', 'editDeductionDialogVisible']),
   },
 
   async beforeMount() {
@@ -218,7 +245,33 @@ export default {
 
   methods: {
     ...mapActions('salary', ['getSalaryDetail']),
+    ...mapMutations('salary', ['setEditDeductionDialogVisible']),
     handleChange(val) {},
+
+    openEditDeductionDialog() {
+      this.setEditDeductionDialogVisible(true)
+    },
+
+    confirmDeleteDeduction() {
+      this.$confirm(
+        'Bạn có chắc chắn muốn xóa khấu trừ này không?',
+        'Cảnh báo',
+        {
+          confirmButtonText: 'Xóa',
+          cancelButtonText: 'Đóng',
+          type: 'warning',
+        }
+      )
+        .then(() => {
+          this.deleteDeduction()
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    },
   },
 }
 </script>
@@ -300,12 +353,30 @@ export default {
   align-items: center;
 }
 
-.salary-detail__actual-point-icon {
+.salary-detail__edit-icon {
   font-size: 20px;
   font-weight: 600;
-  margin-left: 12px;
   color: #4d77ff;
   cursor: pointer;
+  padding: 8px;
+}
+
+.salary-detail__edit-icon:hover {
+  background-color: rgb(216, 216, 216);
+  border-radius: 50%;
+}
+
+.salary-detail__delete-icon {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f56c6c;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.salary-detail__delete-icon:hover {
+  background-color: rgb(216, 216, 216);
+  border-radius: 50%;
 }
 
 .salary-detail__date-deduction {
@@ -316,14 +387,10 @@ export default {
   margin-right: 8px;
 }
 
-.salary-detail__working-time {
-  margin-left: 30px;
-}
-
 .salary-detail__flex {
-  width: 70%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .salary-detail__actual-income {

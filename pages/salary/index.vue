@@ -13,11 +13,19 @@
           @change="onChangeMonth"
         >
         </el-date-picker>
-        <el-button class="salary__export" type="success"> Export </el-button>
+        <el-button
+          class="salary__export"
+          type="success"
+          :disabled="salaryDataList.length <= 0"
+          @click="exportSalary"
+        >
+          Export
+        </el-button>
       </div>
     </div>
     <div class="salary-table">
       <vue-good-table
+        ref="salary-table"
         :columns="salaryListHeader"
         :rows="salaryList"
         :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
@@ -28,6 +36,7 @@
           enabled: true,
         }"
         @on-row-dblclick="onRowDoubleClick"
+        @on-selected-rows-change="onSelectedRowsChange"
       >
         <template slot="pagination-bottom">
           <el-pagination
@@ -58,6 +67,7 @@ export default {
       'salaryListHeader',
       'salaryList',
       'totalPage',
+      'salaryDataList',
     ]),
   },
 
@@ -70,11 +80,23 @@ export default {
       'onChangeMonth',
       'onRowDoubleClick',
       'getListSalary',
+      'exportSalary',
     ]),
-    ...mapMutations('salary', ['setMonthSearch']),
+    ...mapMutations('salary', ['setMonthSearch', 'setSalaryDataList']),
     selectMonth(e) {
       this.$emit('input', e)
       this.setMonthSearch(e)
+    },
+
+    onSelectedRowsChange() {
+      const salaryIdSelectedList = []
+      this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
+      for (let i = 0; i < this.salaryDataList; i++) {
+        salaryIdSelectedList.push(
+          this.$refs['salary-table'].selectedRows[i].salary_monthly_id
+        )
+      }
+      this.setListSalaryId(salaryIdSelectedList)
     },
   },
 }

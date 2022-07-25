@@ -141,4 +141,7 @@ export default () => ({
     },
   },
   totalPage: 1,
+  salaryDataList: [],
+  listSalaryId: [],
+  editDeductionDialogVisible: false,
 })

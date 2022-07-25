@@ -22,4 +22,16 @@ export default {
   setSalaryDetail(state, salaryDetail) {
     state.salaryDetail = salaryDetail
   },
+
+  setSalaryDataList(state, salaryDataList) {
+    state.salaryDataList = salaryDataList
+  },
+
+  setListSalaryId(state, listSalaryId) {
+    state.listSalaryId = listSalaryId
+  },
+
+  setEditDeductionDialogVisible(state, editDeductionDialogVisible) {
+    state.editDeductionDialogVisible = editDeductionDialogVisible
+  },
 }
