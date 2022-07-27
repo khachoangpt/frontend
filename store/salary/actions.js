@@ -37,6 +37,8 @@ export default {
     await dispatch('getListSalary', 1)
   },
 
+  async onChangeYear({ dispatch, state, commit }) {},
+
   onRowDoubleClick({ commit }, data) {
     try {
       this.$router.push(this.localePath('/salary/' + data.row.salaryMonthlyId))
@@ -84,6 +86,81 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute('download', 'salary')
       link.click()
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async editDeduction({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.editDeduction(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        await commit('setEditDeductionDialogVisible', false)
+        await Message.success('Sửa khấu trừ thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async deleteDeduction({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.deleteDeduction(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        Message.success('Xóa khấu trừ thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async editAdvance({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.editAdvance(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        await commit('setEditAdvanceDialogVisible', false)
+        await Message.success('Sửa tạm ứng thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async deleteAdvance({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.deleteAdvance(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        Message.success('Xóa tạm ứng thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async editBonus({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.editBonus(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        await commit('setEditBonusDialogVisible', false)
+        await Message.success('Sửa tiền thưởng thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async deleteBonus({ commit, dispatch, state }, data) {
+    try {
+      const res = await this.$repository.salary.deleteBonus(data)
+      if (res.code === 201) {
+        await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
+        Message.success('Xóa tiền thưởng thành công.')
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }

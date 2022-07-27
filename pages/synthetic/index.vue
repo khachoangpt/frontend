@@ -2,25 +2,15 @@
   <div class="container">
     <h1 class="title">Tổng hợp biểu đồ quản lý nhân viên phòng ban</h1>
     <el-row :gutter="20">
-      <el-col class="dashboard__col" :span="10">
+      <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text"
                 >Tổng số nhân viên phòng ban</span
               >
-              <el-select v-model="option" placeholder="Nam/Nữ">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
             </div>
-            <pie-chart :values="employeeNumber" />
+            <doughnut-chart :values="employeeNumber" />
           </el-card>
         </div>
       </el-col>
@@ -29,28 +19,21 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Mức tuổi</span>
-              <el-select v-model="option" placeholder="Độ tuổi">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
             </div>
-            <pie-chart :values="ageNumber" />
+            <doughnut-chart :values="ageNumber" :background-color="ageColor" />
           </el-card>
         </div>
       </el-col>
-      <el-col class="dashboard__col" :span="6">
+      <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Full time/Part time</span>
             </div>
-            <pie-chart :values="workTimeNumber" />
+            <doughnut-chart
+              :values="workTimeNumber"
+              :background-color="workTimeColor"
+            />
           </el-card>
         </div>
       </el-col>
@@ -61,7 +44,7 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử thôi việc</span>
-              <el-select v-model="option" placeholder="Lý do thôi việc">
+              <el-select v-model="option" placeholder="Thời gian">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -82,8 +65,8 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Lịch sử nghỉ theo lý do</span>
-              <el-select v-model="option" placeholder="Lịch sử nghỉ theo lý do">
+              <span class="box-card__header-text">Lịch sử nghỉ phép</span>
+              <el-select v-model="option" placeholder="Loại nghỉ phép">
                 <el-option
                   v-for="item in options"
                   :key="item.value"
@@ -114,19 +97,21 @@
   </div>
 </template>
 <script>
-import PieChart from '~/components/chart/PieChart.vue'
 import BarChart from '~/components/chart/BarChart.vue'
+import DoughnutChart from '~/components/chart/DoughnutChart.vue'
 import MultipleColumnChart from '~/components/chart/MultipleColumnChart.vue'
 export default {
   name: 'SyntheticPage',
   components: {
-    PieChart,
     BarChart,
+    DoughnutChart,
     MultipleColumnChart,
   },
   layout: 'main',
   data() {
     return {
+      ageColor: ['#64a340', '#348c75', '#348c75', '#05ffd1'],
+      workTimeColor: ['#328fa8', '#ffde05'],
       seniorityNumber: [
         {
           key: 1,

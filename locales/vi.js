@@ -27,6 +27,7 @@ const vi = {
     request: 'Yêu cầu',
     policy: 'Chính sách',
     salary: 'Tiền lương',
+    salaryHistory: 'Lịch sử lương',
   },
 
   datepicker: {
@@ -103,6 +104,13 @@ const vi = {
     message: {
       checkInSuccess: 'Check in thành công.',
       checkOutSuccess: 'Check out thành công.',
+    },
+  },
+
+  salary: {
+    deductionDialog: {
+      'Work Late': 'Đi làm muộn',
+      'Leave Soon': 'Về sớm',
     },
   },
 }

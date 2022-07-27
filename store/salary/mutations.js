@@ -34,4 +34,28 @@ export default {
   setEditDeductionDialogVisible(state, editDeductionDialogVisible) {
     state.editDeductionDialogVisible = editDeductionDialogVisible
   },
+
+  setEditAdvanceDialogVisible(state, editAdvanceDialogVisible) {
+    state.editAdvanceDialogVisible = editAdvanceDialogVisible
+  },
+
+  setYearSearch(state, yearSearch) {
+    state.yearSearch = yearSearch
+  },
+
+  setSalaryHistoryListHeader(state, salaryHistoryListHeader) {
+    state.salaryHistoryListHeader = salaryHistoryListHeader
+  },
+
+  setSalaryHistoryDataList(state, salaryHistoryDataList) {
+    state.salaryHistoryDataList = salaryHistoryDataList
+  },
+
+  setEditBonusDialogVisible(state, editBonusDialogVisible) {
+    state.editBonusDialogVisible = editBonusDialogVisible
+  },
+
+  setSalaryHistoryList(state, salaryHistoryList) {
+    state.salaryHistoryList = salaryHistoryList
+  },
 }

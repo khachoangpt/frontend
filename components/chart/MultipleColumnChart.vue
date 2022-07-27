@@ -73,23 +73,17 @@ export default {
         datasets: [
           {
             label: 'Tìm kiếm công việc mới',
-            backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-              16
-            )}`,
+            backgroundColor: '#798c34',
             data: [3, 7, 4],
           },
           {
             label: 'Môi trường không phù hợp',
-            backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-              16
-            )}`,
+            backgroundColor: `#8c5d34`,
             data: [4, 3, 5],
           },
           {
             label: 'Đồng nghiệp không hoà đồng',
-            backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-              16
-            )}`,
+            backgroundColor: `#8c7634`,
             data: [7, 2, 6],
           },
         ],
@@ -97,12 +91,32 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              usePointStyle: true,
+              boxWidth: 6,
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+            },
+          },
+        },
       },
     }
   },
   mounted() {
     // this.formatData()
-    this.randomColor()
+    // this.randomColor()
   },
   methods: {
     formatData() {

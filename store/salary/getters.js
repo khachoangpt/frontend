@@ -8,4 +8,10 @@ export default {
   salaryDataList: (state) => state.salaryDataList,
   listSalaryId: (state) => state.listSalaryId,
   editDeductionDialogVisible: (state) => state.editDeductionDialogVisible,
+  yearSearch: (state) => state.yearSearch,
+  salaryHistoryListHeader: (state) => state.salaryHistoryListHeader,
+  salaryHistoryDataList: (state) => state.salaryHistoryDataList,
+  editAdvanceDialogVisible: (state) => state.editAdvanceDialogVisible,
+  editBonusDialogVisible: (state) => state.editBonusDialogVisible,
+  salaryHistoryList: (state) => state.salaryHistoryList,
 }

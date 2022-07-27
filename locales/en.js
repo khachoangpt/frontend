@@ -26,7 +26,8 @@ const en = {
     personnel: 'Personnel',
     request: 'Request',
     policy: 'Policy',
-    salary: 'Salary',
+    salary: 'Payroll',
+    salaryHistory: 'Payroll history',
   },
   datepicker: {
     chooseDay: 'Pick a day',
@@ -102,6 +103,13 @@ const en = {
     message: {
       checkInSuccess: 'Check in successfully.',
       checkOutSuccess: 'Check out successfully.',
+    },
+  },
+
+  salary: {
+    deductionDialog: {
+      'Work Late': 'Work Late',
+      'Leave Soon': 'Leave Soon',
     },
   },
 }

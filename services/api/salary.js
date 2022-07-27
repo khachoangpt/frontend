@@ -44,6 +44,72 @@ class UserApi extends Policy {
       },
     })
   }
+
+  editDeduction(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/update_deduction_salary', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  deleteDeduction(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/delete_deduction_salary?deductionId=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  editAdvance(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/update_advance_salary', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  deleteAdvance(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/delete_advance_salary?advanceId=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  editBonus(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/update_bonus_salary', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  deleteBonus(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/delete_bonus_salary?bonusId=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

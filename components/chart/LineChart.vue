@@ -111,16 +111,20 @@ export default {
             label: '',
             data: [],
             borderColor: 'rgb(0, 0, 0)',
+            borderWidth: 1,
+            pointStyle: 'circle',
+            pointRadius: 5,
           },
         ],
       },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'Predicted world population (millions) in 2050',
+        plugins: {
+          legend: {
+            display: false,
+            position: 'right',
+          },
         },
       },
     }

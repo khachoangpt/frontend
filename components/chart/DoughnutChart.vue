@@ -4,7 +4,7 @@
     :chart-data="chartData"
     :chart-id="chartId"
     :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
+    :plugins="[ChartDataLabels]"
     :css-classes="cssClasses"
     :styles="styles"
     :width="width"
@@ -14,6 +14,7 @@
 
 <script>
 import { Doughnut } from 'vue-chartjs/legacy'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 import {
   Chart as ChartJS,
@@ -60,6 +61,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    backgroundColor: {
+      type: Array,
+      default: () => ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+    },
     values: {
       type: Array,
       default: () => [
@@ -103,11 +108,12 @@ export default {
   },
   data() {
     return {
+      ChartDataLabels,
       chartData: {
         labels: [],
         datasets: [
           {
-            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+            backgroundColor: [],
             data: [],
           },
         ],
@@ -115,6 +121,26 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            labels: {
+              usePointStyle: true,
+              boxWidth: 6,
+            },
+            position: 'bottom',
+          },
+          datalabels: {
+            formatter: (value, ctx) => {
+              const dataArr = ctx.chart.data.datasets[0].data
+              const sum = dataArr.reduce((acc, data) => {
+                return acc + data
+              }, 0)
+              const percentage = ((value * 100) / sum).toFixed(2) + '%'
+              return percentage
+            },
+            color: '#fff',
+          },
+        },
       },
     }
   },
@@ -126,8 +152,11 @@ export default {
       const objData = this.values.reduce((acc, { label, value }) => {
         return { ...acc, [label]: (acc[label] ? acc[label] : 0) + value }
       }, {})
-      this.chartData.labels = Object.keys(objData)
       this.chartData.datasets[0].data = Object.values(objData)
+      this.chartData.labels = Object.keys(objData).map((item, index) => {
+        return `${item} ( ${this.chartData.datasets[0].data[index]} )`
+      })
+      this.chartData.datasets[0].backgroundColor = this.backgroundColor
     },
   },
 }

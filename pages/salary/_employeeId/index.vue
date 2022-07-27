@@ -103,11 +103,13 @@
                       <div>
                         <i
                           class="salary-detail__edit-icon el-icon-edit-outline"
-                          @click="openEditDeductionDialog"
+                          @click="openEditDeductionDialog(deduction)"
                         ></i>
                         <i
                           class="salary-detail__delete-icon el-icon-delete"
-                          @click="confirmDeleteDeduction"
+                          @click="
+                            confirmDeleteDeduction(deduction.deduction_id)
+                          "
                         ></i>
                       </div>
                     </h3>
@@ -133,9 +135,11 @@
                       <div>
                         <i
                           class="salary-detail__edit-icon el-icon-edit-outline"
+                          @click="openEditAdvanceDialog(advance)"
                         ></i>
                         <i
                           class="salary-detail__delete-icon el-icon-delete"
+                          @click="confirmDeleteAdvance(advance.advances_id)"
                         ></i>
                       </div>
                     </h3>
@@ -199,8 +203,12 @@
                     <div>
                       <i
                         class="salary-detail__edit-icon el-icon-edit-outline"
+                        @click="openEditBonusDialog(bonus)"
                       ></i>
-                      <i class="salary-detail__delete-icon el-icon-delete"></i>
+                      <i
+                        class="salary-detail__delete-icon el-icon-delete"
+                        @click="confirmDeleteBonus(bonus.bonus_id)"
+                      ></i>
                     </div>
                   </h3>
                 </div>
@@ -216,27 +224,291 @@
         </el-col>
       </el-row>
     </div>
-    <edit-deduction-dialog />
+    <el-dialog
+      class="edit-deduction-dialog"
+      :visible.sync="editDeductionDialogVisible"
+      width="30%"
+      center
+      :before-close="closeDialogDeduction"
+    >
+      <template slot="title">
+        <div class="dialog-title">Sửa khấu trừ</div>
+      </template>
+      <el-form
+        ref="deductionForm"
+        :rules="rules"
+        :model="deductionForm"
+        label-width="120px"
+      >
+        <el-form-item label="Ngày" prop="date">
+          <el-date-picker
+            v-model="deductionForm.date"
+            type="date"
+            placeholder="Chọn một ngày"
+            class="deduction-dialog__input"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="Loại khấu trừ" prop="deduction">
+          <el-select
+            v-model="deductionForm.deductionTypeId"
+            class="deduction-dialog__input"
+          >
+            <el-option
+              :label="$i18n.t('salary.deductionDialog[\'Work Late\']')"
+              :value="1"
+            ></el-option>
+            <el-option
+              :label="$i18n.t('salary.deductionDialog[\'Leave Soon\']')"
+              :value="2"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Số tiền" prop="value">
+          <el-input
+            v-model.trim.number="deductionForm.value"
+            class="deduction-dialog__input"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Chi tiết" prop="description">
+          <el-input
+            v-model="deductionForm.description"
+            type="textarea"
+            class="deduction-dialog__input"
+            :rows="3"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogDeduction">Đóng</el-button>
+        <el-button type="primary" @click="submitForm('deductionForm')">
+          Xác nhận
+        </el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      class="edit-deduction-dialog"
+      :visible.sync="editAdvanceDialogVisible"
+      width="30%"
+      center
+      :before-close="closeDialogAdvance"
+    >
+      <template slot="title">
+        <div class="dialog-title">Sửa tạm ứng</div>
+      </template>
+      <el-form
+        ref="advanceForm"
+        :rules="advanceRules"
+        :model="advanceForm"
+        label-width="120px"
+      >
+        <el-form-item label="Ngày" prop="date">
+          <el-date-picker
+            v-model="advanceForm.date"
+            type="date"
+            placeholder="Chọn một ngày"
+            class="deduction-dialog__input"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="Số tiền" prop="value">
+          <el-input
+            v-model.trim.number="advanceForm.value"
+            class="deduction-dialog__input"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Chi tiết" prop="description">
+          <el-input
+            v-model="advanceForm.description"
+            type="textarea"
+            class="deduction-dialog__input"
+            :rows="3"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogAdvance">Đóng</el-button>
+        <el-button type="primary" @click="submitForm('advanceForm')">
+          Xác nhận
+        </el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      class="edit-deduction-dialog"
+      :visible.sync="editBonusDialogVisible"
+      width="30%"
+      center
+      :before-close="closeDialogBonus"
+    >
+      <template slot="title">
+        <div class="dialog-title">Sửa tiền thưởng</div>
+      </template>
+      <el-form
+        ref="bonusForm"
+        :rules="rules"
+        :model="bonusForm"
+        label-width="120px"
+      >
+        <el-form-item label="Ngày" prop="date">
+          <el-date-picker
+            v-model="bonusForm.date"
+            type="date"
+            placeholder="Chọn một ngày"
+            class="deduction-dialog__input"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="Loại tiền thưởng" prop="bonus">
+          <el-select
+            v-model="bonusForm.bonusTypeId"
+            class="deduction-dialog__input"
+          >
+            <el-option
+              :label="$i18n.t('salary.deductionDialog[\'Work Late\']')"
+              :value="1"
+            ></el-option>
+            <el-option
+              :label="$i18n.t('salary.deductionDialog[\'Leave Soon\']')"
+              :value="2"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Số tiền" prop="value">
+          <el-input
+            v-model.trim.number="bonusForm.value"
+            class="deduction-dialog__input"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="Chi tiết" prop="description">
+          <el-input
+            v-model="bonusForm.description"
+            type="textarea"
+            class="deduction-dialog__input"
+            :rows="3"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeDialogBonus">Đóng</el-button>
+        <el-button type="primary" @click="submitForm('bonusForm')">
+          Xác nhận
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import EditDeductionDialog from '~/components/dialog/EditDeductionDialog.vue'
 export default {
   name: 'PersonnelPage',
-  components: { EditDeductionDialog },
   layout: 'main',
 
   data() {
     return {
       activeNames: [],
+      deductionForm: {
+        deductionSalaryId: '',
+        value: '',
+        description: '',
+        date: '',
+        deductionTypeId: '',
+      },
+      advanceForm: {
+        advanceId: '',
+        value: '',
+        description: '',
+        date: '',
+      },
+      bonusForm: {
+        bonusSalaryId: '',
+        value: '',
+        description: '',
+        date: '',
+        bonusTypeId: '',
+      },
+      rules: {
+        date: [
+          {
+            required: true,
+            message: 'Ngày không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        value: [
+          {
+            required: true,
+            message: 'Số tiền không được để trống',
+            trigger: 'blur',
+          },
+          { type: 'number', message: 'Nhập vào một số' },
+        ],
+        description: [
+          {
+            required: true,
+            message: 'Chi tiết không được để trống',
+            trigger: 'blur',
+          },
+        ],
+      },
+
+      bonusRules: {
+        date: [
+          {
+            required: true,
+            message: 'Ngày không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        value: [
+          {
+            required: true,
+            message: 'Số tiền không được để trống',
+            trigger: 'blur',
+          },
+          { type: 'number', message: 'Nhập vào một số' },
+        ],
+        description: [
+          {
+            required: true,
+            message: 'Chi tiết không được để trống',
+            trigger: 'blur',
+          },
+        ],
+      },
+
+      advanceRules: {
+        date: [
+          {
+            required: true,
+            message: 'Ngày không được để trống',
+            trigger: 'blur',
+          },
+        ],
+        value: [
+          {
+            required: true,
+            message: 'Số tiền không được để trống',
+            trigger: 'blur',
+          },
+          { type: 'number', message: 'Nhập vào một số' },
+        ],
+        description: [
+          {
+            required: true,
+            message: 'Chi tiết không được để trống',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
 
   computed: {
     ...mapGetters('user', ['personnelDetail']),
-    ...mapGetters('salary', ['salaryDetail', 'editDeductionDialogVisible']),
+    ...mapGetters('salary', [
+      'salaryDetail',
+      'editDeductionDialogVisible',
+      'editAdvanceDialogVisible',
+      'editBonusDialogVisible',
+    ]),
   },
 
   async beforeMount() {
@@ -244,15 +516,70 @@ export default {
   },
 
   methods: {
-    ...mapActions('salary', ['getSalaryDetail']),
-    ...mapMutations('salary', ['setEditDeductionDialogVisible']),
+    ...mapActions('salary', [
+      'getSalaryDetail',
+      'editDeduction',
+      'deleteDeduction',
+      'editAdvance',
+      'deleteAdvance',
+      'editBonus',
+      'deleteBonus',
+    ]),
+    ...mapMutations('salary', [
+      'setEditDeductionDialogVisible',
+      'setEditAdvanceDialogVisible',
+      'setEditBonusDialogVisible',
+    ]),
     handleChange(val) {},
 
-    openEditDeductionDialog() {
-      this.setEditDeductionDialogVisible(true)
+    async openEditDeductionDialog(data) {
+      this.deductionForm.deductionSalaryId = data.deduction_id
+      this.deductionForm.value = data.value
+      this.deductionForm.description = data.description
+      this.deductionForm.date = data.date
+      this.deductionForm.deductionTypeId = data.deduction_name
+      await this.setEditDeductionDialogVisible(true)
     },
 
-    confirmDeleteDeduction() {
+    async openEditAdvanceDialog(data) {
+      this.advanceForm.advanceId = data.advances_id
+      this.advanceForm.value = data.value
+      this.advanceForm.description = data.description
+      this.advanceForm.date = data.date
+      await this.setEditAdvanceDialogVisible(true)
+    },
+
+    async openEditBonusDialog(data) {
+      this.bonusForm.bonusSalaryId = data.bonus_id
+      this.bonusForm.value = data.value
+      this.bonusForm.description = data.description
+      this.bonusForm.date = data.date
+      this.bonusForm.bonusTypeId = data.bonus_name
+      await this.setEditBonusDialogVisible(true)
+    },
+
+    confirmDeleteAdvance(data) {
+      this.$confirm(
+        'Bạn có chắc chắn muốn xóa tạm ứng này không?',
+        'Cảnh báo',
+        {
+          confirmButtonText: 'Xóa',
+          cancelButtonText: 'Đóng',
+          type: 'warning',
+        }
+      )
+        .then(() => {
+          this.deleteAdvance(data)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    },
+
+    confirmDeleteDeduction(data) {
       this.$confirm(
         'Bạn có chắc chắn muốn xóa khấu trừ này không?',
         'Cảnh báo',
@@ -263,7 +590,7 @@ export default {
         }
       )
         .then(() => {
-          this.deleteDeduction()
+          this.deleteDeduction(data)
         })
         .catch(() => {
           this.$message({
@@ -271,6 +598,55 @@ export default {
             message: 'Delete canceled',
           })
         })
+    },
+
+    confirmDeleteBonus(data) {
+      this.$confirm(
+        'Bạn có chắc chắn muốn xóa tiền thưởng này không?',
+        'Cảnh báo',
+        {
+          confirmButtonText: 'Xóa',
+          cancelButtonText: 'Đóng',
+          type: 'warning',
+        }
+      )
+        .then(() => {
+          this.deleteBonus(data)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled',
+          })
+        })
+    },
+
+    closeDialogDeduction() {
+      this.setEditDeductionDialogVisible(false)
+    },
+
+    closeDialogAdvance() {
+      this.setEditAdvanceDialogVisible(false)
+    },
+
+    closeDialogBonus() {
+      this.setEditBonusDialogVisible(false)
+    },
+
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (formName === 'advanceForm') {
+            this.editAdvance(this.advanceForm)
+          } else if (formName === 'deductionForm') {
+            this.editDeduction(this.deductionForm)
+          } else if (formName === 'bonusForm') {
+            this.editBonus(this.bonusForm)
+          }
+        } else {
+          return false
+        }
+      })
     },
   },
 }
@@ -433,5 +809,20 @@ export default {
 
 .el-collapse-item__arrow {
   font-weight: 600;
+}
+
+.edit-deduction-dialog .el-dialog {
+  border-radius: 10px;
+}
+
+.dialog-title {
+  font-size: 23px;
+  font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ccc;
+}
+
+.deduction-dialog__input {
+  width: 100% !important;
 }
 </style>

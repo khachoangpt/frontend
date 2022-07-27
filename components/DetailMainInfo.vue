@@ -387,7 +387,7 @@ export default {
 
   async mounted() {
     await this.getPersonnelDetail(this.$route.params.employeeId)
-    await this.getListGrade()
+    await this.getListGrade(1)
     await this.getListOffice()
     await this.getWorkingTypes()
     await this.getListPositions()

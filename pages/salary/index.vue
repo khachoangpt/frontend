@@ -82,7 +82,11 @@ export default {
       'getListSalary',
       'exportSalary',
     ]),
-    ...mapMutations('salary', ['setMonthSearch', 'setSalaryDataList']),
+    ...mapMutations('salary', [
+      'setMonthSearch',
+      'setSalaryDataList',
+      'setListSalaryId',
+    ]),
     selectMonth(e) {
       this.$emit('input', e)
       this.setMonthSearch(e)

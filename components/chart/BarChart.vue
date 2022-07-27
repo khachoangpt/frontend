@@ -117,12 +117,28 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+            },
+          },
+        },
       },
     }
   },
   mounted() {
     this.formatData()
-    this.randomColor()
   },
   methods: {
     formatData() {
@@ -131,15 +147,6 @@ export default {
       }, {})
       this.chartData.labels = Object.keys(objData)
       this.chartData.datasets[0].data = Object.values(objData)
-    },
-    randomColor() {
-      this.chartData.datasets[0].backgroundColor = this.chartData.labels.reduce(
-        (acc, current) => {
-          current = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-          return [...acc, current]
-        },
-        []
-      )
     },
   },
 }

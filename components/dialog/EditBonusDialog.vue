@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       deductionForm: {
-        deductionSalaryId: '',
+        deductionSalaryId: this.$route.params.employeeId,
         value: '',
         description: '',
         date: '',
@@ -105,7 +105,8 @@ export default {
       this.setEditDeductionDialogVisible(false)
     },
 
-    editDeduction() {},
+    editDeduction() {
+    },
   },
 }
 </script>

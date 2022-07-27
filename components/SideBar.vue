@@ -76,8 +76,17 @@
       <span class="sidebar-item__text">{{ $i18n.t('sidebar.request') }}</span>
     </el-menu-item>
     <el-menu-item class="sidebar-item" :index="localePath('/salary')">
-      <i class="el-icon-money sidebar-icon"></i>
+      <i class="el-icon-s-finance sidebar-icon"></i>
       <span class="sidebar-item__text">{{ $i18n.t('sidebar.salary') }}</span>
+    </el-menu-item>
+    <el-menu-item
+      class="sidebar-item"
+      :index="localePath('/salary/salary-history')"
+    >
+      <i class="el-icon-money sidebar-icon"></i>
+      <span class="sidebar-item__text">{{
+        $i18n.t('sidebar.salaryHistory')
+      }}</span>
     </el-menu-item>
     <el-submenu
       v-if="

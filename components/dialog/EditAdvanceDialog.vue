@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     class="edit-deduction-dialog"
-    :visible.sync="editDeductionDialogVisible"
+    :visible.sync="editAdvanceDialogVisible"
     width="30%"
     center
     :before-close="closeDialog"
@@ -10,14 +10,14 @@
       <div class="dialog-title">Sửa khấu trừ</div>
     </template>
     <el-form
-      ref="deductionForm"
+      ref="advanceForm"
       :rules="rules"
-      :model="deductionForm"
+      :model="advanceForm"
       label-width="120px"
     >
       <el-form-item label="Ngày" prop="date">
         <el-date-picker
-          v-model="deductionForm.date"
+          v-model="advanceForm.date"
           type="date"
           placeholder="Chọn một ngày"
           class="deduction-dialog__input"
@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item label="Loại khấu trừ" prop="deductionType">
         <el-select
-          v-model="deductionForm.deductionTypeId"
+          v-model="advanceForm.deductionTypeId"
           class="deduction-dialog__input"
         >
           <el-option label="Đi làm muộn" value="1"></el-option>
@@ -34,13 +34,13 @@
       </el-form-item>
       <el-form-item label="Số tiền" prop="value">
         <el-input
-          v-model.trim.number="deductionForm.value"
+          v-model.trim.number="advanceForm.value"
           class="deduction-dialog__input"
         ></el-input>
       </el-form-item>
       <el-form-item label="Ghi chú" prop="description">
         <el-input
-          v-model="deductionForm.description"
+          v-model="advanceForm.description"
           type="textarea"
           class="deduction-dialog__input"
           :rows="3"
@@ -49,7 +49,7 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">Đóng</el-button>
-      <el-button type="primary" @click="editDeduction">Xác nhận</el-button>
+      <el-button type="primary" @click="editAdvance">Xác nhận</el-button>
     </span>
   </el-dialog>
 </template>
@@ -57,11 +57,11 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 export default {
-  name: 'EditDeductionDialog',
+  name: 'EditAdvanceDialog',
   data() {
     return {
-      deductionForm: {
-        deductionSalaryId: '',
+      advanceForm: {
+        deductionSalaryId: this.$route.params.employeeId,
         value: '',
         description: '',
         date: '',
@@ -95,17 +95,17 @@ export default {
   },
 
   computed: {
-    ...mapGetters('salary', ['editDeductionDialogVisible']),
+    ...mapGetters('salary', ['editAdvanceDialogVisible']),
   },
 
   methods: {
-    ...mapMutations('salary', ['setEditDeductionDialogVisible']),
+    ...mapMutations('salary', ['setEditAdvanceDialogVisible']),
 
     closeDialog() {
-      this.setEditDeductionDialogVisible(false)
+      this.setEditAdvanceDialogVisible(false)
     },
 
-    editDeduction() {},
+    editAdvance() {},
   },
 }
 </script>

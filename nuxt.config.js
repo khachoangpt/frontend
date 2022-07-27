@@ -18,10 +18,6 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
-      {
-        'http-equiv': 'Content-Security-Policy',
-        content: 'upgrade-insecure-requests',
-      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/hrm-logo.png' }],
   },
@@ -59,7 +55,7 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL:
-      'http://humanresourcemanagementsystem-env-2.eba-mutdm3hm.us-west-2.elasticbeanstalk.com/hrm',
+      'https://www.hronline.tk/',
     proxyHeaders: false,
     credentials: false,
   },
