@@ -26,7 +26,7 @@ const vi = {
     personnel: 'Nhân sự',
     request: 'Yêu cầu',
     policy: 'Chính sách',
-    salary: 'Tiền lương',
+    salary: 'Bảng lương',
     salaryHistory: 'Lịch sử lương',
   },
 

@@ -16,7 +16,7 @@
       class="main-info__content"
     >
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Công ty</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -33,7 +33,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Vị trí</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -50,7 +50,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Khoảng thời gian</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -76,7 +76,7 @@
         v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
         :span="6"
       >
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div
             v-if="isEditLine !== working"
             class="main-info__content-item-action"

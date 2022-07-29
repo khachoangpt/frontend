@@ -3,6 +3,15 @@
     <div class="salary__header">
       <div class="salary__header-text">Lịch sử lương</div>
       <div>
+        <el-input
+          v-if="activeTable === 'second'"
+          :value="searchEmployeeText"
+          class="header-actions__search"
+          placeholder="Tên nhân viên"
+          @input="inputSearch"
+        >
+          <i slot="suffix" class="el-input__icon el-icon-search"></i>
+        </el-input>
         <el-date-picker
           :value="yearSearch"
           type="year"
@@ -10,7 +19,6 @@
           format="yyyy"
           :clearable="false"
           @input="selectYear"
-          @change="onChangeMonth"
         >
         </el-date-picker>
         <el-button
@@ -24,7 +32,7 @@
       </div>
     </div>
     <div class="salary-table">
-      <el-tabs :value="activeTable" type="border-card" @tab-click="clickTab">
+      <el-tabs v-model="activeTable" type="border-card" @tab-click="clickTab">
         <el-tab-pane label="Lịch sử cá nhân" name="first">
           <vue-good-table
             ref="salary-table"
@@ -34,9 +42,6 @@
             sort-options="{
           enabled: true,
         }"
-            :pagination-options="{
-              enabled: true,
-            }"
             @on-row-dblclick="onRowDoubleClick"
             @on-selected-rows-change="onSelectedRowsChange"
           >
@@ -51,9 +56,6 @@
             sort-options="{
           enabled: true,
         }"
-            :pagination-options="{
-              enabled: true,
-            }"
             @on-row-dblclick="onRowDoubleClick"
             @on-selected-rows-change="onSelectedRowsChange"
           >
@@ -82,6 +84,7 @@ export default {
       'salaryHistoryList',
       'totalPage',
       'salaryHistoryDataList',
+      'searchEmployeeText',
     ]),
   },
 
@@ -98,6 +101,7 @@ export default {
       'setYearSearch',
       'setSalaryHistoryDataList',
       'setListSalaryId',
+      'setSearchEmployeeText',
     ]),
     selectYear(e) {
       this.$emit('input', e)
@@ -117,7 +121,14 @@ export default {
       this.setListSalaryId(salaryIdSelectedList)
     },
 
-    clickTab(tab) {},
+    clickTab(tab) {
+      console.log(this.activeTable)
+    },
+
+    inputSearch(e) {
+      this.$emit('input', e)
+      this.setSearchEmployeeText(e)
+    },
   },
 }
 </script>
@@ -151,5 +162,10 @@ export default {
 
 .vgt-left-align {
   text-align: center;
+}
+
+.header-actions__search {
+  width: 240px;
+  margin-right: 12px;
 }
 </style>

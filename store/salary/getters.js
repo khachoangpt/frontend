@@ -14,4 +14,5 @@ export default {
   editAdvanceDialogVisible: (state) => state.editAdvanceDialogVisible,
   editBonusDialogVisible: (state) => state.editBonusDialogVisible,
   salaryHistoryList: (state) => state.salaryHistoryList,
+  searchEmployeeText: (state) => state.searchEmployeeText,
 }

@@ -18,7 +18,7 @@
       class="main-info__content"
     >
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Họ và tên</span>
             <span
@@ -38,7 +38,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày sinh</span>
             <span
@@ -59,7 +59,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Liên hệ</span>
             <span
@@ -82,7 +82,7 @@
         v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
         :span="6"
       >
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div
             v-if="isEditLineRelative !== relative"
             class="main-info__content-item-action"

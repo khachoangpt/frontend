@@ -26,7 +26,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Tên chủ tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -43,7 +43,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngân hàng</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -60,7 +60,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -77,7 +77,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Số tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">

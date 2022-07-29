@@ -213,6 +213,34 @@
                   </h3>
                 </div>
               </el-collapse-item>
+              <el-collapse-item name="8">
+                <template slot="title">
+                  <span class="salary-detail-content__detail">Allowance</span>
+                </template>
+                <div class="salary-detail-content__sub-detail">
+                  <h3
+                    v-for="(bonus, index) in salaryDetail
+                      .bonusSalaryResponseList.bonusSalaryResponseList"
+                    :key="'bonus' + index"
+                    class="salary-detail__flex"
+                  >
+                    <span class="salary-detail__date-deduction">
+                      {{ bonus.date }}
+                    </span>
+                    <span> {{ bonus.value }}</span>
+                    <div>
+                      <i
+                        class="salary-detail__edit-icon el-icon-edit-outline"
+                        @click="openEditBonusDialog(bonus)"
+                      ></i>
+                      <i
+                        class="salary-detail__delete-icon el-icon-delete"
+                        @click="confirmDeleteBonus(bonus.bonus_id)"
+                      ></i>
+                    </div>
+                  </h3>
+                </div>
+              </el-collapse-item>
               <p class="salary-detail-content__detail">
                 Actual Income:
                 <span class="salary-detail__actual-income">{{

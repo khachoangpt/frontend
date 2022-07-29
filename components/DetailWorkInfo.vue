@@ -27,7 +27,7 @@
       </div>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content bg-purple">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Vị trí</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
@@ -41,7 +41,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content bg-purple-light">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -57,7 +57,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content bg-purple">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương cơ bản</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -73,7 +73,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content bg-purple">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Văn phòng</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -91,7 +91,7 @@
       </el-row>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content bg-purple">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Lịch làm việc</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -107,7 +107,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content bg-purple-light">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Lĩnh vực / Chuyên môn</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -123,7 +123,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content bg-purple">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Ngày bắt đầu</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
@@ -141,7 +141,7 @@
       </el-row>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content bg-purple-light">
+          <div class="grid-content ">
             <div class="main-info__content-item">
               <span class="content-item__head">Phân loại nhân sự</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">

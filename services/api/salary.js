@@ -11,14 +11,10 @@ class UserApi extends Policy {
   getListSalary(data) {
     const accessToken = getToken()
     return this.$axios.$get(
-      '/api/get_all_salary_monthly?orderBy=employeeId:desc&paging=offset:' +
+      '/api/get_all_management_salary_monthly?orderBy=employeeId:desc&paging=offset:' +
         (data.page - 1) +
         ',limit:' +
-        PageLimit +
-        '&filter=startDate:AEQ' +
-        data.startDate +
-        ',endDate:AEQ' +
-        data.endDate,
+        PageLimit,
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,
@@ -38,11 +34,15 @@ class UserApi extends Policy {
 
   exportSalary(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/download_csv_salary_monthly', data, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    })
+    return this.$axios.$post(
+      '/api/download_csv_management_salary_monthly',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
   }
 
   editDeduction(data) {

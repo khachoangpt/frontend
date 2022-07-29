@@ -58,4 +58,8 @@ export default {
   setSalaryHistoryList(state, salaryHistoryList) {
     state.salaryHistoryList = salaryHistoryList
   },
+
+  setSearchEmployeeText(state, searchEmployeeText) {
+    state.searchEmployeeText = searchEmployeeText
+  },
 }

@@ -54,6 +54,16 @@
               <i slot="prefix" class="el-input__icon el-icon-lock"></i>
             </el-input>
           </el-form-item>
+          <div class="login-form__addition">
+            <nuxt-link
+              class="login-form__addition-forgot"
+              :to="localePath('/forgot')"
+            >
+              <el-link type="primary">{{
+                $i18n.t('login.forgotPassword')
+              }}</el-link>
+            </nuxt-link>
+          </div>
           <div class="change-password-form__submit">
             <el-button
               class="change-password-form__submit-btn"
@@ -61,7 +71,7 @@
               round
               native-type="submit"
             >
-              {{$i18n.t('changePassword.changePassword')}}
+              {{ $i18n.t('changePassword.changePassword') }}
             </el-button>
           </div>
         </el-form>
@@ -71,7 +81,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'ChangePasswordComponent',
   data() {
@@ -130,6 +140,15 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('auth', ['email']),
+  },
+
+  mounted() {
+    console.log(this.email)
+    this.form.email = this.email
+  },
+
   methods: {
     ...mapActions('auth', ['changePassword']),
   },
@@ -183,5 +202,14 @@ export default {
 .change-password-form__input input {
   background-color: rgba(255, 255, 255, 0) !important;
   color: #fff !important;
+}
+
+.login-form__addition {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.login-form__addition-forgot {
+  text-decoration: none;
 }
 </style>

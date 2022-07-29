@@ -64,6 +64,7 @@ export default {
       },
     }
   },
+
   methods: {
     ...mapActions('auth', ['forgot']),
   },

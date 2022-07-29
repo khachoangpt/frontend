@@ -23,7 +23,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số thuế</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -42,7 +42,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -59,7 +59,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple-light">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head"> Bảo hiểm </span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -76,7 +76,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content bg-purple">
+        <div class="grid-content ">
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi đăng ký BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">

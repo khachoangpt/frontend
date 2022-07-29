@@ -3,7 +3,7 @@
     <el-page-header @back="back"> </el-page-header>
     <el-row>
       <el-col class="detail-page-left hidden-xs-only" :lg="4">
-        <div class="grid-content bg-purple personnel-detail__left">
+        <div class="grid-content personnel-detail__left">
           <div class="detail-basic">
             <div
               class="detail-basic__avatar"
@@ -162,11 +162,19 @@
         </div>
       </el-col>
       <el-col :lg="20">
-        <div
-          id="detail-right"
-          class="grid-content bg-purple personnel-detail__right"
-        >
-          <h2 class="detail-right__header">Thông tin cá nhân</h2>
+        <div id="detail-right" class="grid-content personnel-detail__right">
+          <div>
+            <div class="detail-right__header">
+              <span class="detail-right__header-info">Thông tin cá nhân</span>
+              <nuxt-link
+                to="/forgot/change-password"
+                class="detail-right__header-pass"
+              >
+                <i class="el-icon-key detail-right__header-pass-icon"> </i>
+                Đổi mật khẩu
+              </nuxt-link>
+            </div>
+          </div>
           <div class="detail-right__main-info">
             <detail-main-info />
             <detail-work-info />
@@ -430,10 +438,30 @@ export default {
 }
 
 .detail-right__header {
-  font-size: 24px;
-  color: #67c23a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 2px solid #ccc;
   padding-bottom: 16px;
+}
+
+.detail-right__header-info {
+  font-size: 24px;
+  color: #67c23a;
+  font-weight: 600;
+}
+
+.detail-right__header-pass {
+  font-size: 16px;
+  margin-right: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #303133;
+  text-decoration: none;
+}
+
+.detail-right__header-pass:hover {
+  color: #4d77ff;
 }
 
 .detail-right__main-info {
@@ -523,5 +551,10 @@ export default {
 
 .edit-input {
   width: 80%;
+}
+
+.detail-right__header-pass-icon {
+  font-weight: 600;
+  margin-right: 2px;
 }
 </style>
