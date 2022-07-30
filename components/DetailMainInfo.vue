@@ -385,7 +385,7 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Lĩnh vực</span>
+            <span class="content-item__head">Phòng ban</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-collection-tag"></i>
               {{ personnelDetail.area_name }}

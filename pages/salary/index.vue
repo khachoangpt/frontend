@@ -4,25 +4,41 @@
       <div class="salary__header-text">Quản lý tiền lương</div>
     </div>
     <div class="salary__header-actions">
-      <el-input
+      <el-autocomplete
         v-if="activeName === 'second'"
-        :value="searchEmployeeText"
+        v-model="employeeSearch"
+        :clearable="true"
         class="header-actions__search"
         placeholder="Tên nhân viên"
-        @input="inputSearch"
-      >
-        <i slot="suffix" class="el-input__icon el-icon-search"></i>
-      </el-input>
+        :fetch-suggestions="querySearch"
+        @select="handleChangeEmployee"
+        @clear="handleChangeEmployee"
+      ></el-autocomplete>
       <el-select
         v-if="activeName === 'second'"
-        v-model="searchStatusText"
+        v-model="statusText"
         class="header-actions__search-status"
         placeholder="Select"
         @change="handleChangeSalaryStatus"
       >
-        <el-option label="Pending" value="PENDING"> </el-option>
-        <el-option label="Approve" value="APPROVED"> </el-option>
-        <el-option label="Reject" value="REJECTED"> </el-option>
+        <el-option
+          class="header-actions__item-status-pending"
+          label="Pending"
+          value="PENDING"
+        >
+        </el-option>
+        <el-option
+          class="header-actions__item-status-approve"
+          label="Approve"
+          value="APPROVED"
+        >
+        </el-option>
+        <el-option
+          class="header-actions__item-status-reject"
+          label="Reject"
+          value="REJECTED"
+        >
+        </el-option>
       </el-select>
       <el-date-picker
         v-if="activeName === 'second'"
@@ -41,7 +57,6 @@
         type="year"
         placeholder="Tìm kiếm"
         format="yyyy"
-        value-format="yyyy"
         :clearable="false"
         @input="selectYear"
         @change="onChangeYear"
@@ -57,7 +72,11 @@
       </el-button>
     </div>
     <div class="salary-table">
-      <el-tabs v-model="activeName" type="border-card">
+      <el-tabs
+        v-model="activeName"
+        type="border-card"
+        @tab-click="handleChangeTabSalary"
+      >
         <el-tab-pane label="Cá nhân" name="first">
           <vue-good-table
             ref="salary-table"
@@ -137,6 +156,7 @@
               class="salary-table__selected-action-btn"
             >
               <el-button
+                v-if="isShowCheck"
                 size="medium"
                 type="primary"
                 @click="handleClickCheckSalary"
@@ -144,13 +164,19 @@
                 Đã xem
               </el-button>
               <el-button
+                v-if="isShowReject"
                 size="medium"
                 type="danger"
                 @click="handleClickRejectSalary"
               >
                 Từ chối
               </el-button>
-              <el-button size="medium" type="success" @click="approveSalary">
+              <el-button
+                v-if="isShowApprove"
+                size="medium"
+                type="success"
+                @click="approveSalary"
+              >
                 Chốt bảng lương
               </el-button>
             </div>
@@ -158,6 +184,31 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+    <el-dialog
+      title="Chuyển tiếp bảng lương"
+      :visible.sync="checkDialogVisible"
+      top="30vh"
+      width="30%"
+      :before-close="closeDialog"
+    >
+      <div class="dialog-check-salary__label">
+        Nhập tên người muốn chuyển tiếp:
+      </div>
+      <el-autocomplete
+        v-model="managerApprove"
+        :clearable="true"
+        placeholder="Tên quản lý"
+        :fetch-suggestions="querySearchManager"
+        @select="handleChangeManager"
+        @clear="handleChangeManager"
+      ></el-autocomplete>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="closeDialog">Đóng</el-button>
+        <el-button size="small" type="primary" @click="submitCheckSalary"
+          >Xác nhận</el-button
+        >
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -168,8 +219,13 @@ export default {
   layout: 'main',
   data() {
     return {
-      searchStatusText: '',
+      statusText: '',
       activeName: 'first',
+      employeeSearch: '',
+      managerApprove: '',
+      isShowCheck: true,
+      isShowReject: true,
+      isShowApprove: true,
     }
   },
 
@@ -181,18 +237,23 @@ export default {
       'salaryList',
       'totalPage',
       'salaryDataList',
-      'searchEmployeeText',
       'listSalaryId',
       'salaryHistoryListHeader',
       'salaryHistoryList',
+      'listEmployeeByManager',
+      'checkDialogVisible',
+      'listManagerOfArea',
+      'searchManagerText',
     ]),
   },
 
   async mounted() {
-    await this.getListSalary(1)
+    await this.getEmployeeByManager()
+    await this.getListPersonalSalary()
   },
 
   methods: {
+    ...mapActions('user', ['getEmployeeByManager']),
     ...mapActions('salary', [
       'onChangeMonth',
       'onChangeYear',
@@ -203,12 +264,18 @@ export default {
       'approveSalary',
       'rejectSalary',
       'checkSalary',
+      'getListPersonalSalary',
+      'getManagerOfArea',
     ]),
     ...mapMutations('salary', [
       'setMonthSearch',
       'setYearSearch',
       'setSalaryDataList',
       'setListSalaryId',
+      'setSearchStatusText',
+      'setSearchEmployeeText',
+      'setCheckDialogVisible',
+      'setSearchManagerText',
     ]),
     selectMonth(e) {
       this.$emit('input', e)
@@ -220,19 +287,26 @@ export default {
     },
 
     onSelectedRowsChange() {
+      this.isShowCheck = true
+      this.isShowReject = true
+      this.isShowApprove = true
       const salaryIdSelectedList = []
       this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
       for (let i = 0; i < this.salaryDataList; i++) {
+        if (
+          this.$refs['salary-table'].selectedRows[i].salaryStatus ===
+            'APPROVED' ||
+          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED'
+        ) {
+          this.isShowCheck = false
+          this.isShowReject = false
+          this.isShowApprove = false
+        }
         salaryIdSelectedList.push(
           this.$refs['salary-table'].selectedRows[i].salaryMonthlyId
         )
       }
       this.setListSalaryId(salaryIdSelectedList)
-    },
-
-    inputSearch(e) {
-      this.$emit('input', e)
-      this.setSearchEmployeeText(e)
     },
 
     handleClickRejectSalary() {
@@ -251,7 +325,60 @@ export default {
         })
     },
 
-    handleClickCheckSalary() {
+    async handleClickCheckSalary() {
+      await this.setCheckDialogVisible(true)
+      await this.getManagerOfArea()
+    },
+
+    async handleChangeTabSalary(data) {
+      if (data.name === 'second') {
+        await this.setSearchStatusText('')
+        await this.setSearchEmployeeText('')
+        await this.getListSalary(1)
+      } else if (data.name === 'first') {
+        await this.getListPersonalSalary()
+      }
+    },
+
+    async handleChangeSalaryStatus(data) {
+      await this.setSearchStatusText(data)
+      await this.getListSalary(1)
+    },
+
+    querySearch(queryString, cb) {
+      const results = queryString
+        ? this.listEmployeeByManager.filter(this.createFilter(queryString))
+        : this.listEmployeeByManager
+      cb(results)
+    },
+
+    querySearchManager(queryString, cb) {
+      const results = queryString
+        ? this.listManagerOfArea.filter(this.createFilter(queryString))
+        : this.listManagerOfArea
+      cb(results)
+    },
+
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
+    async handleChangeEmployee(data) {
+      await this.setSearchEmployeeText(data)
+      await this.getListSalary(1)
+    },
+
+    async handleChangeManager(data) {
+      await this.setSearchManagerText(data)
+    },
+
+    async closeDialog() {
+      await this.setCheckDialogVisible(false)
+    },
+
+    submitCheckSalary() {
       this.checkSalary()
     },
   },
@@ -332,5 +459,24 @@ export default {
 
 .salary-table__selected-action-btn {
   margin-left: 30px;
+}
+
+.header-actions__item-status-pending {
+  color: #e6a23c;
+}
+
+.header-actions__item-status-approve {
+  color: #67c23a;
+}
+
+.header-actions__item-status-reject {
+  color: #f56c6c;
+}
+
+.el-autocomplete-suggestion {
+  width: auto !important;
+}
+.dialog-check-salary__label {
+  margin-bottom: 12px;
 }
 </style>

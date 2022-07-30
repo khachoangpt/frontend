@@ -38,7 +38,7 @@ export default {
   },
 
   async onChangeYear({ dispatch, state, commit }) {
-    await dispatch('getListPersonalSalary', 1)
+    await dispatch('getListPersonalSalary')
   },
 
   onRowDoubleClick({ commit }, data) {
@@ -51,10 +51,20 @@ export default {
 
   async getListSalary({ commit, state }, page) {
     try {
+      const regexEmpId = /\((.+)\)/i
+      let employeeID = ''
+      if (
+        state.searchEmployeeText !== '' &&
+        state.searchEmployeeText !== undefined
+      ) {
+        employeeID = state.searchEmployeeText.value.match(regexEmpId)[1]
+      }
       const data = {
         page,
         startDate: state.selectedTimeRange.startDate,
         endDate: state.selectedTimeRange.endDate,
+        salaryStatus: state.searchStatusText,
+        employeeId: employeeID,
       }
       const res = await this.$repository.salary.getListSalary(data)
       await commit('setSalaryList', res.salaryMonthlyResponses)
@@ -64,14 +74,18 @@ export default {
     }
   },
 
-  async getListPersonalSalary({ commit, state }, page) {
+  async getListPersonalSalary({ commit, state }) {
     try {
+      const salaryHistoryList = []
       for (let i = 1; i <= 12; i++) {
         const month = i < 10 ? '0' + i : i
-        const endDate = new Date(state.yearSearch, Number(month), 0)
+        const endDate = new Date(
+          state.yearSearch.getFullYear(),
+          Number(month),
+          0
+        )
         const data = {
-          page,
-          startDate: state.yearSearch + '-' + month + '-' + '01',
+          startDate: state.yearSearch.getFullYear() + '-' + month + '-' + '01',
           endDate:
             endDate.getFullYear() +
             '-' +
@@ -84,8 +98,15 @@ export default {
               : endDate.getDate()),
         }
         const res = await this.$repository.salary.getListPersonalSalary(data)
-        console.log(res)
+        if (res.salaryMonthlyResponses.length > 0) {
+          const date = new Date(
+            Date.parse(res.salaryMonthlyResponses[0].startDate)
+          )
+          res.salaryMonthlyResponses[0].month = date.getMonth() + 1
+          salaryHistoryList.push(res.salaryMonthlyResponses[0])
+        }
       }
+      await commit('setSalaryHistoryList', salaryHistoryList)
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -196,8 +217,6 @@ export default {
     }
   },
 
-  async handleChangeSalaryStatus({ commit }, data) {},
-
   async approveSalary({ commit, state, dispatch }) {
     try {
       for (let i = 0; i < state.listSalaryId.length; i++) {
@@ -227,15 +246,37 @@ export default {
 
   async checkSalary({ commit, state, dispatch }) {
     try {
+      const regexEmpId = /\((.+)\)/i
+      let employeeID = ''
+      if (
+        state.searchManagerText !== '' &&
+        state.searchManagerText !== undefined
+      ) {
+        employeeID = state.searchManagerText.value.match(regexEmpId)[1]
+      }
       for (let i = 0; i < state.listSalaryId.length; i++) {
         await this.$repository.salary.checkSalary({
           salaryMonthlyId: state.listSalaryId[i],
           salaryStatus: 'PENDING',
-          approverId: 'huynq100',
+          approverId: employeeID,
         })
       }
+      await commit('setCheckDialogVisible', false)
       await dispatch('getListSalary', 1)
       Message.success('Chuyển tiếp bảng lương thành công.')
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getManagerOfArea({ commit, state }) {
+    try {
+      const result = []
+      const res = await this.$repository.user.getManagerOfArea()
+      for (let i = 0; i < res.length; i++) {
+        result.push({ value: res[i].name + ' (' + res[i].employeeID + ')' })
+      }
+      await commit('setListManagerOfArea', result)
     } catch (error) {
       Message.error(error.response.data.message)
     }

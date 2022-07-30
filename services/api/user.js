@@ -267,6 +267,24 @@ class UserApi extends User {
       },
     })
   }
+
+  getEmployeeByManager() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_employee_by_manager', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  getManagerOfArea() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_list_manager_of_area', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

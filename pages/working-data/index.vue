@@ -41,7 +41,7 @@
           >
         </el-card>
         <el-card class="time-keeping__filter">
-          <h3>Lĩnh vực</h3>
+          <h3>Phòng ban</h3>
           <el-checkbox
             v-for="(area, index) in listArea"
             :key="index"

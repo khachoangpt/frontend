@@ -109,7 +109,7 @@
         <el-col :span="6">
           <div class="grid-content ">
             <div class="main-info__content-item">
-              <span class="content-item__head">Lĩnh vực / Chuyên môn</span>
+              <span class="content-item__head">Phòng ban / Chuyên môn</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
                 >Back Office</span
               >

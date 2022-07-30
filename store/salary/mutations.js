@@ -62,4 +62,24 @@ export default {
   setSearchEmployeeText(state, searchEmployeeText) {
     state.searchEmployeeText = searchEmployeeText
   },
+
+  setSearchStatusText(state, searchStatusText) {
+    state.searchStatusText = searchStatusText
+  },
+
+  setListEmployeeByManager(state, listEmployeeByManager) {
+    state.listEmployeeByManager = listEmployeeByManager
+  },
+
+  setCheckDialogVisible(state, checkDialogVisible) {
+    state.checkDialogVisible = checkDialogVisible
+  },
+
+  setListManagerOfArea(state, listManagerOfArea) {
+    state.listManagerOfArea = listManagerOfArea
+  },
+
+  setSearchManagerText(state, searchManagerText) {
+    state.searchManagerText = searchManagerText
+  },
 }

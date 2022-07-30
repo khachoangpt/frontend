@@ -304,4 +304,17 @@ export default {
   async onChangePosition({ commit, dispatch }, data) {
     await dispatch('getListGrade', data)
   },
+
+  async getEmployeeByManager({ commit }) {
+    try {
+      const result = []
+      const res = await this.$repository.user.getEmployeeByManager()
+      for (let i = 0; i < res.length; i++) {
+        result.push({ value: res[i].name + ' (' + res[i].employeeID + ')' })
+      }
+      await commit('salary/setListEmployeeByManager', result, { root: true })
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

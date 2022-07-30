@@ -15,4 +15,9 @@ export default {
   editBonusDialogVisible: (state) => state.editBonusDialogVisible,
   salaryHistoryList: (state) => state.salaryHistoryList,
   searchEmployeeText: (state) => state.searchEmployeeText,
+  searchStatusText: (state) => state.searchStatusText,
+  listEmployeeByManager: (state) => state.listEmployeeByManager,
+  checkDialogVisible: (state) => state.checkDialogVisible,
+  listManagerOfArea: (state) => state.listManagerOfArea,
+  searchManagerText: (state) => state.searchManagerText,
 }

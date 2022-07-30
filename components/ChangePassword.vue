@@ -145,7 +145,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.email)
     this.form.email = this.email
   },
 

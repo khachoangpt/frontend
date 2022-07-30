@@ -66,7 +66,7 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="Lĩnh vực hiện tại">
+          <el-form-item label="Phòng ban hiện tại">
             <el-input value="IT" :disabled="true"></el-input>
           </el-form-item>
         </el-col>

@@ -10,21 +10,23 @@ class UserMock extends Policy {}
 class UserApi extends Policy {
   getListSalary(data) {
     const accessToken = getToken()
-    return this.$axios.$get(
+    let url =
       '/api/get_all_management_salary_monthly?filter=startDate:AEQ' +
-        data.startDate +
-        ',endDate:AEQ' +
-        data.endDate +
-        '&paging=offset:' +
-        (data.page - 1) +
-        ',limit:' +
-        PageLimit,
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+      data.startDate +
+      ',endDate:AEQ' +
+      data.endDate
+    if (data.salaryStatus !== '') {
+      url = url + ',salaryStatus:AEQ' + data.salaryStatus
+    }
+    if (data.employeeId !== '') {
+      url = url + ',employeeId:AEQ' + data.employeeId
+    }
+    url = url + '&paging=offset:' + (data.page - 1) + ',limit:' + PageLimit
+    return this.$axios.$get(url, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getListPersonalSalary(data) {
@@ -33,11 +35,7 @@ class UserApi extends Policy {
       '/api/get_all_personal_salary_monthly?filter=startDate:AEQ' +
         data.startDate +
         ',endDate:AEQ' +
-        data.endDate +
-        '&paging=offset:' +
-        (data.page - 1) +
-        ',limit:' +
-        PageLimit,
+        data.endDate,
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,

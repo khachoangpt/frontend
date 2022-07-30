@@ -63,7 +63,7 @@ export default () => ({
       sortable: false,
     },
     {
-      label: 'Lĩnh vực',
+      label: 'Phòng ban',
       field: 'area_name',
       width: '200px',
       thClass: 'table-header-center',
