@@ -1,7 +1,7 @@
 export default () => ({
   personnelList: '',
   personnelDetail: '.',
-  taxList: '.',
+  taxList: [],
   bankInfo: '.',
   additionInfo: '.',
   workingHistory: '.',

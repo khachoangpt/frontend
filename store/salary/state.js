@@ -5,7 +5,7 @@ const startDate = new Date(year, month + 1, 1)
 const endDate = new Date(year, month + 1, 0)
 
 export default () => ({
-  monthSearch: new Date(),
+  monthSearch: '',
   yearSearch: new Date(),
   selectedTimeRange: {
     startDate:
@@ -111,6 +111,12 @@ export default () => ({
       field: 'month',
       width: '50px',
       sortable: true,
+    },
+    {
+      label: 'Trạng thái',
+      field: 'salaryStatus',
+      width: '80px',
+      sortable: false,
     },
     {
       label: 'Vị trí',

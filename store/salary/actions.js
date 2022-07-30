@@ -37,7 +37,9 @@ export default {
     await dispatch('getListSalary', 1)
   },
 
-  async onChangeYear({ dispatch, state, commit }) {},
+  async onChangeYear({ dispatch, state, commit }) {
+    await dispatch('getListPersonalSalary', 1)
+  },
 
   onRowDoubleClick({ commit }, data) {
     try {
@@ -61,6 +63,34 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async getListPersonalSalary({ commit, state }, page) {
+    try {
+      for (let i = 1; i <= 12; i++) {
+        const month = i < 10 ? '0' + i : i
+        const endDate = new Date(state.yearSearch, Number(month), 0)
+        const data = {
+          page,
+          startDate: state.yearSearch + '-' + month + '-' + '01',
+          endDate:
+            endDate.getFullYear() +
+            '-' +
+            (endDate.getMonth() < 10
+              ? '0' + (endDate.getMonth() + 1)
+              : endDate.getMonth() + 1) +
+            '-' +
+            (endDate.getDate() < 10
+              ? '0' + endDate.getDate()
+              : endDate.getDate()),
+        }
+        const res = await this.$repository.salary.getListPersonalSalary(data)
+        console.log(res)
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
   async getSalaryDetail({ commit, state }, data) {
     try {
       const res = await this.$repository.salary.getSalaryDetail(data)
@@ -166,7 +196,48 @@ export default {
     }
   },
 
-  async handleChangeSalaryStatus({ commit }, data) {
-    await console.log(data)
+  async handleChangeSalaryStatus({ commit }, data) {},
+
+  async approveSalary({ commit, state, dispatch }) {
+    try {
+      for (let i = 0; i < state.listSalaryId.length; i++) {
+        await this.$repository.salary.approveSalary(state.listSalaryId[i])
+      }
+      await dispatch('getListSalary', 1)
+      Message.success('Xác nhận lương thành công.')
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async rejectSalary({ commit, state, dispatch }, value) {
+    try {
+      for (let i = 0; i < state.listSalaryId.length; i++) {
+        await this.$repository.salary.rejectSalary({
+          salaryMonthlyId: state.listSalaryId[i],
+          comment: value,
+        })
+      }
+      await dispatch('getListSalary', 1)
+      Message.success('Đã từ chối bảng lương.')
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async checkSalary({ commit, state, dispatch }) {
+    try {
+      for (let i = 0; i < state.listSalaryId.length; i++) {
+        await this.$repository.salary.checkSalary({
+          salaryMonthlyId: state.listSalaryId[i],
+          salaryStatus: 'PENDING',
+          approverId: 'huynq100',
+        })
+      }
+      await dispatch('getListSalary', 1)
+      Message.success('Chuyển tiếp bảng lương thành công.')
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
   },
 }

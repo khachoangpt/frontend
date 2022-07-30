@@ -150,7 +150,11 @@ export default {
         phone_number: state.personnelDetail.phone_number,
         birth_date: state.personnelDetail.birth_date,
         marital_status: state.personnelDetail.marital_status,
-        working_status: state.personnelDetail.working_status,
+        working_status:
+          state.personnelDetail.working_status === 'Active' ||
+          state.personnelDetail.working_status === true
+            ? 1
+            : 0,
         avatar: state.personnelDetail.avatar,
         working_contract_id: state.personnelDetail.working_contract_id,
         company_name: state.personnelDetail.company_name,

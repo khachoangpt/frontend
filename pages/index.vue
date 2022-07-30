@@ -4,7 +4,7 @@
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Tổng số nhân viên</span>
             </div>
             <doughnut-chart :values="employeeNumber" />
@@ -14,7 +14,7 @@
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Mức tuổi</span>
             </div>
             <doughnut-chart :values="ageNumber" :background-color="ageColor" />
@@ -24,7 +24,7 @@
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Full time/Part time</span>
             </div>
             <doughnut-chart
@@ -46,7 +46,7 @@
       >
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Ngày nghỉ của công ty</span>
             </div>
             <v-calendar
@@ -68,7 +68,7 @@
       >
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Cơ cấu lương</span>
               <el-select v-model="option" size="small" placeholder="Tháng">
                 <el-option
@@ -88,7 +88,7 @@
       <el-col class="dashboard__col" :lg="24" :md="24" :sm="24" :xs="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Lịch sử lương</span>
               <el-select v-model="option" size="small" placeholder="Năm">
                 <el-option
@@ -110,7 +110,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Lịch sử thôi việc</span>
               <el-select v-model="option" placeholder="Thời gian">
                 <el-option
@@ -132,7 +132,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Lịch sử nghỉ phép</span>
               <el-select v-model="option" placeholder="Loại nghỉ phép">
                 <el-option
@@ -154,7 +154,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Thâm niên</span>
             </div>
             <bar-chart :values="seniorityNumber" />
@@ -166,7 +166,7 @@
       <el-col class="dashboard__col" :lg="8" :md="12" :sm="12" :xs="24">
         <div class="grid-content">
           <el-card class="box-card box-card__attendance">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Dữ liệu giờ làm</span>
             </div>
             <doughnut />
@@ -176,7 +176,7 @@
       <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header">
               <span class="box-card__header-text">Cơ cấu tổ chức</span>
               <el-select v-model="option" placeholder="Khu vực">
                 <el-option
@@ -536,12 +536,6 @@ export default {
   border-radius: 10px;
 }
 
-.clearfix {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .vc-container {
   border: none;
 }
@@ -566,10 +560,7 @@ export default {
   font-size: 16px;
   color: #1e90ff;
 }
-.clearfix {
-  display: flex;
-  justify-content: space-between;
-}
+
 .title {
   font-size: 2.25rem;
   font-family: 'Roboto', sans-serif;

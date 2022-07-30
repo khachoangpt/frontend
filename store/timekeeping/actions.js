@@ -31,7 +31,11 @@ export default {
       let res = await this.$repository.timekeeping.getEmployeeTimekeepingList(
         data
       )
-      res = res.timekeepingResponsesList[0].timekeepingResponses
+      if (res.timekeepingResponsesList.length === 0) {
+        res = []
+      } else {
+        res = res.timekeepingResponsesList[0].timekeepingResponses
+      }
       const response = []
       for (let i = 0; i < res.length; i++) {
         const timekeepingStatus = []

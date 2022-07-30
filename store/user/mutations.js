@@ -170,19 +170,19 @@ export default {
   },
 
   updateTaxCode(state, data) {
-    state.taxList[0].tax_code = data
+    state.taxList.tax_code = data
   },
 
   updateInsuranceId(state, data) {
-    state.taxList[0].insurance_id = data
+    state.taxList.insurance_id = data
   },
 
   updateInsuranceName(state, data) {
-    state.taxList[0].insurance_name = data
+    state.taxList.insurance_name = data
   },
 
   updateTaxAddress(state, data) {
-    state.taxList[0].address = data
+    state.taxList.address = data
   },
 
   updatePersonnelFullName(state, data) {
@@ -192,6 +192,9 @@ export default {
     state.personnelDetail.employee_id = data
   },
   updatePersonnelStartDate(state, data) {
+    state.personnelDetail.start_date = data
+  },
+  updatePersonnelEndDate(state, data) {
     state.personnelDetail.start_date = data
   },
   updatePersonnelWorkingStatus(state, data) {

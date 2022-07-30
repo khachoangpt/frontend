@@ -499,6 +499,10 @@ export default {
 
 .content-item__detail {
   font-weight: 600;
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .working-status--active {

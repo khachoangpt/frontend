@@ -5,6 +5,7 @@
     </div>
     <div class="salary__header-actions">
       <el-input
+        v-if="activeName === 'second'"
         :value="searchEmployeeText"
         class="header-actions__search"
         placeholder="Tên nhân viên"
@@ -13,16 +14,18 @@
         <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </el-input>
       <el-select
+        v-if="activeName === 'second'"
         v-model="searchStatusText"
         class="header-actions__search-status"
         placeholder="Select"
         @change="handleChangeSalaryStatus"
       >
-        <el-option label="Pending" value="Pending"> </el-option>
-        <el-option label="Approve" value="Approve"> </el-option>
-        <el-option label="Reject" value="Reject"> </el-option>
+        <el-option label="Pending" value="PENDING"> </el-option>
+        <el-option label="Approve" value="APPROVED"> </el-option>
+        <el-option label="Reject" value="REJECTED"> </el-option>
       </el-select>
       <el-date-picker
+        v-if="activeName === 'second'"
         :value="monthSearch"
         type="month"
         placeholder="Tìm kiếm"
@@ -30,6 +33,18 @@
         :clearable="false"
         @input="selectMonth"
         @change="onChangeMonth"
+      >
+      </el-date-picker>
+      <el-date-picker
+        v-if="activeName === 'first'"
+        :value="yearSearch"
+        type="year"
+        placeholder="Tìm kiếm"
+        format="yyyy"
+        value-format="yyyy"
+        :clearable="false"
+        @input="selectYear"
+        @change="onChangeYear"
       >
       </el-date-picker>
       <el-button
@@ -42,45 +57,106 @@
       </el-button>
     </div>
     <div class="salary-table">
-      <vue-good-table
-        ref="salary-table"
-        :columns="salaryListHeader"
-        :rows="salaryList"
-        :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-        sort-options="{
+      <el-tabs v-model="activeName" type="border-card">
+        <el-tab-pane label="Cá nhân" name="first">
+          <vue-good-table
+            ref="salary-table"
+            :columns="salaryHistoryListHeader"
+            :rows="salaryHistoryList"
+            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+            sort-options="{
           enabled: true,
         }"
-        :pagination-options="{
-          enabled: true,
-        }"
-        @on-row-dblclick="onRowDoubleClick"
-        @on-selected-rows-change="onSelectedRowsChange"
-      >
-        <template slot="pagination-bottom">
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :page-size="5"
-            :total="totalPage"
+            @on-row-dblclick="onRowDoubleClick"
+            @on-selected-rows-change="onSelectedRowsChange"
           >
-          </el-pagination>
-        </template>
-        <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'salaryStatus'">
-            <span :class="'salary-status__' + props.row.salaryStatus">{{
-              props.row.salaryStatus
-            }}</span>
-          </span>
-        </template>
-        <div
-          slot="selected-row-actions"
-          class="salary-table__selected-action-btn"
-        >
-          <el-button size="medium" type="primary">Xác nhận</el-button>
-          <el-button size="medium" type="danger">Từ chối</el-button>
-          <el-button size="medium" type="success">Chốt bảng lương</el-button>
-        </div>
-      </vue-good-table>
+            <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'salaryStatus'">
+                <span :class="'salary-status__' + props.row.salaryStatus">{{
+                  props.row.salaryStatus
+                }}</span>
+              </span>
+            </template>
+            <div
+              slot="selected-row-actions"
+              class="salary-table__selected-action-btn"
+            >
+              <el-button
+                size="medium"
+                type="primary"
+                @click="handleClickCheckSalary"
+              >
+                Đã xem
+              </el-button>
+              <el-button
+                size="medium"
+                type="danger"
+                @click="handleClickRejectSalary"
+              >
+                Từ chối
+              </el-button>
+              <el-button size="medium" type="success" @click="approveSalary">
+                Chốt bảng lương
+              </el-button>
+            </div>
+          </vue-good-table>
+        </el-tab-pane>
+        <el-tab-pane label="Bảng lương" name="second">
+          <vue-good-table
+            ref="salary-table"
+            :columns="salaryListHeader"
+            :rows="salaryList"
+            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+            sort-options="{
+          enabled: true,
+        }"
+            :pagination-options="{
+              enabled: true,
+            }"
+            @on-row-dblclick="onRowDoubleClick"
+            @on-selected-rows-change="onSelectedRowsChange"
+          >
+            <template slot="pagination-bottom">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :page-size="5"
+                :total="totalPage"
+              >
+              </el-pagination>
+            </template>
+            <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field == 'salaryStatus'">
+                <span :class="'salary-status__' + props.row.salaryStatus">{{
+                  props.row.salaryStatus
+                }}</span>
+              </span>
+            </template>
+            <div
+              slot="selected-row-actions"
+              class="salary-table__selected-action-btn"
+            >
+              <el-button
+                size="medium"
+                type="primary"
+                @click="handleClickCheckSalary"
+              >
+                Đã xem
+              </el-button>
+              <el-button
+                size="medium"
+                type="danger"
+                @click="handleClickRejectSalary"
+              >
+                Từ chối
+              </el-button>
+              <el-button size="medium" type="success" @click="approveSalary">
+                Chốt bảng lương
+              </el-button>
+            </div>
+          </vue-good-table>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -93,17 +169,22 @@ export default {
   data() {
     return {
       searchStatusText: '',
+      activeName: 'first',
     }
   },
 
   computed: {
     ...mapGetters('salary', [
       'monthSearch',
+      'yearSearch',
       'salaryListHeader',
       'salaryList',
       'totalPage',
       'salaryDataList',
       'searchEmployeeText',
+      'listSalaryId',
+      'salaryHistoryListHeader',
+      'salaryHistoryList',
     ]),
   },
 
@@ -114,13 +195,18 @@ export default {
   methods: {
     ...mapActions('salary', [
       'onChangeMonth',
+      'onChangeYear',
       'onRowDoubleClick',
       'getListSalary',
       'exportSalary',
       'handleChangeSalaryStatus',
+      'approveSalary',
+      'rejectSalary',
+      'checkSalary',
     ]),
     ...mapMutations('salary', [
       'setMonthSearch',
+      'setYearSearch',
       'setSalaryDataList',
       'setListSalaryId',
     ]),
@@ -128,13 +214,17 @@ export default {
       this.$emit('input', e)
       this.setMonthSearch(e)
     },
+    selectYear(e) {
+      this.$emit('input', e)
+      this.setYearSearch(e)
+    },
 
     onSelectedRowsChange() {
       const salaryIdSelectedList = []
       this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
       for (let i = 0; i < this.salaryDataList; i++) {
         salaryIdSelectedList.push(
-          this.$refs['salary-table'].selectedRows[i].salary_monthly_id
+          this.$refs['salary-table'].selectedRows[i].salaryMonthlyId
         )
       }
       this.setListSalaryId(salaryIdSelectedList)
@@ -143,6 +233,26 @@ export default {
     inputSearch(e) {
       this.$emit('input', e)
       this.setSearchEmployeeText(e)
+    },
+
+    handleClickRejectSalary() {
+      this.$prompt('Nhập lý do từ chối:', 'Từ chối bảng lương', {
+        confirmButtonText: 'Xong',
+        cancelButtonText: 'Đóng',
+      })
+        .then(({ value }) => {
+          this.rejectSalary(value)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Input canceled',
+          })
+        })
+    },
+
+    handleClickCheckSalary() {
+      this.checkSalary()
     },
   },
 }

@@ -5,14 +5,20 @@
     </div>
 
     <div class="salary-detail__content">
-      <div class="salary-detail__employee">
-        <div
-          class="salary-avatar__background"
-          :style="{ backgroundImage: 'url(' + personnelDetail.avatar + ')' }"
-        ></div>
+      <div class="salary-detail__content-head">
+        <div class="salary-detail__employee">
+          <div
+            class="salary-avatar__background"
+            :style="{ backgroundImage: 'url(' + personnelDetail.avatar + ')' }"
+          ></div>
+          <div>
+            <p class="salary-avatar__name">{{ personnelDetail.full_name }}</p>
+            <p class="salary-avatar__role">{{ personnelDetail.grade }}</p>
+          </div>
+        </div>
         <div>
-          <p class="salary-avatar__name">{{ personnelDetail.full_name }}</p>
-          <p class="salary-avatar__role">{{ personnelDetail.grade }}</p>
+          <span class="salary-status__label">Trạng thái:</span>
+          <span class="salary-status__PENDING">PENDING</span>
         </div>
       </div>
       <el-row class="salary-detail__row">
@@ -251,6 +257,17 @@
           </el-card>
         </el-col>
       </el-row>
+    </div>
+    <div class="salary-detail__actions">
+      <el-button size="medium" type="primary" @click="handleClickCheckSalary">
+        Đã xem
+      </el-button>
+      <el-button size="medium" type="danger" @click="handleClickRejectSalary">
+        Từ chối
+      </el-button>
+      <el-button size="medium" type="success" @click="approveSalary">
+        Chốt bảng lương
+      </el-button>
     </div>
     <el-dialog
       class="edit-deduction-dialog"
@@ -676,6 +693,28 @@ export default {
         }
       })
     },
+
+    approveSalary() {},
+
+    handleClickRejectSalary() {
+      this.$prompt('Nhập lý do từ chối:', 'Từ chối bảng lương', {
+        confirmButtonText: 'Xong',
+        cancelButtonText: 'Đóng',
+      })
+        .then(({ value }) => {
+          this.rejectSalary(value)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Input canceled',
+          })
+        })
+    },
+
+    handleClickCheckSalary() {
+      this.checkSalary()
+    },
   },
 }
 </script>
@@ -852,5 +891,42 @@ export default {
 
 .deduction-dialog__input {
   width: 100% !important;
+}
+
+.salary-status__PENDING {
+  background-color: #e6a23c;
+  color: #fff;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.salary-status__APPROVED {
+  background-color: #67c23a;
+  color: #fff;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.salary-status__REJECTED {
+  background-color: #f56c6c;
+  color: #fff;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.salary-detail__content-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.salary-status__label {
+  font-weight: 600;
+}
+
+.salary-detail__actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10vh;
 }
 </style>

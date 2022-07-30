@@ -24,7 +24,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Họ và tên</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -41,7 +41,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã nhân sự</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -50,6 +50,7 @@
             <el-input
               v-else
               size="medium"
+              disabled
               :value="personnelDetail.employee_id"
               class="edit-input"
               @input="updatePersonnelEmployeeId"
@@ -58,7 +59,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày bắt đầu</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -77,13 +78,41 @@
           </div>
         </div>
       </el-col>
+      <el-col :span="6">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">Ngày kết thúc</span>
+            <span v-if="isEditMainInfo" class="content-item__detail">
+              {{ personnelDetail.end_date }}
+            </span>
+            <el-date-picker
+              v-else
+              size="medium"
+              :value="personnelDetail.end_date"
+              type="date"
+              class="edit-input"
+              placeholder="Pick a day"
+              @input="updatePersonnelEndDate"
+            >
+            </el-date-picker>
+          </div>
+        </div>
+      </el-col>
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Tình trạng việc làm</span>
+            <span class="content-item__head">Tình trạng làm việc</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
+              <span
+                v-if="personnelDetail.working_status === true"
+                class="el-icon-success content-item__detail-status-icon"
+              ></span>
+              <span
+                v-else
+                class="el-icon-error content-item__detail-status-icon"
+              ></span>
               {{
                 personnelDetail.working_status === true
                   ? 'Active'
@@ -109,12 +138,31 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Hợp đồng hiện tại</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail.contract_url }}
-            </span>
+            <el-popover
+              v-if="isEditMainInfo"
+              placement="bottom-start"
+              width="400"
+              trigger="hover"
+              class="content-item__detail content-item__detail-link"
+            >
+              <a
+                :href="personnelDetail.contract_url"
+                target="_blank"
+                class="content-item__detail-link"
+              >
+                {{ personnelDetail.contract_url }}
+              </a>
+              <span
+                slot="reference"
+                target="_blank"
+                class="content-item__detail-link"
+              >
+                {{ personnelDetail.contract_url }}
+              </span>
+            </el-popover>
             <el-input
               v-else
               size="medium"
@@ -126,7 +174,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Số điện thoại</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -143,7 +191,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Cấp bậc</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -171,7 +219,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày sinh</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -191,7 +239,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Email</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -208,7 +256,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Giới tính</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -230,7 +278,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Tình trạng hôn nhân</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -254,7 +302,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Văn phòng</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -281,7 +329,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Lịch làm việc</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -308,7 +356,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Vị trí</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -335,7 +383,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Lĩnh vực</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
@@ -387,11 +435,15 @@ export default {
 
   async mounted() {
     await this.getPersonnelDetail(this.$route.params.employeeId)
-    await this.getListGrade(1)
     await this.getListOffice()
     await this.getWorkingTypes()
     await this.getListPositions()
     await this.getListArea()
+    await this.getListGrade(
+      this.listPositions.find(
+        (position) => position.position === this.personnelDetail.position_name
+      ).job_id
+    )
   },
 
   methods: {
@@ -408,6 +460,7 @@ export default {
       'updatePersonnelFullName',
       'updatePersonnelEmployeeId',
       'updatePersonnelStartDate',
+      'updatePersonnelEndDate',
       'updatePersonnelWorkingStatus',
       'updatePersonnelContractUrl',
       'updatePersonnelPhoneNumber',
@@ -431,4 +484,19 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.content-item__detail-link {
+  color: #409eff;
+}
+
+.el-icon-success {
+  color: #67c23a;
+}
+.el-icon-error {
+  color: #f56c6c;
+}
+
+.content-item__detail-status-icon {
+  font-size: 18px;
+}
+</style>
