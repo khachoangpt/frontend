@@ -1,5 +1,18 @@
 <template>
-  <div>
+  <div class="forgot-page">
+    <el-dropdown class="login-page__language" @command="handleCommand">
+      <i class="header__icon">
+        <country-flag class="header__language" :country="country" />
+      </i>
+      <el-dropdown-menu slot="dropdown">
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('vi')">
+          <el-dropdown-item command="vn">Tiếng Việt</el-dropdown-item>
+        </nuxt-link>
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('en')">
+          <el-dropdown-item command="us">English</el-dropdown-item>
+        </nuxt-link>
+      </el-dropdown-menu>
+    </el-dropdown>
     <div class="forgot">
       <div class="logo">
         <img class="logo-img" src="/hrm-logo.png" alt="" />
@@ -40,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'ForgotPasswordComponent',
   data() {
@@ -65,13 +78,25 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('auth', ['country']),
+  },
+
   methods: {
     ...mapActions('auth', ['forgot']),
+    ...mapMutations('auth', ['setCountry']),
+    handleCommand(command) {
+      this.setCountry(command)
+    },
   },
 }
 </script>
 
 <style>
+.forgot-page {
+  position: relative;
+}
+
 .forgot {
   display: flex;
   flex-direction: column;
@@ -118,5 +143,11 @@ export default {
 .forgot-form__input input {
   background-color: rgba(255, 255, 255, 0) !important;
   color: #fff !important;
+}
+
+.login-page__language {
+  float: right;
+  position: absolute;
+  right: 5%;
 }
 </style>

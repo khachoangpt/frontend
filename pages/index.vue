@@ -1,44 +1,18 @@
 <template>
   <div class="dashboard">
     <el-row :gutter="40">
-      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
-        <div class="grid-content bg-purple">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text">{{ latestTickId }}</span>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
-        <div class="grid-content bg-purple-light">
-          <el-card class="box-card box-card__attendance">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Dữ liệu giờ làm</span>
-            </div>
-            <doughnut />
-          </el-card>
-        </div>
-      </el-col>
-      <el-col class="dashboard__col" :lg="8" :md="12" :sm="24" :xs="24">
+      <el-col class="dashboard__col" :lg="6" :md="12" :sm="12" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Ngày nghỉ của công ty</span>
             </div>
-            <el-calendar :first-day-of-week="0">
-              <template slot="dateCell" slot-scope="{ date, data }">
-                <p
-                  :class="
-                    date.getDay() === 0 || date.getDay() === 6
-                      ? 'is-weekend'
-                      : ''
-                  "
-                >
-                  {{ data.day.split('-').slice(2).join('-') }}
-                </p>
-              </template>
-            </el-calendar>
+            <v-calendar
+              :attributes="attributes"
+              is-expanded
+              :locale="$i18n.locale"
+              :first-day-of-week="1"
+            />
           </el-card>
         </div>
       </el-col>
@@ -149,20 +123,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Doughnut from '~/components/chart/Doughnut.vue'
 import LineChart from '~/components/chart/LineChart.vue'
 import DoughnutChart from '~/components/chart/DoughnutChart.vue'
 import TreeChart from '~/components/chart/TreeChart.vue'
 export default {
   name: 'HomePage',
-  components: { Doughnut, LineChart, TreeChart, DoughnutChart },
+  components: { LineChart, TreeChart, DoughnutChart },
   layout: 'main',
   middleware: ['auth'],
 
   data() {
     return {
       value: new Date(),
-      latestTickId: 0,
       historySalaryOption: {
         optionsType: [
           {
@@ -178,8 +150,19 @@ export default {
         date: new Date(),
         employeeById: '',
       },
-      salaryStructureDate: new Date(),
+      salaryStructureDate: new Date(2022, 5, 1),
       salaryStructureEmployeeById: '',
+      attributes: [
+        {
+          key: 'today',
+          highlight: 'red',
+          dates: {
+            start: new Date(2022, 0, 1), // Jan 1st, 2018
+            end: new Date(2023, 0, 1), // Jan 1st, 2019
+            weekdays: [1, 7], // ...on Sundays and Saturdays
+          },
+        },
+      ],
     }
   },
 
@@ -317,5 +300,9 @@ export default {
 .clearfix {
   display: flex;
   justify-content: space-between;
+}
+
+.vc-container {
+  border: none;
 }
 </style>

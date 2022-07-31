@@ -5,6 +5,7 @@ const vi = {
     signIn: 'Đăng nhập',
     password: 'Mật khẩu',
     forgotPassword: 'Quên mật khẩu?',
+    passwordIncorrect: 'Mật khẩu không đúng. Hãy nhập lại.',
   },
 
   forgot: {

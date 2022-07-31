@@ -13,7 +13,9 @@ export default {
       commit('setAccessToken', res.accessToken)
       this.$router.push(this.localePath('/'))
     } catch (error) {
-      Message.error(error.response.data.message)
+      if (error.response.data.message === 'Bad credentials') {
+        Message.error(this.$i18n.t('login.passwordIncorrect'))
+      }
     }
   },
 

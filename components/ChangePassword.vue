@@ -1,5 +1,18 @@
 <template>
-  <div>
+  <div class="change-password-page">
+    <el-dropdown class="login-page__language" @command="handleCommand">
+      <i class="header__icon">
+        <country-flag class="header__language" :country="country" />
+      </i>
+      <el-dropdown-menu slot="dropdown">
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('vi')">
+          <el-dropdown-item command="vn">Tiếng Việt</el-dropdown-item>
+        </nuxt-link>
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('en')">
+          <el-dropdown-item command="us">English</el-dropdown-item>
+        </nuxt-link>
+      </el-dropdown-menu>
+    </el-dropdown>
     <div class="change-password">
       <div class="logo">
         <img class="logo-img" src="/hrm-logo.png" alt="" />
@@ -81,7 +94,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'ChangePasswordComponent',
   data() {
@@ -141,7 +154,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['email']),
+    ...mapGetters('auth', ['email', 'country']),
   },
 
   mounted() {
@@ -150,11 +163,19 @@ export default {
 
   methods: {
     ...mapActions('auth', ['changePassword']),
+    ...mapMutations('auth', ['setCountry']),
+    handleCommand(command) {
+      this.setCountry(command)
+    },
   },
 }
 </script>
 
 <style>
+.change-password-page {
+  position: relative;
+}
+
 .change-password {
   display: flex;
   flex-direction: column;
@@ -210,5 +231,11 @@ export default {
 
 .login-form__addition-forgot {
   text-decoration: none;
+}
+
+.login-page__language {
+  float: right;
+  position: absolute;
+  right: 5%;
 }
 </style>
