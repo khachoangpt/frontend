@@ -20,4 +20,5 @@ export default {
   checkDialogVisible: (state) => state.checkDialogVisible,
   listManagerOfArea: (state) => state.listManagerOfArea,
   searchManagerText: (state) => state.searchManagerText,
+  isEnoughLevelApprove: (state) => state.isEnoughLevelApprove,
 }

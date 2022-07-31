@@ -18,7 +18,9 @@
         </div>
         <div>
           <span class="salary-status__label">Trạng thái:</span>
-          <span class="salary-status__PENDING">PENDING</span>
+          <span :class="'salary-status__' + salaryDetail.salaryStatus">
+            {{ salaryDetail.salaryStatus }}
+          </span>
         </div>
       </div>
       <el-row class="salary-detail__row">
@@ -259,13 +261,28 @@
       </el-row>
     </div>
     <div class="salary-detail__actions">
-      <el-button size="medium" type="primary" @click="handleClickCheckSalary">
-        Đã xem
+      <el-button
+        v-if="isShowCheck && isEnoughLevelApprove === 'False'"
+        size="medium"
+        type="primary"
+        @click="handleClickCheckSalary"
+      >
+        Chuyển tiếp
       </el-button>
-      <el-button size="medium" type="danger" @click="handleClickRejectSalary">
+      <el-button
+        v-if="isShowReject"
+        size="medium"
+        type="danger"
+        @click="handleClickRejectSalary"
+      >
         Từ chối
       </el-button>
-      <el-button size="medium" type="success" @click="approveSalary">
+      <el-button
+        v-if="isShowApprove && isEnoughLevelApprove === 'True'"
+        size="medium"
+        type="success"
+        @click="approveSalary"
+      >
         Chốt bảng lương
       </el-button>
     </div>
@@ -543,6 +560,9 @@ export default {
           },
         ],
       },
+      isShowCheck: true,
+      isShowReject: true,
+      isShowApprove: true,
     }
   },
 
@@ -553,11 +573,24 @@ export default {
       'editDeductionDialogVisible',
       'editAdvanceDialogVisible',
       'editBonusDialogVisible',
+      'isEnoughLevelApprove',
     ]),
   },
 
   async beforeMount() {
     await this.getSalaryDetail(this.$route.params.employeeId)
+    if (this.salaryDetail.salaryStatus === 'REJECTED') {
+      this.isShowCheck = true
+      this.isShowReject = false
+    }
+    if (this.salaryDetail.salaryStatus === 'APPROVED') {
+      this.isShowApprove = false
+      this.isShowCheck = false
+    }
+    if (this.salaryDetail.salaryStatus === 'PENDING') {
+      this.isShowCheck = true
+      this.isShowReject = true
+    }
   },
 
   methods: {

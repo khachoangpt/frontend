@@ -32,9 +32,9 @@ class UserApi extends Policy {
   getListPersonalSalary(data) {
     const accessToken = getToken()
     return this.$axios.$get(
-      '/api/get_all_personal_salary_monthly?filter=startDate:AEQ' +
+      '/api/get_all_personal_salary_monthly?filter=startDate:AGE' +
         data.startDate +
-        ',endDate:AEQ' +
+        ',endDate:ALE' +
         data.endDate,
       {
         headers: {

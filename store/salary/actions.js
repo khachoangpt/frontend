@@ -67,6 +67,7 @@ export default {
         employeeId: employeeID,
       }
       const res = await this.$repository.salary.getListSalary(data)
+      await commit('setIsEnoughLevelApprove', res.is_enough_level)
       await commit('setSalaryList', res.salaryMonthlyResponses)
       await commit('setTotalPage', res.total)
     } catch (error) {
@@ -77,34 +78,17 @@ export default {
   async getListPersonalSalary({ commit, state }) {
     try {
       const salaryHistoryList = []
-      for (let i = 1; i <= 12; i++) {
-        const month = i < 10 ? '0' + i : i
-        const endDate = new Date(
-          state.yearSearch.getFullYear(),
-          Number(month),
-          0
+      const data = {
+        startDate: Date.parse(state.yearSearch.getFullYear() + '-01-01'),
+        endDate: Date.parse(state.yearSearch.getFullYear() + '-12-31'),
+      }
+      const res = await this.$repository.salary.getListPersonalSalary(data)
+      for (let i = 0; i < res.salaryMonthlyResponses.length; i++) {
+        const date = new Date(
+          Date.parse(res.salaryMonthlyResponses[i].startDate)
         )
-        const data = {
-          startDate: state.yearSearch.getFullYear() + '-' + month + '-' + '01',
-          endDate:
-            endDate.getFullYear() +
-            '-' +
-            (endDate.getMonth() < 10
-              ? '0' + (endDate.getMonth() + 1)
-              : endDate.getMonth() + 1) +
-            '-' +
-            (endDate.getDate() < 10
-              ? '0' + endDate.getDate()
-              : endDate.getDate()),
-        }
-        const res = await this.$repository.salary.getListPersonalSalary(data)
-        if (res.salaryMonthlyResponses.length > 0) {
-          const date = new Date(
-            Date.parse(res.salaryMonthlyResponses[0].startDate)
-          )
-          res.salaryMonthlyResponses[0].month = date.getMonth() + 1
-          salaryHistoryList.push(res.salaryMonthlyResponses[0])
-        }
+        res.salaryMonthlyResponses[i].month = date.getMonth() + 1
+        salaryHistoryList.push(res.salaryMonthlyResponses[i])
       }
       await commit('setSalaryHistoryList', salaryHistoryList)
     } catch (error) {

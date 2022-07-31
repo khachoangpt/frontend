@@ -82,4 +82,8 @@ export default {
   setSearchManagerText(state, searchManagerText) {
     state.searchManagerText = searchManagerText
   },
+
+  setIsEnoughLevelApprove(state, isEnoughLevelApprove) {
+    state.isEnoughLevelApprove = isEnoughLevelApprove
+  },
 }

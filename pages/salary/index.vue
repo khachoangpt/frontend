@@ -105,7 +105,7 @@
                 type="primary"
                 @click="handleClickCheckSalary"
               >
-                Đã xem
+                Chuyển tiếp
               </el-button>
               <el-button
                 size="medium"
@@ -156,12 +156,12 @@
               class="salary-table__selected-action-btn"
             >
               <el-button
-                v-if="isShowCheck"
+                v-if="isShowCheck && isEnoughLevelApprove === 'False'"
                 size="medium"
                 type="primary"
                 @click="handleClickCheckSalary"
               >
-                Đã xem
+                Chuyển tiếp
               </el-button>
               <el-button
                 v-if="isShowReject"
@@ -172,7 +172,7 @@
                 Từ chối
               </el-button>
               <el-button
-                v-if="isShowApprove"
+                v-if="isShowApprove && isEnoughLevelApprove === 'True'"
                 size="medium"
                 type="success"
                 @click="approveSalary"
@@ -244,6 +244,7 @@ export default {
       'checkDialogVisible',
       'listManagerOfArea',
       'searchManagerText',
+      'isEnoughLevelApprove',
     ]),
   },
 
@@ -293,14 +294,17 @@ export default {
       const salaryIdSelectedList = []
       this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
       for (let i = 0; i < this.salaryDataList; i++) {
-        if (
-          this.$refs['salary-table'].selectedRows[i].salaryStatus ===
-            'APPROVED' ||
-          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED'
-        ) {
-          this.isShowCheck = false
+        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED') {
+          this.isShowCheck = true
           this.isShowReject = false
+        }
+        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'APPROVED') {
           this.isShowApprove = false
+          this.isShowCheck = false
+        }
+        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'PENDING') {
+          this.isShowCheck = true
+          this.isShowReject = true
         }
         salaryIdSelectedList.push(
           this.$refs['salary-table'].selectedRows[i].salaryMonthlyId

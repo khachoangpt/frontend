@@ -233,4 +233,5 @@ export default () => ({
   checkDialogVisible: false,
   listManagerOfArea: [],
   searchManagerText: '',
+  isEnoughLevelApprove: 'False',
 })
