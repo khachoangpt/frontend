@@ -44,9 +44,12 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử thôi việc</span>
-              <el-select v-model="option" placeholder="Thời gian">
+              <el-select
+                v-model="leaveCompanyReasonChartOption"
+                placeholder="Năm"
+              >
                 <el-option
-                  v-for="item in options"
+                  v-for="item in leaveCompanyReasonChartOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -55,7 +58,7 @@
                 </el-option>
               </el-select>
             </div>
-            <bar-chart :values="reasonType" />
+            <multiple-column-chart :values="leaveCompanyReasonChart" />
           </el-card>
         </div>
       </el-col>
@@ -66,9 +69,23 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử nghỉ phép</span>
-              <el-select v-model="option" placeholder="Loại nghỉ phép">
+              <el-select
+                v-if="!roles.includes('user')"
+                v-model="paidLeaveReasonChartEmployeeId"
+                placeholder="Mã nhân viên"
+              >
                 <el-option
-                  v-for="item in options"
+                  v-for="item in employeeByIdOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                >
+                </el-option>
+              </el-select>
+              <el-select v-model="paidLeaveReasonChartOption" placeholder="Năm">
+                <el-option
+                  v-for="item in paidLeaveReasonChartOptions"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -77,7 +94,7 @@
                 </el-option>
               </el-select>
             </div>
-            <multiple-column-chart />
+            <multiple-column-chart :values="paidLeaveReasonChart" />
           </el-card>
         </div>
       </el-col>
@@ -97,6 +114,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import BarChart from '~/components/chart/BarChart.vue'
 import DoughnutChart from '~/components/chart/DoughnutChart.vue'
 import MultipleColumnChart from '~/components/chart/MultipleColumnChart.vue'
@@ -111,231 +129,103 @@ export default {
   data() {
     return {
       ageColor: ['#64a340', '#348c75', '#348c75', '#05ffd1'],
-      workTimeColor: ['#328fa8', '#ffde05'],
-      seniorityNumber: [
-        {
-          key: 1,
-          label: '10 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 2,
-          label: '20 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 3,
-          label: '30 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 4,
-          label: '40 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 5,
-          label: '50 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 6,
-          label: '60 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 7,
-          label: '70 Năm',
-          value: Math.floor(Math.random() * 11),
-        },
+      workTimeColor: ['#328fa8', '#ffde05', '#64a340'],
+      leaveCompanyReasonChartOptions: [
+        { label: '2020', value: 2020 },
+        { label: '2021', value: 2021 },
+        { label: '2022', value: 2022 },
+        { label: '2023', value: 2023 },
       ],
-      options: [
-        {
-          value: 'Option1',
-          label: 'Option1',
-        },
-        {
-          value: 'Option2',
-          label: 'Option2',
-          disabled: true,
-        },
-        {
-          value: 'Option3',
-          label: 'Option3',
-        },
-        {
-          value: 'Option4',
-          label: 'Option4',
-        },
-        {
-          value: 'Option5',
-          label: 'Option5',
-        },
+      leaveCompanyReasonChartOption: new Date().getFullYear(),
+      paidLeaveReasonChartOptions: [
+        { label: '2020', value: 2020 },
+        { label: '2021', value: 2021 },
+        { label: '2022', value: 2022 },
+        { label: '2023', value: 2023 },
       ],
-      option: '',
-      reasonType: [
-        {
-          key: 1,
-          label: 'Ghét sếp',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 2,
-          label: 'Đánh nhau với đồng nghiệp',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 3,
-          label: 'Lương thấp',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 4,
-          label: 'Buồn',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 5,
-          label: 'Vui',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 6,
-          label: 'Hơi buồn',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 7,
-          label: 'Hơi vui',
-          value: Math.floor(Math.random() * 11),
-        },
-      ],
-      workTimeNumber: [
-        {
-          key: 1,
-          label: 'Full time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 2,
-          label: 'Full time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 3,
-          label: 'Full time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 4,
-          label: 'Full time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 5,
-          label: 'Full time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 6,
-          label: 'Part time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 7,
-          label: 'Part time',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 8,
-          label: 'Part time',
-          value: Math.floor(Math.random() * 11),
-        },
-      ],
-      ageNumber: [
-        {
-          key: 1,
-          label: 'Tuổi 18-20',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 2,
-          label: 'Tuổi 18-20',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 3,
-          label: 'Tuổi 18-20',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 4,
-          label: 'Tuổi 20-30',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 5,
-          label: 'Tuổi 20-30',
-          value: Math.floor(Math.random() * 11),
-        },
-      ],
-      employeeNumber: [
-        {
-          key: 1,
-          label: 'Nam',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 2,
-          label: 'Nam',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 3,
-          label: 'Nam',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 4,
-          label: 'Nữ',
-          value: 1,
-        },
-        {
-          key: 5,
-          label: 'Nữ',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 6,
-          label: 'Nữ',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 7,
-          label: 'Nữ',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 8,
-          label: 'Nữ',
-          value: Math.floor(Math.random() * 11),
-        },
-        {
-          key: 9,
-          label: 'Nữ',
-          value: Math.floor(Math.random() * 11),
-        },
-      ],
+      paidLeaveReasonChartOption: new Date().getFullYear(),
+      paidLeaveReasonChartEmployeeId: '',
     }
+  },
+  computed: {
+    ...mapGetters('synthetic', [
+      'generalDataChart',
+      'leaveCompanyReasonChart',
+      'paidLeaveReasonChart',
+    ]),
+    ...mapGetters('salary', ['employeeById']),
+    ...mapGetters('auth', ['roles', 'id']),
+    employeeByIdOptions() {
+      return this.employeeById.map(({ employeeID, name }) => ({
+        value: employeeID,
+        label: name,
+      }))
+    },
+    employeeNumber() {
+      return [
+        { label: 'Nam', value: this.generalDataChart.totalMaleEmployee },
+        { label: 'Nữ', value: this.generalDataChart.totalFemaleEmployee },
+      ]
+    },
+    ageNumber() {
+      return this.generalDataChart.ageList
+    },
+    workTimeNumber() {
+      return this.generalDataChart.workingTypeList
+    },
+    seniorityNumber() {
+      return this.generalDataChart.seniorityList
+    },
+  },
+  watch: {
+    leaveCompanyReasonChartOption(year) {
+      this.getLeaveCompanyReasonChart(year)
+    },
+    paidLeaveReasonChartOption(year) {
+      this.getPaidLeaveReasonChart({
+        year,
+        employeeId: this.paidLeaveReasonChartEmployeeId,
+      })
+    },
+    paidLeaveReasonChartEmployeeId() {
+      this.getPaidLeaveReasonChart({
+        year: this.paidLeaveReasonChartOption,
+        employeeId: this.paidLeaveReasonChartEmployeeId,
+      })
+    },
+  },
+  async mounted() {
+    await this.getEmployeeById()
+    this.paidLeaveReasonChartEmployeeId = this.id
+    await this.getGeneralDataChart()
+    await this.getLeaveCompanyReasonChart(this.leaveCompanyReasonChartOption)
+    await this.getPaidLeaveReasonChart({
+      year: new Date().getFullYear(),
+      employeeId: this.paidLeaveReasonChartEmployeeId,
+    })
+  },
+  methods: {
+    ...mapActions('synthetic', [
+      'getGeneralDataChart',
+      'getLeaveCompanyReasonChart',
+      'getPaidLeaveReasonChart',
+    ]),
+    ...mapActions('salary', ['getEmployeeById']),
   },
 }
 </script>
 <style scoped>
-.el-row {
-  margin-bottom: 20px;
-}
 .el-col {
   border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
 }
 .grid-content {
   border-radius: 4px;

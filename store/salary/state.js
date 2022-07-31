@@ -234,4 +234,8 @@ export default () => ({
   listManagerOfArea: [],
   searchManagerText: '',
   isEnoughLevelApprove: 'False',
+  historySalary: [],
+  salaryStructure: [],
+  organizational: [],
+  employeeById: [],
 })

@@ -10746,7 +10746,7 @@ vue-chartjs@^4.1.1:
   resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-4.1.1.tgz#b1ffc2845e09d14cb5255305b11bd3e8df8058ab"
   integrity sha512-rKIQ3jPrjhwxjKdNJppnYxRuBSrx4QeM3nNHsfIxEqjX6QS4Jq6e6vnZBxh2MDpURDC2uvuI2N0eIt1cWXbBVA==
 
-vue-class-component@^8.0.0-0:
+vue-class-component@^8.0.0-0, vue-class-component@^8.0.0-rc.1:
   version "8.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz#db692cd97656eb9a08206c03d0b7398cdb1d9420"
   integrity sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==
@@ -10896,6 +10896,13 @@ vuejs-tree@^3.0.2:
     core-js "^3.6.5"
     vue "^3.0.0"
     vue-class-component "^8.0.0-0"
+
+vuex-pathify@^3.0.0-beta:
+  version "3.0.0-beta"
+  resolved "https://registry.yarnpkg.com/vuex-pathify/-/vuex-pathify-3.0.0-beta.tgz#7bfb2b9c54ed3d1e9146c10abcf273103407c4b2"
+  integrity sha512-mnY87hPBXErWINFvTIdnEn2PmdGcJNyiuORR/k8L0AP55TSlRRWwsSwP0DVj5wdLd8IjZum+3Jq98z7kFIr3Tg==
+  dependencies:
+    vue-class-component "^8.0.0-rc.1"
 
 vuex@^3.6.2:
   version "3.6.2"

@@ -42,11 +42,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     height: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     cssClasses: {
       default: '',
@@ -118,9 +118,13 @@ export default {
       },
     }
   },
+  watch: {
+    values() {
+      this.formatData()
+    },
+  },
   mounted() {
     this.formatData()
-    this.randomColor()
   },
   methods: {
     formatData() {
@@ -129,15 +133,6 @@ export default {
       }, {})
       this.chartData.labels = Object.keys(objData)
       this.chartData.datasets[0].data = Object.values(objData)
-    },
-    randomColor() {
-      this.chartData.datasets[0].backgroundColor = this.chartData.labels.reduce(
-        (acc, current) => {
-          current = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-          return [...acc, current]
-        },
-        []
-      )
     },
   },
 }

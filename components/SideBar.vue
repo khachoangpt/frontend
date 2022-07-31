@@ -79,6 +79,10 @@
       <i class="el-icon-s-finance sidebar-icon"></i>
       <span class="sidebar-item__text">{{ $i18n.t('sidebar.salary') }}</span>
     </el-menu-item>
+    <el-menu-item class="sidebar-item" :index="localePath('/synthetic')">
+      <i class="el-icon-s-claim sidebar-icon"></i>
+      <span class="sidebar-item__text">{{ $i18n.t('sidebar.synthetic') }}</span>
+    </el-menu-item>
     <el-submenu
       v-if="
         roles.find(

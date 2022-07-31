@@ -48,11 +48,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 300,
+      default: 400,
     },
     height: {
       type: Number,
-      default: 250,
+      default: 400,
     },
     cssClasses: {
       default: 'new-class',
@@ -68,43 +68,7 @@ export default {
     },
     values: {
       type: Array,
-      default: () => [
-        {
-          key: 0,
-          label: 'Jan 2020',
-          value: 60,
-        },
-        {
-          key: 1,
-          label: 'Feb 2020',
-          value: 35.5,
-        },
-        {
-          key: 2,
-          label: 'Mar 2020',
-          value: 60,
-        },
-        {
-          key: 3,
-          label: 'May 2020',
-          value: 50,
-        },
-        {
-          key: 4,
-          label: 'June 2020',
-          value: 100,
-        },
-        {
-          key: 5,
-          label: 'August 2020',
-          value: 20,
-        },
-        {
-          key: 6,
-          label: 'December 2020',
-          value: 40,
-        },
-      ],
+      default: () => [],
     },
   },
   data() {
@@ -115,8 +79,8 @@ export default {
           {
             label: '',
             data: [],
-            borderColor: 'blue',
-            borderWidth: 2,
+            borderColor: 'rgb(0, 0, 0)',
+            borderWidth: 1,
             pointStyle: 'circle',
             pointRadius: 5,
           },
@@ -134,7 +98,11 @@ export default {
       },
     }
   },
-
+  watch: {
+    values() {
+      this.formatData()
+    },
+  },
   mounted() {
     this.formatData()
   },

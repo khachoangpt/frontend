@@ -27,6 +27,7 @@ const en = {
     request: 'Request',
     policy: 'Policy',
     salary: 'Payroll',
+    synthetic: 'Synthetic',
   },
   datepicker: {
     chooseDay: 'Pick a day',

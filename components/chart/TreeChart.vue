@@ -9,16 +9,23 @@
     >
       <template v-slot:node="{ node, collapsed }">
         <div
-          v-if="!node.title"
+          v-if="!node.true"
           class="rich-media-node"
           :style="{ border: collapsed ? '2px solid grey' : '' }"
         >
           <span class="department">
-            {{ node.department }}
+            {{ node.title }}
           </span>
           <div class="wrap-info">
+            <img
+              v-if="node.avatar"
+              :src="node.avatar"
+              alt="image"
+              class="avartar"
+            />
             <el-avatar
-              class="image"
+              v-else
+              class="avartar"
               size="10"
               icon="el-icon-user-solid"
             ></el-avatar>
@@ -34,74 +41,38 @@
 </template>
 <script>
 import VueTree from '@ssthouse/vue-tree-chart'
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'TreeChart',
   components: { VueTree },
   data() {
     return {
       vehicules: {
-        name: 'The company',
-        title: '1',
-        children: [
-          {
-            department: 'Sale',
-            name: 'Nguyễn Phương Tú',
-            children: [
-              {
-                department: 'Sale team 1',
-                name: 'Bùi Thanh Tâm',
-              },
-              {
-                department: 'Sale team 2',
-                name: 'Nguyễn Thu Việt',
-              },
-              {
-                department: 'Sale team 3',
-                name: 'Nguyễn Anh Thắng',
-              },
-            ],
-          },
-          {
-            department: 'Marketing',
-            name: 'Trần Trí Quang',
-
-            children: [
-              {
-                department: 'Sale team 3',
-                name: 'Nguyễn Anh Thắng',
-              },
-            ],
-          },
-          {
-            department: 'Kế toán',
-            name: 'Nguyễn Hồng Tân',
-          },
-          {
-            department: 'HR & Admin',
-            name: 'Lê Văn Thêm',
-
-            children: [
-              {
-                department: 'Tuyển dụng ',
-                name: 'Nguyễn Anh Thắng',
-                children: [
-                  {
-                    department: 'HR team 01',
-                    name: 'Bùi Thanh Tâm',
-                  },
-                  {
-                    department: 'HR team 02',
-                    name: 'Bùi Thanh Tâm',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        identifier: 'customID',
+        head: true,
+        title: '',
+        children: [],
+        identifier: 'employeeID',
       },
       treeConfig: { nodeWidth: 200, nodeHeight: 80, levelHeight: 200 },
     }
+  },
+  computed: {
+    ...mapState('salary', ['organizational']),
+  },
+
+  async mounted() {
+    await this.getOrganizational()
+    this.vehicules = {
+      ...this.vehicules,
+      title: this.organizational.title,
+      children: this.organizational.children,
+      identifier: 'employeeID',
+    }
+  },
+
+  methods: {
+    ...mapActions('salary', ['getOrganizational']),
   },
 }
 </script>
@@ -138,7 +109,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.image {
+.avartar {
   display: block;
   height: 20px;
   width: 20px;

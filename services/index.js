@@ -5,6 +5,7 @@ import timekeepingRepository from '~/services/api/timekeeping'
 import requestRepository from '~/services/api/request'
 import policyRepository from '~/services/api/policy'
 import salaryRepository from '~/services/api/salary'
+import syntheticRepository  from '~/services/api/synthetic'
 
 const createRepository = ({ app, $axios, redirect, $config }) => {
   $axios.onError((error) => {
@@ -36,7 +37,9 @@ const createRepository = ({ app, $axios, redirect, $config }) => {
     timekeeping: timekeepingRepository($config.environment, { $axios }),
     request: requestRepository($config.environment, { $axios }),
     policy: policyRepository($config.environment, { $axios }),
-    salary: salaryRepository($config.environment, { $axios })
+    salary: salaryRepository($config.environment, { $axios }),
+    synthetic: syntheticRepository($config.environment, { $axios }),
+
   }
 }
 

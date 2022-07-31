@@ -265,4 +265,34 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async getHistorySalary({ commit }, { type, date, employeeId }) {
+    const salaryHistory = await this.$repository.salary.getHistorySalary(
+      type,
+      date,
+      employeeId
+    )
+    await commit('setHistorySalary', salaryHistory)
+    return salaryHistory
+  },
+  async getSalaryStructure({ commit }, { date, employeeId }) {
+    const salaryStructure = await this.$repository.salary.getSalaryStructure(
+      date,
+      employeeId
+    )
+    await commit('setSalaryStructure', salaryStructure)
+    return salaryStructure
+  },
+  async getOrganizational({ commit }) {
+    return await commit(
+      'setOrganizational',
+      await this.$repository.salary.getOrganizational()
+    )
+  },
+  async getEmployeeById({ commit }) {
+    return await commit(
+      'setEmployeeById',
+      await this.$repository.salary.getEmployeeById()
+    )
+  },
 }

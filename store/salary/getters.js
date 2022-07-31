@@ -21,4 +21,8 @@ export default {
   listManagerOfArea: (state) => state.listManagerOfArea,
   searchManagerText: (state) => state.searchManagerText,
   isEnoughLevelApprove: (state) => state.isEnoughLevelApprove,
+  historySalary: (state) => state.historySalary,
+  salaryStructure: (state) => state.salaryStructure,
+  organizational: (state) => state.organizational,
+  employeeById: (state) => state.employeeById,
 }

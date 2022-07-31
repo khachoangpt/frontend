@@ -43,11 +43,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     height: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     cssClasses: {
       default: '',
@@ -136,6 +136,11 @@ export default {
         },
       },
     }
+  },
+  watch: {
+    values() {
+      this.formatData()
+    },
   },
   mounted() {
     this.formatData()

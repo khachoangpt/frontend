@@ -14,7 +14,6 @@
 
 <script>
 import { Bar } from 'vue-chartjs/legacy'
-
 import {
   Chart as ChartJS,
   Title,
@@ -43,11 +42,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     height: {
       type: Number,
-      default: 260,
+      default: 400,
     },
     cssClasses: {
       default: '',
@@ -68,25 +67,10 @@ export default {
   },
   data() {
     return {
+      color: ['#4287f5', '#dd42f5', '#f5427e', '#f54242', '#f5d442'],
       chartData: {
-        labels: ['2020', '2021', '2022'],
-        datasets: [
-          {
-            label: 'Tìm kiếm công việc mới',
-            backgroundColor: '#798c34',
-            data: [3, 7, 4],
-          },
-          {
-            label: 'Môi trường không phù hợp',
-            backgroundColor: `#8c5d34`,
-            data: [4, 3, 5],
-          },
-          {
-            label: 'Đồng nghiệp không hoà đồng',
-            backgroundColor: `#8c7634`,
-            data: [7, 2, 6],
-          },
-        ],
+        labels: ['#798c34', `#8c5d34`, `#8c7634`],
+        datasets: [],
       },
       chartOptions: {
         responsive: true,
@@ -114,38 +98,38 @@ export default {
       },
     }
   },
+  watch: {
+    values() {
+      this.formatData()
+    },
+  },
   mounted() {
-    // this.formatData()
-    // this.randomColor()
+    this.formatData()
   },
   methods: {
     formatData() {
-      const yearToValue = this.values.reduce(
-        (acc, { reason, label, value }) => {
-          if (acc[label]) {
-            return { ...acc, [label]: [...acc[label], { reason, value }] }
+      this.chartData.labels = this.values.map(({ label }) => label)
+      const resons = this.values
+        .flatMap(({ value }) => value)
+        .reduce((acc, current) => {
+          if (acc[current.reason]) {
+            return {
+              ...acc,
+              [current.reason]: [...acc[current.reason], current.value],
+            }
           }
-          return { ...acc, [label]: [{ reason, value }] }
-        },
-        {}
-      )
-      //   const a = Object.values(yearToValue)
-      //     .flat()
-      //     .reduce(
-      //       (result, item) => ([
-      //         ...result,
-      //         [item.reason]: [...(result[item.reason] || []), item.value],
-      //       ]),
-      //       []
-      //     )
-      console.log(Object.values(yearToValue).flat())
-      //   this.chartData.labels = Object.keys(yearToValue)
-    },
-    randomColor() {
-      this.chartData.datasets[0].backgroundColor = this.chartData.labels.reduce(
-        (acc, current) => {
-          current = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-          return [...acc, current]
+          return { ...acc, [current.reason]: [current.value] }
+        }, {})
+      this.chartData.datasets = Object.keys(resons).reduce(
+        (acc, current, index) => {
+          return [
+            ...acc,
+            {
+              label: current,
+              data: [...resons[current]],
+              backgroundColor: this.color[index],
+            },
+          ]
         },
         []
       )

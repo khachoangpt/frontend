@@ -86,4 +86,18 @@ export default {
   setIsEnoughLevelApprove(state, isEnoughLevelApprove) {
     state.isEnoughLevelApprove = isEnoughLevelApprove
   },
+
+  setHistorySalary(state, historySalary) {
+    state.historySalary = historySalary
+  },
+
+  setSalaryStructure(state, salaryStructure) {
+    state.salaryStructure = salaryStructure
+  },
+  setOrganizational(state, organizational) {
+    state.organizational = organizational
+  },
+  setEmployeeById(state, employeeById) {
+    state.employeeById = employeeById
+  }
 }

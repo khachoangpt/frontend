@@ -1,7 +1,10 @@
+import { format } from 'date-fns'
 import makeFactoryClass from '../class_factory'
 import BaseClass from './base_class'
 import { getToken } from '~/helper/jwt'
 import { PageLimit } from '~/constants/index'
+
+const accessToken = getToken()
 
 class Policy extends BaseClass {}
 
@@ -158,6 +161,54 @@ class UserApi extends Policy {
       },
     })
   }
+
+  getHistorySalary(type, date, employeeId) {
+    const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
+    return this.$axios.$get(
+        `/api/get_salary_history_chart?type=${type}&date=${dateFormat}&employeeId=${employeeId}`,
+        {
+            headers: {
+                Authorization: 'Bearer ' + accessToken,
+            },
+        }
+    )
 }
+
+getSalaryStructure(date, employeeId) {
+    const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
+    return this.$axios.$get(
+        `api/get_salary_structure_chart?date=${dateFormat}&employeeId=${employeeId}`,
+        {
+            headers: {
+                Authorization: 'Bearer ' + accessToken,
+            },
+        }
+    )
+}
+
+getOrganizational() {
+    return this.$axios.$get(
+        'https://www.hronline.tk/hrm/api/get_organizational',
+        {
+            headers: {
+                Authorization: 'Bearer ' + accessToken,
+            },
+        }
+    )
+}
+
+getEmployeeById() {
+    return this.$axios.$get(
+        '/api/get_employee_by_manager',
+        {
+            headers: {
+                Authorization: 'Bearer ' + accessToken,
+            },
+        }
+    )
+}
+}
+
+
 
 export default makeFactoryClass(UserMock, UserApi)
