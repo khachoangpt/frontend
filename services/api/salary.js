@@ -188,7 +188,7 @@ getSalaryStructure(date, employeeId) {
 
 getOrganizational() {
     return this.$axios.$get(
-        'https://www.hronline.tk/hrm/api/get_organizational',
+        '/api/get_organizational',
         {
             headers: {
                 Authorization: 'Bearer ' + accessToken,
