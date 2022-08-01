@@ -1,5 +1,14 @@
 <template>
   <el-row :gutter="20">
+    <el-col :span="4">
+      <el-page-header @back="back"> </el-page-header>
+      <div class="working-data-emp">
+        <span class="working-data-emp__label">Dữ liệu giờ làm của:</span>
+        <span class="working-data-emp__label working-data-emp__name">
+          {{ selectedEmployeeName }} ({{ $route.params.employeeId }})
+        </span>
+      </div>
+    </el-col>
     <el-col :span="20">
       <div class="time-keeping__header">
         <div class="time-keeping__header-bookmark">
@@ -90,20 +99,6 @@
           </div>
         </div>
       </v-calendar>
-    </el-col>
-    <el-col :span="4">
-      <div class="timekeeping-check">
-        <div v-if="isCheckIn" class="timekeeping-check-in-btn" @click="checkIn">
-          IN
-        </div>
-        <div
-          v-if="!isCheckIn"
-          class="timekeeping-check-out-btn"
-          @click="checkOut"
-        >
-          OUT
-        </div>
-      </div>
     </el-col>
     <el-dialog
       :title="
@@ -196,9 +191,17 @@ export default {
     ...mapGetters('timekeeping', [
       'selectedTimeRange',
       'listEmployeeTimekeeping',
+      'selectedEmployeeName',
       'timekeepingInDay',
       'isCheckIn',
     ]),
+  },
+
+  async mounted() {
+    await this.getEmployeeTimekeepingList({
+      date: this.selectedTimeRange,
+      employeeId: this.$route.params.employeeId,
+    })
   },
 
   methods: {
@@ -227,7 +230,14 @@ export default {
         startDate: Date.parse(new Date(time.year, time.month - 1, 1)),
         endDate: Date.parse(new Date(time.year, time.month, 0)),
       }
-      await this.getEmployeeTimekeepingList(data)
+      await this.getEmployeeTimekeepingList({
+        date: data,
+        employeeId: this.$route.params.employeeId,
+      })
+    },
+
+    back() {
+      this.$router.go(-1)
     },
   },
 }
@@ -489,5 +499,34 @@ export default {
 
 .timekeeping-check-out-btn:hover {
   background-color: #f54747;
+}
+
+.el-icon-back {
+  color: #4d77ff;
+}
+
+.el-page-header__left::after {
+  display: none;
+}
+
+.el-page-header__title {
+  color: #4d77ff;
+}
+
+.working-data-emp {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.working-data-emp__label {
+  text-align: center;
+}
+
+.working-data-emp__name {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
 }
 </style>

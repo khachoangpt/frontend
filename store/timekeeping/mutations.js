@@ -46,4 +46,8 @@ export default {
   setIsCheckIn(state, isCheckIn) {
     state.isCheckIn = isCheckIn
   },
+
+  setSelectedEmployeeName(state, selectedEmployeeName) {
+    state.selectedEmployeeName = selectedEmployeeName
+  },
 }

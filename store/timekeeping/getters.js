@@ -11,4 +11,5 @@ export default {
   monthSearch: (state) => state.monthSearch,
   columns: (state) => state.columns,
   isCheckIn: (state) => state.isCheckIn,
+  selectedEmployeeName: (state) => state.selectedEmployeeName,
 }

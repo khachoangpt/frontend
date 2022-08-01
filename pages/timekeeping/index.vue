@@ -193,6 +193,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['id']),
     ...mapGetters('timekeeping', [
       'selectedTimeRange',
       'listEmployeeTimekeeping',
@@ -227,7 +228,7 @@ export default {
         startDate: Date.parse(new Date(time.year, time.month - 1, 1)),
         endDate: Date.parse(new Date(time.year, time.month, 0)),
       }
-      await this.getEmployeeTimekeepingList(data)
+      await this.getEmployeeTimekeepingList({ date: data, employeeId: this.id })
     },
   },
 }

@@ -14,6 +14,7 @@
       enabled: true,
     }"
     @on-selected-rows-change="onSelectedRowsChange"
+    @on-row-dblclick="onRowDoubleClick"
   >
     <template slot="pagination-bottom">
       <el-pagination
@@ -69,6 +70,10 @@ export default {
 
     async currentChange(page) {
       await this.getAllTimeKeeping([this.selectedTimeRange, page])
+    },
+
+    onRowDoubleClick(params) {
+      this.$router.push('/working-data/' + params.row.employee_id)
     },
   },
 }

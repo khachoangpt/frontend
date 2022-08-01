@@ -21,15 +21,19 @@ export default {
     }
   },
 
-  async getEmployeeTimekeepingList({ rootState, commit }, selectedTimeRange) {
+  async getEmployeeTimekeepingList({ rootState, commit }, value) {
     try {
       const data = {
-        employeeId: rootState.auth.id,
-        startDate: selectedTimeRange.startDate,
-        endDate: selectedTimeRange.endDate,
+        employeeId: value.employeeId,
+        startDate: value.date.startDate,
+        endDate: value.date.endDate,
       }
       let res = await this.$repository.timekeeping.getEmployeeTimekeepingList(
         data
+      )
+      await commit(
+        'setSelectedEmployeeName',
+        res.timekeepingResponsesList[0].full_name
       )
       if (res.timekeepingResponsesList.length === 0) {
         res = []
