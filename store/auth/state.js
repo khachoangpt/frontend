@@ -8,7 +8,7 @@ export default () => ({
   tokenType: '',
   accessToken: '',
   isRememberMe: false,
-  country: 'vn',
+  country: 'us',
   rules: {
     email: [
       {

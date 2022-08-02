@@ -170,7 +170,7 @@
                       .employeeTaxResponseList"
                     :key="'tax' + index"
                   >
-                    {{ tax.tax_name }}({{ tax.tax_value }}): {{ tax.value }}
+                    {{ tax.tax_name }}({{ tax.tax_value }}%): {{ tax.value }}
                   </h3>
                 </div>
               </el-collapse-item>
@@ -227,23 +227,28 @@
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <h3
-                    v-for="(bonus, index) in salaryDetail
-                      .bonusSalaryResponseList.bonusSalaryResponseList"
-                    :key="'bonus' + index"
+                    v-for="(allowance, index) in salaryDetail
+                      .employeeAllowanceResponseList
+                      .employeeAllowanceResponseList"
+                    :key="'allowance' + index"
                     class="salary-detail__flex"
                   >
-                    <span class="salary-detail__date-deduction">
-                      {{ bonus.date }}
+                    <span>
+                      {{ allowance.allowance_name }}
                     </span>
-                    <span> {{ bonus.value }}</span>
+                    <span> {{ allowance.value }}</span>
                     <div>
                       <i
                         class="salary-detail__edit-icon el-icon-edit-outline"
-                        @click="openEditBonusDialog(bonus)"
+                        @click="openEditAllowanceDialog(allowance)"
                       ></i>
                       <i
                         class="salary-detail__delete-icon el-icon-delete"
-                        @click="confirmDeleteBonus(bonus.bonus_id)"
+                        @click="
+                          confirmDeleteAllowance(
+                            allowance.employee_allowance_id
+                          )
+                        "
                       ></i>
                     </div>
                   </h3>

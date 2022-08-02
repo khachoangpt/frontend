@@ -202,6 +202,10 @@ export default () => ({
       bonusSalaryResponseList: [],
       total: 0,
     },
+    employeeAllowanceResponseList: {
+      employeeAllowanceResponseList: [],
+      total: 0,
+    },
     deductionSalaryResponseList: {
       deductionSalaryResponseList: [],
       total: 0,

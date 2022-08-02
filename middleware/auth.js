@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import { getToken } from '~/helper/jwt'
 
-export default function ({ app, store, redirect }) {
+export default function ({ app, store, redirect, i18n }) {
   if (!getToken()) {
     return redirect('/login')
   } else {
@@ -12,6 +12,10 @@ export default function ({ app, store, redirect }) {
       store.commit('auth/setEmail', decoded.User_Data.email)
       store.commit('auth/setRoles', decoded.User_Data.authorities)
       store.dispatch('auth/getEmployeeInfo', decoded.User_Data.id)
+      store.commit(
+        'auth/setCountry',
+        i18n.locale === 'vi' ? 'vn' : i18n.locale === 'en' ? 'us' : 'us'
+      )
     } else {
       return redirect('/login')
     }

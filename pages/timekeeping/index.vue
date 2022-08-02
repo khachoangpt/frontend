@@ -213,12 +213,14 @@ export default {
   async mounted() {
     const dateFormat = format(new Date(), 'yyyy-MM-dd')
     await this.getDetailTimekeeping(dateFormat)
-    if (
-      this.timekeepingInDay.check_in_check_outs[
-        this.timekeepingInDay.check_in_check_outs.length - 1
-      ].checkout === null
-    ) {
-      this.setIsCheckIn(false)
+    if (this.timekeepingInDay !== '') {
+      if (
+        this.timekeepingInDay.check_in_check_outs[
+          this.timekeepingInDay.check_in_check_outs.length - 1
+        ].checkout === null
+      ) {
+        this.setIsCheckIn(false)
+      }
     }
   },
 

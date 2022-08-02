@@ -5,11 +5,11 @@
         <country-flag class="header__language" :country="country" />
       </i>
       <el-dropdown-menu slot="dropdown">
-        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('vi')">
-          <el-dropdown-item command="vn">Tiếng Việt</el-dropdown-item>
-        </nuxt-link>
         <nuxt-link class="dropdown-language__item" :to="switchLocalePath('en')">
           <el-dropdown-item command="us">English</el-dropdown-item>
+        </nuxt-link>
+        <nuxt-link class="dropdown-language__item" :to="switchLocalePath('vi')">
+          <el-dropdown-item command="vn">Tiếng Việt</el-dropdown-item>
         </nuxt-link>
       </el-dropdown-menu>
     </el-dropdown>

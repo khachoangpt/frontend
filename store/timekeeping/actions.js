@@ -106,12 +106,12 @@ export default {
         date: selectedDate,
       }
       const res = await this.$repository.timekeeping.getDetailTimekeeping(data)
-      if (res.total_working_time !== null) {
+      if (res !== '') {
         const totalWorkingTime = res.total_working_time + ''
         const time = totalWorkingTime.split('.')
         res.total_working_time = time[0] + ' giờ ' + time[1] + ' phút'
+        await commit('setTimekeepingInDay', res)
       }
-      await commit('setTimekeepingInDay', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }

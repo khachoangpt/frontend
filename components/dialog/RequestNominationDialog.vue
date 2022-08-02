@@ -27,33 +27,40 @@
       :model="nominationForm"
       :rules="rules"
       label-position="left"
-      label-width="150px"
+      label-width="100px"
       class="request-dialog__body"
     >
-      <el-form-item label="Yêu cầu" prop="requestName">
-        <el-select
-          v-model="nominationForm.requestName"
-          class="request-form__input"
-          @change="onChangeRequestName"
-        >
-          <el-option
-            v-for="(requestName, index) in listRequestName"
-            :key="'requestName' + index"
-            :label="requestName.request_name_name"
-            :value="requestName.request_name_name"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Nhân viên" prop="employeeName">
-        <el-autocomplete
-          v-model="nominationForm.employeeName"
-          class="inline-input"
-          :fetch-suggestions="querySearch"
-          :trigger-on-focus="false"
-          @select="handleSelect"
-        ></el-autocomplete>
-      </el-form-item>
       <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item label="Yêu cầu" prop="requestName">
+            <el-select
+              v-model="nominationForm.requestNameId"
+              class="request-form__input"
+              @change="onChangeRequestName"
+            >
+              <el-option
+                v-for="(requestName, index) in listRequestName"
+                :key="'requestName' + index"
+                :label="requestName.request_name_name"
+                :value="requestName.request_name_name"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item label="Nhân viên" prop="employeeName">
+            <el-autocomplete
+              v-model="nominationForm.employeeName"
+              class="header-actions__search request-form__input"
+              placeholder="Tên nhân viên"
+              :clearable="true"
+              :fetch-suggestions="querySearch"
+              @select="handleChangeEmployee"
+              @clear="handleChangeEmployee"
+            ></el-autocomplete> </el-form-item
+        ></el-col>
         <el-col :span="12">
           <el-form-item label="Ngày" prop="requestDate">
             <el-date-picker
@@ -65,36 +72,89 @@
             ></el-date-picker>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="Phòng ban hiện tại">
-            <el-input value="IT" :disabled="true"></el-input>
-          </el-form-item>
-        </el-col>
       </el-row>
-      <el-row :gutter="20">
+      <el-row
+        v-if="nominationForm.requestNameId.trim() === 'Promotion'"
+        :gutter="20"
+      >
         <el-col :span="12">
-          <el-form-item label="Vị trí hiện tại">
-            <el-input value="Develop" :disabled="true"></el-input>
+          <el-form-item label="Vị trí">
+            <el-input
+              class="request-form__input"
+              :value="currentPosition"
+              :disabled="true"
+            ></el-input>
           </el-form-item>
         </el-col>
-        <el-col v-if="nominationForm.requestName.trim() === 'Bonus'" :span="12">
-          <el-form-item label="Tiền thưởng">
-            <el-input v-model="nominationForm.bonusValue"></el-input>
+        <el-col :span="12">
+          <el-form-item>
+            <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
+            <el-input
+              v-model="nominationForm.salary"
+              class="request-form__input"
+              value="IT"
+              :disabled="true"
+            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row
-        v-if="nominationForm.requestName.trim() === 'Salary increment'"
+        v-if="nominationForm.requestNameId.trim() === 'Promotion'"
         :gutter="20"
       >
         <el-col :span="12">
-          <el-form-item label="Lương hiện tại">
-            <el-input value="2000" :disabled="true"></el-input>
+          <el-form-item label="Cấp bậc">
+            <el-input
+              class="request-form__input"
+              :value="currentGrade"
+              :disabled="true"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="Lương mong muốn" prop="salary">
-            <el-input v-model="nominationForm.salary"></el-input>
+          <el-form-item>
+            <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
+            <el-input
+              v-model="nominationForm.salary"
+              class="request-form__input"
+              value="IT"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col v-if="nominationForm.requestNameId.trim() === 'Bonus'" :span="12">
+          <el-form-item label="Tiền thưởng">
+            <el-input
+              v-model="nominationForm.bonusValue"
+              class="request-form__input"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row
+        v-if="nominationForm.requestNameId.trim() === 'Salary increment'"
+        :gutter="20"
+      >
+        <el-col :span="12">
+          <el-form-item label="Lương">
+            <el-input
+              class="request-form__input"
+              value="2000"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item>
+            <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
+            <el-input
+              v-model="nominationForm.salary"
+              class="request-form__input"
+              value="IT"
+              :disabled="true"
+            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -128,14 +188,24 @@ export default {
 
   data() {
     return {
-      links: [],
+      currentPosition: '',
+      currentGrade: '',
       nominationForm: {
-        requestName: '',
+        createEmployeeId: '',
+        requestTypeId: '',
+        requestNameId: '',
+        description: '',
+        employeeId: '',
         employeeName: '',
-        requestDate: '',
-        bonusValue: '',
-        requestDescription: '',
-        salary: '',
+        date: '',
+        currentTitle: '',
+        desiredTitle: '',
+        currentArea: '',
+        desiredArea: '',
+        currentOffice: '',
+        desiredOffice: '',
+        type: '',
+        value: '',
       },
 
       rules: {
@@ -179,27 +249,33 @@ export default {
   },
 
   computed: {
+    ...mapGetters('user', ['personnelDetail']),
     ...mapGetters('request', [
       'requestNominationDialogVisible',
       'listRequestName',
       'fullscreenLoading',
     ]),
+    ...mapGetters('salary', ['listEmployeeByManager']),
   },
 
-  mounted() {
-    this.links = this.loadAll()
+  async mounted() {
+    await this.getEmployeeByManager()
   },
 
   methods: {
+    ...mapActions('user', ['getEmployeeByManager', 'getPersonnelDetail']),
     ...mapActions('request', [
       'createRequestBonus',
+      'createRequestPromotion',
       'createRequestSalaryIncrement',
     ]),
+    ...mapActions('salary', ['getListSalary']),
     ...mapMutations('request', [
       'setRequestNominationDialogVisible',
       'setFullscreenLoading',
       'setCurrentRequestNameId',
     ]),
+    ...mapMutations('salary', ['setSearchEmployeeText']),
 
     closeDialog() {
       this.setRequestNominationDialogVisible(false)
@@ -209,46 +285,26 @@ export default {
       this.setRequestNominationDialogVisible(false)
     },
 
-    querySearch(queryString, cb) {
-      const links = this.links
-      const results = queryString
-        ? links.filter(this.createFilter(queryString))
-        : links
-      // call callback function to return suggestions
-      cb(results)
-    },
-    createFilter(queryString) {
-      return (link) => {
-        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-      }
-    },
-
-    loadAll() {
-      return [
-        { value: 'vue', link: 'https://github.com/vuejs/vue' },
-        { value: 'element', link: 'https://github.com/ElemeFE/element' },
-        { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
-        { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
-        { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
-        { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
-        { value: 'babel', link: 'https://github.com/babel/babel' },
-      ]
-    },
-
     handleSelect(item) {
       this.nominationForm.employeeName = item.value
     },
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.nominationForm.requestName.trim() === 'Bonus') {
+        if (valid && this.nominationForm.requestNameId.trim() === 'Bonus') {
           this.createRequestBonus(this.nominationForm)
           this.setFullscreenLoading(true)
         } else if (
           valid &&
-          this.nominationForm.requestName.trim() === 'Salary increment'
+          this.nominationForm.requestNameId.trim() === 'Salary increment'
         ) {
           this.createRequestSalaryIncrement(this.nominationForm)
+          this.setFullscreenLoading(true)
+        } else if (
+          valid &&
+          this.nominationForm.requestNameId.trim() === 'Promotion'
+        ) {
+          this.createRequestPromotion(this.nominationForm)
           this.setFullscreenLoading(true)
         } else {
           return false
@@ -261,6 +317,34 @@ export default {
         if (this.listRequestName[i].request_name_name === data) {
           this.setCurrentRequestNameId(this.listRequestName[i].request_name_id)
         }
+      }
+    },
+
+    querySearch(queryString, cb) {
+      const results = queryString
+        ? this.listEmployeeByManager.filter(this.createFilter(queryString))
+        : this.listEmployeeByManager
+      cb(results)
+    },
+
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
+    async handleChangeEmployee(data) {
+      if (data !== undefined) {
+        const regexEmpId = /\((.+)\)/i
+        const employeeId = data.value.match(regexEmpId)[1]
+        await this.getPersonnelDetail(employeeId)
+        this.currentPosition = this.personnelDetail.position_name
+        this.currentGrade = this.personnelDetail.grade
+        this.setSearchEmployeeText(data.value)
+      } else {
+        this.currentPosition = ''
+        this.currentGrade = ''
+        this.setSearchEmployeeText('')
       }
     },
   },
@@ -285,12 +369,26 @@ export default {
   margin-top: 16px;
 }
 
-.request-form__input {
-  width: 90%;
-}
-
 .request-dialog__title {
   font-size: 20px;
   font-weight: 600;
+}
+
+.form-with-arrow {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  width: 100px;
+}
+
+.arrow-icon {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.request-form__input {
+  width: 90% !important;
 }
 </style>

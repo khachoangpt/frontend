@@ -309,4 +309,8 @@ export default {
 .request-status-select__Rejected {
   color: #f56c6c;
 }
+
+.el-autocomplete-suggestion {
+  width: fit-content !important;
+}
 </style>

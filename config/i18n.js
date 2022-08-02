@@ -14,9 +14,9 @@ export const i18n = {
       name: 'English',
     },
   ],
-  defaultLocale: 'vi',
+  defaultLocale: 'en',
   vueI18n: {
-    fallbackLocale: 'vi',
+    fallbackLocale: 'en',
     messages: { vi, en },
   },
 }
