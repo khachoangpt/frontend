@@ -53,7 +53,14 @@ export default {
     '@nuxtjs/axios',
     ['@nuxtjs/i18n', i18n],
     'cookie-universal-nuxt',
+    '@nuxtjs/cloudinary',
   ],
+
+  cloudinary: {
+    cloudName: process.env.CLOUDNAME,
+    apiKey: process.env.API_KEY, // only needed if you are using server-side upload
+    apiSecret: process.env.API_SECRET, // only needed if you are using server-side upload
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

@@ -5,23 +5,30 @@
       <el-col class="detail-page-left hidden-xs-only" :lg="4">
         <div class="grid-content personnel-detail__left">
           <div class="detail-basic">
-            <div
-              class="detail-basic__avatar"
-              :style="{
-                backgroundImage: 'url(' + personnelDetail.avatar + ')',
-              }"
+            <el-tooltip
+              content="Đổi avatar"
+              placement="right-start"
+              effect="light"
             >
-              <el-upload
-                class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
+              <div
+                class="detail-basic__avatar"
+                :style="{
+                  backgroundImage: 'url(' + imageUrl + ')',
+                }"
+                @click="clickAvatar"
               >
-                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-            </div>
+                <i class="el-icon-plus avatar-uploader-icon"></i>
+              </div>
+            </el-tooltip>
+
+            <input
+              id="mediaFile"
+              ref="mediaFile"
+              type="file"
+              accept=".jpeg,.jpg,.png,image/jpeg,image/png"
+              aria-label="upload image button"
+              @change="selectFile"
+            />
             <span class="detail-basic__name">{{
               personnelDetail.full_name
             }}</span>
@@ -192,6 +199,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 import { mapGetters, mapMutations } from 'vuex'
 import DetailWorkInfo from '~/components/DetailWorkInfo.vue'
 import DetailMainInfo from '~/components/DetailMainInfo.vue'
@@ -300,6 +308,30 @@ export default {
         this.activeSubTab = 2
       }
     },
+
+    async selectFile(e) {
+      const file = e.target.files[0]
+
+      /* Make sure file exists */
+      if (!file) return
+      const readData = (f) =>
+        new Promise((resolve) => {
+          const reader = new FileReader()
+          reader.onloadend = () => resolve(reader.result)
+          reader.readAsDataURL(f)
+        })
+      const data = await readData(file)
+      const res = await this.$cloudinary.upload(data, {
+        folder: 'hrm-avatar',
+        uploadPreset: 'qj7y0hfx',
+      })
+      this.imageUrl = res.secure_url
+      Message.success('Đổi ảnh đại diện thành công.')
+    },
+
+    clickAvatar() {
+      this.$refs.mediaFile.click()
+    },
   },
 }
 </script>
@@ -328,20 +360,18 @@ export default {
 }
 
 .detail-basic__avatar {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  /* background-image: url('static/avatar.jpg'),
-    url('https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png'); */
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  border: 2px solid #4d77ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .detail-basic__avatar:hover {
   opacity: 0.6;
   cursor: pointer;
+}
+
+.detail-basic__avatar:hover .avatar-uploader-icon {
+  display: block;
 }
 
 .detail-basic__avatar:hover .avatar-uploader {
@@ -546,6 +576,7 @@ export default {
 .avatar-uploader-icon {
   font-size: 24px;
   font-weight: 600;
+  display: none;
 }
 
 .main-info__content-item-action {
@@ -560,5 +591,24 @@ export default {
 .detail-right__header-pass-icon {
   font-weight: 600;
   margin-right: 2px;
+}
+
+.detail-basic__avatar {
+  border-radius: 100%;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  background: #f4f4f4;
+  background-size: cover;
+  background-position: center center;
+  width: 140px;
+  height: 140px;
+  background-repeat: no-repeat;
+  border: 2px solid #4d77ff;
+}
+
+#mediaFile {
+  position: absolute;
+  top: -1000px;
 }
 </style>
