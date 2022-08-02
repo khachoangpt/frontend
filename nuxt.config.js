@@ -11,7 +11,7 @@ export default {
   head: {
     title: 'PingDaily',
     htmlAttrs: {
-      lang: 'vi',
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },

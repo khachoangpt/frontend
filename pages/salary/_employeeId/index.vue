@@ -567,6 +567,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['id']),
     ...mapGetters('user', ['personnelDetail']),
     ...mapGetters('salary', [
       'salaryDetail',
@@ -577,8 +578,13 @@ export default {
     ]),
   },
 
-  async beforeMount() {
+  async mounted() {
     await this.getSalaryDetail(this.$route.params.employeeId)
+    if (this.personnelDetail.employee_id === this.id) {
+      this.isShowCheck = false
+      this.isShowReject = false
+      this.isShowApprove = false
+    }
     if (this.salaryDetail.salaryStatus === 'REJECTED') {
       this.isShowCheck = true
       this.isShowReject = false
@@ -586,6 +592,7 @@ export default {
     if (this.salaryDetail.salaryStatus === 'APPROVED') {
       this.isShowApprove = false
       this.isShowCheck = false
+      this.isShowReject = false
     }
     if (this.salaryDetail.salaryStatus === 'PENDING') {
       this.isShowCheck = true

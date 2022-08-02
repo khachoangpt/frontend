@@ -243,13 +243,51 @@ export default {
     await dispatch('getAllTimeKeeping', [state.selectedTimeRange, 1])
   },
 
-  async checkIn({ commit }) {
-    await commit('setIsCheckIn', false)
-    Message.success(this.$i18n.t('timekeeping.message.checkInSuccess'))
+  async checkIn({ commit, dispatch, rootState }) {
+    try {
+      const res = await this.$repository.timekeeping.checkInCheckOut()
+      if (res.code === 201) {
+        const date = {
+          startDate: Date.parse(
+            new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+          ),
+          endDate: Date.parse(
+            new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+          ),
+        }
+        await dispatch('getEmployeeTimekeepingList', {
+          date,
+          employeeId: rootState.auth.id,
+        })
+        await commit('setIsCheckIn', false)
+        Message.success(this.$i18n.t('timekeeping.message.checkInSuccess'))
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
   },
 
-  async checkOut({ commit }) {
-    await commit('setIsCheckIn', true)
-    Message.success(this.$i18n.t('timekeeping.message.checkOutSuccess'))
+  async checkOut({ commit, dispatch, rootState }) {
+    try {
+      const res = await this.$repository.timekeeping.checkInCheckOut()
+      if (res.code === 201) {
+        const date = {
+          startDate: Date.parse(
+            new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+          ),
+          endDate: Date.parse(
+            new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
+          ),
+        }
+        await dispatch('getEmployeeTimekeepingList', {
+          date,
+          employeeId: rootState.auth.id,
+        })
+        await commit('setIsCheckIn', true)
+        Message.success(this.$i18n.t('timekeeping.message.checkOutSuccess'))
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
   },
 }

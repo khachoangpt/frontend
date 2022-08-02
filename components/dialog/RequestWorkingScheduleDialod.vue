@@ -45,7 +45,10 @@
         </el-select>
       </el-form-item>
       <el-form-item
-        v-if="workingScheduleForm.requestName === 'Working Time'"
+        v-if="
+          workingScheduleForm.requestName === 'Work Late' ||
+          workingScheduleForm.requestName === 'Leave Soon'
+        "
         label="Ngày"
         prop="requestDate"
       >
@@ -86,7 +89,7 @@
       <el-button @click="closeDialog"> Đóng </el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-background="rgba(0, 0, 0, 0.2)"
         type="primary"
         @click="submitForm('workingScheduleForm')"
       >
@@ -165,7 +168,10 @@ export default {
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.workingScheduleForm.requestName === 'Working Time') {
+        if (
+          (valid && this.workingScheduleForm.requestName === 'Work Late') ||
+          this.workingScheduleForm.requestName === 'Leave Soon'
+        ) {
           this.createRequestTimekeeping(this.workingScheduleForm)
           this.setFullscreenLoading(true)
         } else if (valid && this.workingScheduleForm.requestName === 'OT') {

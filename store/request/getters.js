@@ -32,4 +32,6 @@ export default {
   detailRequestVisible: (state) => state.detailRequestVisible,
   detailRequestReceiveVisible: (state) => state.detailRequestReceiveVisible,
   listRequestId: (state) => state.listRequestId,
+  currentRequestReasonId: (state) => state.currentRequestReasonId,
+  dayOffRemaining: (state) => state.dayOffRemaining,
 }

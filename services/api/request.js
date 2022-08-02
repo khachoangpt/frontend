@@ -168,15 +168,11 @@ class UserApi extends Request {
 
   updateRejectRequest(data) {
     const accessToken = getToken()
-    return this.$axios.$post(
-      '/api/update_reject_application_request?requestId=' + data,
-      {},
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    return this.$axios.$post('/api/update_reject_application_request', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   updateApproveRequest(data) {
@@ -208,6 +204,18 @@ class UserApi extends Request {
         Authorization: 'Bearer ' + accessToken,
       },
     })
+  }
+
+  getPaidLeaveRemaining(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/get_paid_leave_remaining?employeeId=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
   }
 }
 

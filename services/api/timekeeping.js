@@ -86,6 +86,15 @@ class UserApi extends TimeKeeping {
       }
     )
   }
+
+  checkInCheckOut() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/checkin_checkout', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

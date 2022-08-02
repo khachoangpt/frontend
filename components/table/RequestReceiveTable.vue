@@ -138,7 +138,7 @@
         >
           Chuyển tiếp
         </el-button>
-        <el-button type="danger" @click="rejectRequest"> Từ chối </el-button>
+        <el-button type="danger" @click="open"> Từ chối </el-button>
       </span>
     </el-dialog>
   </div>
@@ -211,13 +211,6 @@ export default {
       this.setDetailRequestReceiveVisible(false)
     },
 
-    async rejectRequest() {
-      await this.updateRejectRequest(
-        this.requestReceiveDetail.application_request_id
-      )
-      this.setDetailRequestReceiveVisible(false)
-    },
-
     async approveRequest() {
       await this.updateApproveRequest(
         this.requestReceiveDetail.application_request_id
@@ -226,6 +219,26 @@ export default {
     },
 
     reviewedRequest() {},
+
+    open() {
+      this.$prompt('Nhập lý do từ chối', 'Tip', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Đóng',
+      })
+        .then(({ value }) => {
+          this.updateRejectRequest({
+            requestId: this.requestReceiveDetail.application_request_id,
+            comment: value,
+          })
+          this.setDetailRequestReceiveVisible(false)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Input canceled',
+          })
+        })
+    },
   },
 }
 </script>

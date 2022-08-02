@@ -32,7 +32,7 @@
           <span>{{ $i18n.t('timekeeping.status.off') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
-          <el-tag type="success" effect="dark" size="mini"> OL </el-tag>
+          <el-tag type="success" effect="dark" size="mini"> PL </el-tag>
           <span>{{ $i18n.t('timekeeping.status.paidLeave') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">

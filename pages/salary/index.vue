@@ -96,28 +96,6 @@
                 }}</span>
               </span>
             </template>
-            <div
-              slot="selected-row-actions"
-              class="salary-table__selected-action-btn"
-            >
-              <el-button
-                size="medium"
-                type="primary"
-                @click="handleClickCheckSalary"
-              >
-                Chuyển tiếp
-              </el-button>
-              <el-button
-                size="medium"
-                type="danger"
-                @click="handleClickRejectSalary"
-              >
-                Từ chối
-              </el-button>
-              <el-button size="medium" type="success" @click="approveSalary">
-                Chốt bảng lương
-              </el-button>
-            </div>
           </vue-good-table>
         </el-tab-pane>
         <el-tab-pane label="Bảng lương" name="second">
@@ -294,15 +272,22 @@ export default {
       const salaryIdSelectedList = []
       this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
       for (let i = 0; i < this.salaryDataList; i++) {
-        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED') {
+        if (
+          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED'
+        ) {
           this.isShowCheck = true
           this.isShowReject = false
         }
-        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'APPROVED') {
+        if (
+          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'APPROVED'
+        ) {
           this.isShowApprove = false
           this.isShowCheck = false
+          this.isShowReject = false
         }
-        if(this.$refs['salary-table'].selectedRows[i].salaryStatus === 'PENDING') {
+        if (
+          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'PENDING'
+        ) {
           this.isShowCheck = true
           this.isShowReject = true
         }
@@ -337,6 +322,8 @@ export default {
     async handleChangeTabSalary(data) {
       if (data.name === 'second') {
         await this.setSearchStatusText('')
+        this.statusText = ''
+        this.employeeSearch = ''
         await this.setSearchEmployeeText('')
         await this.getListSalary(1)
       } else if (data.name === 'first') {

@@ -176,3 +176,7 @@ template {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+table.vgt-table td {
+  vertical-align: middle !important;
+}

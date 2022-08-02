@@ -121,4 +121,12 @@ export default {
   setListRequestId(state, listRequestId) {
     state.listRequestId = listRequestId
   },
+
+  setCurrentRequestReasonId(state, currentRequestReasonId) {
+    state.currentRequestReasonId = currentRequestReasonId
+  },
+
+  setDayOffRemaining(state, dayOffRemaining) {
+    state.dayOffRemaining = dayOffRemaining
+  },
 }

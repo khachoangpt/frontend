@@ -6,7 +6,10 @@ export const EOffice = {
 
 export const EArea = {
   'Back Office': 'BACK_OFFICE',
-  'Sales': 'SALES',
+  Sales: 'SALES',
+  Marketing: 'MARKETING',
+  Accountant: 'ACCOUNTANT',
+  HR: 'HR',
 }
 
 export const ERequestStatus = {

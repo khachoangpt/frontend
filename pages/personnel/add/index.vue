@@ -296,7 +296,7 @@
       }}</el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
-        element-loading-background="rgba(0, 0, 0, 0.8)"
+        element-loading-background="rgba(0, 0, 0, 0.2)"
         type="primary"
         @click="addNewEmployee('addEmployeeForm')"
       >

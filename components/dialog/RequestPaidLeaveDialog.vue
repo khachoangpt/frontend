@@ -31,7 +31,10 @@
       class="request-dialog__body"
     >
       <el-form-item>
-        <span class="request-form__day-off">Quỹ ngày nghỉ còn lại: 8 ngày</span>
+        <span class="request-form__day-off"
+          >Quỹ ngày nghỉ còn lại:
+          <span> {{ dayOffRemaining }} ngày </span>
+        </span>
       </el-form-item>
       <el-form-item label="Yêu cầu" prop="requestName">
         <el-select
@@ -55,15 +58,34 @@
           range-separator="To"
           start-placeholder="Từ ngày"
           end-placeholder="Đến ngày"
+          :picker-options="pickerOptions"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="Lý do" prop="requestDescription">
+      <el-form-item label="Lý do" prop="reason">
+        <el-select
+          v-model="paidLeaveForm.reason"
+          class="request-form__input"
+          @change="onChangeReason"
+        >
+          <el-option
+            v-for="(reason, index) in listReason"
+            :key="'reason' + index"
+            :label="reason.reason_name"
+            :value="reason.reason_id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        v-if="paidLeaveForm.reason === 3"
+        label="Nhập lý do"
+        prop="requestDescription"
+      >
         <el-input
           v-model="paidLeaveForm.requestDescription"
           class="request-form__input-area"
           type="textarea"
-          :rows="4"
+          :rows="3"
         ></el-input>
       </el-form-item>
     </el-form>
@@ -87,7 +109,14 @@ export default {
         requestName: '',
         requestDateRange: '',
         requestDescription: '',
+        reason: '',
       },
+
+      listReason: [
+        { reason_id: 1, reason_name: 'Việc gia đình' },
+        { reason_id: 2, reason_name: 'Bị bệnh' },
+        { reason_id: 3, reason_name: 'Khác' },
+      ],
 
       rules: {
         requestName: [
@@ -118,24 +147,47 @@ export default {
             trigger: 'blur',
           },
         ],
+        reason: [
+          {
+            required: true,
+            message: 'Chọn lý do xin nghỉ.',
+            trigger: 'blur',
+          },
+        ],
+      },
+
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now()
+        },
       },
     }
   },
 
   computed: {
+    ...mapGetters('auth', ['id']),
     ...mapGetters('request', [
       'requestPaidLeaveDialogVisible',
       'listRequestName',
       'fullscreenLoading',
+      'dayOffRemaining',
     ]),
   },
 
+  async mounted() {
+    await this.getPaidLeaveRemaining(this.id)
+  },
+
   methods: {
-    ...mapActions('request', ['createRequestPaidLeave']),
+    ...mapActions('request', [
+      'createRequestPaidLeave',
+      'getPaidLeaveRemaining',
+    ]),
     ...mapMutations('request', [
       'setRequestPaidLeaveDialogVisible',
       'setCurrentRequestNameId',
       'setFullscreenLoading',
+      'setCurrentRequestReasonId',
     ]),
 
     closeDialog() {
@@ -159,6 +211,10 @@ export default {
           this.setCurrentRequestNameId(this.listRequestName[i].request_name_id)
         }
       }
+    },
+
+    onChangeReason(data) {
+      this.setCurrentRequestReasonId(data)
     },
   },
 }

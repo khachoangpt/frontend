@@ -279,7 +279,7 @@ class UserApi extends User {
 
   getManagerOfArea() {
     const accessToken = getToken()
-    return this.$axios.$get('/api/get_list_manager_of_area', {
+    return this.$axios.$get('/api/get_list_manager_higher_of_area', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

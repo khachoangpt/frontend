@@ -290,8 +290,6 @@ export default {
         requestTypeId: state.currentRequestTypeId,
         requestNameId: state.currentRequestNameId,
         description: form.requestDescription,
-        employeeId: rootState.auth.id,
-        employeeName: rootState.auth.name,
         startDate:
           form.requestDateRange[0].getFullYear() +
           '-' +
@@ -312,6 +310,7 @@ export default {
           (form.requestDateRange[1].getDate() < 10
             ? '0' + form.requestDateRange[1].getDate()
             : form.requestDateRange[1].getDate()),
+        reason: state.currentRequestReasonId,
       }
       const res = await this.$repository.request.createRequest(data)
       if (res.code === 202) {
@@ -518,6 +517,15 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute('download', 'request')
       link.click()
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getPaidLeaveRemaining({ commit }, data) {
+    try {
+      const res = await this.$repository.request.getPaidLeaveRemaining(data)
+      await commit('setDayOffRemaining', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }

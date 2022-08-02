@@ -84,6 +84,7 @@ export default () => ({
   requestWorkingScheduleDialogVisible: false,
   currentRequestTypeId: '',
   currentRequestNameId: '',
+  currentRequestReasonId: '',
   fullscreenLoading: false,
   dateRangeFilter: '',
   requestTypeFilter: '',
@@ -91,4 +92,5 @@ export default () => ({
   detailRequestVisible: false,
   detailRequestReceiveVisible: false,
   listRequestId: [],
+  dayOffRemaining: 0,
 })

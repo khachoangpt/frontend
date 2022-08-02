@@ -23,7 +23,7 @@
           <span>{{ $i18n.t('timekeeping.status.off') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
-          <el-tag type="success" effect="dark" size="mini"> OL </el-tag>
+          <el-tag type="success" effect="dark" size="mini"> PL </el-tag>
           <span>{{ $i18n.t('timekeeping.status.paidLeave') }}</span>
         </div>
         <div class="time-keeping__header-bookmark">
@@ -51,7 +51,14 @@
           class="custom-calendar__date"
           @click="dayClick(day)"
         >
-          <span class="custom-calendar__date-text">
+          <span
+            class="custom-calendar__date-text"
+            :class="
+              day.day === new Date().getDate()
+                ? 'custom-calendar__date-text-today'
+                : ''
+            "
+          >
             {{ day.day }}
             <i
               v-for="attr in attributes"
@@ -178,7 +185,8 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { format } from 'date-fns'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'TimekeepingPage',
   layout: 'main',
@@ -202,6 +210,18 @@ export default {
     ]),
   },
 
+  async mounted() {
+    const dateFormat = format(new Date(), 'yyyy-MM-dd')
+    await this.getDetailTimekeeping(dateFormat)
+    if (
+      this.timekeepingInDay.check_in_check_outs[
+        this.timekeepingInDay.check_in_check_outs.length - 1
+      ].checkout === null
+    ) {
+      this.setIsCheckIn(false)
+    }
+  },
+
   methods: {
     ...mapActions('timekeeping', [
       'getEmployeeTimekeepingList',
@@ -209,6 +229,7 @@ export default {
       'checkIn',
       'checkOut',
     ]),
+    ...mapMutations('timekeeping', ['setIsCheckIn']),
 
     async dayClick(selectedDay) {
       if (selectedDay.attributes.length !== 0) {
@@ -490,5 +511,10 @@ export default {
 
 .timekeeping-check-out-btn:hover {
   background-color: #f54747;
+}
+
+.custom-calendar__date-text-today {
+  font-weight: 600;
+  color: #0080ff;
 }
 </style>

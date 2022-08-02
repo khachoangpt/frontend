@@ -15,6 +15,8 @@ export default {
     } catch (error) {
       if (error.response.data.message === 'Bad credentials') {
         Message.error(this.$i18n.t('login.passwordIncorrect'))
+      } else {
+        Message.error(error.response.data.message)
       }
     }
   },
