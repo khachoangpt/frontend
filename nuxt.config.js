@@ -58,8 +58,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL:
-      'http://hrmcapstone-env.eba-pspzzkfj.ap-southeast-1.elasticbeanstalk.com/hrm',
+    baseURL: 'https://hronline.tk/hrm',
     proxyHeaders: false,
     credentials: false,
   },
