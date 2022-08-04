@@ -26,7 +26,11 @@
           >
           </el-option>
         </el-select> -->
-        <nuxt-link class="btn-add-employee" :to="localePath('/personnel/add')">
+        <nuxt-link
+          v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+          class="btn-add-employee"
+          :to="localePath('/personnel/add')"
+        >
           <el-button class="header-actions__button" type="primary">
             Tạo mới
           </el-button>
@@ -47,7 +51,7 @@ export default {
   name: 'PersonnelPage',
   components: { PersonnelInformationTable },
   layout: 'main',
-  middleware: ['auth', 'admin'],
+  middleware: ['auth'],
   data() {
     return {
       value: '',
@@ -56,6 +60,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('user', ['workingStatus', 'searchText']),
   },
 

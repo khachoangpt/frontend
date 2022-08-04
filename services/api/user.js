@@ -286,6 +286,15 @@ class UserApi extends User {
     })
   }
 
+  getManagerLowerOfArea() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_list_manager_lower_of_area', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
   getHoliday(data) {
     const accessToken = getToken()
     return this.$axios.$get('/api/get_all_holiday?year=' + data, {

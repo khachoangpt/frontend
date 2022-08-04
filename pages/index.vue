@@ -53,7 +53,7 @@
                 v-model="historySalaryOption.date"
                 type="year"
                 placeholder="Ngày"
-                :disabled="historySalaryOption.type !== 'yearly'"
+                :disabled="historySalaryOption.type !== 'monthly'"
               >
               </el-date-picker>
             </div>
@@ -88,7 +88,7 @@
               </el-select>
               <el-date-picker
                 v-model="salaryStructureDate"
-                type="year"
+                type="month"
                 placeholder="Ngày"
               >
               </el-date-picker>

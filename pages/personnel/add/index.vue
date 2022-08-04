@@ -15,7 +15,7 @@
       >
         <el-row :gutter="40">
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.fullName')"
                 prop="fullName"
@@ -29,7 +29,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.dateOfBirth')"
                 prop="birthDate"
@@ -45,7 +45,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.gender')" prop="gender">
                 <el-select
                   v-model="addEmployeeForm.gender"
@@ -64,7 +64,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.phone')" prop="phone">
                 <el-input
                   v-model="addEmployeeForm.phone"
@@ -77,7 +77,7 @@
         </el-row>
         <el-row :gutter="40">
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.personalEmail')"
                 prop="personalEmail"
@@ -91,7 +91,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.role')" prop="role">
                 <el-select
                   v-model="addEmployeeForm.role"
@@ -110,7 +110,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.position')"
                 prop="position"
@@ -133,7 +133,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.grade')" prop="grade">
                 <el-select
                   v-model="addEmployeeForm.grade"
@@ -155,7 +155,7 @@
         </el-row>
         <el-row :gutter="40">
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.area')" prop="area">
                 <el-select
                   v-model="addEmployeeForm.area"
@@ -174,7 +174,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.workingType')"
                 prop="workingType"
@@ -196,7 +196,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.manager')"
                 prop="managerId"
@@ -211,7 +211,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.employeeType')"
                 prop="employeeType"
@@ -237,7 +237,7 @@
         </el-row>
         <el-row :gutter="40">
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item :label="$i18n.t('personnel.office')" prop="office">
                 <el-select
                   v-model="addEmployeeForm.office"
@@ -256,7 +256,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.startDate')"
                 prop="startDate"
@@ -272,7 +272,7 @@
             </div>
           </el-col>
           <el-col :span="6">
-            <div class="grid-content ">
+            <div class="grid-content">
               <el-form-item
                 :label="$i18n.t('personnel.endDate')"
                 prop="endDate"
@@ -461,7 +461,8 @@ export default {
     await this.getWorkingTypes()
     await this.getListPositions()
     await this.getListRoleType()
-    await this.searchManager('')
+    await this.getManagerLowerOfArea()
+    console.log(this.listManager)
   },
 
   methods: {
@@ -478,6 +479,7 @@ export default {
       'searchManager',
       'onChangePosition',
     ]),
+    ...mapActions('salary', ['getManagerLowerOfArea']),
 
     ...mapMutations('user', ['setFullscreenLoading']),
 

@@ -99,5 +99,9 @@ export default {
   },
   setEmployeeById(state, employeeById) {
     state.employeeById = employeeById
-  }
+  },
+
+  setListManagerLowerOfArea(state, listManagerLowerOfArea) {
+    state.listManagerLowerOfArea = listManagerLowerOfArea
+  },
 }

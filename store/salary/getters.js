@@ -25,4 +25,5 @@ export default {
   salaryStructure: (state) => state.salaryStructure,
   organizational: (state) => state.organizational,
   employeeById: (state) => state.employeeById,
+  listManagerLowerOfArea: (state) => state.listManagerLowerOfArea,
 }

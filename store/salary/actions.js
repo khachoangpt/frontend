@@ -266,6 +266,20 @@ export default {
     }
   },
 
+  async getManagerLowerOfArea({ commit, state }) {
+    try {
+      const result = []
+      const res = await this.$repository.user.getManagerLowerOfArea()
+      for (let i = 0; i < res.length; i++) {
+        result.push({ value: res[i].name + ' (' + res[i].employeeID + ')' })
+      }
+      await commit('user/setListManager', result, {root: true})
+      await commit('setListManagerLowerOfArea', result)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
   async getHistorySalary({ commit }, { type, date, employeeId }) {
     const salaryHistory = await this.$repository.salary.getHistorySalary(
       type,
