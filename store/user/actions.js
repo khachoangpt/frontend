@@ -317,4 +317,17 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async getHoliday({ commit }, data) {
+    try {
+      const res = await this.$repository.user.getHoliday(data)
+      const result = []
+      for (let i = 0; i < res.length; i++) {
+        result.push(new Date(Date.parse(res[i])))
+      }
+      await commit('setListHoliday', result)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

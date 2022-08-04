@@ -7,12 +7,7 @@
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Ngày nghỉ của công ty</span>
             </div>
-            <v-calendar
-              :attributes="attributes"
-              is-expanded
-              :locale="$i18n.locale"
-              :first-day-of-week="1"
-            />
+            <Calendar />
           </el-card>
         </div>
       </el-col>
@@ -124,12 +119,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Calendar from '../components/chart/Calendar.vue'
 import LineChart from '~/components/chart/LineChart.vue'
 import DoughnutChart from '~/components/chart/DoughnutChart.vue'
 import TreeChart from '~/components/chart/TreeChart.vue'
 export default {
   name: 'HomePage',
-  components: { LineChart, TreeChart, DoughnutChart },
+  components: { LineChart, TreeChart, DoughnutChart, Calendar },
   layout: 'main',
   middleware: ['auth'],
 
@@ -153,17 +149,6 @@ export default {
       },
       salaryStructureDate: new Date(2022, 5, 1),
       salaryStructureEmployeeById: '',
-      attributes: [
-        {
-          key: 'today',
-          highlight: 'red',
-          dates: {
-            start: new Date(2022, 0, 1), // Jan 1st, 2018
-            end: new Date(2023, 0, 1), // Jan 1st, 2019
-            weekdays: [1, 7], // ...on Sundays and Saturdays
-          },
-        },
-      ],
     }
   },
 
@@ -225,7 +210,6 @@ export default {
     }
     this.historySalaryOption.employeeById = this.id
     this.salaryStructureEmployeeById = this.id
-
     await this.getHistorySalary({
       ...this.historySalaryOption,
       employeeId: this.historySalaryOption.employeeById,

@@ -63,7 +63,7 @@ export default {
   name: 'WorkingData',
   components: { WorkingDataTable },
   layout: 'main',
-  middleware: ['auth', 'admin'],
+  middleware: ['auth', 'manager'],
   data() {
     return {
       filterOffice: [],

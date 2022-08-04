@@ -111,12 +111,7 @@
       <span class="sidebar-item__text">{{ $i18n.t('sidebar.salary') }}</span>
     </el-menu-item>
     <el-menu-item
-      v-if="
-        roles.find(
-          (role) =>
-            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
-        )
-      "
+      v-if="roles.find((role) => role.authority === 'ROLE_MANAGER')"
       class="sidebar-item"
       :index="localePath('/synthetic')"
     >

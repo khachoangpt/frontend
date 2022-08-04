@@ -139,4 +139,5 @@ export default () => ({
   totalPage: 1,
   fullscreenLoading: false,
   listManager: [],
+  listHoliday: [],
 })

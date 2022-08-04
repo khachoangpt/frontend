@@ -72,7 +72,28 @@
       </el-button>
     </div>
     <div class="salary-table">
+      <vue-good-table
+        v-if="roles.find((role) => role.authority === 'ROLE_USER')"
+        ref="salary-table"
+        :columns="salaryHistoryListHeader"
+        :rows="salaryHistoryList"
+        :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+        sort-options="{
+          enabled: true,
+        }"
+        @on-row-dblclick="onRowDoubleClick"
+        @on-selected-rows-change="onSelectedRowsChange"
+      >
+        <template slot="table-row" slot-scope="props">
+          <span v-if="props.column.field == 'salaryStatus'">
+            <span :class="'salary-status__' + props.row.salaryStatus">{{
+              props.row.salaryStatus
+            }}</span>
+          </span>
+        </template>
+      </vue-good-table>
       <el-tabs
+        v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
         v-model="activeName"
         type="border-card"
         @tab-click="handleChangeTabSalary"
@@ -208,6 +229,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('salary', [
       'monthSearch',
       'yearSearch',
@@ -227,7 +249,9 @@ export default {
   },
 
   async mounted() {
-    await this.getEmployeeByManager()
+    if (!this.roles.find((role) => role.authority === 'ROLE_USER')) {
+      await this.getEmployeeByManager()
+    }
     await this.getListPersonalSalary()
   },
 

@@ -275,4 +275,8 @@ export default {
   setListManager(state, listManager) {
     state.listManager = listManager
   },
+
+  setListHoliday(state, listHoliday) {
+    state.listHoliday = listHoliday
+  },
 }

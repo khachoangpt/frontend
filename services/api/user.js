@@ -285,6 +285,15 @@ class UserApi extends User {
       },
     })
   }
+
+  getHoliday(data) {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_all_holiday?year=' + data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

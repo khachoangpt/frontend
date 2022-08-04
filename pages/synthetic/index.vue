@@ -48,6 +48,7 @@
                 v-model="leaveCompanyReasonChartOption"
                 type="year"
                 placeholder="Ngày"
+                :default-value="new Date()"
               >
               </el-date-picker>
             </div>
@@ -80,6 +81,7 @@
                 v-model="paidLeaveReasonChartOption"
                 type="year"
                 placeholder="Ngày"
+                :default-value="new Date()"
               >
               </el-date-picker>
             </div>
@@ -163,13 +165,13 @@ export default {
     },
     paidLeaveReasonChartOption(year) {
       this.getPaidLeaveReasonChart({
-        year,
+        year: year.getFullYear(),
         employeeId: this.paidLeaveReasonChartEmployeeId,
       })
     },
     paidLeaveReasonChartEmployeeId() {
       this.getPaidLeaveReasonChart({
-        year: this.paidLeaveReasonChartOption,
+        year: this.paidLeaveReasonChartOption.getFullYear(),
         employeeId: this.paidLeaveReasonChartEmployeeId,
       })
     },
@@ -178,7 +180,9 @@ export default {
     await this.getEmployeeById()
     this.paidLeaveReasonChartEmployeeId = this.id
     await this.getGeneralDataChart()
-    await this.getLeaveCompanyReasonChart(this.leaveCompanyReasonChartOption)
+    await this.getLeaveCompanyReasonChart(
+      this.leaveCompanyReasonChartOption.getFullYear()
+    )
     await this.getPaidLeaveReasonChart({
       year: new Date().getFullYear(),
       employeeId: this.paidLeaveReasonChartEmployeeId,

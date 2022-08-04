@@ -29,4 +29,5 @@ export default {
   isEditAdditionInfo: (state) => state.isEditAdditionInfo,
   isEditWorkInfo: (state) => state.isEditWorkInfo,
   listManager: (state) => state.listManager,
+  listHoliday: (state) => state.listHoliday,
 }

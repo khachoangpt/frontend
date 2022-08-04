@@ -89,12 +89,18 @@
         <el-col :span="12">
           <el-form-item>
             <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
-            <el-input
-              v-model="nominationForm.salary"
-              class="request-form__input"
-              value="IT"
-              :disabled="true"
-            ></el-input>
+            <el-select
+              v-model="nominationForm.desiredTitle"
+              placeholder="Select"
+              :disabled="nominationForm.employeeName === ''"
+            >
+              <el-option
+                v-for="position in listPositions"
+                :key="position.job_id"
+                :label="position.position"
+                :value="position.job_id"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -114,17 +120,26 @@
         <el-col :span="12">
           <el-form-item>
             <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
-            <el-input
-              v-model="nominationForm.salary"
-              class="request-form__input"
-              value="IT"
-              :disabled="true"
-            ></el-input>
+            <el-select
+              v-model="nominationForm.desiredGrade"
+              placeholder="Select"
+              :disabled="nominationForm.employeeName === ''"
+            >
+              <el-option
+                v-for="grade in listGrade"
+                :key="grade.grade_id"
+                :label="grade.name"
+                :value="grade.name"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col v-if="nominationForm.requestNameId.trim() === 'Bonus'" :span="12">
+        <el-col
+          v-if="nominationForm.requestNameId.trim() === 'Bonus'"
+          :span="12"
+        >
           <el-form-item label="Tiền thưởng">
             <el-input
               v-model="nominationForm.bonusValue"
@@ -200,6 +215,8 @@ export default {
         date: '',
         currentTitle: '',
         desiredTitle: '',
+        currentGrade: '',
+        desiredGrade: '',
         currentArea: '',
         desiredArea: '',
         currentOffice: '',
@@ -249,7 +266,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['personnelDetail']),
+    ...mapGetters('user', ['personnelDetail', 'listPositions', 'listGrade']),
     ...mapGetters('request', [
       'requestNominationDialogVisible',
       'listRequestName',
@@ -260,10 +277,21 @@ export default {
 
   async mounted() {
     await this.getEmployeeByManager()
+    await this.getListPositions()
+    // await this.getListGrade(
+    //   this.listPositions.find(
+    //     (position) => position.position === this.personnelDetail.position_name
+    //   ).job_id
+    // )
   },
 
   methods: {
-    ...mapActions('user', ['getEmployeeByManager', 'getPersonnelDetail']),
+    ...mapActions('user', [
+      'getEmployeeByManager',
+      'getPersonnelDetail',
+      'getListPositions',
+      'getListGrade',
+    ]),
     ...mapActions('request', [
       'createRequestBonus',
       'createRequestPromotion',
