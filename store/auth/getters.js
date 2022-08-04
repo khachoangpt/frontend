@@ -11,4 +11,5 @@ export default {
   grade: (state) => state.grade,
   country: (state) => state.country,
   isCollapse: (state) => state.isCollapse,
+  fullName: (state) => state.fullName,
 }

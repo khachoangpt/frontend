@@ -3,7 +3,13 @@
     <div class="main-info-header">
       <span id="sub-6" class="main-info-header__text"> Lịch sử làm việc </span>
       <span
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         class="main-info-header__edit"
         @click="centerDialogVisible = true"
       >
@@ -16,7 +22,7 @@
       class="main-info__content"
     >
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Công ty</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -33,7 +39,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Vị trí</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -50,7 +56,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Khoảng thời gian</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
@@ -73,10 +79,16 @@
         </div>
       </el-col>
       <el-col
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         :span="6"
       >
-        <div class="grid-content ">
+        <div class="grid-content">
           <div
             v-if="isEditLine !== working"
             class="main-info__content-item-action"

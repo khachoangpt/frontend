@@ -46,4 +46,8 @@ export default {
   setIsCollapse(state, isCollapse) {
     state.isCollapse = isCollapse
   },
+
+  setFullName(state, fullName) {
+    state.fullName = fullName
+  },
 }

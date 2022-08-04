@@ -43,7 +43,23 @@ export default {
       const res = await this.$repository.request.getListRequestType(
         rootState.auth.id
       )
-      commit('setListRequestType', res)
+      const result = []
+      for (let i = 0; i < res.length; i++) {
+        if (res[i].request_type_name === 'Tax Enrollment') {
+          continue
+        }
+        if (
+          rootState.auth.roles.find(
+            (role) =>
+              role.authority === 'ROLE_USER' &&
+              res[i].request_type_name === 'Nomination'
+          )
+        ) {
+          continue
+        }
+        result.push(res[i])
+      }
+      commit('setListRequestType', result)
     } catch (error) {
       Message.error(error.response.data.message)
     }

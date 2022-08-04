@@ -4,7 +4,12 @@
       <span id="sub-3" class="main-info-header__text"> Thuế và bảo hiểm </span>
       <span
         v-if="
-          isEditTaxInfo && roles.find((role) => role.authority === 'ROLE_ADMIN')
+          isEditTaxInfo &&
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
         class="main-info-header__edit"
         @click="setIsEditTaxInfo(false)"
@@ -14,7 +19,11 @@
       <span
         v-else-if="
           isEditTaxInfo === false &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
       >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
@@ -23,7 +32,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số thuế</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -42,7 +51,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Mã số BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -59,7 +68,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Bảo hiểm </span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
@@ -76,7 +85,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi đăng ký BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">

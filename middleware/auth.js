@@ -11,6 +11,7 @@ export default function ({ app, store, redirect, i18n }) {
       store.commit('auth/setId', decoded.User_Data.id)
       store.commit('auth/setEmail', decoded.User_Data.email)
       store.commit('auth/setRoles', decoded.User_Data.authorities)
+      store.commit('auth/setFullName', decoded.User_Data.fullName)
       store.dispatch('auth/getEmployeeInfo', decoded.User_Data.id)
       store.commit(
         'auth/setCountry',

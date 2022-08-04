@@ -44,19 +44,12 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử thôi việc</span>
-              <el-select
+              <el-date-picker
                 v-model="leaveCompanyReasonChartOption"
-                placeholder="Năm"
+                type="year"
+                placeholder="Ngày"
               >
-                <el-option
-                  v-for="item in leaveCompanyReasonChartOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
+              </el-date-picker>
             </div>
             <multiple-column-chart :values="leaveCompanyReasonChart" />
           </el-card>
@@ -83,16 +76,12 @@
                 >
                 </el-option>
               </el-select>
-              <el-select v-model="paidLeaveReasonChartOption" placeholder="Năm">
-                <el-option
-                  v-for="item in paidLeaveReasonChartOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
+              <el-date-picker
+                v-model="paidLeaveReasonChartOption"
+                type="year"
+                placeholder="Ngày"
+              >
+              </el-date-picker>
             </div>
             <multiple-column-chart :values="paidLeaveReasonChart" />
           </el-card>
@@ -130,20 +119,8 @@ export default {
     return {
       ageColor: ['#64a340', '#348c75', '#348c75', '#05ffd1'],
       workTimeColor: ['#328fa8', '#ffde05', '#64a340'],
-      leaveCompanyReasonChartOptions: [
-        { label: '2020', value: 2020 },
-        { label: '2021', value: 2021 },
-        { label: '2022', value: 2022 },
-        { label: '2023', value: 2023 },
-      ],
-      leaveCompanyReasonChartOption: new Date().getFullYear(),
-      paidLeaveReasonChartOptions: [
-        { label: '2020', value: 2020 },
-        { label: '2021', value: 2021 },
-        { label: '2022', value: 2022 },
-        { label: '2023', value: 2023 },
-      ],
-      paidLeaveReasonChartOption: new Date().getFullYear(),
+      leaveCompanyReasonChartOption: new Date(),
+      paidLeaveReasonChartOption: new Date(),
       paidLeaveReasonChartEmployeeId: '',
     }
   },
@@ -154,12 +131,15 @@ export default {
       'paidLeaveReasonChart',
     ]),
     ...mapGetters('salary', ['employeeById']),
-    ...mapGetters('auth', ['roles', 'id']),
+    ...mapGetters('auth', ['roles', 'id', 'fullName']),
     employeeByIdOptions() {
-      return this.employeeById.map(({ employeeID, name }) => ({
-        value: employeeID,
-        label: name,
-      }))
+      return [
+        { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
+        ...this.employeeById.map(({ employeeID, name }) => ({
+          value: employeeID,
+          label: `${name} - ${employeeID}`,
+        })),
+      ]
     },
     employeeNumber() {
       return [

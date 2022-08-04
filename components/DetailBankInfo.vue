@@ -7,7 +7,11 @@
       <span
         v-if="
           isEditBankInfo &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
         class="main-info-header__edit"
         @click="setIsEditBankInfo(false)"
@@ -17,7 +21,11 @@
       <span
         v-else-if="
           isEditBankInfo === false &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
       >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
@@ -26,7 +34,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Tên chủ tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -43,7 +51,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngân hàng</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -60,7 +68,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
@@ -77,7 +85,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Số tài khoản</span>
             <span v-if="isEditBankInfo" class="content-item__detail">

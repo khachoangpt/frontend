@@ -28,7 +28,7 @@
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử lương</span>
               <el-select
-                v-if="!roles.includes('user')"
+                v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
                 v-model="historySalaryOption.employeeById"
                 placeholder="Mã nhân viên"
               >
@@ -56,8 +56,9 @@
               </el-select>
               <el-date-picker
                 v-model="historySalaryOption.date"
-                type="date"
+                type="year"
                 placeholder="Ngày"
+                :disabled="historySalaryOption.type !== 'yearly'"
               >
               </el-date-picker>
             </div>
@@ -77,7 +78,7 @@
             <div slot="header" class="clearfix">
               <span class="box-card__header-text">Cơ cấu lương</span>
               <el-select
-                v-if="!roles.includes('user')"
+                v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
                 v-model="salaryStructureEmployeeById"
                 placeholder="Mã nhân viên"
               >
@@ -92,7 +93,7 @@
               </el-select>
               <el-date-picker
                 v-model="salaryStructureDate"
-                type="date"
+                type="year"
                 placeholder="Ngày"
               >
               </el-date-picker>
@@ -167,17 +168,20 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['roles', 'id']),
+    ...mapGetters('auth', ['roles', 'id', 'fullName']),
     ...mapGetters('salary', [
       'historySalary',
       'salaryStructure',
       'employeeById',
     ]),
     employeeByIdOptions() {
-      return this.employeeById.map(({ employeeID, name }) => ({
-        value: employeeID,
-        label: name,
-      }))
+      return [
+        { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
+        ...this.employeeById.map(({ employeeID, name }) => ({
+          value: employeeID,
+          label: `${name} - ${employeeID}`,
+        })),
+      ]
     },
   },
   watch: {
@@ -216,7 +220,9 @@ export default {
   },
 
   async mounted() {
-    await this.getEmployeeById()
+    if (!this.roles.find((role) => role.authority === 'ROLE_USER')) {
+      await this.getEmployeeById()
+    }
     this.historySalaryOption.employeeById = this.id
     this.salaryStructureEmployeeById = this.id
 

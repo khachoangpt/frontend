@@ -3,6 +3,7 @@ export default () => ({
   email: '',
   name: '',
   avatar: '',
+  fullName: '',
   grade: '',
   roles: [],
   tokenType: '',

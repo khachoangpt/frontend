@@ -5,7 +5,13 @@
         Danh sách người phụ thuộc
       </span>
       <span
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         class="main-info-header__edit"
         @click="centerDialogVisible = true"
       >
@@ -18,7 +24,7 @@
       class="main-info__content"
     >
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Họ và tên</span>
             <span
@@ -38,7 +44,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày sinh</span>
             <span
@@ -59,7 +65,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Liên hệ</span>
             <span
@@ -79,10 +85,16 @@
         </div>
       </el-col>
       <el-col
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         :span="6"
       >
-        <div class="grid-content ">
+        <div class="grid-content">
           <div
             v-if="isEditLineRelative !== relative"
             class="main-info__content-item-action"

@@ -8,7 +8,11 @@
         <span
           v-if="
             isEditWorkInfo &&
-            roles.find((role) => role.authority === 'ROLE_ADMIN')
+            roles.find(
+              (role) =>
+                role.authority === 'ROLE_ADMIN' ||
+                role.authority === 'ROLE_MANAGER'
+            )
           "
           class="main-info-header__edit"
           @click="editWorkInfo"
@@ -18,7 +22,11 @@
         <span
           v-else-if="
             isEditWorkInfo === false &&
-            roles.find((role) => role.authority === 'ROLE_ADMIN')
+            roles.find(
+              (role) =>
+                role.authority === 'ROLE_ADMIN' ||
+                role.authority === 'ROLE_MANAGER'
+            )
           "
         >
           <el-button type="info" @click="closeEdit">Đóng</el-button>
@@ -27,7 +35,7 @@
       </div>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Vị trí</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
@@ -41,7 +49,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -57,7 +65,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương cơ bản</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -73,7 +81,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Văn phòng</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -91,7 +99,7 @@
       </el-row>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lịch làm việc</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -107,7 +115,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Phòng ban / Chuyên môn</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
@@ -123,7 +131,7 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Ngày bắt đầu</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
@@ -141,7 +149,7 @@
       </el-row>
       <el-row class="main-info__content">
         <el-col :span="6">
-          <div class="grid-content ">
+          <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Phân loại nhân sự</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">

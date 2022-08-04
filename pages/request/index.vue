@@ -91,7 +91,9 @@
     <request-behaviour-dialog />
     <request-company-asset-dialog />
     <request-integrity-dialog />
-    <request-nomination-dialog />
+    <request-nomination-dialog
+      v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
+    />
     <request-paid-leave-dialog />
     <request-tax-enrollment-dialog />
     <request-working-schedule-dialod />
@@ -134,6 +136,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['roles']),
     ...mapGetters('request', [
       'listRequestType',
       'listRequestStatus',

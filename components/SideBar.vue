@@ -29,25 +29,38 @@
         <p class="avatar__role">{{ grade }}</p>
       </div>
     </el-menu-item>
-    <el-menu-item class="sidebar-item" :index="localePath('/')">
+    <el-menu-item
+      v-if="
+        roles.find(
+          (role) =>
+            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
+        )
+      "
+      class="sidebar-item"
+      :index="localePath('/')"
+    >
       <i class="el-icon-menu sidebar-icon"></i>
       <span class="sidebar-item__text">
         {{ $i18n.t('sidebar.dashboard') }}
-      </span>
-    </el-menu-item>
-    <el-menu-item class="sidebar-item" :index="localePath('/timekeeping')">
-      <i class="el-icon-s-claim sidebar-icon"></i>
-      <span class="sidebar-item__text">
-        {{ $i18n.t('sidebar.timekeeping') }}
       </span>
     </el-menu-item>
     <el-menu-item
       v-if="
         roles.find(
           (role) =>
-            role.authority === 'ROLE_ADMIN' || role.authority === 'ROLE_MANAGER'
+            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
         )
       "
+      class="sidebar-item"
+      :index="localePath('/timekeeping')"
+    >
+      <i class="el-icon-s-claim sidebar-icon"></i>
+      <span class="sidebar-item__text">
+        {{ $i18n.t('sidebar.timekeeping') }}
+      </span>
+    </el-menu-item>
+    <el-menu-item
+      v-if="roles.find((role) => role.authority === 'ROLE_MANAGER')"
       class="sidebar-item"
       :index="localePath('/working-data')"
     >
@@ -71,28 +84,46 @@
         {{ $i18n.t('sidebar.personnel') }}
       </span>
     </el-menu-item>
-    <el-menu-item class="sidebar-item" :index="localePath('/request')">
-      <i class="el-icon-s-order sidebar-icon"></i>
-      <span class="sidebar-item__text">{{ $i18n.t('sidebar.request') }}</span>
-    </el-menu-item>
-    <el-menu-item class="sidebar-item" :index="localePath('/salary')">
-      <i class="el-icon-s-finance sidebar-icon"></i>
-      <span class="sidebar-item__text">{{ $i18n.t('sidebar.salary') }}</span>
-    </el-menu-item>
-    <el-menu-item class="sidebar-item" :index="localePath('/synthetic')">
-      <i class="el-icon-s-claim sidebar-icon"></i>
-      <span class="sidebar-item__text">{{ $i18n.t('sidebar.synthetic') }}</span>
-    </el-menu-item>
-    <el-submenu
+    <el-menu-item
       v-if="
         roles.find(
           (role) =>
-            role.authority === 'ROLE_ADMIN' || role.authority === 'ROLE_MANAGER'
+            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
         )
       "
       class="sidebar-item"
-      :index="localePath('/policy')"
+      :index="localePath('/request')"
     >
+      <i class="el-icon-s-order sidebar-icon"></i>
+      <span class="sidebar-item__text">{{ $i18n.t('sidebar.request') }}</span>
+    </el-menu-item>
+    <el-menu-item
+      v-if="
+        roles.find(
+          (role) =>
+            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
+        )
+      "
+      class="sidebar-item"
+      :index="localePath('/salary')"
+    >
+      <i class="el-icon-s-finance sidebar-icon"></i>
+      <span class="sidebar-item__text">{{ $i18n.t('sidebar.salary') }}</span>
+    </el-menu-item>
+    <el-menu-item
+      v-if="
+        roles.find(
+          (role) =>
+            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
+        )
+      "
+      class="sidebar-item"
+      :index="localePath('/synthetic')"
+    >
+      <i class="el-icon-s-claim sidebar-icon"></i>
+      <span class="sidebar-item__text">{{ $i18n.t('sidebar.synthetic') }}</span>
+    </el-menu-item>
+    <el-submenu class="sidebar-item" :index="localePath('/policy')">
       <template slot="title">
         <i class="el-icon-s-claim sidebar-icon"></i>
         <span slot="title">{{ $i18n.t('sidebar.policy') }}</span>

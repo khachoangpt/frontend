@@ -5,7 +5,11 @@
       <span
         v-if="
           isEditAdditionInfo &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
         class="main-info-header__edit"
         @click="editAdditionInfo"
@@ -15,7 +19,11 @@
       <span
         v-else-if="
           isEditAdditionInfo === false &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
       >
         <el-button type="info" @click="closeEdit">Đóng</el-button>
@@ -24,7 +32,7 @@
     </div>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Địa chỉ hiện tại</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -41,7 +49,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Nơi sinh</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -58,7 +66,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Hộ khẩu thường trú </span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -77,7 +85,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">CMT / CCCD</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -94,7 +102,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Ngày cấp</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -111,7 +119,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Nơi cấp </span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -130,7 +138,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Quốc tịch</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -147,7 +155,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Email khác</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -164,7 +172,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Số điện thoại khác</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -183,7 +191,7 @@
     </el-row>
     <el-row class="main-info__content">
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Nickname </span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
@@ -200,7 +208,7 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Facebook</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">

@@ -3,7 +3,13 @@
     <div class="main-info-header">
       <span id="sub-8" class="main-info-header__text"> Thông tin học vấn </span>
       <span
-        v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
         class="main-info-header__edit"
         @click="centerDialogVisible = true"
       >
@@ -16,7 +22,7 @@
       class="main-info__content"
     >
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Trường học</span>
             <span
@@ -36,7 +42,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Khoảng thời gian</span>
             <span
@@ -62,7 +68,7 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="grid-content ">
+        <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Bằng cấp</span>
             <span
@@ -81,8 +87,17 @@
           </div>
         </div>
       </el-col>
-      <el-col v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')" :span="6">
-        <div class="grid-content ">
+      <el-col
+        v-if="
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
+        "
+        :span="6"
+      >
+        <div class="grid-content">
           <div
             v-if="isEditLineEducation !== education"
             class="main-info__content-item-action"

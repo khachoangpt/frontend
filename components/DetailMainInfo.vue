@@ -5,7 +5,11 @@
       <span
         v-if="
           isEditMainInfo &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
+          )
         "
         class="main-info-header__edit"
         @click="setIsEditMainInfo(false)"
@@ -15,7 +19,10 @@
       <span
         v-else-if="
           isEditMainInfo === false &&
-          roles.find((role) => role.authority === 'ROLE_ADMIN')
+          roles.find(
+            (role) =>
+              role.authority === 'ROLE_ADMIN' || role.authority === 'ROLE_MANAGER'
+          )
         "
       >
         <el-button type="info" @click="closeEdit">Đóng</el-button>

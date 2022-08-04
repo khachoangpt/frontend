@@ -92,6 +92,7 @@ class UserApi extends TimeKeeping {
     return this.$axios.$get('/api/checkin_checkout', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
+        Date: new Date().toUTCString(),
       },
     })
   }
