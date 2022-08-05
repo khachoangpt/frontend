@@ -174,13 +174,15 @@
         <div id="detail-right" class="grid-content personnel-detail__right">
           <div>
             <div class="detail-right__header">
-              <span class="detail-right__header-info">Thông tin cá nhân</span>
+              <span class="detail-right__header-info">{{
+                $i18n.t('personnel.detail.personalInfo')
+              }}</span>
               <nuxt-link
                 to="/forgot/change-password"
                 class="detail-right__header-pass"
               >
                 <i class="el-icon-key detail-right__header-pass-icon"> </i>
-                Đổi mật khẩu
+                {{ $i18n.t('personnel.detail.changePassword') }}
               </nuxt-link>
             </div>
           </div>

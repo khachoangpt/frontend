@@ -57,15 +57,15 @@ export default {
   ],
 
   cloudinary: {
-    cloudName: process.env.CLOUDNAME,
-    apiKey: process.env.API_KEY, // only needed if you are using server-side upload
-    apiSecret: process.env.API_SECRET, // only needed if you are using server-side upload
+    cloudName: 'pingdaily',
+    apiKey: '419171925473186', // only needed if you are using server-side upload
+    apiSecret: 'PwgKFUsYSsF2aWQ68LSfP58MF6Y', // only needed if you are using server-side upload
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: process.env.BASE_URL,
+    baseURL: 'https://hronline.tk/hrm',
     proxyHeaders: false,
     credentials: false,
   },

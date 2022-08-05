@@ -85,6 +85,20 @@ const vi = {
       startDate: 'Ngày bắt đầu không được để trống',
       endDate: 'Ngày kết thúc không được để trống',
     },
+
+    detail: {
+      personalInfo: 'Thông tin cá nhân',
+      changePassword: 'Đổi mật khẩu',
+      mainInfo: 'Thông tin chính',
+      editMainInfo: 'Sửa thông tin chính',
+      close: 'Đóng',
+      confirm: 'Xác nhận',
+      fullName: 'Họ và tên',
+      employeeId: 'Mã nhân sự',
+      startDate: 'Ngày bắt đầu',
+      endDate: 'Ngày kết thúc',
+      workingStatus: 'Tình trạng làm việc ',
+    },
   },
 
   timekeeping: {

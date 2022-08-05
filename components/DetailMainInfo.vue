@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="main-info-header">
-      <span id="sub-1" class="main-info-header__text">Thông tin chính</span>
+      <span id="sub-1" class="main-info-header__text">{{
+        $i18n.t('personnel.detail.mainInfo')
+      }}</span>
       <span
         v-if="
           isEditMainInfo &&
@@ -14,26 +16,33 @@
         class="main-info-header__edit"
         @click="setIsEditMainInfo(false)"
       >
-        Sửa thông tin chính
+        {{ $i18n.t('personnel.detail.editMainInfo') }}
       </span>
       <span
         v-else-if="
           isEditMainInfo === false &&
           roles.find(
             (role) =>
-              role.authority === 'ROLE_ADMIN' || role.authority === 'ROLE_MANAGER'
+              role.authority === 'ROLE_ADMIN' ||
+              role.authority === 'ROLE_MANAGER'
           )
         "
       >
-        <el-button type="info" @click="closeEdit">Đóng</el-button>
-        <el-button type="primary" @click="updateMainInfo">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
+        <el-button type="primary" @click="updateMainInfo">{{
+          $i18n.t('personnel.detail.confirm')
+        }}</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Họ và tên</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.fullName')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.full_name }}
             </span>
@@ -50,7 +59,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Mã nhân sự</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.employeeId')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.employee_id }}
             </span>
@@ -68,7 +79,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Ngày bắt đầu</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.startDate')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.start_date }}
             </span>
@@ -88,7 +101,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Ngày kết thúc</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.endDate')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.end_date }}
             </span>
@@ -110,7 +125,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Tình trạng làm việc</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.workingStatus')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <span
                 v-if="personnelDetail.working_status === true"

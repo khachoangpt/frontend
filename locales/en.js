@@ -84,6 +84,19 @@ const en = {
       startDate: 'Start date is not empty',
       endDate: 'End date is not empty',
     },
+    detail: {
+      personalInfo: 'Personal information',
+      changePassword: 'Change password',
+      mainInfo: 'Main information',
+      editMainInfo: 'Edit main information',
+      close: 'Close',
+      confirm: 'Confirm',
+      fullName: 'Full Name',
+      employeeId: 'Employee ID',
+      startDate: 'Start date',
+      endDate: 'End date',
+      workingStatus: 'Working status',
+    },
   },
 
   timekeeping: {
