@@ -24,6 +24,8 @@
             <input
               id="mediaFile"
               ref="mediaFile"
+              v-loading.fullscreen.lock="fullscreenLoading"
+              element-loading-background="rgba(0, 0, 0, 0.2)"
               type="file"
               accept=".jpeg,.jpg,.png,image/jpeg,image/png"
               aria-label="upload image button"
@@ -228,6 +230,7 @@ export default {
       imageUrl: '',
       activeSubTab: 1,
       scrollPosition: null,
+      fullscreenLoading: false,
     }
   },
   computed: {
@@ -310,6 +313,7 @@ export default {
     },
 
     async selectFile(e) {
+      this.fullscreenLoading = true
       const file = e.target.files[0]
 
       /* Make sure file exists */
@@ -325,8 +329,11 @@ export default {
         folder: 'hrm-avatar',
         uploadPreset: 'qj7y0hfx',
       })
-      this.imageUrl = res.secure_url
-      Message.success('Đổi ảnh đại diện thành công.')
+      if (res.type === 'upload') {
+        this.fullscreenLoading = false
+        this.imageUrl = res.secure_url
+        Message.success('Đổi ảnh đại diện thành công.')
+      }
     },
 
     clickAvatar() {

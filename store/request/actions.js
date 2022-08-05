@@ -116,6 +116,12 @@ export default {
       const res = await this.$repository.request.getDetailReceiveRequest(
         requestId
       )
+      // const regexEmpId = /\[(.+)\]/m
+      // const arrayRegex =
+      //   res.applicationsRequestResponseList[0].description.match(
+      //     regexEmpId
+      //   )
+      // console.log(arrayRegex)
       commit('setRequestReceiveDetail', res.applicationsRequestResponseList[0])
     } catch (error) {
       Message.error(error.response.data.message)
