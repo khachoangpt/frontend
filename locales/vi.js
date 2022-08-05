@@ -1,6 +1,15 @@
 import localeVi from 'element-ui/lib/locale/lang/vi'
 
 const vi = {
+  dashboard: {
+    holidayCompany: 'Ngày nghỉ của công ty',
+    salaryHistory: 'Lịch sử lương',
+    month: 'Tháng',
+    year: 'Năm',
+    salaryStructure: 'Cơ cấu lương',
+    organization: 'Cơ cấu tổ chức',
+  },
+
   login: {
     signIn: 'Đăng nhập',
     password: 'Mật khẩu',
@@ -98,10 +107,21 @@ const vi = {
       startDate: 'Ngày bắt đầu',
       endDate: 'Ngày kết thúc',
       workingStatus: 'Tình trạng làm việc ',
+      contractUrl: 'Hợp đồng hiện tại',
+      phoneNumber: 'Số điện thoại',
+      grade: 'Cấp bậc',
+      birthDate: 'Ngày sinh ',
+      gender: 'Giới tính',
+      maritalStatus: 'Tình trạng hôn nhân',
+      office: 'Văn phòng',
+      workingSchedule: 'Lịch làm việc',
+      position: 'Vị trí',
+      area: 'Phòng ban',
     },
   },
 
   timekeeping: {
+    workingDataOf: 'Dữ liệu giờ làm của:',
     status: {
       normal: 'Bình thường',
       late: 'Đi muộn',
@@ -115,11 +135,22 @@ const vi = {
     dialog: {
       title: 'Dữ liệu giờ làm ngày ',
       totalTime: 'Tổng giờ làm:',
+      firstCheckIn: 'Check-in lần đầu:',
+      lastCheckOut: 'Check-out lần cuối:',
+      history: 'Lịch sử check-in/check-out',
+      hour: 'giờ',
+      minute: 'phút',
     },
     message: {
       checkInSuccess: 'Check in thành công.',
       checkOutSuccess: 'Check out thành công.',
     },
+  },
+
+  workingData: {
+    workingData: 'Dữ liệu giờ làm',
+    employee: 'Nhân viên',
+    id: 'Mã',
   },
 
   salary: {

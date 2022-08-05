@@ -162,7 +162,7 @@ template {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: linear-gradient(#f4f5f8,#f1f3f6);
+  background: linear-gradient(#f4f5f8, #f1f3f6);
   border-radius: 10px;
 }
 
@@ -179,4 +179,14 @@ template {
 
 table.vgt-table td {
   vertical-align: middle !important;
+}
+
+.el-dialog {
+  border-radius: 10px !important;
+}
+
+.el-dialog__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: blue !important;
 }

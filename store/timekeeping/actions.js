@@ -99,6 +99,84 @@ export default {
     }
   },
 
+  async getListTimekeepingPersonnel({ rootState, commit }, value) {
+    try {
+      const data = {
+        employeeId: value.employeeId,
+        startDate: value.date.startDate,
+        endDate: value.date.endDate,
+      }
+      let res = await this.$repository.timekeeping.getListTimekeepingPersonnel(
+        data
+      )
+      await commit(
+        'setSelectedEmployeeName',
+        res.timekeepingResponsesList[0].full_name
+      )
+      if (res.timekeepingResponsesList.length === 0) {
+        res = []
+      } else {
+        res = res.timekeepingResponsesList[0].timekeepingResponses
+      }
+      const response = []
+      for (let i = 0; i < res.length; i++) {
+        const timekeepingStatus = []
+        const types = []
+        const classes = []
+        for (let j = 0; j < res[i].timekeeping_status.length; j++) {
+          timekeepingStatus.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'late'
+              ? 'late'
+              : res[i].timekeeping_status[j].timekeeping_status === 'soon'
+              ? 'soon'
+              : res[i].timekeeping_status[j].timekeeping_status === 'off'
+              ? 'off'
+              : res[i].timekeeping_status[j].timekeeping_status === 'PL'
+              ? 'PL'
+              : ''
+          )
+          types.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'late'
+              ? 'danger'
+              : res[i].timekeeping_status[j].timekeeping_status === 'soon'
+              ? 'warning'
+              : res[i].timekeeping_status[j].timekeeping_status === 'off'
+              ? 'info'
+              : res[i].timekeeping_status[j].timekeeping_status === 'PL'
+              ? 'success'
+              : ''
+          )
+          classes.push(
+            res[i].timekeeping_status[j].timekeeping_status === 'normal'
+              ? 'el-icon-finished custom-calendar__status-finished'
+              : res[i].timekeeping_status[j].timekeeping_status === 'haft'
+              ? 'el-icon-sunrise-1 custom-calendar__status-half'
+              : res[i].timekeeping_status[j].timekeeping_status === 'holiday'
+              ? 'el-icon-date custom-calendar__status-holiday'
+              : res[i].timekeeping_status[j].timekeeping_status === 'overtime'
+              ? 'el-icon-moon custom-calendar__status-overnight'
+              : ''
+          )
+        }
+        const attribute = {
+          key: i,
+          customData: {
+            checkIn: res[i].first_check_in,
+            checkOut: res[i].last_check_out,
+            status: timekeepingStatus,
+            type: types,
+            class: classes,
+          },
+          dates: new Date(res[i].current_date),
+        }
+        response.push(attribute)
+      }
+      await commit('setListEmployeeTimekeeping', response)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
   async getDetailTimekeeping({ rootState, commit }, selectedDate) {
     try {
       const data = {
@@ -109,7 +187,19 @@ export default {
       if (res !== '') {
         const totalWorkingTime = res.total_working_time + ''
         const time = totalWorkingTime.split('.')
-        res.total_working_time = time[0] + ' giờ ' + time[1] + ' phút'
+        if (res.total_working_time !== null) {
+          res.total_working_time =
+            time[0] +
+            ' ' +
+            this.$i18n.t('timekeeping.dialog.hour') +
+            ' ' +
+            time[1] +
+            ' ' +
+            this.$i18n.t('timekeeping.dialog.minute')
+        } else {
+          res.total_working_time =
+            '0 ' + this.$i18n.t('timekeeping.dialog.hour')
+        }
         await commit('setTimekeepingInDay', res)
       }
     } catch (error) {
@@ -178,12 +268,12 @@ export default {
   async getDaysInMonth({ commit, state }, data) {
     commit('setColumns', [
       {
-        label: 'Nhân viên',
+        label: this.$i18n.t('workingData.employee'),
         field: 'full_name',
         width: '150px',
       },
       {
-        label: 'Mã',
+        label: this.$i18n.t('workingData.id'),
         field: 'employee_id',
         width: '50px',
       },
@@ -191,12 +281,12 @@ export default {
     const date = new Date(data.year, data.month - 1, 1)
     const days = [
       {
-        label: 'Nhân viên',
+        label: this.$i18n.t('workingData.employee'),
         field: 'full_name',
         width: '150px',
       },
       {
-        label: 'Mã',
+        label: this.$i18n.t('workingData.id'),
         field: 'employee_id',
         width: '50px',
       },

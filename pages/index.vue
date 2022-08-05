@@ -1,30 +1,36 @@
 <template>
   <div class="dashboard">
-    <el-row :gutter="40">
+    <el-row :gutter="16">
       <el-col class="dashboard__col" :lg="6" :md="12" :sm="12" :xs="24">
         <div class="grid-content bg-purple">
-          <el-card class="box-card">
+          <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Ngày nghỉ của công ty</span>
+              <span class="box-card__header-text">{{
+                $i18n.t('dashboard.holidayCompany')
+              }}</span>
             </div>
             <Calendar />
           </el-card>
         </div>
       </el-col>
       <el-col
-        class="dashboard__col -max-width"
-        :lg="8"
+        v-if="!roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        class="dashboard__col"
+        :lg="18"
         :md="12"
         :sm="24"
         :xs="24"
       >
         <div class="grid-content bg-purple">
-          <el-card class="box-card -max-width">
+          <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Lịch sử lương</span>
+              <span class="box-card__header-text">{{
+                $i18n.t('dashboard.salaryHistory')
+              }}</span>
               <el-select
                 v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
                 v-model="historySalaryOption.employeeById"
+                size="small"
                 placeholder="Mã nhân viên"
               >
                 <el-option
@@ -38,7 +44,8 @@
               </el-select>
               <el-select
                 v-model="historySalaryOption.type"
-                placeholder="Lựa chọn kiểu"
+                class="salary-history__search-input"
+                size="small"
               >
                 <el-option
                   v-for="item in historySalaryOption.optionsType"
@@ -52,6 +59,8 @@
               <el-date-picker
                 v-model="historySalaryOption.date"
                 type="year"
+                size="small"
+                class="salary-history__search-input"
                 placeholder="Ngày"
                 :disabled="historySalaryOption.type !== 'monthly'"
               >
@@ -62,52 +71,57 @@
         </div>
       </el-col>
       <el-col
-        class="dashboard__col -max-width"
+        v-if="!roles.find((role) => role.authority === 'ROLE_ADMIN')"
+        class="dashboard__col"
         :lg="8"
         :md="12"
         :sm="24"
         :xs="24"
       >
         <div class="grid-content bg-purple">
-          <el-card class="box-card -max-width">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Cơ cấu lương</span>
-              <el-select
-                v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
-                v-model="salaryStructureEmployeeById"
-                placeholder="Mã nhân viên"
-              >
-                <el-option
-                  v-for="item in employeeByIdOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
+          <el-card class="box-card salary-structure-chart">
+            <div slot="header" class="salary-structure-chart__header">
+              <span class="box-card__header-text">{{
+                $i18n.t('dashboard.salaryStructure')
+              }}</span>
+              <div class="salary-structure-chart__action">
+                <el-select
+                  v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
+                  v-model="salaryStructureEmployeeById"
+                  class="salary-structure__search-text"
+                  size="small"
+                  placeholder="Mã nhân viên"
                 >
-                </el-option>
-              </el-select>
-              <el-date-picker
-                v-model="salaryStructureDate"
-                type="month"
-                placeholder="Ngày"
-              >
-              </el-date-picker>
+                  <el-option
+                    v-for="item in employeeByIdOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                  >
+                  </el-option>
+                </el-select>
+                <el-date-picker
+                  v-model="salaryStructureDate"
+                  class="salary-structure__search-text"
+                  size="small"
+                  type="month"
+                  placeholder="Ngày"
+                >
+                </el-date-picker>
+              </div>
             </div>
             <doughnut-chart :values="salaryStructure" />
           </el-card>
         </div>
       </el-col>
-      <el-col
-        class="dashboard__col -max-width"
-        :lg="8"
-        :md="12"
-        :sm="24"
-        :xs="24"
-      >
+      <el-col class="dashboard__col" :lg="16" :md="12" :sm="24" :xs="24">
         <div class="grid-content bg-purple">
-          <el-card class="box-card -max-width">
+          <el-card class="box-card organization-chart">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Cơ cấu tổ chức</span>
+              <span class="box-card__header-text">{{
+                $i18n.t('dashboard.organization')
+              }}</span>
             </div>
             <tree-chart />
           </el-card>
@@ -136,11 +150,11 @@ export default {
         optionsType: [
           {
             value: 'yearly',
-            label: 'Năm',
+            label: this.$i18n.t('dashboard.year'),
           },
           {
             value: 'monthly',
-            label: 'Tháng',
+            label: this.$i18n.t('dashboard.month'),
           },
         ],
         type: 'monthly',
@@ -205,19 +219,21 @@ export default {
   },
 
   async mounted() {
-    if (!this.roles.find((role) => role.authority === 'ROLE_USER')) {
+    if (this.roles.find((role) => role.authority === 'ROLE_MANAGER')) {
       await this.getEmployeeById()
     }
-    this.historySalaryOption.employeeById = this.id
-    this.salaryStructureEmployeeById = this.id
-    await this.getHistorySalary({
-      ...this.historySalaryOption,
-      employeeId: this.historySalaryOption.employeeById,
-    })
-    await this.getSalaryStructure({
-      date: this.salaryStructureDate,
-      employeeId: this.salaryStructureEmployeeById,
-    })
+    if (!this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
+      this.historySalaryOption.employeeById = this.id
+      this.salaryStructureEmployeeById = this.id
+      await this.getHistorySalary({
+        ...this.historySalaryOption,
+        employeeId: this.historySalaryOption.employeeById,
+      })
+      await this.getSalaryStructure({
+        date: this.salaryStructureDate,
+        employeeId: this.salaryStructureEmployeeById,
+      })
+    }
   },
 
   methods: {
@@ -237,14 +253,7 @@ export default {
 }
 
 .dashboard__col {
-  margin-bottom: 24px;
-}
-.dashboard__col.-max-width {
-  width: 100%;
-}
-
-.box-card.-max-width {
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .el-calendar__header {
@@ -290,9 +299,43 @@ export default {
 .clearfix {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .vc-container {
   border: none;
+}
+
+.dashboard-column__height {
+  height: 320px;
+}
+
+.salary-structure-chart {
+  height: 360px;
+}
+
+.el-card__header {
+  border: none;
+  padding: 18px 20px 0 20px;
+}
+
+.salary-structure-chart__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.salary-structure-chart__action {
+  display: flex;
+  flex-direction: column;
+}
+
+.salary-structure__search-text {
+  margin-top: 8px;
+  width: 190px !important;
+}
+
+.salary-history__search-input {
+  width: 100px !important;
 }
 </style>

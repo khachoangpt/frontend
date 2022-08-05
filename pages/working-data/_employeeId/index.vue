@@ -3,7 +3,9 @@
     <el-col :span="4">
       <el-page-header @back="back"> </el-page-header>
       <div class="working-data-emp">
-        <span class="working-data-emp__label">Dữ liệu giờ làm của:</span>
+        <span class="working-data-emp__label">{{
+          $i18n.t('timekeeping.workingDataOf')
+        }}</span>
         <span class="working-data-emp__label working-data-emp__name">
           {{ selectedEmployeeName }} ({{ $route.params.employeeId }})
         </span>
@@ -103,11 +105,7 @@
     <el-dialog
       :title="
         $i18n.t('timekeeping.dialog.title') +
-        new Date(selectedDay.date).getDate() +
-        '-' +
-        (new Date(selectedDay.date).getMonth() + 1) +
-        '-' +
-        new Date(selectedDay.date).getFullYear()
+        format(new Date(selectedDay.date || new Date()), 'dd-MM-yyyy')
       "
       :visible.sync="dialogTimekeepingDetailVisible"
       width="30%"
@@ -115,24 +113,30 @@
     >
       <div class="dialog-timekeeping-detail__content">
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Tổng giờ làm: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.totalTime') }}
+          </el-col>
           <el-col :span="14">{{ timekeepingInDay.total_working_time }}</el-col>
         </el-row>
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Checkin lần đầu: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.firstCheckIn') }}
+          </el-col>
           <el-col v-if="selectedDay !== ''" :span="14">
             {{ selectedDay.attributes[0].customData.checkIn }}
           </el-col>
         </el-row>
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Checkout lần cuối: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.lastCheckOut') }}
+          </el-col>
           <el-col v-if="selectedDay !== ''" :span="14">
             {{ selectedDay.attributes[0].customData.checkOut }}
           </el-col>
         </el-row>
       </div>
       <div class="dialog-timekeeping-detail__history-head">
-        Lịch sử checkin/checkout
+        {{ $i18n.t('timekeeping.dialog.history') }}
       </div>
       <div class="dialog-timekeeping-detail__history">
         <el-row>
@@ -173,12 +177,14 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'TimekeepingPage',
   layout: 'main',
   data() {
     return {
+      format,
       dialogTimekeepingDetailVisible: false,
       selectedDay: '',
       masks: {

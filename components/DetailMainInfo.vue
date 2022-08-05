@@ -164,7 +164,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Hợp đồng hiện tại</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.contractUrl')
+            }}</span>
             <el-popover
               v-if="isEditMainInfo"
               placement="bottom-start"
@@ -200,7 +202,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Số điện thoại</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.phoneNumber')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.phone_number }}
             </span>
@@ -217,7 +221,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Cấp bậc</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.grade')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.grade }}
             </span>
@@ -245,7 +251,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Ngày sinh</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.birthDate')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.birth_date }}
             </span>
@@ -282,7 +290,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Giới tính</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.gender')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-female content-item__detail-icon"></i>
               {{ personnelDetail.gender }}
@@ -304,7 +314,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Tình trạng hôn nhân</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.maritalStatus')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               {{ personnelDetail.marital_status }}
             </span>
@@ -328,7 +340,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Văn phòng</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.office')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-office-building"></i>
               {{ personnelDetail.office_name }}
@@ -355,7 +369,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Lịch làm việc</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.workingSchedule')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-date"></i>
               {{ personnelDetail.working_name }}
@@ -382,7 +398,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Vị trí</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.position')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-folder-checked"></i>
               {{ personnelDetail.position_name }}
@@ -409,7 +427,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Phòng ban</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.area')
+            }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
               <i class="el-icon-collection-tag"></i>
               {{ personnelDetail.area_name }}

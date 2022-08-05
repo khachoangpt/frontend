@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <VueTree
-      style="width: 100%; height: 1000px"
+      style="width: 100%; height: 500px"
       :dataset="vehicules"
       :config="treeConfig"
       direction="vertical"

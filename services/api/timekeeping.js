@@ -87,12 +87,28 @@ class UserApi extends TimeKeeping {
     )
   }
 
+  getListTimekeepingPersonnel(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/get_list_timekeeping_by_month?filter=date:ABT' +
+        data.startDate +
+        '-' +
+        data.endDate +
+        ',employeeId:AEQ' +
+        data.employeeId,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
   checkInCheckOut() {
     const accessToken = getToken()
     return this.$axios.$get('/api/checkin_checkout', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
-        Date: new Date().toUTCString(),
       },
     })
   }

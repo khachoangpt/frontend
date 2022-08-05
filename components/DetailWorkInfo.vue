@@ -37,20 +37,6 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Vị trí</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
-              <el-input
-                v-else
-                size="medium"
-                :value="personnelDetail.full_name"
-                class="edit-input"
-              ></el-input>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="grid-content">
-            <div class="main-info__content-item">
               <span class="content-item__head">Lương</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
                 >10.000.000</span
@@ -83,10 +69,10 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Văn phòng</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >Ha Noi Office</span
-              >
+              <span class="content-item__head">Ngày bắt đầu</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                personnelDetail.start_date
+              }}</span>
               <el-input
                 v-else
                 size="medium"
@@ -96,8 +82,6 @@
             </div>
           </div>
         </el-col>
-      </el-row>
-      <el-row class="main-info__content">
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
@@ -114,10 +98,28 @@
             </div>
           </div>
         </el-col>
+      </el-row>
+      <el-row class="main-info__content">
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Phòng ban / Chuyên môn</span>
+              <span class="content-item__head">Văn phòng</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail"
+                >Ha Noi Office</span
+              >
+              <el-input
+                v-else
+                size="medium"
+                :value="personnelDetail.full_name"
+                class="edit-input"
+              ></el-input>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid-content">
+            <div class="main-info__content-item">
+              <span class="content-item__head">Phòng ban</span>
               <span v-if="isEditWorkInfo" class="content-item__detail"
                 >Back Office</span
               >
@@ -133,10 +135,24 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Ngày bắt đầu</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                personnelDetail.start_date
-              }}</span>
+              <span class="content-item__head">Vị trí</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
+              <el-input
+                v-else
+                size="medium"
+                :value="personnelDetail.full_name"
+                class="edit-input"
+              ></el-input>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid-content">
+            <div class="main-info__content-item">
+              <span class="content-item__head">Cấp bậc</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail"
+                >Develop 1</span
+              >
               <el-input
                 v-else
                 size="medium"
@@ -154,6 +170,22 @@
               <span class="content-item__head">Phân loại nhân sự</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
                 Probationary Staff
+              </span>
+              <el-input
+                v-else
+                size="medium"
+                :value="personnelDetail.full_name"
+                class="edit-input"
+              ></el-input>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid-content">
+            <div class="main-info__content-item">
+              <span class="content-item__head">Manager</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">
+                Nguyễn Thị Liên
               </span>
               <el-input
                 v-else

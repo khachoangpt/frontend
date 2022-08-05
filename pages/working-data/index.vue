@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="time-keeping__header">
-      <div class="time-keeping__header-text">Dữ liệu giờ làm</div>
+      <div class="time-keeping__header-text">
+        {{ $i18n.t('workingData.workingData') }}
+      </div>
       <div>
         <el-date-picker
           :value="monthSearch"
@@ -24,12 +26,12 @@
       </div>
     </div>
     <el-row :gutter="20">
-      <el-col :span="20">
+      <el-col :span="24">
         <el-card>
           <working-data-table />
         </el-card>
       </el-col>
-      <el-col :span="4">
+      <!-- <el-col :span="4">
         <el-card class="time-keeping__filter">
           <h3>Văn phòng</h3>
           <el-checkbox
@@ -50,7 +52,7 @@
             >{{ area.name }}</el-checkbox
           >
         </el-card>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>

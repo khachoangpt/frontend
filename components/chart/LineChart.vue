@@ -48,11 +48,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 400,
+      default: 230,
     },
     height: {
       type: Number,
-      default: 400,
+      default: 230,
     },
     cssClasses: {
       default: 'new-class',

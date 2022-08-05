@@ -1,6 +1,6 @@
 <template>
   <el-row :gutter="20">
-    <el-col :span="20">
+    <el-col :span="24">
       <div class="time-keeping__header">
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-finished custom-calendar__status-finished"></i>
@@ -98,7 +98,7 @@
         </div>
       </v-calendar>
     </el-col>
-    <el-col :span="4">
+    <!-- <el-col :span="4">
       <div class="timekeeping-check">
         <div v-if="isCheckIn" class="timekeeping-check-in-btn" @click="checkIn">
           IN
@@ -111,15 +111,11 @@
           OUT
         </div>
       </div>
-    </el-col>
+    </el-col> -->
     <el-dialog
       :title="
         $i18n.t('timekeeping.dialog.title') +
-        new Date(selectedDay.date).getDate() +
-        '-' +
-        (new Date(selectedDay.date).getMonth() + 1) +
-        '-' +
-        new Date(selectedDay.date).getFullYear()
+        format(new Date(selectedDay.date || new Date()), 'dd-MM-yyyy')
       "
       :visible.sync="dialogTimekeepingDetailVisible"
       width="30%"
@@ -127,24 +123,30 @@
     >
       <div class="dialog-timekeeping-detail__content">
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Tổng giờ làm: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.totalTime') }}
+          </el-col>
           <el-col :span="14">{{ timekeepingInDay.total_working_time }}</el-col>
         </el-row>
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Checkin lần đầu: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.firstCheckIn') }}
+          </el-col>
           <el-col v-if="selectedDay !== ''" :span="14">
             {{ selectedDay.attributes[0].customData.checkIn }}
           </el-col>
         </el-row>
         <el-row class="dialog-timekeeping-detail__row" :gutter="20">
-          <el-col :span="10"> Checkout lần cuối: </el-col>
+          <el-col :span="10">
+            {{ $i18n.t('timekeeping.dialog.lastCheckOut') }}
+          </el-col>
           <el-col v-if="selectedDay !== ''" :span="14">
             {{ selectedDay.attributes[0].customData.checkOut }}
           </el-col>
         </el-row>
       </div>
       <div class="dialog-timekeeping-detail__history-head">
-        Lịch sử checkin/checkout
+        {{ $i18n.t('timekeeping.dialog.history') }}
       </div>
       <div class="dialog-timekeeping-detail__history">
         <el-row>
@@ -192,6 +194,7 @@ export default {
   layout: 'main',
   data() {
     return {
+      format,
       dialogTimekeepingDetailVisible: false,
       selectedDay: '',
       masks: {
@@ -201,7 +204,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['id']),
+    ...mapGetters('auth', ['id', 'roles']),
     ...mapGetters('timekeeping', [
       'selectedTimeRange',
       'listEmployeeTimekeeping',
@@ -211,21 +214,20 @@ export default {
   },
 
   async mounted() {
-    const dateFormat = format(new Date(), 'yyyy-MM-dd')
-    await this.getDetailTimekeeping(dateFormat)
-    if (this.timekeepingInDay !== '') {
-      if (
-        this.timekeepingInDay.check_in_check_outs[
-          this.timekeepingInDay.check_in_check_outs.length - 1
-        ].checkout === null
-      ) {
-        this.setIsCheckIn(false)
-      }
-    }
+    // if (this.timekeepingInDay !== '') {
+    //   if (
+    //     this.timekeepingInDay.check_in_check_outs[
+    //       this.timekeepingInDay.check_in_check_outs.length - 1
+    //     ].checkout === null
+    //   ) {
+    //     await this.setIsCheckIn(false)
+    //   }
+    // }
   },
 
   methods: {
     ...mapActions('timekeeping', [
+      'getListTimekeepingPersonnel',
       'getEmployeeTimekeepingList',
       'getDetailTimekeeping',
       'checkIn',
@@ -251,7 +253,17 @@ export default {
         startDate: Date.parse(new Date(time.year, time.month - 1, 1)),
         endDate: Date.parse(new Date(time.year, time.month, 0)),
       }
-      await this.getEmployeeTimekeepingList({ date: data, employeeId: this.id })
+      if (this.roles.find((role) => role.authority === 'ROLE_MANAGER')) {
+        await this.getEmployeeTimekeepingList({
+          date: data,
+          employeeId: this.id,
+        })
+      } else if (this.roles.find((role) => role.authority === 'ROLE_USER')) {
+        await this.getListTimekeepingPersonnel({
+          date: data,
+          employeeId: this.id,
+        })
+      }
     },
   },
 }
@@ -376,7 +388,7 @@ export default {
   height: 100%;
 }
 .custom-calendar.vc-container {
-  --day-border: 1px solid #b8c2cc;
+  --day-border: 1px solid #a8abad;
   --day-border-highlight: 1px solid #b8c2cc;
   --day-width: 90px;
   --day-height: 90px;
@@ -387,7 +399,7 @@ export default {
 }
 .custom-calendar.vc-container .vc-weeks {
   padding: 0;
-  height: 80vh;
+  height: 77vh;
   grid-template-rows: 33px repeat(6, 1fr);
 }
 .custom-calendar.vc-container .vc-header {
@@ -411,7 +423,7 @@ export default {
 }
 .custom-calendar.vc-container .vc-day.weekday-1,
 .custom-calendar.vc-container .vc-day.weekday-7 {
-  background-color: #eff8ff;
+  background-color: #d4e9f8;
 }
 
 .custom-calendar.vc-container .vc-day {

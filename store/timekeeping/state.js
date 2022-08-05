@@ -16,18 +16,7 @@ export default () => ({
   listAreaFilter: [],
   totalPage: 1,
   workingDataList: [],
-  columns: [
-    {
-      label: 'Nhân viên',
-      field: 'full_name',
-      width: '150px',
-    },
-    {
-      label: 'mã',
-      field: 'employee_id',
-      width: '50px',
-    },
-  ],
+  columns: [],
   monthSearch: new Date(),
   isCheckIn: true,
 })

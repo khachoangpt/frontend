@@ -1,6 +1,15 @@
 import localeEn from 'element-ui/lib/locale/lang/en'
 
 const en = {
+  dashboard: {
+    holidayCompany: 'Company day off',
+    salaryHistory: 'Salary history',
+    month: 'Month',
+    year: 'Year',
+    salaryStructure: 'Salary structure',
+    organization: 'Organization structure',
+  },
+
   login: {
     signIn: 'Sign in',
     password: 'Password',
@@ -96,10 +105,21 @@ const en = {
       startDate: 'Start date',
       endDate: 'End date',
       workingStatus: 'Working status',
+      contractUrl: 'Current Contract',
+      phoneNumber: 'Phone Number',
+      grade: 'Grade',
+      birthDate: 'Date of Birth',
+      gender: 'Gender',
+      maritalStatus: 'Marriage Status',
+      office: 'Office',
+      workingSchedule: 'Working Schedule',
+      position: 'Position',
+      area: 'Area',
     },
   },
 
   timekeeping: {
+    workingDataOf: 'Working data of:',
     status: {
       normal: 'Normal',
       late: 'Late',
@@ -113,11 +133,22 @@ const en = {
     dialog: {
       title: 'Working data at ',
       totalTime: 'Total working time:',
+      firstCheckIn: 'First check-in:',
+      lastCheckOut: 'Last check-out:',
+      history: 'Check-in/Check-out history',
+      hour: 'hour(s)',
+      minute: 'minute(s)',
     },
     message: {
       checkInSuccess: 'Check in successfully.',
       checkOutSuccess: 'Check out successfully.',
     },
+  },
+
+  workingData: {
+    workingData: 'Working data',
+    employee: 'Employee',
+    id: 'ID',
   },
 
   salary: {

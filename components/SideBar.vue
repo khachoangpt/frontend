@@ -29,16 +29,7 @@
         <p class="avatar__role">{{ grade }}</p>
       </div>
     </el-menu-item>
-    <el-menu-item
-      v-if="
-        roles.find(
-          (role) =>
-            role.authority === 'ROLE_USER' || role.authority === 'ROLE_MANAGER'
-        )
-      "
-      class="sidebar-item"
-      :index="localePath('/')"
-    >
+    <el-menu-item class="sidebar-item" :index="localePath('/')">
       <i class="el-icon-menu sidebar-icon"></i>
       <span class="sidebar-item__text">
         {{ $i18n.t('sidebar.dashboard') }}
