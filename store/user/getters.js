@@ -34,4 +34,6 @@ export default {
   addWorkingHistoryVisible: (state) => state.addWorkingHistoryVisible,
   addRelativeDialogVisible: (state) => state.addRelativeDialogVisible,
   addEducationDialogVisible: (state) => state.addEducationDialogVisible,
+  screenLoadingAvatar: (state) => state.screenLoadingAvatar,
+  imageUrl: (state) => state.imageUrl,
 }

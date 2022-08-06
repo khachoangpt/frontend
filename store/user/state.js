@@ -144,4 +144,6 @@ export default () => ({
   addWorkingHistoryVisible: false,
   addRelativeDialogVisible: false,
   addEducationDialogVisible: false,
+  screenLoadingAvatar: false,
+  imageUrl: '',
 })

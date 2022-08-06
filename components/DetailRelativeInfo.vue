@@ -119,7 +119,7 @@
       </el-col>
     </el-row>
     <el-dialog
-      :modal="relativeInformationForm"
+      :model="relativeInformationForm"
       title="Thêm người phụ thuộc"
       :visible.sync="addRelativeDialogVisible"
       width="30%"

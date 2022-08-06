@@ -123,7 +123,6 @@ export default {
 
   async mounted() {
     await this.getTaxList(this.$route.params.employeeId)
-    console.log(this.taxList)
   },
 
   methods: {

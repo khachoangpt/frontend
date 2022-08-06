@@ -315,6 +315,15 @@ class UserApi extends User {
       }
     )
   }
+
+  updateAvatar(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/update_avatar', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

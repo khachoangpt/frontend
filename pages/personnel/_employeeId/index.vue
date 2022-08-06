@@ -24,7 +24,7 @@
             <input
               id="mediaFile"
               ref="mediaFile"
-              v-loading.fullscreen.lock="fullscreenLoading"
+              v-loading.fullscreen.lock="screenLoadingAvatar"
               element-loading-background="rgba(0, 0, 0, 0.2)"
               type="file"
               accept=".jpeg,.jpg,.png,image/jpeg,image/png"
@@ -203,8 +203,7 @@
 </template>
 
 <script>
-import { Message } from 'element-ui'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import DetailWorkInfo from '~/components/DetailWorkInfo.vue'
 import DetailMainInfo from '~/components/DetailMainInfo.vue'
 import DetailTax from '~/components/DetailTax.vue'
@@ -229,10 +228,8 @@ export default {
   layout: 'main',
   data() {
     return {
-      imageUrl: '',
       activeSubTab: 1,
       scrollPosition: null,
-      fullscreenLoading: false,
     }
   },
   computed: {
@@ -244,6 +241,8 @@ export default {
       'workingHistory',
       'relativeInfo',
       'educationInfo',
+      'screenLoadingAvatar',
+      'imageUrl',
     ]),
   },
 
@@ -266,6 +265,7 @@ export default {
   },
 
   methods: {
+    ...mapActions('user', ['updateAvatar']),
     ...mapMutations('user', [
       'setIsEditLineRelative',
       'setIsEditAdditionInfo',
@@ -275,6 +275,7 @@ export default {
       'setIsEditTaxInfo',
       'setIsEditWorkInfo',
       'setIsEditLine',
+      'setScreenLoadingAvatar',
     ]),
 
     scrollToElement(el) {
@@ -285,9 +286,6 @@ export default {
     },
     back() {
       this.$router.go(-1)
-    },
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg'
@@ -315,7 +313,7 @@ export default {
     },
 
     async selectFile(e) {
-      this.fullscreenLoading = true
+      this.setScreenLoadingAvatar(true)
       const file = e.target.files[0]
 
       /* Make sure file exists */
@@ -332,9 +330,7 @@ export default {
         uploadPreset: 'qj7y0hfx',
       })
       if (res.type === 'upload') {
-        this.fullscreenLoading = false
-        this.imageUrl = res.secure_url
-        Message.success('Đổi ảnh đại diện thành công.')
+        this.updateAvatar(res.secure_url)
       }
     },
 

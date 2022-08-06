@@ -401,4 +401,17 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async updateAvatar({ commit, state }, data) {
+    try {
+      const value = {
+        employeeId: state.personnelDetail.employee_id,
+        avatar: data,
+      }
+      console.log(value)
+      await this.$repository.user.updateAvatar(value)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

@@ -295,4 +295,12 @@ export default {
   setAddEducationDialogVisible(state, addEducationDialogVisible) {
     state.addEducationDialogVisible = addEducationDialogVisible
   },
+
+  setScreenLoadingAvatar(state, screenLoadingAvatar) {
+    state.screenLoadingAvatar = screenLoadingAvatar
+  },
+
+  setImageUrl(state, imageUrl) {
+    state.imageUrl = imageUrl
+  },
 }
