@@ -49,35 +49,22 @@
         </div>
       </el-col>
     </el-row>
-    <el-row class="main-info__content">
-      <el-col :span="8">
-        <div class="grid-content">
-          <div class="main-info__content-item">
-            <span class="content-item__head">Mã số BHXH</span>
-            <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList.insurance_id }}
-            </span>
-            <el-input
-              v-else
-              size="medium"
-              :value="taxList.insurance_id"
-              class="edit-input"
-              @input="updateInsuranceId"
-            ></el-input>
-          </div>
-        </div>
-      </el-col>
+    <el-row
+      v-for="(insurance, index) in taxList.insuranceDtos"
+      :key="'insurance' + index"
+      class="main-info__content"
+    >
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Bảo hiểm </span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList.insurance_name }}
+              {{ insurance.insuranceName }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList.insurance_name"
+              :value="insurance.insuranceName"
               class="edit-input"
               @input="updateInsuranceName"
             ></el-input>
@@ -87,14 +74,31 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Nơi đăng ký BHXH</span>
+            <span class="content-item__head">Mã số BHXH</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ taxList.address }}
+              {{ insurance.insuranceID }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="taxList.address"
+              :value="insurance.insuranceID"
+              class="edit-input"
+              @input="updateInsuranceId"
+            ></el-input>
+          </div>
+        </div>
+      </el-col>
+      <el-col :span="8">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">Nơi đăng ký BHXH</span>
+            <span v-if="isEditTaxInfo" class="content-item__detail">
+              {{ insurance.address }}
+            </span>
+            <el-input
+              v-else
+              size="medium"
+              :value="insurance.address"
               class="edit-input"
               @input="updateTaxAddress"
             ></el-input>
@@ -119,6 +123,7 @@ export default {
 
   async mounted() {
     await this.getTaxList(this.$route.params.employeeId)
+    console.log(this.taxList)
   },
 
   methods: {

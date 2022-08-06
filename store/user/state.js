@@ -140,4 +140,8 @@ export default () => ({
   fullscreenLoading: false,
   listManager: [],
   listHoliday: [],
+  workingInfo: {},
+  addWorkingHistoryVisible: false,
+  addRelativeDialogVisible: false,
+  addEducationDialogVisible: false,
 })

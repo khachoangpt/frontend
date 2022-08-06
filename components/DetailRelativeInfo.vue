@@ -13,7 +13,7 @@
           )
         "
         class="main-info-header__edit"
-        @click="centerDialogVisible = true"
+        @click="openDialog"
       >
         Thêm người phụ thuộc
       </span>
@@ -119,26 +119,45 @@
       </el-col>
     </el-row>
     <el-dialog
+      :modal="relativeInformationForm"
       title="Thêm người phụ thuộc"
-      :visible.sync="centerDialogVisible"
+      :visible.sync="addRelativeDialogVisible"
       width="30%"
       center
+      :before-close="closeDialog"
     >
-      <el-form label-position="top" class="demo-form-inline">
-        <el-form-item label="Họ và tên">
-          <el-input placeholder="Họ và tên"></el-input>
+      <el-form
+        ref="relativeInformationForm"
+        :model="relativeInformationForm"
+        :rules="rules"
+        label-position="top"
+        class="demo-form-inline"
+      >
+        <el-form-item label="Họ và tên" prop="parentName">
+          <el-input
+            v-model="relativeInformationForm.parentName"
+            placeholder="Họ và tên"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="Ngày sinh">
-          <el-date-picker type="date" placeholder="Pick a day">
-          </el-date-picker>
+        <el-form-item label="Quan hệ" prop="relative">
+          <el-input
+            v-model="relativeInformationForm.relative"
+            placeholder="Quan hệ"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="Liên hệ">
-          <el-input placeholder="Liên hệ"></el-input>
+        <el-form-item label="Liên hệ" prop="contact">
+          <el-input
+            v-model="relativeInformationForm.contact"
+            placeholder="Liên hệ"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">Đóng</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">
+        <el-button @click="closeDialog">Đóng</el-button>
+        <el-button
+          type="primary"
+          @click="submitForm('relativeInformationForm')"
+        >
           Xác nhận
         </el-button>
       </span>
@@ -152,13 +171,44 @@ export default {
   data() {
     return {
       isEditMainInfo: true,
-      centerDialogVisible: false,
+      relativeInformationForm: {
+        parentName: '',
+        relative: '',
+        contact: '',
+      },
+      rules: {
+        parentName: [
+          {
+            required: true,
+            message: 'Tên không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        relative: [
+          {
+            required: true,
+            message: 'Quan hệ không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        contact: [
+          {
+            required: true,
+            message: 'Thông tin liên hệ không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['relativeInfo', 'isEditLineRelative']),
+    ...mapGetters('user', [
+      'relativeInfo',
+      'isEditLineRelative',
+      'addRelativeDialogVisible',
+    ]),
   },
 
   async mounted() {
@@ -170,6 +220,7 @@ export default {
       'getRelativeInfo',
       'editRelativeInfo',
       'updateRelativeInfo',
+      'addRelativeInfo',
     ]),
 
     ...mapMutations('user', [
@@ -177,6 +228,7 @@ export default {
       'updateRelativeBirthDate',
       'updateRelativeContact',
       'setIsEditLineRelative',
+      'setAddRelativeDialogVisible',
     ]),
     async closeEdit() {
       this.setIsEditLineRelative('')
@@ -193,6 +245,24 @@ export default {
 
     updateRelaContact(event, index) {
       this.updateRelativeContact({ event, index })
+    },
+
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.addRelativeInfo(this.relativeInformationForm)
+        } else {
+          return false
+        }
+      })
+    },
+
+    closeDialog() {
+      this.setAddRelativeDialogVisible(false)
+    },
+
+    openDialog() {
+      this.setAddRelativeDialogVisible(true)
     },
   },
 }

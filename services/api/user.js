@@ -303,6 +303,18 @@ class UserApi extends User {
       },
     })
   }
+
+  getWorkingInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/working_info?employeeID=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

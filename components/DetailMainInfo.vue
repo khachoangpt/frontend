@@ -328,9 +328,8 @@
               placeholder="Select"
               @input="updatePersonnelMaritalStatus"
             >
-              <el-option label="Độc thân" value="Độc thân"> </el-option>
-              <el-option label="Đã có gia đình" value="Đã có gia đình">
-              </el-option>
+              <el-option label="Độc thân" value="Alone"> </el-option>
+              <el-option label="Đã có gia đình" value="Married"> </el-option>
             </el-select>
           </div>
         </div>

@@ -38,13 +38,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >10.000.000</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.final_salary
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.final_salary"
                 class="edit-input"
               ></el-input>
             </div>
@@ -54,13 +54,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lương cơ bản</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >3.000.000</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.base_salary
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.base_salary"
                 class="edit-input"
               ></el-input>
             </div>
@@ -71,12 +71,12 @@
             <div class="main-info__content-item">
               <span class="content-item__head">Ngày bắt đầu</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                personnelDetail.start_date
+                workingInfo.start_date
               }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.start_date"
                 class="edit-input"
               ></el-input>
             </div>
@@ -86,13 +86,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Lịch làm việc</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >Part Time</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.working_type
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.working_type"
                 class="edit-input"
               ></el-input>
             </div>
@@ -104,13 +104,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Văn phòng</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >Ha Noi Office</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.office
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.office"
                 class="edit-input"
               ></el-input>
             </div>
@@ -120,13 +120,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Phòng ban</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >Back Office</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.area
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.area"
                 class="edit-input"
               ></el-input>
             </div>
@@ -136,11 +136,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Vị trí</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail">IT</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.position
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.position"
                 class="edit-input"
               ></el-input>
             </div>
@@ -150,13 +152,13 @@
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">Cấp bậc</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail"
-                >Develop 1</span
-              >
+              <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                workingInfo.grade
+              }}</span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.grade"
                 class="edit-input"
               ></el-input>
             </div>
@@ -169,12 +171,12 @@
             <div class="main-info__content-item">
               <span class="content-item__head">Phân loại nhân sự</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
-                Probationary Staff
+                {{ workingInfo.employee_type }}
               </span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.employee_type"
                 class="edit-input"
               ></el-input>
             </div>
@@ -185,12 +187,28 @@
             <div class="main-info__content-item">
               <span class="content-item__head">Manager</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
-                Nguyễn Thị Liên
+                {{ workingInfo.manager_id }}
               </span>
               <el-input
                 v-else
                 size="medium"
-                :value="personnelDetail.full_name"
+                :value="workingInfo.manager_id"
+                class="edit-input"
+              ></el-input>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="6">
+          <div class="grid-content">
+            <div class="main-info__content-item">
+              <span class="content-item__head">Phân quyền</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">
+                {{ workingInfo.manager_id }}
+              </span>
+              <el-input
+                v-else
+                size="medium"
+                :value="workingInfo.manager_id"
                 class="edit-input"
               ></el-input>
             </div>
@@ -210,20 +228,20 @@ export default {
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['personnelDetail', 'isEditWorkInfo']),
+    ...mapGetters('user', ['workingInfo', 'isEditWorkInfo']),
   },
 
   async mounted() {
-    await this.getPersonnelDetail(this.$route.params.employeeId)
+    await this.getWorkingInfo(this.$route.params.employeeId)
   },
 
   methods: {
-    ...mapActions('user', ['getPersonnelDetail']),
+    ...mapActions('user', ['getWorkingInfo']),
     ...mapMutations('user', ['setIsEditWorkInfo']),
 
     async closeEdit() {
       await this.setIsEditWorkInfo(true)
-      await this.getPersonnelDetail(this.$route.params.employeeId)
+      await this.getWorkingInfo(this.$route.params.employeeId)
     },
 
     editWorkInfo() {

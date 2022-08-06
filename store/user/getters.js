@@ -30,4 +30,8 @@ export default {
   isEditWorkInfo: (state) => state.isEditWorkInfo,
   listManager: (state) => state.listManager,
   listHoliday: (state) => state.listHoliday,
+  workingInfo: (state) => state.workingInfo,
+  addWorkingHistoryVisible: (state) => state.addWorkingHistoryVisible,
+  addRelativeDialogVisible: (state) => state.addRelativeDialogVisible,
+  addEducationDialogVisible: (state) => state.addEducationDialogVisible,
 }

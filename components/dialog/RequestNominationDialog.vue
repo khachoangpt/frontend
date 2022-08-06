@@ -32,7 +32,14 @@
     >
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="Yêu cầu" prop="requestName">
+          <el-form-item
+            label="Yêu cầu"
+            :rules="{
+              required: true,
+              message: 'Yêu cầu không được để trống.',
+              trigger: 'change',
+            }"
+          >
             <el-select
               v-model="nominationForm.requestNameId"
               class="request-form__input"
@@ -155,27 +162,53 @@
         <el-col :span="12">
           <el-form-item label="Lương">
             <el-input
+              v-model="currentSalary"
               class="request-form__input"
-              value="2000"
               :disabled="true"
             ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item>
+          <el-form-item prop="salary">
             <span slot="label"><i class="el-icon-right arrow-icon"></i></span>
             <el-input
-              v-model="nominationForm.salary"
+              v-model.number="nominationForm.salary"
               class="request-form__input"
               value="IT"
-              :disabled="true"
             ></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row
+        v-if="nominationForm.requestNameId.trim() === 'Salary increment'"
+        :gutter="20"
+      >
+        <el-col :span="12">
+          <el-form-item label="Loại" prop="type">
+            <el-select
+              v-model="nominationForm.type"
+              class="request-form__input"
+              placeholder="Select"
+            >
+              <el-option
+                label="Outstanding employee"
+                value="Outstanding employee"
+              ></el-option>
+              <el-option
+                label="Excellent Account"
+                value="Excellent Account"
+              ></el-option>
+              <el-option
+                label="Best Recruiter"
+                value="Best Recruiter"
+              ></el-option>
+            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
       <el-form-item label="Ghi chú" prop="requestDescription">
         <el-input
-          v-model="nominationForm.requestDescription"
+          v-model="nominationForm.description"
           class="request-form__input-area"
           type="textarea"
           :rows="4"
@@ -205,6 +238,7 @@ export default {
     return {
       currentPosition: '',
       currentGrade: '',
+      currentSalary: '',
       nominationForm: {
         createEmployeeId: '',
         requestTypeId: '',
@@ -226,18 +260,17 @@ export default {
       },
 
       rules: {
-        requestName: [
-          {
-            required: true,
-            message: 'Yêu cầu không được để trống.',
-            trigger: 'blur',
-          },
-        ],
+        requestValidate: {
+          required: true,
+          message: 'Yêu cầu không được để trống.',
+          trigger: 'change',
+        },
+
         employeeName: [
           {
             required: true,
             message: 'Nhân viên không được để trống.',
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         requestDate: [
@@ -260,13 +293,26 @@ export default {
             message: 'Lương mong muốn không được để trống.',
             trigger: 'blur',
           },
+          { type: 'number', message: 'Nhập vào một số.' },
+        ],
+        type: [
+          {
+            required: true,
+            message: 'Loại không được để trống.',
+            trigger: 'change',
+          },
         ],
       },
     }
   },
 
   computed: {
-    ...mapGetters('user', ['personnelDetail', 'listPositions', 'listGrade']),
+    ...mapGetters('user', [
+      'personnelDetail',
+      'listPositions',
+      'listGrade',
+      'workingInfo',
+    ]),
     ...mapGetters('request', [
       'requestNominationDialogVisible',
       'listRequestName',
@@ -291,6 +337,7 @@ export default {
       'getPersonnelDetail',
       'getListPositions',
       'getListGrade',
+      'getWorkingInfo',
     ]),
     ...mapActions('request', [
       'createRequestBonus',
@@ -366,10 +413,16 @@ export default {
         const regexEmpId = /\((.+)\)/i
         const employeeId = data.value.match(regexEmpId)[1]
         await this.getPersonnelDetail(employeeId)
+        await this.getWorkingInfo(employeeId)
         this.currentPosition = this.personnelDetail.position_name
         this.currentGrade = this.personnelDetail.grade
+        this.currentSalary = new Intl.NumberFormat('vi-VN', {
+          style: 'currency',
+          currency: 'VND',
+        }).format(this.workingInfo.final_salary)
         this.setSearchEmployeeText(data.value)
       } else {
+        this.currentSalary = ''
         this.currentPosition = ''
         this.currentGrade = ''
         this.setSearchEmployeeText('')

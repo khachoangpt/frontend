@@ -253,17 +253,10 @@ export default {
         startDate: Date.parse(new Date(time.year, time.month - 1, 1)),
         endDate: Date.parse(new Date(time.year, time.month, 0)),
       }
-      if (this.roles.find((role) => role.authority === 'ROLE_MANAGER')) {
-        await this.getEmployeeTimekeepingList({
-          date: data,
-          employeeId: this.id,
-        })
-      } else if (this.roles.find((role) => role.authority === 'ROLE_USER')) {
-        await this.getListTimekeepingPersonnel({
-          date: data,
-          employeeId: this.id,
-        })
-      }
+      await this.getListTimekeepingPersonnel({
+        date: data,
+        employeeId: this.id,
+      })
     },
   },
 }

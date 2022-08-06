@@ -11,7 +11,7 @@
           )
         "
         class="main-info-header__edit"
-        @click="centerDialogVisible = true"
+        @click="openDialog"
       >
         Thêm thông tin học vấn
       </span>
@@ -123,16 +123,27 @@
     </el-row>
     <el-dialog
       title="Thêm thông tin học vấn"
-      :visible.sync="centerDialogVisible"
+      :visible.sync="addEducationDialogVisible"
       width="30%"
       center
+      :before-close="closeDialog"
     >
-      <el-form label-position="top" class="demo-form-inline">
+      <el-form
+        ref="educationForm"
+        :model="educationForm"
+        :rules="rules"
+        label-position="top"
+        class="demo-form-inline"
+      >
         <el-form-item label="Trường học">
-          <el-input placeholder="Trường học"></el-input>
+          <el-input
+            v-model="educationForm.school"
+            placeholder="Trường học"
+          ></el-input>
         </el-form-item>
         <el-form-item label="Khoảng thời gian">
           <el-date-picker
+            v-model="educationForm.date"
             type="daterange"
             range-separator="To"
             start-placeholder="Start date"
@@ -141,12 +152,15 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="Bằng cấp">
-          <el-input placeholder="Bằng cấp"></el-input>
+          <el-input
+            v-model="educationForm.certificate"
+            placeholder="Bằng cấp"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">Đóng</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false"
+        <el-button @click="closeDialog">Đóng</el-button>
+        <el-button type="primary" @click="submitForm('educationForm')"
           >Xác nhận</el-button
         >
       </span>
@@ -159,14 +173,44 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      isEditMainInfo: true,
-      centerDialogVisible: false,
+      educationForm: {
+        school: '',
+        certificate: '',
+        date: '',
+      },
+      rules: {
+        school: [
+          {
+            required: true,
+            message: 'Trường học không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        certificate: [
+          {
+            required: true,
+            message: 'Bằng cấp không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        date: [
+          {
+            required: true,
+            message: 'Thời gian không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['educationInfo', 'isEditLineEducation']),
+    ...mapGetters('user', [
+      'educationInfo',
+      'isEditLineEducation',
+      'addEducationDialogVisible',
+    ]),
   },
 
   async mounted() {
@@ -174,12 +218,17 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getEducationInfo', 'updateEducationInfo']),
+    ...mapActions('user', [
+      'getEducationInfo',
+      'updateEducationInfo',
+      'addEducationInfo',
+    ]),
     ...mapMutations('user', [
       'updateEducationDate',
       'updateEducationCertificate',
       'updateEducationNameSchool',
       'setIsEditLineEducation',
+      'setAddEducationDialogVisible',
     ]),
     async closeEdit() {
       this.setIsEditLineEducation('')
@@ -196,6 +245,24 @@ export default {
 
     updateEduCertificate(event, index) {
       this.updateEducationCertificate({ event, index })
+    },
+
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.addEducationInfo(this.educationForm)
+        } else {
+          return false
+        }
+      })
+    },
+
+    closeDialog() {
+      this.setAddEducationDialogVisible(false)
+    },
+
+    openDialog() {
+      this.setAddEducationDialogVisible(true)
     },
   },
 }

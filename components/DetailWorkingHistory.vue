@@ -11,7 +11,7 @@
           )
         "
         class="main-info-header__edit"
-        @click="centerDialogVisible = true"
+        @click="openDialog"
       >
         Thêm lịch sử làm việc
       </span>
@@ -114,19 +114,32 @@
     </el-row>
     <el-dialog
       title="Thêm lịch sử làm việc"
-      :visible.sync="centerDialogVisible"
+      :visible.sync="addWorkingHistoryVisible"
       width="30%"
       center
+      :before-close="closeDialog"
     >
-      <el-form class="demo-form-inline">
-        <el-form-item label="Công ty">
-          <el-input placeholder="Công ty"></el-input>
+      <el-form
+        ref="workingInformationForm"
+        :model="workingInformationForm"
+        :rules="rules"
+        class="demo-form-inline"
+      >
+        <el-form-item label="Công ty" prop="company">
+          <el-input
+            v-model="workingInformationForm.company"
+            placeholder="Công ty"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="Vị trí">
-          <el-input placeholder="Vị trí"></el-input>
+        <el-form-item label="Vị trí" prop="position">
+          <el-input
+            v-model="workingInformationForm.position"
+            placeholder="Vị trí"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="Khoảng thời gian">
+        <el-form-item label="Khoảng thời gian" prop="date">
           <el-date-picker
+            v-model="workingInformationForm.date"
             type="daterange"
             range-separator="To"
             start-placeholder="Start date"
@@ -136,10 +149,10 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">Đóng</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false"
-          >Xác nhận</el-button
-        >
+        <el-button @click="closeDialog">Đóng</el-button>
+        <el-button type="primary" @click="submitForm('workingInformationForm')">
+          Xác nhận
+        </el-button>
       </span>
     </el-dialog>
   </div>
@@ -150,13 +163,44 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      centerDialogVisible: false,
+      workingInformationForm: {
+        company: '',
+        position: '',
+        date: '',
+      },
+      rules: {
+        company: [
+          {
+            required: true,
+            message: 'Tên công ty không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        position: [
+          {
+            required: true,
+            message: 'Vị trí không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+        date: [
+          {
+            required: true,
+            message: 'Thời gian không được để trống.',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['workingHistory', 'isEditLine']),
+    ...mapGetters('user', [
+      'workingHistory',
+      'isEditLine',
+      'addWorkingHistoryVisible',
+    ]),
   },
 
   async mounted() {
@@ -164,12 +208,17 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getWorkingHistory', 'updateWorkingHistory']),
+    ...mapActions('user', [
+      'getWorkingHistory',
+      'updateWorkingHistory',
+      'addWorkingHistory',
+    ]),
     ...mapMutations('user', [
       'updateWorkingHistoryCompanyName',
       'updateWorkingHistoryPosition',
       'updateWorkingHistoryDate',
       'setIsEditLine',
+      'setAddWorkingHistoryVisible',
     ]),
 
     async closeEdit() {
@@ -187,6 +236,24 @@ export default {
 
     updateWorkingHistoryDateMethod(event, index) {
       this.updateWorkingHistoryDate({ event, index })
+    },
+
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.addWorkingHistory(this.workingInformationForm)
+        } else {
+          return false
+        }
+      })
+    },
+
+    closeDialog() {
+      this.setAddWorkingHistoryVisible(false)
+    },
+
+    openDialog() {
+      this.setAddWorkingHistoryVisible(true)
     },
   },
 }

@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import { format } from 'date-fns'
 import { ERequestStatus, ERequestType } from '~/constants/enums'
 
 export default {
@@ -389,26 +390,21 @@ export default {
     form
   ) {
     try {
+      const regexEmp = /(.+)\((.+)\)/i
+      const employeeId = form.employeeName.match(regexEmp)[2]
+      const employeeName = form.employeeName.match(regexEmp)[1]
       const data = {
         createEmployeeId: rootState.auth.id,
-        requestTypeId: state.currentRequestTypeId,
-        requestNameId: state.currentRequestNameId,
-        description: form.requestDescription,
-        employeeId: rootState.auth.id,
-        employeeName: rootState.auth.name,
-        date:
-          form.requestDate.getFullYear() +
-          '-' +
-          (form.requestDate.getMonth() + 1 < 10
-            ? '0' + (form.requestDate.getMonth() + 1)
-            : form.requestDate.getMonth() + 1) +
-          '-' +
-          (form.requestDate.getDate() < 10
-            ? '0' + form.requestDate.getDate()
-            : form.requestDate.getDate()),
+        requestTypeId: String(state.currentRequestTypeId),
+        requestNameId: String(state.currentRequestNameId),
+        description: form.description,
+        employeeId,
+        employeeName,
+        date: format(form.requestDate, 'yyyy-MM-dd'),
         currentTitle: 'DEV 1',
         currentArea: 'IT',
-        value: form.bonusValue,
+        value: String(form.salary),
+        type: form.type,
       }
       const res = await this.$repository.request.createRequest(data)
       if (res.code === 202) {

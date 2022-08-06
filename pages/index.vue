@@ -115,7 +115,13 @@
           </el-card>
         </div>
       </el-col>
-      <el-col class="dashboard__col" :lg="16" :md="12" :sm="24" :xs="24">
+      <el-col
+        class="dashboard__col"
+        :lg="roles.find((role) => role.authority === 'ROLE_ADMIN') ? 18 : 16"
+        :md="12"
+        :sm="24"
+        :xs="24"
+      >
         <div class="grid-content bg-purple">
           <el-card class="box-card organization-chart">
             <div slot="header" class="clearfix">

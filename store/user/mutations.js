@@ -279,4 +279,20 @@ export default {
   setListHoliday(state, listHoliday) {
     state.listHoliday = listHoliday
   },
+
+  setWorkingInfo(state, workingInfo) {
+    state.workingInfo = workingInfo
+  },
+
+  setAddWorkingHistoryVisible(state, addWorkingHistoryVisible) {
+    state.addWorkingHistoryVisible = addWorkingHistoryVisible
+  },
+
+  setAddRelativeDialogVisible(state, addRelativeDialogVisible) {
+    state.addRelativeDialogVisible = addRelativeDialogVisible
+  },
+
+  setAddEducationDialogVisible(state, addEducationDialogVisible) {
+    state.addEducationDialogVisible = addEducationDialogVisible
+  },
 }

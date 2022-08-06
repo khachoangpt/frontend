@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import { format } from 'date-fns'
 
 export default {
   async getPersonnelList({ commit }, data) {
@@ -11,6 +12,9 @@ export default {
     try {
       const regexEmpId = /\((.+)\)/i
       data.managerId = data.managerId.match(regexEmpId)[1]
+      data.birthDate = format(data.birthDate, 'yyyy-MM-dd')
+      data.startDate = format(data.startDate, 'yyyy-MM-dd')
+      data.endDate = format(data.endDate, 'yyyy-MM-dd')
       const res = await this.$repository.user.addEmployee(data)
       if (res.code === 201) {
         Message.success('Thêm nhân viên mới thành công.')
@@ -155,10 +159,13 @@ export default {
           state.personnelDetail.working_status === true
             ? 1
             : 0,
-        avatar: state.personnelDetail.avatar,
+        avatar:
+          state.personnelDetail.avatar === null
+            ? ''
+            : state.personnelDetail.avatar,
         working_contract_id: state.personnelDetail.working_contract_id,
-        company_name: state.personnelDetail.company_name,
         start_date: state.personnelDetail.start_date,
+        end_date: state.personnelDetail.end_date,
         contract_url: state.personnelDetail.contract_url,
         area_id: state.listArea.find(
           (area) => area.name === state.personnelDetail.area_name
@@ -229,6 +236,32 @@ export default {
     }
   },
 
+  async addWorkingHistory({ commit, state }, data) {
+    try {
+      const workingHistory = {
+        employeeId: state.personnelDetail.employee_id,
+        companyName: data.company,
+        position: data.position,
+        startDate: format(data.date[0], 'yyyy-MM-dd'),
+        endDate: format(data.date[1], 'yyyy-MM-dd'),
+      }
+      const res = await this.$repository.user.updateWorkingHistory(
+        workingHistory
+      )
+      if (res.code === 202) {
+        Message.success('Thêm lịch sử làm việc thành công.')
+        const res = await this.$repository.user.getWorkingHistory(
+          state.personnelDetail.employee_id
+        )
+        await commit('setWorkingHistory', res)
+        await commit('setIsEditLine', '')
+        await commit('setAddWorkingHistoryVisible', false)
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
   async updateRelativeInfo({ commit, state }, index) {
     try {
       const relativeInfo = {
@@ -254,6 +287,8 @@ export default {
     }
   },
 
+  async addRelativeInfo({ commit, state }, data) {},
+
   async updateEducationInfo({ commit, state }, index) {
     try {
       const educationInfo = {
@@ -273,6 +308,33 @@ export default {
         )
         await commit('setEducationInfo', res)
         await commit('setIsEditLineEducation', '')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async addEducationInfo({ commit, state }, data) {
+    try {
+      const workingHistory = {
+        employeeId: state.personnelDetail.employee_id,
+        nameSchool: data.school,
+        certificate: data.certificate,
+        startDate: format(data.date[0], 'yyyy-MM-dd'),
+        endDate: format(data.date[1], 'yyyy-MM-dd'),
+        status: 'End',
+      }
+      const res = await this.$repository.user.updateEducationInfo(
+        workingHistory
+      )
+      if (res.code === 202) {
+        Message.success('Thêm thông tin học vấn thành công.')
+        const res = await this.$repository.user.getEducationInfo(
+          state.personnelDetail.employee_id
+        )
+        await commit('setEducationInfo', res)
+        await commit('setIsEditLine', '')
+        await commit('setAddEducationDialogVisible', false)
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -326,6 +388,15 @@ export default {
         result.push(new Date(Date.parse(res[i])))
       }
       await commit('setListHoliday', result)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getWorkingInfo({ commit }, data) {
+    try {
+      const res = await this.$repository.user.getWorkingInfo(data)
+      await commit('setWorkingInfo', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }
