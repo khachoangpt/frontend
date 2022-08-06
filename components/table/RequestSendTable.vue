@@ -124,6 +124,14 @@
             </el-tag>
           </div>
         </el-col>
+        <el-col
+          v-if="requestSendDetail.request_status === 'REJECTED'"
+          :span="10"
+        >
+          <span class="reject-reason" @click="getRejectReason"
+            >Xem lý do từ chối</span
+          >
+        </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
@@ -202,6 +210,19 @@ export default {
         this.requestSendDetail.application_request_id
       )
       this.setDetailRequestVisible(false)
+    },
+
+    async getRejectReason() {
+      let reason = ''
+      if (this.requestSendDetail.comment === null) {
+        reason = 'Không có lý do'
+      } else {
+        reason = this.requestSendDetail.comment
+      }
+      await this.$alert(reason, 'Lý do từ chối', {
+        confirmButtonText: 'OK',
+        callback: (action) => {},
+      })
     },
   },
 }

@@ -93,4 +93,5 @@ export default () => ({
   detailRequestReceiveVisible: false,
   listRequestId: [],
   dayOffRemaining: 0,
+  chooseManagerDialogVisible: false,
 })

@@ -217,6 +217,15 @@ class UserApi extends Request {
       }
     )
   }
+
+  reviewedRequest(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/update_checked_application_request', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

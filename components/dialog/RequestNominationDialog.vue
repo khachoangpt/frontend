@@ -450,11 +450,6 @@ export default {
   margin-top: 16px;
 }
 
-.request-dialog__title {
-  font-size: 20px;
-  font-weight: 600;
-}
-
 .form-with-arrow {
   display: flex;
   align-items: center;

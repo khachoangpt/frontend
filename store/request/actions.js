@@ -312,7 +312,10 @@ export default {
         createEmployeeId: rootState.auth.id,
         requestTypeId: state.currentRequestTypeId,
         requestNameId: state.currentRequestNameId,
-        description: form.requestDescription,
+        description:
+          form.requestDescription === ''
+            ? 'Description'
+            : form.requestDescription,
         startDate:
           form.requestDateRange[0].getFullYear() +
           '-' +
@@ -401,8 +404,8 @@ export default {
         employeeId,
         employeeName,
         date: format(form.requestDate, 'yyyy-MM-dd'),
-        currentTitle: 'DEV 1',
-        currentArea: 'IT',
+        currentTitle: rootState.user.position,
+        currentArea: rootState.user.grade,
         value: String(form.salary),
         type: form.type,
       }
@@ -544,6 +547,24 @@ export default {
     try {
       const res = await this.$repository.request.getPaidLeaveRemaining(data)
       await commit('setDayOffRemaining', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async reviewedRequest({ commit }, data) {
+    try {
+      const regexEmpId = /\((.+)\)/i
+      const employeeId = data.chooseManager.match(regexEmpId)[1]
+      const params = {
+        applicationRequestId: String(data.selectedRequest),
+        requestStatus: 'PENDING',
+        approverId: employeeId,
+      }
+      await this.$repository.request.reviewedRequest(params)
+      await commit('setChooseManagerDialogVisible', false)
+      await commit('setDetailRequestReceiveVisible', false)
+      Message.success('Chuyển tiếp thành công.')
     } catch (error) {
       Message.error(error.response.data.message)
     }

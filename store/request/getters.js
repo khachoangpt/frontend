@@ -34,4 +34,5 @@ export default {
   listRequestId: (state) => state.listRequestId,
   currentRequestReasonId: (state) => state.currentRequestReasonId,
   dayOffRemaining: (state) => state.dayOffRemaining,
+  chooseManagerDialogVisible: (state) => state.chooseManagerDialogVisible,
 }

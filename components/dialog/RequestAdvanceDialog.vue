@@ -193,9 +193,4 @@ export default {
 .request-form__input-area {
   width: 100%;
 }
-
-.request-dialog__title {
-  font-size: 20px;
-  font-weight: 600;
-}
 </style>

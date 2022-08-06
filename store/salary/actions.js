@@ -87,7 +87,7 @@ export default {
         const date = new Date(
           Date.parse(res.salaryMonthlyResponses[i].startDate)
         )
-        res.salaryMonthlyResponses[i].month = date.getMonth() + 1
+        res.salaryMonthlyResponses[i].month = String(date.getMonth() + 1)
         salaryHistoryList.push(res.salaryMonthlyResponses[i])
       }
       await commit('setSalaryHistoryList', salaryHistoryList)
@@ -273,7 +273,7 @@ export default {
       for (let i = 0; i < res.length; i++) {
         result.push({ value: res[i].name + ' (' + res[i].employeeID + ')' })
       }
-      await commit('user/setListManager', result, {root: true})
+      await commit('user/setListManager', result, { root: true })
       await commit('setListManagerLowerOfArea', result)
     } catch (error) {
       Message.error(error.response.data.message)

@@ -104,9 +104,7 @@
             :columns="salaryHistoryListHeader"
             :rows="salaryHistoryList"
             :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-            sort-options="{
-          enabled: true,
-        }"
+            :sort-options="{enabled: true}"
             @on-row-dblclick="onRowDoubleClick"
             @on-selected-rows-change="onSelectedRowsChange"
           >
@@ -203,9 +201,9 @@
       ></el-autocomplete>
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeDialog">Đóng</el-button>
-        <el-button size="small" type="primary" @click="submitCheckSalary"
-          >Xác nhận</el-button
-        >
+        <el-button size="small" type="primary" @click="submitCheckSalary">
+          Xác nhận
+        </el-button>
       </span>
     </el-dialog>
   </div>

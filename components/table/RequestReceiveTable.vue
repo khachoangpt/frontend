@@ -117,6 +117,14 @@
             </el-tag>
           </div>
         </el-col>
+        <el-col
+          v-if="requestReceiveDetail.request_status === 'REJECTED'"
+          :span="10"
+        >
+          <span class="reject-reason" @click="getRejectReason"
+            >Xem lý do từ chối</span
+          >
+        </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
@@ -127,18 +135,46 @@
           ></div>
         </el-col>
       </el-row>
-      <span v-if="isAction" slot="footer" class="dialog-footer">
+      <span v-if="isAction && isChecked" slot="footer" class="dialog-footer">
         <el-button v-if="isEnoughLevel" type="success" @click="approveRequest">
           Chấp nhận
         </el-button>
         <el-button
           v-if="!isEnoughLevel"
           type="primary"
-          @click="reviewedRequest"
+          @click="openChooseManagerDialog"
         >
           Chuyển tiếp
         </el-button>
         <el-button type="danger" @click="open"> Từ chối </el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      top="40vh"
+      title="Chuyển tiếp"
+      class="request-dialog__choose-manager"
+      :visible.sync="chooseManagerDialogVisible"
+      width="24%"
+      :before-close="closeChooseManagerDialog"
+    >
+      <el-form label-position="top">
+        <el-form-item label="Chọn người muốn chuyển tiếp:" la>
+          <el-autocomplete
+            v-model="chooseManager"
+            :clearable="true"
+            placeholder="Tên quản lý"
+            :fetch-suggestions="querySearchManager"
+          ></el-autocomplete>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="closeChooseManagerDialog">Đóng</el-button>
+        <el-button
+          type="primary"
+          @click="reviewedRequest({ chooseManager, selectedRequest })"
+        >
+          Xác nhận
+        </el-button>
       </span>
     </el-dialog>
   </div>
@@ -150,12 +186,16 @@ export default {
   name: 'RequestReceiveTable',
   data() {
     return {
+      isChecked: true,
+      selectedRequest: '',
+      chooseManager: '',
       isAction: true,
-      isEnoughLevel: true,
+      isEnoughLevel: '',
     }
   },
 
   computed: {
+    ...mapGetters('auth', ['id']),
     ...mapGetters('request', [
       'requestTableHeader',
       'requestListReceive',
@@ -163,7 +203,9 @@ export default {
       'requestListSelected',
       'requestReceiveDetail',
       'detailRequestReceiveVisible',
+      'chooseManagerDialogVisible',
     ]),
+    ...mapGetters('salary', ['listManagerOfArea', 'searchManagerText']),
   },
 
   methods: {
@@ -172,14 +214,18 @@ export default {
       'getDetailReceiveRequest',
       'updateRejectRequest',
       'updateApproveRequest',
+      'reviewedRequest',
     ]),
+    ...mapActions('salary', ['getManagerOfArea']),
     ...mapMutations('request', [
       'setRequestListSelected',
       'setDetailRequestReceiveVisible',
       'setListRequestId',
+      'setChooseManagerDialogVisible',
     ]),
 
-    onRowDoubleClick(data) {
+    async onRowDoubleClick(data) {
+      this.selectedRequest = data.row.application_request_id
       if (data.row.is_enough_level === 'True') {
         this.isEnoughLevel = true
       } else {
@@ -190,8 +236,11 @@ export default {
       } else {
         this.isAction = false
       }
-      this.setDetailRequestReceiveVisible(true)
-      this.getDetailReceiveRequest(data.row.application_request_id)
+      await this.setDetailRequestReceiveVisible(true)
+      await this.getDetailReceiveRequest(data.row.application_request_id)
+      if (this.requestReceiveDetail.checked_by.includes(this.id)) {
+        this.isChecked = false
+      }
     },
 
     onSelectedRowsChange() {
@@ -211,14 +260,21 @@ export default {
       this.setDetailRequestReceiveVisible(false)
     },
 
+    closeChooseManagerDialog() {
+      this.setChooseManagerDialogVisible(false)
+    },
+
+    async openChooseManagerDialog() {
+      await this.getManagerOfArea()
+      await this.setChooseManagerDialogVisible(true)
+    },
+
     async approveRequest() {
       await this.updateApproveRequest(
         this.requestReceiveDetail.application_request_id
       )
       this.setDetailRequestReceiveVisible(false)
     },
-
-    reviewedRequest() {},
 
     open() {
       this.$prompt('Nhập lý do từ chối', 'Tip', {
@@ -238,6 +294,32 @@ export default {
             message: 'Input canceled',
           })
         })
+    },
+
+    querySearchManager(queryString, cb) {
+      const results = queryString
+        ? this.listManagerOfArea.filter(this.createFilter(queryString))
+        : this.listManagerOfArea
+      cb(results)
+    },
+
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
+    async getRejectReason() {
+      let reason = ''
+      if (this.requestReceiveDetail.comment === null) {
+        reason = 'Không có lý do'
+      } else {
+        reason = this.requestReceiveDetail.comment
+      }
+      await this.$alert(reason, 'Lý do từ chối', {
+        confirmButtonText: 'OK',
+        callback: (action) => {},
+      })
     },
   },
 }
@@ -293,5 +375,19 @@ export default {
 
 .request-detail-dialog__tag {
   margin-left: 8px;
+}
+
+.request-dialog__choose-manager .el-dialog__body {
+  padding: 0 20px !important;
+}
+
+.reject-reason {
+  color: #f56c6c;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.reject-reason:hover {
+  color: #f42b2b;
 }
 </style>

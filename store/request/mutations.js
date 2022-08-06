@@ -129,4 +129,8 @@ export default {
   setDayOffRemaining(state, dayOffRemaining) {
     state.dayOffRemaining = dayOffRemaining
   },
+
+  setChooseManagerDialogVisible(state, chooseManagerDialogVisible) {
+    state.chooseManagerDialogVisible = chooseManagerDialogVisible
+  },
 }
