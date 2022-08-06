@@ -167,7 +167,7 @@ export default {
         date: new Date(),
         employeeById: '',
       },
-      salaryStructureDate: new Date(2022, 5, 1),
+      salaryStructureDate: new Date(),
       salaryStructureEmployeeById: '',
     }
   },
@@ -181,7 +181,7 @@ export default {
     ]),
     employeeByIdOptions() {
       return [
-        { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
+        // { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
         ...this.employeeById.map(({ employeeID, name }) => ({
           value: employeeID,
           label: `${name} - ${employeeID}`,

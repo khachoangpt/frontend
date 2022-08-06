@@ -63,7 +63,17 @@ export default {
     },
     backgroundColor: {
       type: Array,
-      default: () => ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+      default: () => [
+        '#278ecf',
+        '#4bd762',
+        '#d42ae8',
+        '#ffca1f',
+        '#535ad7',
+        '#ff602c',
+        '#ff9416',
+        '#83bfff',
+        '#6edb8f',
+      ],
     },
     values: {
       type: Array,

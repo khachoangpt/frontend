@@ -1,42 +1,44 @@
 <template>
   <div class="container">
-    <VueTree
-      style="width: 100%; height: 500px"
-      :dataset="vehicules"
-      :config="treeConfig"
-      direction="vertical"
-      link-style="straight"
-    >
-      <template v-slot:node="{ node, collapsed }">
-        <div
-          v-if="!node.true"
-          class="rich-media-node"
-          :style="{ border: collapsed ? '2px solid grey' : '' }"
-        >
-          <span class="department">
-            {{ node.title }}
-          </span>
-          <div class="wrap-info">
-            <img
-              v-if="node.avatar"
-              :src="node.avatar"
-              alt="image"
-              class="avartar"
-            />
-            <el-avatar
-              v-else
-              class="avartar"
-              size="10"
-              icon="el-icon-user-solid"
-            ></el-avatar>
-            <span class="name">{{ node.name }}</span>
+    <v-zoomer>
+      <VueTree
+        style="width: 100%; height: 500px"
+        :dataset="vehicules"
+        :config="treeConfig"
+        direction="vertical"
+        link-style="straight"
+      >
+        <template #node="{ node, collapsed }">
+          <div
+            v-if="!node.true"
+            class="rich-media-node"
+            :style="{ border: collapsed ? '2px solid grey' : '' }"
+          >
+            <span class="department">
+              {{ node.title }}
+            </span>
+            <div class="wrap-info">
+              <img
+                v-if="node.avatar"
+                :src="node.avatar"
+                alt="image"
+                class="avartar"
+              />
+              <el-avatar
+                v-else
+                class="avartar"
+                size="10"
+                icon="el-icon-user-solid"
+              ></el-avatar>
+              <span class="name">{{ node.name }}</span>
+            </div>
           </div>
-        </div>
-        <div v-else class="rich-media-node">
-          <span class="title">{{ node.name }}</span>
-        </div>
-      </template>
-    </VueTree>
+          <div v-else class="rich-media-node">
+            <span class="title">{{ node.name }}</span>
+          </div>
+        </template>
+      </VueTree>
+    </v-zoomer>
   </div>
 </template>
 <script>
@@ -54,7 +56,7 @@ export default {
         children: [],
         identifier: 'employeeID',
       },
-      treeConfig: { nodeWidth: 200, nodeHeight: 80, levelHeight: 200 },
+      treeConfig: { nodeWidth: 130, nodeHeight: 50, levelHeight: 100 },
     }
   },
   computed: {
@@ -86,9 +88,8 @@ export default {
 }
 
 .rich-media-node {
-  width: 200px;
-  max-width: 500px;
-  height: 80px;
+  width: 130px;
+  height: 50px;
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -97,6 +98,7 @@ export default {
   background-color: #ffffff;
   border-radius: 4px;
   margin: 4px;
+  font-size: 11px;
 }
 .department {
   font-weight: bold;
@@ -105,14 +107,14 @@ export default {
 .wrap-info {
   color: #303131;
   margin-top: 4px;
-  font-size: 15px;
+  font-size: 10px;
   display: flex;
   justify-content: center;
 }
 .avartar {
   display: block;
-  height: 20px;
-  width: 20px;
+  height: 10px;
+  width: 10px;
   margin-right: 8px;
 }
 
@@ -121,5 +123,19 @@ export default {
   display: table;
   font-size: 21px;
   font-weight: bold;
+}
+
+.vue-zoomer {
+  width: 100%;
+}
+</style>
+<style>
+.dom-container {
+  margin-top: 150px;
+  margin-left: 50px;
+}
+.vue-tree {
+  margin-top: 150px;
+  margin-left: 50px;
 }
 </style>

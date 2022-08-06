@@ -36,6 +36,7 @@ export default {
     '@/plugins/vue-good-table',
     '@/plugins/repository',
     '@/plugins/v-calendar',
+    '@/plugins/vue-zoomer',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
