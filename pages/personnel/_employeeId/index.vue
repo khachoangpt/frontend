@@ -13,7 +13,7 @@
               <div
                 class="detail-basic__avatar"
                 :style="{
-                  backgroundImage: 'url(' + imageUrl + ')',
+                  backgroundImage: 'url(' + avatar + ')',
                 }"
                 @click="clickAvatar"
               >
@@ -233,6 +233,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('auth', [
+      'avatar',
+    ]),
     ...mapGetters('user', [
       'taxList',
       'personnelDetail',
