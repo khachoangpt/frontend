@@ -178,7 +178,7 @@ class UserApi extends Policy {
   getHistorySalary(type, date, employeeId) {
     const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
     let url = `/api/get_salary_history_chart?type=${type}&employeeId=${employeeId}`
-    if (type === 'yearly') {
+    if (type === 'monthly') {
       url = url + `&date=${dateFormat}`
     }
     return this.$axios.$get(url, {
