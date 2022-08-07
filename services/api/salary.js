@@ -177,14 +177,15 @@ class UserApi extends Policy {
 
   getHistorySalary(type, date, employeeId) {
     const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
-    return this.$axios.$get(
-      `/api/get_salary_history_chart?type=${type}&date=${dateFormat}&employeeId=${employeeId}`,
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    let url = `/api/get_salary_history_chart?type=${type}&employeeId=${employeeId}`
+    if (type === 'yearly') {
+      url = url + `&date=${dateFormat}`
+    }
+    return this.$axios.$get(url, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   getSalaryStructure(date, employeeId) {

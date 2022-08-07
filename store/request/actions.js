@@ -357,7 +357,7 @@ export default {
         createEmployeeId: rootState.auth.id,
         requestTypeId: state.currentRequestTypeId,
         requestNameId: state.currentRequestNameId,
-        description: form.requestDescription,
+        description: form.description,
         employeeId: rootState.auth.id,
         employeeName: rootState.auth.name,
         date:
@@ -372,7 +372,7 @@ export default {
             : form.requestDate.getDate()),
         currentTitle: 'DEV 1',
         currentArea: 'IT',
-        currentOffice: 'HaNoi',
+        type: 'Yearly Bonus',
         value: form.bonusValue,
       }
       const res = await this.$repository.request.createRequest(data)
@@ -404,8 +404,8 @@ export default {
         employeeId,
         employeeName,
         date: format(form.requestDate, 'yyyy-MM-dd'),
-        currentTitle: rootState.user.position,
-        currentArea: rootState.user.grade,
+        currentTitle: 'DEV 1',
+        currentArea: 'IT',
         value: String(form.salary),
         type: form.type,
       }
