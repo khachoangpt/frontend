@@ -258,13 +258,6 @@ export default {
     await this.setIsEditTaxInfo(true)
     await this.setIsEditWorkInfo(true)
     await this.setIsEditLine('')
-    document
-      .getElementById('detail-right')
-      .addEventListener('scroll', this.updateScroll)
-  },
-
-  destroy() {
-    window.removeEventListener('scroll', this.updateScroll)
   },
 
   methods: {
@@ -301,18 +294,6 @@ export default {
         this.$message.error('Avatar picture size can not exceed 2MB!')
       }
       return isJPG && isLt2M
-    },
-
-    updateScroll(evt) {
-      if (evt.target.scrollTop > 0 && evt.target.scrollTop <= 529) {
-        this.activeSubTab = 1
-      }
-      if (
-        evt.target.scrollTop > 529 &&
-        evt.target.scrollTop <= 889.5999755859375
-      ) {
-        this.activeSubTab = 2
-      }
     },
 
     async selectFile(e) {
