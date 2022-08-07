@@ -5,15 +5,15 @@ const startDate = new Date(year, month + 1, 1)
 const endDate = new Date(year, month + 1, 0)
 
 export default () => ({
-  monthSearch: '',
+  monthSearch: new Date(year, month - 1, 1),
   yearSearch: new Date(),
   selectedTimeRange: {
     startDate:
       startDate.getFullYear() +
       '-' +
-      (startDate.getMonth() < 10
-        ? '0' + startDate.getMonth()
-        : startDate.getMonth()) +
+      (startDate.getMonth() - 1 < 10
+        ? '0' + startDate.getMonth() - 1
+        : startDate.getMonth() - 1) +
       '-' +
       (startDate.getDate() < 10
         ? '0' + startDate.getDate()
@@ -21,9 +21,9 @@ export default () => ({
     endDate:
       endDate.getFullYear() +
       '-' +
-      (endDate.getMonth() + 1 < 10
-        ? '0' + (endDate.getMonth() + 1)
-        : endDate.getMonth() + 1) +
+      (endDate.getMonth() < 10
+        ? '0' + endDate.getMonth()
+        : endDate.getMonth()) +
       '-' +
       (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()),
   },

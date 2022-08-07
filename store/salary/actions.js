@@ -87,7 +87,10 @@ export default {
         const date = new Date(
           Date.parse(res.salaryMonthlyResponses[i].startDate)
         )
-        res.salaryMonthlyResponses[i].month = String(date.getMonth() + 1)
+        res.salaryMonthlyResponses[i].month =
+          date.getMonth() + 1 < 10
+            ? '0' + String(date.getMonth() + 1)
+            : String(date.getMonth() + 1)
         salaryHistoryList.push(res.salaryMonthlyResponses[i])
       }
       await commit('setSalaryHistoryList', salaryHistoryList)
@@ -109,9 +112,16 @@ export default {
     }
   },
 
-  async exportSalary({ state }) {
+  async exportSalary({ state }, activeName) {
     try {
-      let res = await this.$repository.salary.exportSalary(state.listSalaryId)
+      let res = []
+      if (activeName === 'second') {
+        res = await this.$repository.salary.exportSalary(state.listSalaryId)
+      } else {
+        res = await this.$repository.salary.exportSalaryPersonnel(
+          state.listSalaryId
+        )
+      }
       if (!res.match(/^data:text\/csv/i)) {
         res = 'data:text/csv;charset=utf-8,' + res
       }

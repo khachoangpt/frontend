@@ -69,6 +69,19 @@ class UserApi extends Policy {
     )
   }
 
+  exportSalaryPersonnel(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/download_csv_personal_salary_monthly',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
   editDeduction(data) {
     const accessToken = getToken()
     return this.$axios.$put('/api/update_deduction_salary', data, {

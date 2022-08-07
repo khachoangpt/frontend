@@ -105,8 +105,13 @@
                         {{ deduction.date }}
                       </span>
                       <span>
-                        {{ deduction.deduction_name }} (-{{ deduction.value }}
-                        đồng)
+                        {{ deduction.deduction_name }} (-{{
+                          new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(deduction.value)
+                        }}
+                        )
                       </span>
                       <div>
                         <i
@@ -139,7 +144,14 @@
                       <span class="salary-detail__date-deduction">
                         {{ advance.date }}
                       </span>
-                      <span> {{ advance.value }} đồng</span>
+                      <span>
+                        {{
+                          new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                          }).format(advance.value)
+                        }}
+                      </span>
                       <div>
                         <i
                           class="salary-detail__edit-icon el-icon-edit-outline"
@@ -189,7 +201,13 @@
                   >
                     {{ insurance.insurance_name }}({{
                       insurance.insurance_value
-                    }}%): {{ insurance.value }} $
+                    }}%):
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(insurance.value)
+                    }}
                   </h3>
                 </div>
               </el-collapse-item>
@@ -207,7 +225,14 @@
                     <span class="salary-detail__date-deduction">
                       {{ bonus.date }}
                     </span>
-                    <span> {{ bonus.value }}</span>
+                    <span>
+                      {{
+                        new Intl.NumberFormat('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND',
+                        }).format(bonus.value)
+                      }}</span
+                    >
                     <div>
                       <i
                         class="salary-detail__edit-icon el-icon-edit-outline"
@@ -236,7 +261,14 @@
                     <span>
                       {{ allowance.allowance_name }}
                     </span>
-                    <span> {{ allowance.value }}</span>
+                    <span>
+                      {{
+                        new Intl.NumberFormat('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND',
+                        }).format(allowance.value)
+                      }}</span
+                    >
                     <div>
                       <i
                         class="salary-detail__edit-icon el-icon-edit-outline"
@@ -257,7 +289,10 @@
               <p class="salary-detail-content__detail">
                 Actual Income:
                 <span class="salary-detail__actual-income">{{
-                  salaryDetail.final_salary
+                  new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                  }).format(salaryDetail.final_salary)
                 }}</span>
               </p>
             </el-collapse>

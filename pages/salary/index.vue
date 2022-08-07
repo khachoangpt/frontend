@@ -66,7 +66,7 @@
         class="salary__export"
         type="success"
         :disabled="salaryDataList <= 0"
-        @click="exportSalary"
+        @click="exportSalary(activeName)"
       >
         Export
       </el-button>
@@ -74,15 +74,16 @@
     <div class="salary-table">
       <vue-good-table
         v-if="roles.find((role) => role.authority === 'ROLE_USER')"
-        ref="salary-table"
+        ref="salary-table-1"
         :columns="salaryHistoryListHeader"
         :rows="salaryHistoryList"
         :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-        sort-options="{
+        :sort-options="{
           enabled: true,
+          initialSortBy: { field: 'month', type: 'asc' },
         }"
         @on-row-dblclick="onRowDoubleClick"
-        @on-selected-rows-change="onSelectedRowsChange"
+        @on-selected-rows-change="onSelectedRowsChange('salary-table-1')"
       >
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'salaryStatus'">
@@ -100,13 +101,16 @@
       >
         <el-tab-pane label="Cá nhân" name="first">
           <vue-good-table
-            ref="salary-table"
+            ref="salary-table-2"
             :columns="salaryHistoryListHeader"
             :rows="salaryHistoryList"
             :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
-            :sort-options="{enabled: true}"
+            :sort-options="{
+              enabled: true,
+              initialSortBy: { field: 'month', type: 'asc' },
+            }"
             @on-row-dblclick="onRowDoubleClick"
-            @on-selected-rows-change="onSelectedRowsChange"
+            @on-selected-rows-change="onSelectedRowsChange('salary-table-2')"
           >
             <template slot="table-row" slot-scope="props">
               <span v-if="props.column.field == 'salaryStatus'">
@@ -119,7 +123,7 @@
         </el-tab-pane>
         <el-tab-pane label="Bảng lương" name="second">
           <vue-good-table
-            ref="salary-table"
+            ref="salary-table-3"
             :columns="salaryListHeader"
             :rows="salaryList"
             :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
@@ -130,7 +134,7 @@
               enabled: true,
             }"
             @on-row-dblclick="onRowDoubleClick"
-            @on-selected-rows-change="onSelectedRowsChange"
+            @on-selected-rows-change="onSelectedRowsChange('salary-table-3')"
           >
             <template slot="pagination-bottom">
               <el-pagination
@@ -287,37 +291,31 @@ export default {
       this.setYearSearch(e)
     },
 
-    onSelectedRowsChange() {
+    async onSelectedRowsChange(tableName) {
       this.isShowCheck = true
       this.isShowReject = true
       this.isShowApprove = true
       const salaryIdSelectedList = []
-      this.setSalaryDataList(this.$refs['salary-table'].selectedRows.length)
+      await this.setSalaryDataList(this.$refs[tableName].selectedRows.length)
       for (let i = 0; i < this.salaryDataList; i++) {
-        if (
-          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'REJECTED'
-        ) {
+        if (this.$refs[tableName].selectedRows[i].salaryStatus === 'REJECTED') {
           this.isShowCheck = true
           this.isShowReject = false
         }
-        if (
-          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'APPROVED'
-        ) {
+        if (this.$refs[tableName].selectedRows[i].salaryStatus === 'APPROVED') {
           this.isShowApprove = false
           this.isShowCheck = false
           this.isShowReject = false
         }
-        if (
-          this.$refs['salary-table'].selectedRows[i].salaryStatus === 'PENDING'
-        ) {
+        if (this.$refs[tableName].selectedRows[i].salaryStatus === 'PENDING') {
           this.isShowCheck = true
           this.isShowReject = true
         }
         salaryIdSelectedList.push(
-          this.$refs['salary-table'].selectedRows[i].salaryMonthlyId
+          this.$refs[tableName].selectedRows[i].salaryMonthlyId
         )
       }
-      this.setListSalaryId(salaryIdSelectedList)
+      await this.setListSalaryId(salaryIdSelectedList)
     },
 
     handleClickRejectSalary() {
