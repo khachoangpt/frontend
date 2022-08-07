@@ -398,14 +398,19 @@ export default {
     }
   },
 
-  async updateAvatar({ commit, state }, data) {
+  async updateAvatar({ commit, state, dispatch }, data) {
     try {
       const value = {
         employeeId: state.personnelDetail.employee_id,
         avatar: data,
       }
-      console.log(value)
-      await this.$repository.user.updateAvatar(value)
+      const res = await this.$repository.user.updateAvatar(value)
+      if (res.code === 202) {
+        await dispatch('getPersonnelDetail', state.personnelDetail.employee_id)
+        await commit('setImageUrl', data)
+        await commit('setScreenLoadingAvatar', false)
+        Message.success('Đổi avatar thành công.')
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }
