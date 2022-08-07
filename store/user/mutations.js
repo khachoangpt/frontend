@@ -195,7 +195,7 @@ export default {
     state.personnelDetail.start_date = data
   },
   updatePersonnelEndDate(state, data) {
-    state.personnelDetail.start_date = data
+    state.personnelDetail.end_date = data
   },
   updatePersonnelWorkingStatus(state, data) {
     state.personnelDetail.working_status = data
