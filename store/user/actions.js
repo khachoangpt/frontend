@@ -159,10 +159,6 @@ export default {
           state.personnelDetail.working_status === true
             ? 1
             : 0,
-        avatar:
-          state.personnelDetail.avatar === null
-            ? ''
-            : state.personnelDetail.avatar,
         working_contract_id: state.personnelDetail.working_contract_id,
         start_date: state.personnelDetail.start_date,
         end_date: state.personnelDetail.end_date,
