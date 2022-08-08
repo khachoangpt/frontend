@@ -1,7 +1,9 @@
 <template>
   <div class="main-info__work-info">
     <div class="main-info-header">
-      <span id="sub-5" class="main-info-header__text"> Thông tin thêm </span>
+      <span id="sub-5" class="main-info-header__text">
+        {{ $i18n.t('personnel.detail.additionalInfo') }}
+      </span>
       <span
         v-if="
           isEditAdditionInfo &&
@@ -14,7 +16,7 @@
         class="main-info-header__edit"
         @click="editAdditionInfo"
       >
-        Sửa thông tin thêm
+        {{ $i18n.t('personnel.detail.editAdditionalInfo') }}
       </span>
       <span
         v-else-if="
@@ -26,15 +28,21 @@
           )
         "
       >
-        <el-button type="info" @click="closeEdit">Đóng</el-button>
-        <el-button type="primary">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
+        <el-button type="primary">{{
+          $i18n.t('personnel.detail.confirm')
+        }}</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Địa chỉ hiện tại</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.currentAddress')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.address }}
             </span>
@@ -51,7 +59,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Nơi sinh</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.placeOfBirth')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.place_of_origin }}
             </span>
@@ -68,7 +78,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head"> Hộ khẩu thường trú </span>
+            <span class="content-item__head">
+              {{ $i18n.t('personnel.detail.permanentResidence') }}
+            </span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.place_of_residence }}
             </span>
@@ -87,7 +99,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">CMT / CCCD</span>
+            <span class="content-item__head">
+              {{ $i18n.t('personnel.detail.idCard') }}</span
+            >
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.card_id }}
             </span>
@@ -104,7 +118,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Ngày cấp</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.providedDate')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.provideDate }}
             </span>
@@ -121,7 +137,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head"> Nơi cấp </span>
+            <span class="content-item__head">
+              {{ $i18n.t('personnel.detail.providedPlace') }}
+            </span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.providePlace }}
             </span>
@@ -140,7 +158,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Quốc tịch</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.nationality')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.nationality }}
             </span>
@@ -157,7 +177,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Email khác</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.otherEmail')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.personal_email }}
             </span>
@@ -174,7 +196,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Số điện thoại khác</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.otherPhone')
+            }}</span>
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.phone_number }}
             </span>

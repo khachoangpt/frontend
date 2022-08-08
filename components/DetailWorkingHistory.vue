@@ -1,7 +1,9 @@
 <template>
   <div class="main-info__work-info">
     <div class="main-info-header">
-      <span id="sub-6" class="main-info-header__text"> Lịch sử làm việc </span>
+      <span id="sub-6" class="main-info-header__text">
+        {{ $i18n.t('personnel.detail.workingHistoryInfo') }}
+      </span>
       <span
         v-if="
           roles.find(
@@ -13,7 +15,7 @@
         class="main-info-header__edit"
         @click="openDialog"
       >
-        Thêm lịch sử làm việc
+        {{ $i18n.t('personnel.detail.addWorkingHistory') }}
       </span>
     </div>
     <el-row
@@ -24,7 +26,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Công ty</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.company')
+            }}</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
               {{ working.company_name }}
             </span>
@@ -41,7 +45,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Vị trí</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.position')
+            }}</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
               {{ working.position }}
             </span>
@@ -58,7 +64,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Khoảng thời gian</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.timePeriod')
+            }}</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
               {{ working.start_date }} -
               {{ working.end_date }}
@@ -103,9 +111,11 @@
           </div>
           <div v-else class="main-info__content-item-action">
             <span>
-              <el-button type="info" @click="closeEdit"> Đóng </el-button>
+              <el-button type="info" @click="closeEdit">
+                {{ $i18n.t('personnel.detail.close') }}
+              </el-button>
               <el-button type="primary" @click="updateWorkingHistory(index)">
-                Xác nhận
+                {{ $i18n.t('personnel.detail.confirm') }}
               </el-button>
             </span>
           </div>
@@ -113,7 +123,7 @@
       </el-col>
     </el-row>
     <el-dialog
-      title="Thêm lịch sử làm việc"
+      :title="$i18n.t('personnel.detail.addWorkingHistory')"
       :visible.sync="addWorkingHistoryVisible"
       width="30%"
       center
@@ -125,33 +135,44 @@
         :rules="rules"
         class="demo-form-inline"
       >
-        <el-form-item label="Công ty" prop="company">
+        <el-form-item
+          :label="$i18n.t('personnel.detail.company')"
+          prop="company"
+        >
           <el-input
             v-model="workingInformationForm.company"
-            placeholder="Công ty"
+            :placeholder="$i18n.t('personnel.detail.company')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Vị trí" prop="position">
+        <el-form-item
+          :label="$i18n.t('personnel.detail.position')"
+          prop="position"
+        >
           <el-input
             v-model="workingInformationForm.position"
-            placeholder="Vị trí"
+            :placeholder="$i18n.t('personnel.detail.position')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Khoảng thời gian" prop="date">
+        <el-form-item
+          :label="$i18n.t('personnel.detail.timePeriod')"
+          prop="date"
+        >
           <el-date-picker
             v-model="workingInformationForm.date"
             type="daterange"
             range-separator="To"
-            start-placeholder="Start date"
-            end-placeholder="End date"
+            :start-placeholder="$i18n.t('personnel.detail.startDate')"
+            :end-placeholder="$i18n.t('personnel.detail.endDate')"
           >
           </el-date-picker>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialog">Đóng</el-button>
+        <el-button @click="closeDialog">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
         <el-button type="primary" @click="submitForm('workingInformationForm')">
-          Xác nhận
+          {{ $i18n.t('personnel.detail.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -172,21 +193,21 @@ export default {
         company: [
           {
             required: true,
-            message: 'Tên công ty không được để trống.',
+            message: this.$i18n.t('personnel.detail.validateCompany'),
             trigger: 'blur',
           },
         ],
         position: [
           {
             required: true,
-            message: 'Vị trí không được để trống.',
+            message: this.$i18n.t('personnel.detail.validatePosition'),
             trigger: 'blur',
           },
         ],
         date: [
           {
             required: true,
-            message: 'Thời gian không được để trống.',
+            message: this.$i18n.t('personnel.detail.validateTime'),
             trigger: 'blur',
           },
         ],

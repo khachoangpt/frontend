@@ -2,7 +2,7 @@
   <div class="main-info__work-info">
     <div class="main-info-header">
       <span id="sub-4" class="main-info-header__text">
-        Thông tin ngân hàng
+        {{ $i18n.t('personnel.detail.bankInfo') }}
       </span>
       <span
         v-if="
@@ -16,7 +16,7 @@
         class="main-info-header__edit"
         @click="setIsEditBankInfo(false)"
       >
-        Sửa thông tin ngân hàng
+        {{ $i18n.t('personnel.detail.editBankInfo') }}
       </span>
       <span
         v-else-if="
@@ -28,15 +28,21 @@
           )
         "
       >
-        <el-button type="info" @click="closeEdit">Đóng</el-button>
-        <el-button type="primary" @click="editBankInfo">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
+        <el-button type="primary" @click="editBankInfo">{{
+          $i18n.t('personnel.detail.confirm')
+        }}</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Tên chủ tài khoản</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.accountName')
+            }}</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
               {{ bankInfo.account_name }}
             </span>
@@ -53,7 +59,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Ngân hàng</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.bank')
+            }}</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
               {{ bankInfo.name_bank }}
             </span>
@@ -70,7 +78,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Địa chỉ</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.address')
+            }}</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
               {{ bankInfo.address }}
             </span>
@@ -87,7 +97,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Số tài khoản</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.accountNumber')
+            }}</span>
             <span v-if="isEditBankInfo" class="content-item__detail">
               {{ bankInfo.account_number }}
             </span>

@@ -1,7 +1,9 @@
 <template>
   <div class="main-info__work-info">
     <div class="main-info-header">
-      <span id="sub-8" class="main-info-header__text"> Thông tin học vấn </span>
+      <span id="sub-8" class="main-info-header__text">
+        {{ $i18n.t('personnel.detail.educationInfo') }}
+      </span>
       <span
         v-if="
           roles.find(
@@ -13,7 +15,7 @@
         class="main-info-header__edit"
         @click="openDialog"
       >
-        Thêm thông tin học vấn
+        {{ $i18n.t('personnel.detail.addEducationInfo') }}
       </span>
     </div>
     <el-row
@@ -24,7 +26,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Trường học</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.school')
+            }}</span>
             <span
               v-if="isEditLineEducation !== education"
               class="content-item__detail"
@@ -44,7 +48,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Khoảng thời gian</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.timePeriod')
+            }}</span>
             <span
               v-if="isEditLineEducation !== education"
               class="content-item__detail"
@@ -59,8 +65,8 @@
               :value="[education.start_date, education.end_date]"
               type="daterange"
               range-separator="To"
-              start-placeholder="Start date"
-              end-placeholder="End date"
+              :start-placeholder="$i18n.t('personnel.detail.startDate')"
+              :end-placeholder="$i18n.t('personnel.detail.endDate')"
               @input="updateEduDate($event, index)"
             >
             </el-date-picker>
@@ -70,7 +76,9 @@
       <el-col :span="6">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Bằng cấp</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.degree')
+            }}</span>
             <span
               v-if="isEditLineEducation !== education"
               class="content-item__detail"
@@ -112,9 +120,11 @@
           </div>
           <div v-else class="main-info__content-item-action">
             <span>
-              <el-button type="info" @click="closeEdit"> Đóng </el-button>
+              <el-button type="info" @click="closeEdit">
+                {{ $i18n.t('personnel.detail.close') }}
+              </el-button>
               <el-button type="primary" @click="updateEducationInfo(index)">
-                Xác nhận
+                {{ $i18n.t('personnel.detail.confirm') }}
               </el-button>
             </span>
           </div>
@@ -122,7 +132,7 @@
       </el-col>
     </el-row>
     <el-dialog
-      title="Thêm thông tin học vấn"
+      :title="$i18n.t('personnel.detail.addEducationInfo')"
       :visible.sync="addEducationDialogVisible"
       width="30%"
       center
@@ -135,34 +145,43 @@
         label-position="top"
         class="demo-form-inline"
       >
-        <el-form-item label="Trường học">
+        <el-form-item :label="$i18n.t('personnel.detail.school')" prop="school">
           <el-input
             v-model="educationForm.school"
-            placeholder="Trường học"
+            :placeholder="$i18n.t('personnel.detail.school')"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Khoảng thời gian">
+        <el-form-item
+          :label="$i18n.t('personnel.detail.timePeriod')"
+          prop="date"
+        >
           <el-date-picker
             v-model="educationForm.date"
+            class="add-education__time"
             type="daterange"
             range-separator="To"
-            start-placeholder="Start date"
-            end-placeholder="End date"
+            :start-placeholder="$i18n.t('personnel.detail.startDate')"
+            :end-placeholder="$i18n.t('personnel.detail.endDate')"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="Bằng cấp">
+        <el-form-item
+          :label="$i18n.t('personnel.detail.degree')"
+          prop="certificate"
+        >
           <el-input
             v-model="educationForm.certificate"
-            placeholder="Bằng cấp"
+            :placeholder="$i18n.t('personnel.detail.degree')"
           ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialog">Đóng</el-button>
-        <el-button type="primary" @click="submitForm('educationForm')"
-          >Xác nhận</el-button
-        >
+        <el-button @click="closeDialog">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
+        <el-button type="primary" @click="submitForm('educationForm')">{{
+          $i18n.t('personnel.detail.confirm')
+        }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -182,21 +201,21 @@ export default {
         school: [
           {
             required: true,
-            message: 'Trường học không được để trống.',
+            message: this.$i18n.t('personnel.detail.validateSchool'),
             trigger: 'blur',
           },
         ],
         certificate: [
           {
             required: true,
-            message: 'Bằng cấp không được để trống.',
+            message: this.$i18n.t('personnel.detail.validateDegree'),
             trigger: 'blur',
           },
         ],
         date: [
           {
             required: true,
-            message: 'Thời gian không được để trống.',
+            message: this.$i18n.t('personnel.detail.validateTime'),
             trigger: 'blur',
           },
         ],
@@ -268,4 +287,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.add-education__time {
+  width: 100% !important;
+}
+</style>

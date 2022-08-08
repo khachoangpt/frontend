@@ -1,7 +1,9 @@
 <template>
   <div class="main-info__work-info">
     <div class="main-info-header">
-      <span id="sub-3" class="main-info-header__text"> Thuế và bảo hiểm </span>
+      <span id="sub-3" class="main-info-header__text">
+        {{ $i18n.t('personnel.detail.taxInfo') }}
+      </span>
       <span
         v-if="
           isEditTaxInfo &&
@@ -14,7 +16,7 @@
         class="main-info-header__edit"
         @click="setIsEditTaxInfo(false)"
       >
-        Sửa thông tin pháp lý
+        {{ $i18n.t('personnel.detail.editTaxInfo') }}
       </span>
       <span
         v-else-if="
@@ -26,15 +28,21 @@
           )
         "
       >
-        <el-button type="info" @click="closeEdit">Đóng</el-button>
-        <el-button type="primary" @click="updateTaxInfo">Xác nhận</el-button>
+        <el-button type="info" @click="closeEdit">{{
+          $i18n.t('personnel.detail.close')
+        }}</el-button>
+        <el-button type="primary" @click="updateTaxInfo">{{
+          $i18n.t('personnel.detail.confirm')
+        }}</el-button>
       </span>
     </div>
     <el-row class="main-info__content">
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Mã số thuế</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.taxCode')
+            }}</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ taxList.tax_code }}
             </span>
@@ -57,7 +65,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head"> Bảo hiểm </span>
+            <span class="content-item__head">
+              {{ $i18n.t('personnel.detail.insurance') }}
+            </span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ insurance.insuranceName }}
             </span>
@@ -74,7 +84,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Mã số BHXH</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.insuranceNumber')
+            }}</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ insurance.insuranceID }}
             </span>
@@ -91,7 +103,9 @@
       <el-col :span="8">
         <div class="grid-content">
           <div class="main-info__content-item">
-            <span class="content-item__head">Nơi đăng ký BHXH</span>
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.placeRegistration')
+            }}</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
               {{ insurance.address }}
             </span>
