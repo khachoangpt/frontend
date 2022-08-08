@@ -303,4 +303,60 @@ export default {
   setImageUrl(state, imageUrl) {
     state.imageUrl = imageUrl
   },
+
+  setEmployeeRole(state, employeeRole) {
+    state.employeeRole = employeeRole
+  },
+
+  updateWorkingWorkingName(state, data) {
+    state.workingInfo.working_type = data
+  },
+
+  updateWorkingOfficeName(state, data) {
+    state.workingInfo.office = data
+  },
+
+  updateWorkingAreaName(state, data) {
+    state.workingInfo.area = data
+  },
+
+  updateWorkingPositionName(state, data) {
+    state.workingInfo.position = data
+  },
+
+  updateWorkingGrade(state, data) {
+    state.workingInfo.grade = data
+  },
+
+  updateWorkingEmployeeType(state, data) {
+    state.workingInfo.employee_type = data
+  },
+
+  updateWorkingManager(state, data) {
+    state.workingInfo.manager_name = data
+  },
+
+  handleSelect(state, data) {
+    const regexEmp = /(.+)\((.+)\)/i
+    const employeeId = data.value.match(regexEmp)[2]
+    const employeeName = data.value.match(regexEmp)[1]
+    state.workingInfo.manager_name = employeeName
+    state.workingInfo.manager_id = employeeId
+  },
+
+  updateWorkingRole(state, data) {
+    state.employeeRole.roleName = data
+  },
+
+  updateWorkingStartDate(state, data) {
+    state.workingInfo.start_date = data
+  },
+
+  updateWorkingFinalSalary(state, data) {
+    state.workingInfo.final_salary = data
+  },
+
+  updateWorkingBaseSalary(state, data) {
+    state.workingInfo.base_salary = data
+  },
 }

@@ -146,4 +146,5 @@ export default () => ({
   addEducationDialogVisible: false,
   screenLoadingAvatar: false,
   imageUrl: '',
+  employeeRole: '',
 })

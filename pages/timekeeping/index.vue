@@ -14,10 +14,10 @@
           <el-tag type="warning" effect="dark" size="mini"> soon </el-tag>
           <span>{{ $i18n.t('timekeeping.status.soon') }}</span>
         </div>
-        <div class="time-keeping__header-bookmark">
+        <!-- <div class="time-keeping__header-bookmark">
           <i class="el-icon-sunrise-1 custom-calendar__status-half"></i>
           <span>{{ $i18n.t('timekeeping.status.half') }}</span>
-        </div>
+        </div> -->
         <div class="time-keeping__header-bookmark">
           <el-tag type="info" effect="dark" size="mini"> off </el-tag>
           <span>{{ $i18n.t('timekeeping.status.off') }}</span>

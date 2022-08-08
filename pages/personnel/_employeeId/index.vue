@@ -69,9 +69,11 @@
               >
                 <i class="el-icon-user bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thông tin chính</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.mainInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Thông tin cơ bản của nhân viên
+                    {{ $i18n.t('personnel.detail.mainInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -82,9 +84,11 @@
               >
                 <i class="el-icon-data-analysis bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thông tin công việc</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.jobInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Lương, công việc, sự nghiệp
+                    {{ $i18n.t('personnel.detail.jobInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -95,9 +99,11 @@
               >
                 <i class="el-icon-money bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thuế & bảo hiểm</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.taxInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Thông tin thuế và bảo hiểm
+                    {{ $i18n.t('personnel.detail.taxInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -108,9 +114,11 @@
               >
                 <i class="el-icon-bank-card bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thông tin ngân hàng</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.bankInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Ngân hàng, địa chỉ, số tài khoản
+                    {{ $i18n.t('personnel.detail.bankInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -121,9 +129,11 @@
               >
                 <i class="el-icon-more-outline bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Thông tin thêm</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.additionalInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Địa chỉ, CCCD, LinkedIn, Facebook
+                    {{ $i18n.t('personnel.detail.additionalInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -134,13 +144,15 @@
               >
                 <i class="el-icon-school bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Lịch sử làm việc</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.workingHistoryInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Công ty, vị trí, khoảng thời gian
+                    {{ $i18n.t('personnel.detail.workingHistoryInfoDetail') }}
                   </p>
                 </div>
               </li>
-              <li
+              <!-- <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 7 }"
                 @click=";[(activeSubTab = 7), scrollToElement('sub-7')]"
@@ -152,7 +164,7 @@
                     Họ và tên, ngày sinh, quan hệ
                   </p>
                 </div>
-              </li>
+              </li> -->
               <li
                 class="detail__bookmark-item"
                 :class="{ 'detail__bookmark-item--active': activeSubTab === 8 }"
@@ -160,9 +172,11 @@
               >
                 <i class="el-icon-reading bookmark-item__icon"></i>
                 <div>
-                  <p class="bookmark-item__text-head">Học vấn</p>
+                  <p class="bookmark-item__text-head">
+                    {{ $i18n.t('personnel.detail.educationInfo') }}
+                  </p>
                   <p class="bookmark-item__text-detail">
-                    Trường, thời gian, bằng cấp
+                    {{ $i18n.t('personnel.detail.educationInfoDetail') }}
                   </p>
                 </div>
               </li>
@@ -191,9 +205,9 @@
             <detail-work-info />
             <detail-tax />
             <detail-bank-info />
+            <!-- <detail-relative-info /> -->
             <detail-addition-info />
             <detail-working-history />
-            <detail-relative-info />
             <detail-education-info />
           </div>
         </div>
@@ -210,7 +224,7 @@ import DetailTax from '~/components/DetailTax.vue'
 import DetailBankInfo from '~/components/DetailBankInfo.vue'
 import DetailAdditionInfo from '~/components/DetailAdditionInfo.vue'
 import DetailWorkingHistory from '~/components/DetailWorkingHistory.vue'
-import DetailRelativeInfo from '~/components/DetailRelativeInfo.vue'
+// import DetailRelativeInfo from '~/components/DetailRelativeInfo.vue'
 import DetailEducationInfo from '~/components/DetailEducationInfo.vue'
 import 'element-ui/lib/theme-chalk/display.css'
 export default {
@@ -222,7 +236,7 @@ export default {
     DetailBankInfo,
     DetailAdditionInfo,
     DetailWorkingHistory,
-    DetailRelativeInfo,
+    // DetailRelativeInfo,
     DetailEducationInfo,
   },
   layout: 'main',

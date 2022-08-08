@@ -14,7 +14,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown class="notification">
-      <el-badge class="header__notification" :value="12">
+      <el-badge class="header__notification">
         <i class="el-icon-bell header__icon"></i>
       </el-badge>
       <el-dropdown-menu slot="dropdown" class="notification__drop">
@@ -24,7 +24,7 @@
     <el-tooltip
       class="item"
       effect="light"
-      content="Đăng xuất"
+      :content="$i18n.t('sidebar.logout')"
       placement="bottom-start"
     >
       <i

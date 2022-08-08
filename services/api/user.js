@@ -324,6 +324,27 @@ class UserApi extends User {
       },
     })
   }
+
+  getRoleByEmployee(data) {
+    const accessToken = getToken()
+    return this.$axios.$get(
+      '/api/employee/detail/get_role_by_employeeid?employeeId=' + data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  confirmEditWorkingInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/update_working_info', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

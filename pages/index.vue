@@ -181,7 +181,7 @@ export default {
     ]),
     employeeByIdOptions() {
       return [
-        // { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
+        { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
         ...this.employeeById.map(({ employeeID, name }) => ({
           value: employeeID,
           label: `${name} - ${employeeID}`,

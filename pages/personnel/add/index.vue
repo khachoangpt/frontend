@@ -462,7 +462,6 @@ export default {
     await this.getListPositions()
     await this.getListRoleType()
     await this.getManagerLowerOfArea()
-    console.log(this.listManager)
   },
 
   methods: {

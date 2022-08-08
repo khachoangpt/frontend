@@ -305,8 +305,13 @@
               placeholder="Select"
               @input="updatePersonnelGender"
             >
-              <el-option label="Nam" value="Male"> </el-option>
-              <el-option label="Nữ" value="Female"> </el-option>
+              <el-option :label="$i18n.t('personnel.detail.male')" value="Male">
+              </el-option>
+              <el-option
+                :label="$i18n.t('personnel.detail.female')"
+                value="Female"
+              >
+              </el-option>
             </el-select>
           </div>
         </div>
@@ -328,8 +333,16 @@
               placeholder="Select"
               @input="updatePersonnelMaritalStatus"
             >
-              <el-option label="Độc thân" value="Alone"> </el-option>
-              <el-option label="Đã có gia đình" value="Married"> </el-option>
+              <el-option
+                :label="$i18n.t('personnel.detail.alone')"
+                value="Alone"
+              >
+              </el-option>
+              <el-option
+                :label="$i18n.t('personnel.detail.married')"
+                value="Married"
+              >
+              </el-option>
             </el-select>
           </div>
         </div>

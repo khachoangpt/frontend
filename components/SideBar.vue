@@ -9,13 +9,18 @@
     <el-card class="collapse-button" shadow="hover">
       <el-tooltip
         v-if="isCollapse"
-        content="Mở rộng"
+        :content="$i18n.t('sidebar.expand')"
         placement="bottom"
         effect="light"
       >
         <i class="el-icon-s-unfold collapse-icon" @click="collapseSidebar"></i>
       </el-tooltip>
-      <el-tooltip v-else content="Thu nhỏ" placement="bottom" effect="light">
+      <el-tooltip
+        v-else
+        :content="$i18n.t('sidebar.collapse')"
+        placement="bottom"
+        effect="light"
+      >
         <i class="el-icon-s-fold collapse-icon" @click="collapseSidebar"></i>
       </el-tooltip>
     </el-card>

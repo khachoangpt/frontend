@@ -37,7 +37,9 @@ export default {
 
   async beforeMount() {
     await this.getHoliday(new Date().getFullYear())
-    this.attributes[0].dates.push(this.listHoliday[0])
+    for (let i = 0; i < this.listHoliday.length; i++) {
+      this.attributes[0].dates.push(this.listHoliday[i])
+    }
   },
 
   methods: {

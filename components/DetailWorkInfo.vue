@@ -2,9 +2,9 @@
   <div>
     <div class="main-info__work-info">
       <div class="main-info-header">
-        <span id="sub-2" class="main-info-header__text"
-          >Thông tin công việc</span
-        >
+        <span id="sub-2" class="main-info-header__text">
+          {{ $i18n.t('personnel.detail.jobInfo') }}
+        </span>
         <span
           v-if="
             isEditWorkInfo &&
@@ -17,7 +17,7 @@
           class="main-info-header__edit"
           @click="editWorkInfo"
         >
-          Sửa thông tin công việc
+          {{ $i18n.t('personnel.detail.editJobInformation') }}
         </span>
         <span
           v-else-if="
@@ -29,23 +29,35 @@
             )
           "
         >
-          <el-button type="info" @click="closeEdit">Đóng</el-button>
-          <el-button type="primary">Xác nhận</el-button>
+          <el-button type="info" @click="closeEdit">{{
+            $i18n.t('personnel.detail.close')
+          }}</el-button>
+          <el-button
+            type="primary"
+            @click="confirmEditWorkingInfo($route.params.employeeId)"
+            >{{ $i18n.t('personnel.detail.confirm') }}</el-button
+          >
         </span>
       </div>
       <el-row class="main-info__content">
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Lương</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.salary')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                workingInfo.final_salary
+                new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                }).format(workingInfo.final_salary)
               }}</span>
               <el-input
                 v-else
                 size="medium"
                 :value="workingInfo.final_salary"
                 class="edit-input"
+                @input="updateWorkingFinalSalary"
               ></el-input>
             </div>
           </div>
@@ -53,15 +65,21 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Lương cơ bản</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.baseSalary')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                workingInfo.base_salary
+                new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                }).format(workingInfo.base_salary)
               }}</span>
               <el-input
                 v-else
                 size="medium"
                 :value="workingInfo.base_salary"
                 class="edit-input"
+                @input="updateWorkingBaseSalary"
               ></el-input>
             </div>
           </div>
@@ -69,32 +87,51 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Ngày bắt đầu</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.startDate')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.start_date
               }}</span>
-              <el-input
+              <el-date-picker
                 v-else
                 size="medium"
                 :value="workingInfo.start_date"
+                type="date"
                 class="edit-input"
-              ></el-input>
+                value-format="yyyy-MM-dd"
+                placeholder="Pick a day"
+                @input="updateWorkingStartDate"
+              >
+              </el-date-picker>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Lịch làm việc</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.workingSchedule')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.working_type
               }}</span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.working_type"
                 class="edit-input"
-              ></el-input>
+                :value="workingInfo.working_type"
+                placeholder="Select"
+                @input="updateWorkingWorkingName"
+              >
+                <el-option
+                  v-for="workingType in workingTypes"
+                  :key="workingType.type_id"
+                  :label="workingType.name"
+                  :value="workingType.name"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
@@ -103,64 +140,113 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Văn phòng</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.office')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.office
               }}</span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.office"
                 class="edit-input"
-              ></el-input>
+                :value="workingInfo.office"
+                placeholder="Select"
+                @input="updateWorkingOfficeName"
+              >
+                <el-option
+                  v-for="office in listOffice"
+                  :key="office.office_id"
+                  :label="office.name"
+                  :value="office.name"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Phòng ban</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.area')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.area
               }}</span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.area"
                 class="edit-input"
-              ></el-input>
+                :value="workingInfo.area"
+                placeholder="Select"
+                @input="updateWorkingAreaName"
+              >
+                <el-option
+                  v-for="area in listArea"
+                  :key="area.area_id"
+                  :label="area.name"
+                  :value="area.name"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Vị trí</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.position')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.position
               }}</span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.position"
                 class="edit-input"
-              ></el-input>
+                :value="workingInfo.position"
+                placeholder="Select"
+                @input="updateWorkingPositionName"
+                @change="onChangePosition"
+              >
+                <el-option
+                  v-for="position in listPositions"
+                  :key="position.job_id"
+                  :label="position.position"
+                  :value="position.position"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Cấp bậc</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.grade')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">{{
                 workingInfo.grade
               }}</span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.grade"
                 class="edit-input"
-              ></el-input>
+                :value="workingInfo.grade"
+                placeholder="Select"
+                @input="updateWorkingGrade"
+              >
+                <el-option
+                  v-for="grade in listGrade"
+                  :key="grade.grade_id"
+                  :label="grade.name"
+                  :value="grade.name"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
@@ -169,48 +255,80 @@
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Phân loại nhân sự</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.personnelClassification')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
                 {{ workingInfo.employee_type }}
               </span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
+                class="edit-input"
                 :value="workingInfo.employee_type"
-                class="edit-input"
-              ></el-input>
+                placeholder="Select"
+                @input="updateWorkingEmployeeType"
+              >
+                <el-option
+                  v-for="employeeType in employeeTypes"
+                  :key="employeeType.type_id"
+                  :label="employeeType.name"
+                  :value="employeeType.name"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Manager</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.manager')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
-                {{ workingInfo.manager_id }}
+                {{ workingInfo.manager_name }} ({{ workingInfo.manager_id }})
               </span>
-              <el-input
+              <el-autocomplete
                 v-else
-                size="medium"
-                :value="workingInfo.manager_id"
+                :value="workingInfo.manager_name"
                 class="edit-input"
-              ></el-input>
+                :fetch-suggestions="querySearch"
+                :placeholder="$i18n.t('personnel.manager')"
+                @input="updateWorkingManager"
+                @select="handleSelect"
+              ></el-autocomplete>
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col
+          v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+          :span="6"
+        >
           <div class="grid-content">
             <div class="main-info__content-item">
-              <span class="content-item__head">Phân quyền</span>
+              <span class="content-item__head">{{
+                $i18n.t('personnel.detail.role')
+              }}</span>
               <span v-if="isEditWorkInfo" class="content-item__detail">
-                {{ workingInfo.manager_id }}
+                {{ employeeRole.roleName }}
               </span>
-              <el-input
+              <el-select
                 v-else
                 size="medium"
-                :value="workingInfo.manager_id"
                 class="edit-input"
-              ></el-input>
+                :value="employeeRole.roleName"
+                placeholder="Select"
+                @input="updateWorkingRole"
+              >
+                <el-option
+                  v-for="role in $store.state.user.roles"
+                  :key="role.type_id"
+                  :label="role.role"
+                  :value="role.role"
+                >
+                </el-option>
+              </el-select>
             </div>
           </div>
         </el-col>
@@ -228,27 +346,97 @@ export default {
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['workingInfo', 'isEditWorkInfo']),
+    ...mapGetters('user', [
+      'workingInfo',
+      'isEditWorkInfo',
+      'employeeRole',
+      'workingTypes',
+      'listOffice',
+      'listArea',
+      'listPositions',
+      'listGrade',
+      'employeeTypes',
+      'listManager',
+    ]),
   },
 
   async mounted() {
     await this.getWorkingInfo(this.$route.params.employeeId)
+    if (this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
+      await this.getRoleByEmployee(this.$route.params.employeeId)
+    }
   },
 
   methods: {
-    ...mapActions('user', ['getWorkingInfo']),
-    ...mapMutations('user', ['setIsEditWorkInfo']),
+    ...mapActions('salary', ['getManagerLowerOfArea']),
+    ...mapActions('user', [
+      'getWorkingInfo',
+      'getRoleByEmployee',
+      'getWorkingTypes',
+      'getListOffice',
+      'getListArea',
+      'getListPositions',
+      'getListGrade',
+      'getEmployeeTypes',
+      'getListRoleType',
+      'confirmEditWorkingInfo',
+      'onChangePosition',
+    ]),
+    ...mapMutations('user', [
+      'setIsEditWorkInfo',
+      'updateWorkingWorkingName',
+      'updateWorkingOfficeName',
+      'updateWorkingAreaName',
+      'updateWorkingPositionName',
+      'updateWorkingGrade',
+      'updateWorkingEmployeeType',
+      'updateWorkingManager',
+      'updateWorkingRole',
+      'updateWorkingStartDate',
+      'updateWorkingFinalSalary',
+      'updateWorkingBaseSalary',
+      'handleSelect',
+    ]),
 
     async closeEdit() {
       await this.setIsEditWorkInfo(true)
       await this.getWorkingInfo(this.$route.params.employeeId)
+      await this.getRoleByEmployee(this.$route.params.employeeId)
     },
 
-    editWorkInfo() {
+    async editWorkInfo() {
+      await this.getWorkingTypes()
+      await this.getListOffice()
+      await this.getListArea()
+      await this.getListPositions()
+      await this.getManagerLowerOfArea()
+      await this.getListRoleType()
+      await this.getListGrade(
+        this.listPositions.find(
+          (position) => position.position === this.workingInfo.position
+        ).job_id
+      )
+      await this.getEmployeeTypes()
       this.setIsEditWorkInfo(false)
+    },
+
+    querySearch(queryString, cb) {
+      const results = queryString
+        ? this.listManager.filter(this.createFilter(queryString))
+        : this.listManager
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
     },
   },
 }
 </script>
 
-<style></style>
+<style>
+.el-autocomplete-suggestion {
+  width: fit-content !important;
+}
+</style>

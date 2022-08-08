@@ -359,8 +359,16 @@ export default {
     }
   },
 
-  async onChangePosition({ commit, dispatch }, data) {
-    await dispatch('getListGrade', data)
+  async onChangePosition({ commit, dispatch, state }, data) {
+    await commit('updateWorkingGrade', '')
+    if (!isNaN(data)) {
+      await dispatch('getListGrade', data)
+    } else {
+      const positionId = state.listPositions.find(
+        (position) => position.position === data
+      ).job_id
+      await dispatch('getListGrade', positionId)
+    }
   },
 
   async getEmployeeByManager({ commit }) {
@@ -410,6 +418,59 @@ export default {
         await commit('setImageUrl', data)
         await commit('setScreenLoadingAvatar', false)
         Message.success('Đổi avatar thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getRoleByEmployee({ commit }, data) {
+    try {
+      const res = await this.$repository.user.getRoleByEmployee(data)
+      commit('setEmployeeRole', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async confirmEditWorkingInfo({ commit, state, dispatch }, employeeId) {
+    try {
+      const data = {
+        employeeId,
+        baseSalary: state.workingInfo.base_salary,
+        area: state.listArea.find(
+          (area) => area.name === state.workingInfo.area
+        ).area_id,
+        office: state.listOffice.find(
+          (office) => office.name === state.workingInfo.office
+        ).office_id,
+        position: state.listPositions.find(
+          (position) => position.position === state.workingInfo.position
+        ).job_id,
+        grade: state.listGrade.find(
+          (grade) => grade.name === state.workingInfo.grade
+        ).grade_id,
+        workingTypeId: state.workingTypes.find(
+          (workingType) => workingType.name === state.workingInfo.working_type
+        ).type_id,
+        startDate: state.workingInfo.start_date,
+        managerId: state.workingInfo.manager_id,
+        employeeType: state.employeeTypes.find(
+          (employeeType) =>
+            employeeType.name === state.workingInfo.employee_type
+        ).type_id,
+        salaryContractId: state.workingInfo.salary_contract_id,
+        workingContractId: state.workingInfo.working_contract_id,
+        workingPlaceId: state.workingInfo.working_place_id,
+      }
+      const res = await this.$repository.user.confirmEditWorkingInfo(data)
+      if (res.code === 202) {
+        await commit('setIsEditWorkInfo', true)
+        await dispatch('getWorkingInfo', employeeId)
+        if (state.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
+          await dispatch('getRoleByEmployee', employeeId)
+        }
+        Message.success('Sửa thông tin thành công.')
       }
     } catch (error) {
       Message.error(error.response.data.message)

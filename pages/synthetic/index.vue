@@ -43,6 +43,18 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
+              <span class="box-card__header-text">Thâm niên</span>
+            </div>
+            <bar-chart :values="seniorityNumber" />
+          </el-card>
+        </div>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col class="dashboard__col" :span="24">
+        <div class="grid-content">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
               <span class="box-card__header-text">Lịch sử thôi việc</span>
               <el-date-picker
                 v-model="leaveCompanyReasonChartOption"
@@ -86,18 +98,6 @@
               </el-date-picker>
             </div>
             <multiple-column-chart :values="paidLeaveReasonChart" />
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col class="dashboard__col" :span="24">
-        <div class="grid-content">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Thâm niên</span>
-            </div>
-            <bar-chart :values="seniorityNumber" />
           </el-card>
         </div>
       </el-col>

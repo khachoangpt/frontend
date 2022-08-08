@@ -63,7 +63,7 @@ export default {
     },
     values: {
       type: Array,
-      default: () => [
+      default: () => [  
         {
           key: 0,
           label: 'Lương 10-20 triệu',
