@@ -172,7 +172,7 @@ class UserApi extends Request {
 
   updateRejectRequest(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/update_reject_application_request', data, {
+    return this.$axios.$put('/api/update_reject_application_request', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
@@ -181,7 +181,7 @@ class UserApi extends Request {
 
   updateApproveRequest(data) {
     const accessToken = getToken()
-    return this.$axios.$post(
+    return this.$axios.$put(
       '/api/update_approve_application_request?requestId=' + data,
       {},
       {
@@ -224,7 +224,7 @@ class UserApi extends Request {
 
   reviewedRequest(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/update_checked_application_request', data, {
+    return this.$axios.$put('/api/update_checked_application_request', data, {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },
