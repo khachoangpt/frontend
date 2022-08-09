@@ -6,7 +6,7 @@
         <div class="grid-content personnel-detail__left">
           <div class="detail-basic">
             <el-tooltip
-              content="Đổi avatar"
+              :content="$i18n.t('personnel.detail.changeAvatar')"
               placement="right-start"
               effect="light"
             >

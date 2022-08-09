@@ -1,12 +1,14 @@
 <template>
   <div class="personnel">
     <div class="personnel__header">
-      <div class="personnel__header-text">Danh sách nhân sự</div>
+      <div class="personnel__header-text">
+        {{ $i18n.t('personnel.listOfPersonnel') }}
+      </div>
       <div class="personnel__header-actions">
         <el-input
           :value="searchText"
           class="header-actions__search"
-          placeholder="Search"
+          :placeholder="$i18n.t('personnel.search')"
           @input="inputSearch"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
@@ -32,7 +34,7 @@
           :to="localePath('/personnel/add')"
         >
           <el-button class="header-actions__button" type="primary">
-            Tạo mới
+            {{ $i18n.t('personnel.addNew') }}
           </el-button>
         </nuxt-link>
       </div>

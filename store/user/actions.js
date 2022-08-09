@@ -11,11 +11,12 @@ export default {
   async addEmployee({ commit, state }, data) {
     try {
       const regexEmpId = /\((.+)\)/i
-      data.managerId = data.managerId.match(regexEmpId)[1]
-      data.birthDate = format(data.birthDate, 'yyyy-MM-dd')
-      data.startDate = format(data.startDate, 'yyyy-MM-dd')
-      data.endDate = format(data.endDate, 'yyyy-MM-dd')
-      const res = await this.$repository.user.addEmployee(data)
+      const value = JSON.parse(JSON.stringify(data))
+      value.managerId = value.managerId.match(regexEmpId)[1]
+      value.birthDate = format(new Date(value.birthDate), 'yyyy-MM-dd')
+      value.startDate = format(new Date(value.startDate), 'yyyy-MM-dd')
+      value.endDate = format(new Date(value.endDate), 'yyyy-MM-dd')
+      const res = await this.$repository.user.addEmployee(value)
       if (res.code === 201) {
         Message.success('Thêm nhân viên mới thành công.')
         const res = await this.$repository.user.getPersonnelList({
@@ -27,6 +28,7 @@ export default {
         this.$router.push(this.localePath('/personnel'))
       }
     } catch (error) {
+      await commit('setFullscreenLoading', false)
       Message.error(error.response.data.message)
     }
   },

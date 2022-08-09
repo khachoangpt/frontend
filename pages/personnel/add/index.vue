@@ -352,7 +352,7 @@ export default {
           {
             required: true,
             message: this.$i18n.t('personnel.validation.gender'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         phone: [
@@ -373,49 +373,49 @@ export default {
           {
             required: true,
             message: this.$i18n.t('personnel.validation.role'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         position: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.position'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         grade: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.grade'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         area: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.area'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         workingType: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.workingType'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         employeeType: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.employeeType'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         office: [
           {
             required: true,
             message: this.$i18n.t('personnel.validation.office'),
-            trigger: 'blur',
+            trigger: 'change',
           },
         ],
         startDate: [

@@ -67,6 +67,9 @@ const vi = {
     endDate: 'Ngày kết thúc',
     back: 'Quay lại',
     addEmployee: 'Thêm',
+    listOfPersonnel: 'Danh sách nhân sự',
+    search: 'Tìm kiếm',
+    addNew: 'Thêm mới',
     genderList: {
       male: 'Nam',
       female: 'Nữ',
@@ -174,6 +177,10 @@ const vi = {
       degree: 'Bằng cấp',
       validateSchool: 'Trường học không được để trống.',
       validateDegree: 'Bằng cấp không được để trống.',
+      changeAvatar: 'Đổi avatar',
+    },
+    table: {
+      personnel: 'Nhân sự',
     },
   },
 

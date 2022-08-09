@@ -66,6 +66,9 @@ const en = {
     endDate: 'End date',
     back: 'Back',
     addEmployee: 'Add employee',
+    listOfPersonnel: 'List of personnel',
+    search: 'Search',
+    addNew: 'Add employee',
     genderList: {
       male: 'Male',
       female: 'Female',
@@ -172,6 +175,10 @@ const en = {
       degree: 'Degree',
       validateSchool: 'School is not blank',
       validateDegree: 'Degree is not blank',
+      changeAvatar: 'Change avatar',
+    },
+    table: {
+      personnel: 'Personnel',
     },
   },
 
