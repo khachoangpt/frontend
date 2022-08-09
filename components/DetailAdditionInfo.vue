@@ -31,9 +31,11 @@
         <el-button type="info" @click="closeEdit">{{
           $i18n.t('personnel.detail.close')
         }}</el-button>
-        <el-button type="primary">{{
-          $i18n.t('personnel.detail.confirm')
-        }}</el-button>
+        <el-button
+          type="primary"
+          @click="confirmEditAdditionalInfo($route.params.employeeId)"
+          >{{ $i18n.t('personnel.detail.confirm') }}</el-button
+        >
       </span>
     </div>
     <el-row class="main-info__content">
@@ -124,13 +126,23 @@
             <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.provideDate }}
             </span>
-            <el-input
+            <!-- <el-input
               v-else
               size="medium"
               :value="additionInfo.provideDate"
               class="edit-input"
               @input="updateAdditionProvideDate"
-            ></el-input>
+            ></el-input> -->
+            <el-date-picker
+              v-else
+              size="medium"
+              :value="additionInfo.provideDate"
+              type="date"
+              class="edit-input"
+              placeholder="Pick a day"
+              @input="updateAdditionProvideDate"
+            >
+            </el-date-picker>
           </div>
         </div>
       </el-col>
@@ -235,9 +247,31 @@
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Facebook</span>
-            <span v-if="isEditAdditionInfo" class="content-item__detail">
+            <!-- <span v-if="isEditAdditionInfo" class="content-item__detail">
               {{ additionInfo.facebook }}
-            </span>
+            </span> -->
+            <el-popover
+              v-if="isEditAdditionInfo"
+              placement="bottom-start"
+              width="400"
+              trigger="hover"
+              class="content-item__detail content-item__detail-link"
+            >
+              <a
+                :href="additionInfo.facebook"
+                target="_blank"
+                class="content-item__detail-link"
+              >
+                {{ additionInfo.facebook }}
+              </a>
+              <span
+                slot="reference"
+                target="_blank"
+                class="content-item__detail-link"
+              >
+                {{ additionInfo.facebook }}
+              </span>
+            </el-popover>
             <el-input
               v-else
               size="medium"
@@ -269,7 +303,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['getAdditionInfo']),
+    ...mapActions('user', ['getAdditionInfo', 'confirmEditAdditionalInfo']),
     ...mapMutations('user', [
       'updateAdditionAddress',
       'updateAdditionPlaceOfOrigin',
@@ -296,4 +330,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.content-item__detail-link {
+  color: #409eff;
+}
+</style>

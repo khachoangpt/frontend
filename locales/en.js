@@ -157,7 +157,7 @@ const en = {
       editAdditionalInfo: 'Edit additional information',
       currentAddress: 'Current address',
       placeOfBirth: 'Place of birth',
-      permanentResidence: 'Permanent residence',
+      permanentResidence: 'Place of residence',
       idCard: 'ID card',
       providedPlace: 'Provided place',
       providedDate: 'Provided date',

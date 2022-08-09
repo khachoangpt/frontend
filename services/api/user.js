@@ -345,6 +345,15 @@ class UserApi extends User {
       },
     })
   }
+
+  confirmEditAdditionalInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/add_info/update', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

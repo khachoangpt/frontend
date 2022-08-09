@@ -45,13 +45,17 @@ export default {
   },
 
   async getPersonnelDetail({ commit }, employeeId) {
-    const res = await this.$repository.user.getEmployeeDetail(employeeId)
-    if (res.working_status === 'Active') {
-      res.working_status = true
-    } else if (res.working_status === 'Deactivate') {
-      res.working_status = false
+    try {
+      const res = await this.$repository.user.getEmployeeDetail(employeeId)
+      if (res.working_status === 'Active') {
+        res.working_status = true
+      } else if (res.working_status === 'Deactivate') {
+        res.working_status = false
+      }
+      await commit('setPersonnelDetail', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
     }
-    await commit('setPersonnelDetail', res)
   },
 
   async getListGrade({ commit }, data) {
@@ -472,6 +476,33 @@ export default {
         if (state.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
           await dispatch('getRoleByEmployee', employeeId)
         }
+        Message.success('Sửa thông tin thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async confirmEditAdditionalInfo({ commit, state, dispatch }, employeeId) {
+    try {
+      const data = {
+        address: state.additionInfo.address,
+        place_of_residence: state.additionInfo.place_of_residence,
+        place_of_origin: state.additionInfo.place_of_origin,
+        nationality: state.additionInfo.nationality,
+        card_id: state.additionInfo.card_id,
+        provideDate: state.additionInfo.provideDate,
+        providePlace: state.additionInfo.providePlace,
+        personal_email: state.additionInfo.personal_email,
+        phone_number: state.additionInfo.phone_number,
+        nick_name: state.additionInfo.nick_name,
+        facebook: state.additionInfo.facebook,
+        employee_id: state.personnelDetail.employee_id,
+      }
+      const res = await this.$repository.user.confirmEditAdditionalInfo(data)
+      if (res.code === 202) {
+        await commit('setIsEditAdditionInfo', true)
+        await dispatch('getAdditionInfo', employeeId)
         Message.success('Sửa thông tin thành công.')
       }
     } catch (error) {
