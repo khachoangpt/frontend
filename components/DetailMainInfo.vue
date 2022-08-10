@@ -491,15 +491,17 @@ export default {
 
   async mounted() {
     await this.getPersonnelDetail(this.$route.params.employeeId)
-    await this.getListOffice()
-    await this.getWorkingTypes()
-    await this.getListPositions()
-    await this.getListArea()
-    await this.getListGrade(
-      this.listPositions.find(
-        (position) => position.position === this.personnelDetail.position_name
-      ).job_id
-    )
+    if (this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
+      await this.getListOffice()
+      await this.getWorkingTypes()
+      await this.getListPositions()
+      await this.getListArea()
+      await this.getListGrade(
+        this.listPositions.find(
+          (position) => position.position === this.personnelDetail.position_name
+        ).job_id
+      )
+    }
   },
 
   methods: {

@@ -364,6 +364,18 @@ export default {
     await this.getWorkingInfo(this.$route.params.employeeId)
     if (this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
       await this.getRoleByEmployee(this.$route.params.employeeId)
+      await this.getWorkingTypes()
+      await this.getListOffice()
+      await this.getListArea()
+      await this.getListPositions()
+      await this.getManagerLowerOfArea()
+      await this.getListRoleType()
+      await this.getListGrade(
+        this.listPositions.find(
+          (position) => position.position === this.workingInfo.position
+        ).job_id
+      )
+      await this.getEmployeeTypes()
     }
   },
 
@@ -405,19 +417,7 @@ export default {
     },
 
     async editWorkInfo() {
-      await this.getWorkingTypes()
-      await this.getListOffice()
-      await this.getListArea()
-      await this.getListPositions()
-      await this.getManagerLowerOfArea()
-      await this.getListRoleType()
-      await this.getListGrade(
-        this.listPositions.find(
-          (position) => position.position === this.workingInfo.position
-        ).job_id
-      )
-      await this.getEmployeeTypes()
-      this.setIsEditWorkInfo(false)
+      await this.setIsEditWorkInfo(false)
     },
 
     querySearch(queryString, cb) {

@@ -412,7 +412,7 @@ export default {
     }
   },
 
-  async updateAvatar({ commit, state, dispatch }, data) {
+  async updateAvatar({ commit, state, dispatch, rootState }, data) {
     try {
       const value = {
         employeeId: state.personnelDetail.employee_id,
@@ -421,7 +421,7 @@ export default {
       const res = await this.$repository.user.updateAvatar(value)
       if (res.code === 202) {
         await dispatch('getPersonnelDetail', state.personnelDetail.employee_id)
-        await dispatch('auth/getEmployeeInfo', state.personnelDetail.employee_id, {
+        await dispatch('auth/getEmployeeInfo', rootState.auth.id, {
           root: true,
         })
         await commit('setImageUrl', data)
@@ -444,6 +444,9 @@ export default {
 
   async confirmEditWorkingInfo({ commit, state, dispatch }, employeeId) {
     try {
+      const role = state.roles.find(
+        (type) => type.role === state.employeeRole.roleName
+      ).type_id
       const data = {
         employeeId,
         baseSalary: state.workingInfo.base_salary,
@@ -472,8 +475,12 @@ export default {
         workingContractId: state.workingInfo.working_contract_id,
         workingPlaceId: state.workingInfo.working_place_id,
       }
+      const resRole = await this.$repository.user.updateRole({
+        roleId: role,
+        employeeId,
+      })
       const res = await this.$repository.user.confirmEditWorkingInfo(data)
-      if (res.code === 202) {
+      if (res.code === 202 && resRole.code === 202) {
         await commit('setIsEditWorkInfo', true)
         await dispatch('getWorkingInfo', employeeId)
         if (state.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
