@@ -40,7 +40,7 @@
         </span>
       </div>
       <el-row class="main-info__content">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -62,7 +62,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -84,7 +84,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -107,7 +107,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -137,7 +137,7 @@
         </el-col>
       </el-row>
       <el-row class="main-info__content">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -165,7 +165,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -193,7 +193,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -222,7 +222,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -252,7 +252,7 @@
         </el-col>
       </el-row>
       <el-row class="main-info__content">
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -280,7 +280,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="grid-content">
             <div class="main-info__content-item">
               <span class="content-item__head">{{
@@ -303,7 +303,11 @@
         </el-col>
         <el-col
           v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
-          :span="6"
+          :xs="24"
+          :sm="12"
+          :md="6"
+          :lg="6"
+          :xl="6"
         >
           <div class="grid-content">
             <div class="main-info__content-item">

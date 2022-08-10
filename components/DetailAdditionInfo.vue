@@ -5,29 +5,13 @@
         {{ $i18n.t('personnel.detail.additionalInfo') }}
       </span>
       <span
-        v-if="
-          isEditAdditionInfo &&
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
+        v-if="isEditAdditionInfo"
         class="main-info-header__edit"
         @click="editAdditionInfo"
       >
         {{ $i18n.t('personnel.detail.editAdditionalInfo') }}
       </span>
-      <span
-        v-else-if="
-          isEditAdditionInfo === false &&
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
-      >
+      <span v-else-if="isEditAdditionInfo === false">
         <el-button type="info" @click="closeEdit">{{
           $i18n.t('personnel.detail.close')
         }}</el-button>
@@ -39,7 +23,7 @@
       </span>
     </div>
     <el-row class="main-info__content">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -58,7 +42,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -77,7 +61,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">
@@ -98,7 +82,7 @@
       </el-col>
     </el-row>
     <el-row class="main-info__content">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">
@@ -117,7 +101,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -146,7 +130,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">
@@ -167,7 +151,7 @@
       </el-col>
     </el-row>
     <el-row class="main-info__content">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -186,7 +170,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -205,7 +189,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -226,7 +210,7 @@
       </el-col>
     </el-row>
     <el-row class="main-info__content">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head"> Nickname </span>
@@ -243,7 +227,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">Facebook</span>

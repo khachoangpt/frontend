@@ -4,17 +4,7 @@
       <span id="sub-6" class="main-info-header__text">
         {{ $i18n.t('personnel.detail.workingHistoryInfo') }}
       </span>
-      <span
-        v-if="
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
-        class="main-info-header__edit"
-        @click="openDialog"
-      >
+      <span class="main-info-header__edit" @click="openDialog">
         {{ $i18n.t('personnel.detail.addWorkingHistory') }}
       </span>
     </div>
@@ -23,7 +13,7 @@
       :key="working.id"
       class="main-info__content"
     >
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -42,7 +32,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -61,14 +51,14 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
               $i18n.t('personnel.detail.timePeriod')
             }}</span>
             <span v-if="isEditLine !== working" class="content-item__detail">
-              {{ working.start_date }} -
+              {{ working.start_date }} <i class="el-icon-right arrow-right"></i>
               {{ working.end_date }}
             </span>
             <el-date-picker
@@ -86,16 +76,7 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        v-if="
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
-        :span="6"
-      >
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div
             v-if="isEditLine !== working"
@@ -280,4 +261,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.arrow-right {
+  font-weight: 600;
+  color: #409eff;
+}
+</style>

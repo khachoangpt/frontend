@@ -37,7 +37,7 @@
       </span>
     </div>
     <el-row class="main-info__content">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -62,7 +62,7 @@
       :key="'insurance' + index"
       class="main-info__content"
     >
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">
@@ -81,7 +81,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -100,7 +100,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{

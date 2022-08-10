@@ -484,11 +484,11 @@ export default {
 
 .detail-right__header-pass {
   font-size: 16px;
-  margin-right: 24px;
   font-weight: 600;
   cursor: pointer;
   color: #303133;
   text-decoration: none;
+  text-align: right;
 }
 
 .detail-right__header-pass:hover {
@@ -553,9 +553,9 @@ export default {
 .main-info-header__edit {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-  margin-right: 24px;
   font-weight: 600;
   cursor: pointer;
+  text-align: right;
 }
 
 .main-info-header__edit:hover {
@@ -586,7 +586,7 @@ export default {
 }
 
 .edit-input {
-  width: 80%;
+  width: 80% !important;
 }
 
 .detail-right__header-pass-icon {

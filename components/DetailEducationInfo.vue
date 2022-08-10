@@ -4,17 +4,7 @@
       <span id="sub-8" class="main-info-header__text">
         {{ $i18n.t('personnel.detail.educationInfo') }}
       </span>
-      <span
-        v-if="
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
-        class="main-info-header__edit"
-        @click="openDialog"
-      >
+      <span class="main-info-header__edit" @click="openDialog">
         {{ $i18n.t('personnel.detail.addEducationInfo') }}
       </span>
     </div>
@@ -23,7 +13,7 @@
       :key="index"
       class="main-info__content"
     >
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -45,7 +35,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -55,7 +45,8 @@
               v-if="isEditLineEducation !== education"
               class="content-item__detail"
             >
-              {{ education.start_date }} -
+              {{ education.start_date }}
+              <i class="el-icon-right arrow-right"></i>
               {{ education.end_date }}
             </span>
             <el-date-picker
@@ -73,7 +64,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="6">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -95,16 +86,7 @@
           </div>
         </div>
       </el-col>
-      <el-col
-        v-if="
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
-        "
-        :span="6"
-      >
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div
             v-if="isEditLineEducation !== education"
@@ -290,5 +272,10 @@ export default {
 <style>
 .add-education__time {
   width: 100% !important;
+}
+
+.arrow-right {
+  font-weight: 600;
+  color: #409eff;
 }
 </style>
