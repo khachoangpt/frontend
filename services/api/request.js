@@ -78,23 +78,25 @@ class UserApi extends Request {
 
   getListRequestReceiveOnFilter(data) {
     const accessToken = getToken()
-    let url =
-      '/api/list_all_application_request_receive?filter=employeeId:AEQ' +
-      data.employeeId
+    let url = '/api/list_all_application_request_receive?'
     if (data.dateRange.length > 0) {
-      url += ',createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
+      url += 'filter=createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
     }
     if (data.requestTypeId !== '' && data.dateRange.length > 0) {
       url += ',requestType:AEQ' + data.requestTypeId
     } else if (data.requestTypeId !== '' && data.dateRange.length <= 0) {
-      url += ',requestType:AEQ' + data.requestTypeId
+      url += 'filter=requestType:AEQ' + data.requestTypeId
     }
     if (data.requestStatusSearch !== '' && data.requestTypeId !== '') {
       url += ',requestStatus:AEQ' + data.requestStatusSearch
     } else if (data.requestStatusSearch !== '' && data.dateRange.length > 0) {
       url += ',requestStatus:AEQ' + data.requestStatusSearch
-    } else if (data.requestStatusSearch !== '' && data.dateRange.length <= 0) {
-      url += ',requestStatus:AEQ' + data.requestStatusSearch
+    } else if (
+      data.requestStatusSearch !== '' &&
+      data.dateRange.length <= 0 &&
+      data.requestTypeId === ''
+    ) {
+      url += 'filter=requestStatus:AEQ' + data.requestStatusSearch
     }
     return this.$axios.$get(
       url + '&paging=offset:' + (data.page - 1) + ',limit:5',
