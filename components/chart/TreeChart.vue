@@ -27,7 +27,6 @@
               <el-avatar
                 v-else
                 class="avartar"
-                size="10"
                 icon="el-icon-user-solid"
               ></el-avatar>
               <span class="name">{{ node.name }}</span>
@@ -43,7 +42,7 @@
 </template>
 <script>
 import VueTree from '@ssthouse/vue-tree-chart'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TreeChart',
@@ -60,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('salary', ['organizational']),
+    ...mapGetters('salary', ['organizational']),
   },
 
   async mounted() {

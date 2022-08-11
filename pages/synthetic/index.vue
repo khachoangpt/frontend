@@ -177,6 +177,7 @@ export default {
     },
   },
   async mounted() {
+    await this.getGeneralDataChart()
     await this.getEmployeeById()
     this.paidLeaveReasonChartEmployeeId = this.id
     await this.getLeaveCompanyReasonChart(
@@ -186,7 +187,6 @@ export default {
       year: new Date().getFullYear(),
       employeeId: this.paidLeaveReasonChartEmployeeId,
     })
-    await this.getGeneralDataChart()
   },
   methods: {
     ...mapActions('synthetic', [
