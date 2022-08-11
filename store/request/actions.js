@@ -106,6 +106,12 @@ export default {
   async getDetailSendRequest({ commit }, requestId) {
     try {
       const res = await this.$repository.request.getDetailSendRequest(requestId)
+      const description = res.applicationsRequestResponseList[0].description
+      const regexDes = /(\[(.*?)\])/gm
+      const value = description.match(regexDes)
+      for (let i = 0; i < value.length; i++) {
+        value[i] = value[i].substring(1, value[i].length - 1)
+      }
       commit('setRequestSendDetail', res.applicationsRequestResponseList[0])
     } catch (error) {
       Message.error(error.response.data.message)

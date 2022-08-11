@@ -519,4 +519,17 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async addEmployeeByExcel({ commit }, data) {
+    try {
+      const res = await this.$repository.user.addEmployeeByExcel(data)
+      if(res.code === 201) {
+        await commit('setFullscreenLoading', false)
+        await this.$router.push(this.localePath('/personnel'))
+        Message.success('Thêm nhân viên thành công.')
+      }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
 }

@@ -136,10 +136,9 @@
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
           Chi tiết
-          <div
-            class="request-detail-dialog__description"
-            v-html="requestSendDetail.description"
-          ></div>
+          <div class="request-detail-dialog__description">
+            {{ requestSendDetail.description }}
+          </div>
         </el-col>
       </el-row>
       <!-- <span slot="footer" class="dialog-footer">
@@ -282,6 +281,8 @@ export default {
   border: 2px solid #ccc;
   border-radius: 5px;
   padding: 8px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .request-detail-dialog__description::-webkit-scrollbar {

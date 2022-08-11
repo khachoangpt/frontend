@@ -363,6 +363,18 @@ class UserApi extends User {
       },
     })
   }
+
+  addEmployeeByExcel(data) {
+    const formData = new FormData()
+    formData.append('file', data)
+    const accessToken = getToken()
+    return this.$axios.$post('/api/import_excel_employee', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

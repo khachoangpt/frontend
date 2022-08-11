@@ -4,6 +4,18 @@
       <div class="add-personnel__header-text">
         {{ $i18n.t('personnel.addNewEmployee') }}
       </div>
+      <label for="fusk" class="import-by-excel__button">
+        <span class="import-by-excel__text">Import from Excel</span>
+        <img class="import-by-excel" src="~/static/excel.png" alt="excel" />
+      </label>
+      <input
+        id="fusk"
+        ref="excelFile"
+        type="file"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        style="display: none"
+        @change="importFileExcel"
+      />
     </div>
     <div class="add-personnel__content">
       <el-form
@@ -477,6 +489,7 @@ export default {
       'getListRoleType',
       'searchManager',
       'onChangePosition',
+      'addEmployeeByExcel',
     ]),
     ...mapActions('salary', ['getManagerLowerOfArea']),
 
@@ -504,6 +517,11 @@ export default {
         return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
       }
     },
+
+    async importFileExcel() {
+      await this.setFullscreenLoading(true)
+      await this.addEmployeeByExcel(this.$refs.excelFile.files[0])
+    },
   },
 }
 </script>
@@ -513,6 +531,9 @@ export default {
   border-bottom: 2px solid #ccc;
   padding-bottom: 16px;
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .add-personnel__header-text {
@@ -532,5 +553,29 @@ export default {
 
 .el-autocomplete-suggestion {
   width: fit-content !important;
+}
+
+.import-by-excel__button {
+  background-color: #67c23a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.import-by-excel__button:hover {
+  opacity: 0.8;
+}
+
+.import-by-excel__text {
+  font-size: 14px;
+}
+
+.import-by-excel {
+  width: 40px;
+  margin-left: 8px;
 }
 </style>
