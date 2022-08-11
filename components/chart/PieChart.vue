@@ -62,43 +62,7 @@ export default {
     },
     values: {
       type: Array,
-      default: () => [
-        {
-          key: 0,
-          label: 'Lương 10-20 triệu',
-          value: 60,
-        },
-        {
-          key: 1,
-          label: 'Lương 10-20 triệu',
-          value: 35.5,
-        },
-        {
-          key: 2,
-          label: 'Lương 20-30 triệu',
-          value: 50,
-        },
-        {
-          key: 3,
-          label: 'Lương 20-30 triệu',
-          value: 100,
-        },
-        {
-          key: 4,
-          label: 'Lương 20-30 triệu',
-          value: 20,
-        },
-        {
-          key: 5,
-          label: 'Lương 100-300 triệu',
-          value: 40,
-        },
-        {
-          key: 6,
-          label: 'Lương 20-30 triệu',
-          value: 40,
-        },
-      ],
+      default: () => [],
     },
   },
   data() {
