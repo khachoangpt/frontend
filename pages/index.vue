@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
     <el-row :gutter="16">
-      <el-col class="dashboard__col" :lg="6" :md="12" :sm="12" :xs="24">
+      <el-col class="dashboard__col" :lg="7" :md="12" :sm="12" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix">
@@ -16,7 +16,7 @@
       <el-col
         v-if="!roles.find((role) => role.authority === 'ROLE_ADMIN')"
         class="dashboard__col"
-        :lg="18"
+        :lg="17"
         :md="12"
         :sm="24"
         :xs="24"

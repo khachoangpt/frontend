@@ -111,7 +111,7 @@
       class="sidebar-item"
       :index="localePath('/synthetic')"
     >
-      <i class="el-icon-s-claim sidebar-icon"></i>
+      <i class="el-icon-pie-chart sidebar-icon"></i>
       <span class="sidebar-item__text">{{ $i18n.t('sidebar.synthetic') }}</span>
     </el-menu-item>
     <el-submenu class="sidebar-item" :index="localePath('/policy')">
