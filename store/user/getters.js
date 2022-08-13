@@ -39,4 +39,5 @@ export default {
   employeeRole: (state) => state.employeeRole,
   employeeNameSalaryHistory: (state) => state.employeeNameSalaryHistory,
   employeeNameSalaryStructure: (state) => state.employeeNameSalaryStructure,
+  loadingOnSearchEmployee: (state) => state.loadingOnSearchEmployee,
 }

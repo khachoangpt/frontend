@@ -41,7 +41,6 @@
                 :fetch-suggestions="querySearch"
                 @input="updateEmployeeNameSalaryHistory"
                 @select="handleSelectEmployeeSalaryHistory"
-                @clear="onClearEmployeeNameSalaryHistory"
               ></el-autocomplete>
               <el-select
                 v-model="historySalaryOption.type"
@@ -96,7 +95,6 @@
                   :fetch-suggestions="querySearch"
                   @input="updateEmployeeNameSalaryStructure"
                   @select="handleSelectEmployeeSalaryStructure"
-                  @clear="onClearEmployeeNameSalaryStructure"
                 ></el-autocomplete>
                 <el-date-picker
                   v-model="salaryStructureDate"

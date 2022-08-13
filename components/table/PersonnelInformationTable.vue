@@ -6,10 +6,6 @@
     :fixed-header="false"
     :columns="columns"
     :rows="personnelList.hrmResponse"
-    :search-options="{
-      enabled: true,
-      externalQuery: searchText,
-    }"
     :sort-options="{
       enabled: true,
     }"
@@ -62,7 +58,7 @@ export default {
 
   async mounted() {
     await this.getPersonnelList({
-      searchText: this.searchText,
+      searchText: '',
       page: 1,
     })
     this.loadingPersonnelTable = false

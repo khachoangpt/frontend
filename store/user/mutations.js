@@ -367,4 +367,8 @@ export default {
   updateEmployeeNameSalaryStructure(state, data) {
     state.employeeNameSalaryStructure = data
   },
+
+  setLoadingOnSearchEmployee(state, loadingOnSearchEmployee) {
+    state.loadingOnSearchEmployee = loadingOnSearchEmployee
+  },
 }

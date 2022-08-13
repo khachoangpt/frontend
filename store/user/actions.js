@@ -523,11 +523,26 @@ export default {
   async addEmployeeByExcel({ commit }, data) {
     try {
       const res = await this.$repository.user.addEmployeeByExcel(data)
-      if(res.code === 201) {
+      if (res.code === 201) {
         await commit('setFullscreenLoading', false)
         await this.$router.push(this.localePath('/personnel'))
         Message.success('Thêm nhân viên thành công.')
       }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async onChangeSearchEmployee({ commit, state }) {
+    try {
+      await commit('setLoadingOnSearchEmployee', true)
+      const res = await this.$repository.user.getPersonnelList({
+        searchText: state.searchText,
+        page: 1,
+      })
+      await commit('setTotalPage', res.total)
+      await commit('setPersonnelList', res)
+      await commit('setLoadingOnSearchEmployee', false)
     } catch (error) {
       Message.error(error.response.data.message)
     }

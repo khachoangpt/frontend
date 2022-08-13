@@ -1,5 +1,10 @@
 <template>
-  <div class="personnel">
+  <div
+    v-loading.fullscreen.lock="loadingOnSearchEmployee"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+    class="personnel"
+  >
     <div class="personnel__header">
       <div class="personnel__header-text">
         {{ $i18n.t('personnel.listOfPersonnel') }}
@@ -10,6 +15,7 @@
           class="header-actions__search"
           :placeholder="$i18n.t('personnel.search')"
           @input="inputSearch"
+          @change="searchEmployee"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
@@ -46,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import PersonnelInformationTable from '~/components/table/PersonnelInformationTable.vue'
 
 export default {
@@ -63,14 +69,32 @@ export default {
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['workingStatus', 'searchText']),
+    ...mapGetters('user', [
+      'workingStatus',
+      'searchText',
+      'loadingOnSearchEmployee',
+    ]),
+  },
+
+  mounted() {
+    this.setSearchText('')
   },
 
   methods: {
-    ...mapMutations('user', ['setSearchText']),
+    ...mapActions('user', ['onChangeSearchEmployee']),
+    ...mapMutations('user', [
+      'setSearchText',
+      'setLoadingOnSearchEmployee',
+      'setSearchText',
+    ]),
     inputSearch(e) {
       this.$emit('input', e)
       this.setSearchText(e)
+    },
+
+    async searchEmployee() {
+      await this.setLoadingOnSearchEmployee(true)
+      await this.onChangeSearchEmployee()
     },
   },
 }

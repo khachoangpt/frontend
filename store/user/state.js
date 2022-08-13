@@ -149,4 +149,5 @@ export default () => ({
   employeeRole: '',
   employeeNameSalaryHistory: '',
   employeeNameSalaryStructure: '',
+  loadingOnSearchEmployee: false,
 })
