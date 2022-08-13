@@ -1,5 +1,10 @@
 <template>
-  <el-row :gutter="20">
+  <el-row
+    v-loading.fullscreen.lock="loadingWorkingDataEmployee"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+    :gutter="20"
+  >
     <el-col :span="4">
       <el-page-header @back="back"> </el-page-header>
       <div class="working-data-emp">
@@ -190,6 +195,7 @@ export default {
       masks: {
         weekdays: 'WWWW',
       },
+      loadingWorkingDataEmployee: true,
     }
   },
 
@@ -208,6 +214,7 @@ export default {
       date: this.selectedTimeRange,
       employeeId: this.$route.params.employeeId,
     })
+    this.loadingWorkingDataEmployee = false
   },
 
   methods: {

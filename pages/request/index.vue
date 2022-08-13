@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    v-loading.fullscreen.lock="loadingRequest"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+  >
     <div class="request__header">
       <div class="request__header-text">Danh sách yêu cầu</div>
       <div>
@@ -132,6 +136,7 @@ export default {
       requestDateRange: [],
       requestTypeSearch: '',
       requestStatusSearch: '',
+      loadingRequest: true,
     }
   },
 
@@ -150,6 +155,7 @@ export default {
     await this.getListRequestSend(1)
     await this.getListRequestType()
     await this.getListRequestStatus()
+    this.loadingRequest = false
   },
 
   methods: {

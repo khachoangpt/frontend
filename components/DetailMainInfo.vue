@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    v-loading.fullscreen.lock="loadingPersonnelDetail"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+  >
     <div class="main-info-header">
       <span id="sub-1" class="main-info-header__text">{{
         $i18n.t('personnel.detail.mainInfo')
@@ -473,7 +477,9 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {}
+    return {
+      loadingPersonnelDetail: true,
+    }
   },
 
   computed: {
@@ -502,6 +508,7 @@ export default {
         ).job_id
       )
     }
+    this.loadingPersonnelDetail = false
   },
 
   methods: {

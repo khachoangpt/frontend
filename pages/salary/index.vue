@@ -1,5 +1,10 @@
 <template>
-  <div class="salary">
+  <div
+    v-loading.fullscreen.lock="loadingSalary"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+    class="salary"
+  >
     <div class="salary__header">
       <div class="salary__header-text">Quản lý tiền lương</div>
     </div>
@@ -227,6 +232,7 @@ export default {
       isShowCheck: true,
       isShowReject: true,
       isShowApprove: true,
+      loadingSalary: true,
     }
   },
 
@@ -255,6 +261,7 @@ export default {
       await this.getEmployeeByManager()
     }
     await this.getListPersonalSalary()
+    this.loadingSalary = false
   },
 
   methods: {

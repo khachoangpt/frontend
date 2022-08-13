@@ -1,5 +1,10 @@
 <template>
-  <div class="container">
+  <div
+    v-loading.fullscreen.lock="loadingSynthetic"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+    class="container"
+  >
     <h1 class="title">Tổng hợp biểu đồ quản lý nhân viên phòng ban</h1>
     <el-row :gutter="20">
       <el-col class="dashboard__col" :span="8">
@@ -124,6 +129,7 @@ export default {
       leaveCompanyReasonChartOption: new Date(),
       paidLeaveReasonChartOption: new Date(),
       paidLeaveReasonChartEmployeeId: '',
+      loadingSynthetic: true,
     }
   },
   computed: {
@@ -187,6 +193,7 @@ export default {
       year: new Date().getFullYear(),
       employeeId: this.paidLeaveReasonChartEmployeeId,
     })
+    this.loadingSynthetic = false
   },
   methods: {
     ...mapActions('synthetic', [

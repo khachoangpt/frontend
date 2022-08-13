@@ -1,5 +1,10 @@
 <template>
-  <div class="dashboard">
+  <div
+    v-loading.fullscreen.lock="loadingDashboard"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+    class="dashboard"
+  >
     <el-row :gutter="16">
       <el-col class="dashboard__col" :lg="7" :md="12" :sm="12" :xs="24">
         <div class="grid-content bg-purple">
@@ -151,6 +156,7 @@ export default {
 
   data() {
     return {
+      loadingDashboard: true,
       value: new Date(),
       historySalaryOption: {
         optionsType: [
@@ -240,6 +246,7 @@ export default {
         employeeId: this.salaryStructureEmployeeById,
       })
     }
+    this.loadingDashboard = false
   },
 
   methods: {

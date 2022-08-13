@@ -5,13 +5,13 @@ export default {
   async login({ commit }, data) {
     try {
       const res = await this.$repository.user.login(data)
-      saveToken(res.accessToken)
-      commit('setId', res.id)
-      commit('setEmail', res.email)
-      commit('setRoles', res.roles)
-      commit('setTokenType', res.tokenType)
-      commit('setAccessToken', res.accessToken)
-      this.$router.push(this.localePath('/'))
+      await saveToken(res.accessToken)
+      await commit('setId', res.id)
+      await commit('setEmail', res.email)
+      await commit('setRoles', res.roles)
+      await commit('setTokenType', res.tokenType)
+      await commit('setAccessToken', res.accessToken)
+      await this.$router.push(this.localePath('/'))
     } catch (error) {
       if (error.response.data.message === 'Bad credentials') {
         Message.error(this.$i18n.t('login.passwordIncorrect'))

@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    v-loading.fullscreen.lock="loadingSalaryEmployee"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+  >
     <div class="salary-detail__header">
       <div class="salary-detail__header-text">Chi tiết tiền lương</div>
     </div>
@@ -505,6 +509,7 @@ export default {
 
   data() {
     return {
+      loadingSalaryEmployee: true,
       activeNames: [],
       deductionForm: {
         deductionSalaryId: '',
@@ -638,6 +643,7 @@ export default {
       this.isShowCheck = true
       this.isShowReject = true
     }
+    this.loadingSalaryEmployee = false
   },
 
   methods: {

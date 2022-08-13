@@ -1,5 +1,8 @@
 <template>
   <vue-good-table
+    v-loading.fullscreen.lock="loadingPersonnelTable"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
     :fixed-header="false"
     :columns="columns"
     :rows="personnelList.hrmResponse"
@@ -43,7 +46,9 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'PersonnelInformationTable',
   data() {
-    return {}
+    return {
+      loadingPersonnelTable: true,
+    }
   },
 
   computed: {
@@ -55,11 +60,12 @@ export default {
     ]),
   },
 
-  mounted() {
-    this.getPersonnelList({
+  async mounted() {
+    await this.getPersonnelList({
       searchText: this.searchText,
       page: 1,
     })
+    this.loadingPersonnelTable = false
   },
 
   methods: {

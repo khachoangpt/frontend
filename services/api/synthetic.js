@@ -2,11 +2,10 @@ import makeFactoryClass from '../class_factory'
 import BaseClass from './base_class'
 import { getToken } from '~/helper/jwt'
 
-const accessToken = getToken()
-
 class SyntheticMock extends BaseClass {}
 class Synthetic extends BaseClass {
   getGeneralDataChart() {
+    const accessToken = getToken()
     return this.$axios.$get('/api/get_general_data_chart', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
@@ -15,6 +14,7 @@ class Synthetic extends BaseClass {
   }
 
   getLeaveCompanyReasonChart(year) {
+    const accessToken = getToken()
     return this.$axios.$get(
       `/api/get_leave_company_reason_chart?year=${year}`,
       {
@@ -26,6 +26,7 @@ class Synthetic extends BaseClass {
   }
 
   getPaidLeaveReasonChart(year, employeeId) {
+    const accessToken = getToken()
     return this.$axios.$get(
       `api/get_paid_leave_reason_chart?year=${year}&employeeId=${employeeId}`,
       {

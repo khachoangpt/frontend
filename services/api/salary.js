@@ -4,8 +4,6 @@ import BaseClass from './base_class'
 import { getToken } from '~/helper/jwt'
 import { PageLimit } from '~/constants/index'
 
-const accessToken = getToken()
-
 class Policy extends BaseClass {}
 
 class UserMock extends Policy {}
@@ -176,6 +174,7 @@ class UserApi extends Policy {
   }
 
   getHistorySalary(type, date, employeeId) {
+    const accessToken = getToken()
     const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
     let url = `/api/get_salary_history_chart?type=${type}&employeeId=${employeeId}`
     if (type === 'monthly') {
@@ -189,6 +188,7 @@ class UserApi extends Policy {
   }
 
   getSalaryStructure(date, employeeId) {
+    const accessToken = getToken()
     const dateFormat = format(new Date(date || new Date()), 'yyyy-MM-dd')
     return this.$axios.$get(
       `api/get_salary_structure_chart?date=${dateFormat}&employeeId=${employeeId}`,
@@ -201,6 +201,7 @@ class UserApi extends Policy {
   }
 
   getOrganizational() {
+    const accessToken = getToken()
     return this.$axios.$get('/api/get_organizational', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
@@ -209,6 +210,7 @@ class UserApi extends Policy {
   }
 
   getEmployeeById() {
+    const accessToken = getToken()
     return this.$axios.$get('/api/get_employee_by_manager', {
       headers: {
         Authorization: 'Bearer ' + accessToken,

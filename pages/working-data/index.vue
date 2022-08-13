@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    v-loading.fullscreen.lock="loadingWorkingData"
+    element-loading-background="rgba(0, 0, 0, 0.2)"
+    type="primary"
+  >
     <div class="time-keeping__header">
       <div class="time-keeping__header-text">
         {{ $i18n.t('workingData.workingData') }}
@@ -68,6 +72,7 @@ export default {
   middleware: ['auth', 'manager'],
   data() {
     return {
+      loadingWorkingData: true,
       filterOffice: [],
       filterArea: [],
     }
@@ -88,6 +93,7 @@ export default {
     await this.getAllTimeKeeping([this.selectedTimeRange, 1])
     await this.getListOffice()
     await this.getListArea()
+    this.loadingWorkingData = false
   },
 
   methods: {
