@@ -18,6 +18,7 @@
         <img class="logo-img" src="/hrm-logo.png" alt="" />
       </div>
       <div class="change-password-form">
+        <el-page-header class="header-back" @back="back"> </el-page-header>
         <h2 class="change-password-form__header">
           {{ $i18n.t('changePassword.changePassword') }}
         </h2>
@@ -196,6 +197,7 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   min-width: 360px;
   background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
 }
 
 .change-password-form__header {
@@ -237,5 +239,20 @@ export default {
   float: right;
   position: absolute;
   right: 5%;
+}
+
+.header-back {
+  position: absolute;
+  top: -28px;
+  left: 4px;
+  color: #fff !important;
+}
+
+.header-back:hover {
+  color: #08aeea !important;
+}
+
+.el-page-header__left::after {
+  display: none;
 }
 </style>

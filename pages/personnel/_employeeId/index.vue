@@ -192,6 +192,7 @@
                 $i18n.t('personnel.detail.personalInfo')
               }}</span>
               <nuxt-link
+                v-if="id === personnelDetail.employee_id"
                 to="/forgot/change-password"
                 class="detail-right__header-pass"
               >
@@ -247,7 +248,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('auth', ['avatar']),
+    ...mapGetters('auth', ['avatar', 'id']),
     ...mapGetters('user', [
       'taxList',
       'personnelDetail',

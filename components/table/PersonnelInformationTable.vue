@@ -43,17 +43,103 @@ export default {
   name: 'PersonnelInformationTable',
   data() {
     return {
+      columns: [
+        {
+          label: this.$i18n.t('personnel.detail.fullName'),
+          field: 'full_name',
+          width: '180px',
+          thClass: 'table-header-center',
+        },
+        {
+          label: this.$i18n.t('personnel.detail.employeeId'),
+          field: 'employee_id',
+          width: '120px',
+          thClass: 'table-header-center',
+        },
+        {
+          label: 'Email',
+          field: 'email',
+          width: '150px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.workingStatus'),
+          field: 'working_status',
+          width: '120px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.phoneNumber'),
+          field: 'phone',
+          width: '130px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.gender'),
+          field: 'gender',
+          width: '80px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.birthDate'),
+          field: 'birth_date',
+          width: '100px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.office'),
+          field: 'office_name',
+          width: '150px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.area'),
+          field: 'area_name',
+          width: '100px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.grade'),
+          field: 'grade',
+          width: '120px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.seniority'),
+          field: 'seniority',
+          width: '150px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.detail.position'),
+          field: 'position_name',
+          width: '100px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('personnel.employeeType'),
+          field: 'working_name',
+          width: '150px',
+          thClass: 'table-header-center',
+          sortable: false,
+        },
+      ],
       loadingPersonnelTable: true,
     }
   },
 
   computed: {
-    ...mapGetters('user', [
-      'columns',
-      'personnelList',
-      'searchText',
-      'totalPage',
-    ]),
+    ...mapGetters('user', ['personnelList', 'searchText', 'totalPage']),
   },
 
   async mounted() {

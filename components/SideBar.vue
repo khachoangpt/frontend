@@ -245,7 +245,11 @@ export default {
 
 .sidebar-icon {
   font-size: 24px !important;
-  color: #fff !important;
+}
+
+.el-menu-item i,
+.el-submenu__title i {
+  color: #fff;
 }
 
 .sidebar-item {
@@ -261,7 +265,7 @@ export default {
 }
 
 .el-menu-item.is-active {
-  color: aqua;
+  color: aqua !important;
 }
 
 .sidebar-item__text {

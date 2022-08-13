@@ -299,6 +299,33 @@
               </el-form-item>
             </div>
           </el-col>
+          <el-col :span="6">
+            <div class="grid-content">
+              <el-form-item
+                :label="$i18n.t('personnel.baseSalary')"
+                prop="baseSalary"
+              >
+                <el-input
+                  v-model.number="addEmployeeForm.baseSalary"
+                  :placeholder="$i18n.t('personnel.baseSalary')"
+                  class="add-employee-form__input"
+                ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="40">
+          <el-col :span="6">
+            <div class="grid-content">
+              <el-form-item :label="$i18n.t('personnel.salary')" prop="salary">
+                <el-input
+                  v-model.number="addEmployeeForm.salary"
+                  :placeholder="$i18n.t('personnel.salary')"
+                  class="add-employee-form__input"
+                ></el-input>
+              </el-form-item>
+            </div>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -343,6 +370,8 @@ export default {
         personalEmail: '',
         startDate: '',
         endDate: '',
+        baseSalary: '',
+        salary: '',
       },
 
       rules: {
@@ -442,6 +471,28 @@ export default {
             required: true,
             message: this.$i18n.t('personnel.validation.endDate'),
             trigger: 'blur',
+          },
+        ],
+        baseSalary: [
+          {
+            required: true,
+            message: this.$i18n.t('personnel.validation.baseSalary'),
+            trigger: 'blur',
+          },
+          {
+            type: 'number',
+            message: this.$i18n.t('personnel.validation.number'),
+          },
+        ],
+        salary: [
+          {
+            required: true,
+            message: this.$i18n.t('personnel.validation.salary'),
+            trigger: 'blur',
+          },
+          {
+            type: 'number',
+            message: this.$i18n.t('personnel.validation.number'),
           },
         ],
       },

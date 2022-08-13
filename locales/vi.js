@@ -65,6 +65,8 @@ const vi = {
     office: 'Văn phòng làm việc',
     startDate: 'Ngày bắt đầu',
     endDate: 'Ngày kết thúc',
+    baseSalary: 'Lương cơ bản',
+    salary: 'Lương',
     back: 'Quay lại',
     addEmployee: 'Thêm',
     listOfPersonnel: 'Danh sách nhân sự',
@@ -99,6 +101,9 @@ const vi = {
       office: 'Văn phòng không được để trống',
       startDate: 'Ngày bắt đầu không được để trống',
       endDate: 'Ngày kết thúc không được để trống',
+      baseSalary: 'Lương cơ bản không được để trống',
+      salary: 'Lương không được để trống',
+      number: 'Nhập vào một số',
     },
 
     detail: {
@@ -178,6 +183,7 @@ const vi = {
       validateSchool: 'Trường học không được để trống.',
       validateDegree: 'Bằng cấp không được để trống.',
       changeAvatar: 'Đổi avatar',
+      seniority: 'Thâm niên',
     },
     table: {
       personnel: 'Nhân sự',
