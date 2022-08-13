@@ -37,4 +37,6 @@ export default {
   screenLoadingAvatar: (state) => state.screenLoadingAvatar,
   imageUrl: (state) => state.imageUrl,
   employeeRole: (state) => state.employeeRole,
+  employeeNameSalaryHistory: (state) => state.employeeNameSalaryHistory,
+  employeeNameSalaryStructure: (state) => state.employeeNameSalaryStructure,
 }

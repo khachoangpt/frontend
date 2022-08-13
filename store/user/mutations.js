@@ -359,4 +359,12 @@ export default {
   updateWorkingBaseSalary(state, data) {
     state.workingInfo.base_salary = data
   },
+
+  updateEmployeeNameSalaryHistory(state, data) {
+    state.employeeNameSalaryHistory = data
+  },
+
+  updateEmployeeNameSalaryStructure(state, data) {
+    state.employeeNameSalaryStructure = data
+  },
 }

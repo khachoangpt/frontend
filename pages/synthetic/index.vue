@@ -60,7 +60,7 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Lịch sử thôi việc</span>
+              <span class="box-card__header-text">Thống kê nghỉ việc theo năm</span>
               <el-date-picker
                 v-model="leaveCompanyReasonChartOption"
                 type="year"
@@ -79,7 +79,7 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Lịch sử nghỉ phép</span>
+              <span class="box-card__header-text">Thống kê nghỉ phép theo năm</span>
               <el-select
                 v-if="!roles.includes('user')"
                 v-model="paidLeaveReasonChartEmployeeId"

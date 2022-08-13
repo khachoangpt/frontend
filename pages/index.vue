@@ -6,7 +6,7 @@
     class="dashboard"
   >
     <el-row :gutter="16">
-      <el-col class="dashboard__col" :lg="7" :md="12" :sm="12" :xs="24">
+      <el-col class="dashboard__col" :lg="6" :md="8" :sm="24" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix">
@@ -21,8 +21,8 @@
       <el-col
         v-if="!roles.find((role) => role.authority === 'ROLE_ADMIN')"
         class="dashboard__col"
-        :lg="17"
-        :md="12"
+        :lg="18"
+        :md="16"
         :sm="24"
         :xs="24"
       >
@@ -32,21 +32,17 @@
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.salaryHistory')
               }}</span>
-              <el-select
+              <el-autocomplete
                 v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
-                v-model="historySalaryOption.employeeById"
+                class="salary-history__search-employee"
+                :clearable="true"
+                :value="employeeNameSalaryHistory"
                 size="small"
-                placeholder="Mã nhân viên"
-              >
-                <el-option
-                  v-for="item in employeeByIdOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
-                >
-                </el-option>
-              </el-select>
+                :fetch-suggestions="querySearch"
+                @input="updateEmployeeNameSalaryHistory"
+                @select="handleSelectEmployeeSalaryHistory"
+                @clear="onClearEmployeeNameSalaryHistory"
+              ></el-autocomplete>
               <el-select
                 v-model="historySalaryOption.type"
                 class="salary-history__search-input"
@@ -63,11 +59,13 @@
               </el-select>
               <el-date-picker
                 v-model="historySalaryOption.date"
+                :clearable="false"
                 type="year"
                 size="small"
                 class="salary-history__search-input"
                 placeholder="Ngày"
                 :disabled="historySalaryOption.type !== 'monthly'"
+                :picker-options="pickerOptions"
               >
               </el-date-picker>
             </div>
@@ -90,28 +88,24 @@
                 $i18n.t('dashboard.salaryStructure')
               }}</span>
               <div class="salary-structure-chart__action">
-                <el-select
+                <el-autocomplete
                   v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
-                  v-model="salaryStructureEmployeeById"
-                  class="salary-structure__search-text"
+                  :clearable="true"
+                  :value="employeeNameSalaryStructure"
                   size="small"
-                  placeholder="Mã nhân viên"
-                >
-                  <el-option
-                    v-for="item in employeeByIdOptions"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled"
-                  >
-                  </el-option>
-                </el-select>
+                  :fetch-suggestions="querySearch"
+                  @input="updateEmployeeNameSalaryStructure"
+                  @select="handleSelectEmployeeSalaryStructure"
+                  @clear="onClearEmployeeNameSalaryStructure"
+                ></el-autocomplete>
                 <el-date-picker
                   v-model="salaryStructureDate"
+                  :clearable="false"
                   class="salary-structure__search-text"
                   size="small"
                   type="month"
                   placeholder="Ngày"
+                  :picker-options="pickerOptions"
                 >
                 </el-date-picker>
               </div>
@@ -143,7 +137,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Calendar from '../components/chart/Calendar.vue'
 import LineChart from '~/components/chart/LineChart.vue'
 import DoughnutChart from '~/components/chart/DoughnutChart.vue'
@@ -156,6 +150,14 @@ export default {
 
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return (
+            time.getTime() >=
+            new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+          )
+        },
+      },
       loadingDashboard: true,
       value: new Date(),
       historySalaryOption: {
@@ -173,13 +175,21 @@ export default {
         date: new Date(),
         employeeById: '',
       },
-      salaryStructureDate: new Date(),
+      salaryStructureDate: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth() - 1,
+        1
+      ),
       salaryStructureEmployeeById: '',
     }
   },
 
   computed: {
     ...mapGetters('auth', ['roles', 'id', 'fullName']),
+    ...mapGetters('user', [
+      'employeeNameSalaryHistory',
+      'employeeNameSalaryStructure',
+    ]),
     ...mapGetters('salary', [
       'historySalary',
       'salaryStructure',
@@ -187,10 +197,10 @@ export default {
     ]),
     employeeByIdOptions() {
       return [
-        { value: this.id, label: `${this.fullName} - ${this.id} (me)` },
+        { label: this.id, value: `${this.fullName} - ${this.id} (me)` },
         ...this.employeeById.map(({ employeeID, name }) => ({
-          value: employeeID,
-          label: `${name} - ${employeeID}`,
+          label: employeeID,
+          value: `${name} - ${employeeID}`,
         })),
       ]
     },
@@ -233,6 +243,12 @@ export default {
   async mounted() {
     if (this.roles.find((role) => role.authority === 'ROLE_MANAGER')) {
       await this.getEmployeeById()
+      await this.updateEmployeeNameSalaryHistory(
+        this.employeeByIdOptions[0].value
+      )
+      await this.updateEmployeeNameSalaryStructure(
+        this.employeeByIdOptions[0].value
+      )
     }
     if (!this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
       this.historySalaryOption.employeeById = this.id
@@ -256,6 +272,30 @@ export default {
       'getSalaryStructure',
       'getEmployeeById',
     ]),
+    ...mapMutations('user', [
+      'updateEmployeeNameSalaryHistory',
+      'updateEmployeeNameSalaryStructure',
+    ]),
+
+    querySearch(queryString, cb) {
+      const results = queryString
+        ? this.employeeByIdOptions.filter(this.createFilter(queryString))
+        : this.employeeByIdOptions
+      cb(results)
+    },
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
+    handleSelectEmployeeSalaryHistory(data) {
+      this.historySalaryOption.employeeById = data.label
+    },
+
+    handleSelectEmployeeSalaryStructure(data) {
+      this.salaryStructureEmployeeById = data.label
+    },
   },
 }
 </script>
@@ -345,7 +385,6 @@ export default {
 
 .salary-structure__search-text {
   margin-top: 8px;
-  width: 190px !important;
 }
 
 .salary-history__search-input {

@@ -147,4 +147,6 @@ export default () => ({
   screenLoadingAvatar: false,
   imageUrl: '',
   employeeRole: '',
+  employeeNameSalaryHistory: '',
+  employeeNameSalaryStructure: '',
 })
