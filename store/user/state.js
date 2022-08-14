@@ -59,4 +59,6 @@ export default () => ({
   employeeNameSalaryHistory: '',
   employeeNameSalaryStructure: '',
   loadingOnSearchEmployee: false,
+  dateRangeHoliday: '',
+  enableEditCalendar: false,
 })

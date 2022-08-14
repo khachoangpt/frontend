@@ -371,4 +371,12 @@ export default {
   setLoadingOnSearchEmployee(state, loadingOnSearchEmployee) {
     state.loadingOnSearchEmployee = loadingOnSearchEmployee
   },
+
+  setDateRangeHoliday(state, dateRangeHoliday) {
+    state.dateRangeHoliday = dateRangeHoliday
+  },
+
+  setEnableEditCalendar(state, enableEditCalendar) {
+    state.enableEditCalendar = enableEditCalendar
+  },
 }

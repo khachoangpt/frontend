@@ -40,4 +40,6 @@ export default {
   employeeNameSalaryHistory: (state) => state.employeeNameSalaryHistory,
   employeeNameSalaryStructure: (state) => state.employeeNameSalaryStructure,
   loadingOnSearchEmployee: (state) => state.loadingOnSearchEmployee,
+  dateRangeHoliday: (state) => state.dateRangeHoliday,
+  enableEditCalendar: (state) => state.enableEditCalendar,
 }

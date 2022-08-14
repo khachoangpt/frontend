@@ -530,6 +530,7 @@ export default {
       }
     } catch (error) {
       Message.error(error.response.data.message)
+      await commit('setFullscreenLoading', false)
     }
   },
 
@@ -543,6 +544,23 @@ export default {
       await commit('setTotalPage', res.total)
       await commit('setPersonnelList', res)
       await commit('setLoadingOnSearchEmployee', false)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async insertHoliday({ commit, dispatch, state }, data) {
+    try {
+      const value = {
+        holiday_name: 'holiday',
+        start_date: format(data, 'yyyy-MM-dd'),
+        end_date: format(data, 'yyyy-MM-dd'),
+      }
+      const res = await this.$repository.user.insertHoliday(value)
+      if (res.code === 201) {
+        await dispatch('getHoliday', new Date().getFullYear())
+        Message.success('Set holiday successfully')
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }

@@ -13,6 +13,12 @@
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.holidayCompany')
               }}</span>
+              <el-switch
+                v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+                v-model="isEditCalendar"
+                @change="onChangeEditCalendar"
+              >
+              </el-switch>
             </div>
             <Calendar />
           </el-card>
@@ -135,6 +141,7 @@
 </template>
 
 <script>
+import { Message } from 'element-ui'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 import Calendar from '../components/chart/Calendar.vue'
 import LineChart from '~/components/chart/LineChart.vue'
@@ -179,6 +186,7 @@ export default {
         1
       ),
       salaryStructureEmployeeById: '',
+      isEditCalendar: false,
     }
   },
 
@@ -187,6 +195,7 @@ export default {
     ...mapGetters('user', [
       'employeeNameSalaryHistory',
       'employeeNameSalaryStructure',
+      'enableEditCalendar',
     ]),
     ...mapGetters('salary', [
       'historySalary',
@@ -273,6 +282,7 @@ export default {
     ...mapMutations('user', [
       'updateEmployeeNameSalaryHistory',
       'updateEmployeeNameSalaryStructure',
+      'setEnableEditCalendar',
     ]),
 
     querySearch(queryString, cb) {
@@ -293,6 +303,15 @@ export default {
 
     handleSelectEmployeeSalaryStructure(data) {
       this.salaryStructureEmployeeById = data.label
+    },
+
+    onChangeEditCalendar() {
+      this.setEnableEditCalendar(!this.enableEditCalendar)
+      if (this.enableEditCalendar === true) {
+        Message.success('Opened edit calendar')
+      } else {
+        Message.success('Closed edit calendar')
+      }
     },
   },
 }

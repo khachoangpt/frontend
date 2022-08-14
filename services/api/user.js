@@ -375,6 +375,15 @@ class UserApi extends User {
       },
     })
   }
+
+  insertHoliday(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/insert_holiday', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)
