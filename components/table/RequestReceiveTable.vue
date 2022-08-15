@@ -50,7 +50,6 @@
     <el-dialog
       title="Chi tiết yêu cầu"
       :visible.sync="detailRequestReceiveVisible"
-      width="40%"
       center
       custom-class="request-detail-dialog"
       :before-close="closeDialog"
@@ -82,7 +81,7 @@
             class="request-detail-dialog__value"
             :class="'request-status__' + requestReceiveDetail.request_status"
           >
-            {{ requestReceiveDetail.request_status }}
+            <span>{{ requestReceiveDetail.request_status }}</span>
           </span>
         </el-col>
       </el-row>
@@ -236,6 +235,7 @@ export default {
       } else {
         this.isAction = false
       }
+      this.isChecked = true
       await this.setDetailRequestReceiveVisible(true)
       await this.getDetailReceiveRequest(data.row.application_request_id)
       if (this.requestReceiveDetail.checked_by.includes(this.id)) {
@@ -389,5 +389,40 @@ export default {
 
 .reject-reason:hover {
   color: #f42b2b;
+}
+
+.request-detail-dialog {
+  width: 40%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .request-detail-dialog {
+    width: 100%;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .request-detail-dialog {
+    width: 90%;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .request-detail-dialog {
+    width: 60%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .request-detail-dialog {
+    width: 50%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .request-detail-dialog {
+    width: 40%;
+  }
 }
 </style>

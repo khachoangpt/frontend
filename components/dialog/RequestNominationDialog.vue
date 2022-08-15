@@ -2,8 +2,8 @@
   <el-dialog
     top="4vh"
     :visible.sync="requestNominationDialogVisible"
-    width="50%"
     center
+    custom-class="request-detail-dialog"
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
@@ -466,5 +466,42 @@ export default {
 
 .request-form__input {
   width: 90% !important;
+}
+</style>
+
+<style>
+.request-detail-dialog {
+  width: 36%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .request-detail-dialog {
+    width: 100%;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .request-detail-dialog {
+    width: 100%;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .request-detail-dialog {
+    width: 80%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .request-detail-dialog {
+    width: 60%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .request-detail-dialog {
+    width: 50%;
+  }
 }
 </style>

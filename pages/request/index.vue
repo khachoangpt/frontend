@@ -276,6 +276,8 @@ export default {
   color: #fff;
   padding: 6px;
   border-radius: 5px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .request-status__APPROVED {
@@ -283,6 +285,8 @@ export default {
   color: #fff;
   padding: 6px;
   border-radius: 5px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .request-status__REJECTED {
@@ -290,6 +294,8 @@ export default {
   color: #fff;
   padding: 6px;
   border-radius: 5px;
+  white-space: pre-line;
+  word-break: break-word;
 }
 
 .request-send-table__description {
@@ -321,5 +327,9 @@ export default {
 
 .el-autocomplete-suggestion {
   width: fit-content !important;
+}
+
+.clearfix {
+  display: block;
 }
 </style>

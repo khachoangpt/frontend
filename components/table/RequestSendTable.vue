@@ -57,7 +57,6 @@
       title="Chi tiết yêu cầu"
       :visible.sync="detailRequestVisible"
       top="10vh"
-      width="40%"
       center
       custom-class="request-detail-dialog"
       :before-close="closeDialog"
@@ -89,7 +88,7 @@
             class="request-detail-dialog__value"
             :class="'request-status__' + requestSendDetail.request_status"
           >
-            {{ requestSendDetail.request_status }}
+            <span>{{ requestSendDetail.request_status }}</span>
           </span>
         </el-col>
       </el-row>
@@ -128,9 +127,9 @@
           v-if="requestSendDetail.request_status === 'REJECTED'"
           :span="10"
         >
-          <span class="reject-reason" @click="getRejectReason"
-            >Xem lý do từ chối</span
-          >
+          <span class="reject-reason" @click="getRejectReason">
+            Xem lý do từ chối
+          </span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
@@ -296,5 +295,40 @@ export default {
 
 .request-detail-dialog__tag {
   margin-left: 8px;
+}
+
+.request-detail-dialog {
+  width: 40%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .request-detail-dialog {
+    width: 100%;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .request-detail-dialog {
+    width: 90%;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .request-detail-dialog {
+    width: 60%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .request-detail-dialog {
+    width: 50%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .request-detail-dialog {
+    width: 40%;
+  }
 }
 </style>
