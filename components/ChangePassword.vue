@@ -25,7 +25,6 @@
         <el-form
           ref="form"
           status-icon
-          :rules="rules"
           :model="form"
           @submit.native.prevent="changePassword(form)"
         >
@@ -167,6 +166,10 @@ export default {
     ...mapMutations('auth', ['setCountry']),
     handleCommand(command) {
       this.setCountry(command)
+    },
+
+    back() {
+      this.$router.go(-1)
     },
   },
 }

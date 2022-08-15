@@ -14,7 +14,7 @@ const en = {
     signIn: 'Sign in',
     password: 'Password',
     forgotPassword: 'Forgot password?',
-    passwordIncorrect: 'The password is incorrect. Try again.',
+    loginIncorrect: 'Login information is incorrect',
   },
 
   forgot: {
