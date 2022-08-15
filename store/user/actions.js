@@ -450,6 +450,7 @@ export default {
       const data = {
         employeeId,
         baseSalary: state.workingInfo.base_salary,
+        finalSalary: state.workingInfo.final_salary,
         area: state.listArea.find(
           (area) => area.name === state.workingInfo.area
         ).area_id,
@@ -501,7 +502,10 @@ export default {
         place_of_origin: state.additionInfo.place_of_origin,
         nationality: state.additionInfo.nationality,
         card_id: state.additionInfo.card_id,
-        provideDate: state.additionInfo.provideDate,
+        provideDate: format(
+          new Date(state.additionInfo.provideDate),
+          'yyyy-MM-dd'
+        ),
         providePlace: state.additionInfo.providePlace,
         personal_email: state.additionInfo.personal_email,
         phone_number: state.additionInfo.phone_number,
@@ -509,6 +513,7 @@ export default {
         facebook: state.additionInfo.facebook,
         employee_id: state.personnelDetail.employee_id,
       }
+      console.log(data)
       const res = await this.$repository.user.confirmEditAdditionalInfo(data)
       if (res.code === 202) {
         await commit('setIsEditAdditionInfo', true)

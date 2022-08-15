@@ -65,6 +65,7 @@
             <el-input
               v-else
               size="medium"
+              :disabled="true"
               :value="insurance.insuranceName"
               class="edit-input"
               @input="updateInsuranceName"
@@ -111,6 +112,20 @@
         </div>
       </el-col>
     </el-row>
+    <el-row v-if="isEditTaxInfo">
+      <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.numberRelative')
+            }}</span>
+            <span v-if="isEditTaxInfo" class="content-item__detail">
+              {{ relativeInfo.length }}
+            </span>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -123,15 +138,16 @@ export default {
 
   computed: {
     ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['taxList', 'isEditTaxInfo']),
+    ...mapGetters('user', ['taxList', 'isEditTaxInfo', 'relativeInfo']),
   },
 
   async mounted() {
     await this.getTaxList(this.$route.params.employeeId)
+    await this.getRelativeInfo(this.$route.params.employeeId)
   },
 
   methods: {
-    ...mapActions('user', ['getTaxList', 'updateTaxInfo']),
+    ...mapActions('user', ['getTaxList', 'updateTaxInfo', 'getRelativeInfo']),
     ...mapMutations('user', [
       'updateTaxCode',
       'updateInsuranceId',

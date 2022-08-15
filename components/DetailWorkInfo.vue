@@ -135,9 +135,9 @@
               <span class="content-item__head">{{
                 $i18n.t('personnel.detail.office')
               }}</span>
-              <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                workingInfo.office
-              }}</span>
+              <span v-if="isEditWorkInfo" class="content-item__detail">
+                {{ workingInfo.office }}</span
+              >
               <el-select
                 v-else
                 size="medium"

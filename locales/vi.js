@@ -184,6 +184,7 @@ const vi = {
       validateDegree: 'Bằng cấp không được để trống.',
       changeAvatar: 'Đổi avatar',
       seniority: 'Thâm niên',
+      numberRelative: 'Số người phụ thuộc'
     },
     table: {
       personnel: 'Nhân sự',

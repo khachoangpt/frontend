@@ -76,19 +76,19 @@
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
-              $i18n.t('personnel.detail.startDate')
+              $i18n.t('personnel.detail.birthDate')
             }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail.start_date }}
+              {{ personnelDetail.birth_date }}
             </span>
             <el-date-picker
               v-else
+              :value="personnelDetail.birth_date"
               size="medium"
-              :value="personnelDetail.start_date"
               type="date"
               class="edit-input"
               placeholder="Pick a day"
-              @input="updatePersonnelStartDate"
+              @input="updatePersonnelBirthDate"
             >
             </el-date-picker>
           </div>
@@ -98,26 +98,50 @@
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
-              $i18n.t('personnel.detail.endDate')
+              $i18n.t('personnel.detail.gender')
             }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail.end_date }}
+              <i class="el-icon-female content-item__detail-icon"></i>
+              {{ personnelDetail.gender }}
             </span>
-            <el-date-picker
+            <el-select
               v-else
               size="medium"
-              :value="personnelDetail.end_date"
-              type="date"
               class="edit-input"
-              placeholder="Pick a day"
-              @input="updatePersonnelEndDate"
+              :value="personnelDetail.gender"
+              placeholder="Select"
+              @input="updatePersonnelGender"
             >
-            </el-date-picker>
+              <el-option :label="$i18n.t('personnel.detail.male')" value="Male">
+              </el-option>
+              <el-option
+                :label="$i18n.t('personnel.detail.female')"
+                value="Female"
+              >
+              </el-option>
+            </el-select>
           </div>
         </div>
       </el-col>
     </el-row>
     <el-row class="main-info__content">
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">Email</span>
+            <span v-if="isEditMainInfo" class="content-item__detail">
+              {{ personnelDetail.company_email }}
+            </span>
+            <el-input
+              v-else
+              size="medium"
+              :value="personnelDetail.company_email"
+              class="edit-input"
+              @input="updatePersonnelCompanyEmail"
+            ></el-input>
+          </div>
+        </div>
+      </el-col>
       <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
@@ -214,7 +238,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -241,77 +265,9 @@
             </el-select>
           </div>
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row class="main-info__content">
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-        <div class="grid-content">
-          <div class="main-info__content-item">
-            <span class="content-item__head">{{
-              $i18n.t('personnel.detail.birthDate')
-            }}</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail.birth_date }}
-            </span>
-            <el-date-picker
-              v-else
-              :value="personnelDetail.birth_date"
-              size="medium"
-              type="date"
-              class="edit-input"
-              placeholder="Pick a day"
-              @input="updatePersonnelBirthDate"
-            >
-            </el-date-picker>
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-        <div class="grid-content">
-          <div class="main-info__content-item">
-            <span class="content-item__head">Email</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              {{ personnelDetail.company_email }}
-            </span>
-            <el-input
-              v-else
-              size="medium"
-              :value="personnelDetail.company_email"
-              class="edit-input"
-              @input="updatePersonnelCompanyEmail"
-            ></el-input>
-          </div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
-        <div class="grid-content">
-          <div class="main-info__content-item">
-            <span class="content-item__head">{{
-              $i18n.t('personnel.detail.gender')
-            }}</span>
-            <span v-if="isEditMainInfo" class="content-item__detail">
-              <i class="el-icon-female content-item__detail-icon"></i>
-              {{ personnelDetail.gender }}
-            </span>
-            <el-select
-              v-else
-              size="medium"
-              class="edit-input"
-              :value="personnelDetail.gender"
-              placeholder="Select"
-              @input="updatePersonnelGender"
-            >
-              <el-option :label="$i18n.t('personnel.detail.male')" value="Male">
-              </el-option>
-              <el-option
-                :label="$i18n.t('personnel.detail.female')"
-                value="Female"
-              >
-              </el-option>
-            </el-select>
-          </div>
-        </div>
-      </el-col>
       <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
@@ -343,9 +299,53 @@
           </div>
         </div>
       </el-col>
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.startDate')
+            }}</span>
+            <span v-if="isEditMainInfo" class="content-item__detail">
+              {{ personnelDetail.start_date }}
+            </span>
+            <el-date-picker
+              v-else
+              size="medium"
+              :value="personnelDetail.start_date"
+              type="date"
+              class="edit-input"
+              placeholder="Pick a day"
+              @input="updatePersonnelStartDate"
+            >
+            </el-date-picker>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+        <div class="grid-content">
+          <div class="main-info__content-item">
+            <span class="content-item__head">{{
+              $i18n.t('personnel.detail.endDate')
+            }}</span>
+            <span v-if="isEditMainInfo" class="content-item__detail">
+              {{ personnelDetail.end_date }}
+            </span>
+            <el-date-picker
+              v-else
+              size="medium"
+              :value="personnelDetail.end_date"
+              type="date"
+              class="edit-input"
+              placeholder="Pick a day"
+              @input="updatePersonnelEndDate"
+            >
+            </el-date-picker>
+          </div>
+        </div>
+      </el-col>
     </el-row>
     <el-row class="main-info__content">
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -373,8 +373,8 @@
             </el-select>
           </div>
         </div>
-      </el-col>
-      <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+      </el-col> -->
+      <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
         <div class="grid-content">
           <div class="main-info__content-item">
             <span class="content-item__head">{{
@@ -460,7 +460,7 @@
             </el-select>
           </div>
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>

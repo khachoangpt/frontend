@@ -182,6 +182,7 @@ const en = {
       validateDegree: 'Degree is not blank',
       changeAvatar: 'Change avatar',
       seniority: 'Seniority',
+      numberRelative: 'Number of dependents'
     },
     table: {
       personnel: 'Personnel',
