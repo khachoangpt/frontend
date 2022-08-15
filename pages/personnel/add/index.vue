@@ -4,10 +4,18 @@
       <div class="add-personnel__header-text">
         {{ $i18n.t('personnel.addNewEmployee') }}
       </div>
-      <label for="fusk" class="import-by-excel__button">
-        <span class="import-by-excel__text">Import from Excel</span>
-        <img class="import-by-excel" src="~/static/excel.png" alt="excel" />
-      </label>
+      <div class="add-employee__action">
+        <a
+          class="download-template"
+          href="https://res.cloudinary.com/pingdaily/raw/upload/v1660546108/template/Import_fsxewa.xlsx"
+        >
+          Template
+        </a>
+        <label for="fusk" class="import-by-excel__button">
+          <span class="import-by-excel__text">Import from Excel</span>
+          <img class="import-by-excel" src="~/static/excel.png" alt="excel" />
+        </label>
+      </div>
       <input
         id="fusk"
         ref="excelFile"
@@ -628,5 +636,17 @@ export default {
 .import-by-excel {
   width: 40px;
   margin-left: 8px;
+}
+
+.add-employee__action {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.download-template {
+  color: #409EFF;
+  margin-right: 12px;
+  font-size: 14px;
 }
 </style>
