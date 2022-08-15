@@ -7,11 +7,7 @@
       <span
         v-if="
           isEditBankInfo &&
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
         "
         class="main-info-header__edit"
         @click="setIsEditBankInfo(false)"
@@ -21,11 +17,7 @@
       <span
         v-else-if="
           isEditBankInfo === false &&
-          roles.find(
-            (role) =>
-              role.authority === 'ROLE_ADMIN' ||
-              role.authority === 'ROLE_MANAGER'
-          )
+          roles.find((role) => role.authority === 'ROLE_ADMIN')
         "
       >
         <el-button type="info" @click="closeEdit">{{

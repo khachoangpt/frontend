@@ -88,7 +88,7 @@
               circle
               @click="setIsEditLine(working)"
             ></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            <!-- <el-button type="danger" icon="el-icon-delete" circle></el-button> -->
           </div>
           <div v-else class="main-info__content-item-action">
             <span>
