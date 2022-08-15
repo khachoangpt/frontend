@@ -15,25 +15,9 @@
           class="header-actions__search"
           :placeholder="$i18n.t('personnel.search')"
           @input="inputSearch"
-          @change="searchEmployee"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
-        <!-- <el-select
-          v-model="value"
-          clearable
-          placeholder="Select"
-          class="header-actions__working-status"
-        >
-          <i slot="prefix" class="el-input__icon el-icon-user-solid"></i>
-          <el-option
-            v-for="item in workingStatus"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select> -->
         <nuxt-link
           v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
           class="btn-add-employee"
@@ -64,6 +48,7 @@ export default {
     return {
       value: '',
       isEditPersonnel: '',
+      timeout: null,
     }
   },
 
@@ -73,6 +58,7 @@ export default {
       'workingStatus',
       'searchText',
       'loadingOnSearchEmployee',
+      'personnelList',
     ]),
   },
 
@@ -90,11 +76,11 @@ export default {
     inputSearch(e) {
       this.$emit('input', e)
       this.setSearchText(e)
-    },
-
-    async searchEmployee() {
-      await this.setLoadingOnSearchEmployee(true)
-      await this.onChangeSearchEmployee()
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(() => {
+        this.setLoadingOnSearchEmployee(true)
+        this.onChangeSearchEmployee()
+      }, 1000)
     },
   },
 }
