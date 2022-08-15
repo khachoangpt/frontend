@@ -6,7 +6,10 @@ const endDate = new Date(year, month + 1, 0)
 
 export default () => ({
   monthSearch: new Date(year, month - 1, 1),
-  yearSearch: new Date(),
+  yearSearch: [
+    new Date(new Date().getFullYear(), 0, 1),
+    new Date(new Date().getFullYear(), 11, 31),
+  ],
   selectedTimeRange: {
     startDate:
       startDate.getFullYear() +

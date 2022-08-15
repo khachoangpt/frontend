@@ -79,8 +79,19 @@ export default {
     try {
       const salaryHistoryList = []
       const data = {
-        startDate: Date.parse(state.yearSearch.getFullYear() + '-01-01'),
-        endDate: Date.parse(state.yearSearch.getFullYear() + '-12-31'),
+        startDate: Date.parse(
+          state.yearSearch[0].getFullYear() +
+            '-' +
+            (state.yearSearch[0].getMonth() + 1) +
+            '-01'
+        ),
+        endDate: Date.parse(
+          new Date(
+            state.yearSearch[1].getFullYear(),
+            state.yearSearch[1].getMonth() + 1,
+            0
+          )
+        ),
       }
       const res = await this.$repository.salary.getListPersonalSalary(data)
       for (let i = 0; i < res.salaryMonthlyResponses.length; i++) {
@@ -89,10 +100,11 @@ export default {
         )
         res.salaryMonthlyResponses[i].month =
           date.getMonth() + 1 < 10
-            ? '0' + String(date.getMonth() + 1)
-            : String(date.getMonth() + 1)
+            ? String(date.getFullYear()) + '-0' + String(date.getMonth() + 1)
+            : String(date.getFullYear()) + '-' + String(date.getMonth() + 1)
         salaryHistoryList.push(res.salaryMonthlyResponses[i])
       }
+      await commit('setTotalPage', res.total)
       await commit('setSalaryHistoryList', salaryHistoryList)
     } catch (error) {
       Message.error(error.response.data.message)

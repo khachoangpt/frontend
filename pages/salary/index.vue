@@ -56,13 +56,25 @@
         @change="onChangeMonth"
       >
       </el-date-picker>
-      <el-date-picker
+      <!-- <el-date-picker
         v-if="activeName === 'first'"
         :value="yearSearch"
         type="year"
         placeholder="Tìm kiếm"
         format="yyyy"
         :clearable="false"
+        @input="selectYear"
+        @change="onChangeYear"
+      >
+      </el-date-picker> -->
+      <el-date-picker
+        v-if="activeName === 'first'"
+        :value="yearSearch"
+        type="monthrange"
+        :clearable="false"
+        range-separator="To"
+        start-placeholder="Start month"
+        end-placeholder="End month"
         @input="selectYear"
         @change="onChangeYear"
       >
@@ -104,7 +116,7 @@
         type="border-card"
         @tab-click="handleChangeTabSalary"
       >
-        <el-tab-pane label="Cá nhân" name="first">
+        <el-tab-pane label="Bảng lương của tôi" name="first">
           <vue-good-table
             ref="salary-table-2"
             :columns="salaryHistoryListHeader"
@@ -126,7 +138,7 @@
             </template>
           </vue-good-table>
         </el-tab-pane>
-        <el-tab-pane label="Bảng lương" name="second">
+        <el-tab-pane label="Bảng lương nhân viên" name="second">
           <vue-good-table
             ref="salary-table-3"
             :columns="salaryListHeader"
@@ -399,6 +411,8 @@ export default {
     submitCheckSalary() {
       this.checkSalary()
     },
+
+    currentChange() {},
   },
 }
 </script>
@@ -496,5 +510,11 @@ export default {
 }
 .dialog-check-salary__label {
   margin-bottom: 12px;
+}
+
+.el-picker-panel {
+  top: 158px !important;
+  right: 0 !important;
+  left: auto !important;
 }
 </style>
