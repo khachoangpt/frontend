@@ -182,7 +182,7 @@
                 Chuyển tiếp
               </el-button>
               <el-button
-                v-if="isShowReject"
+                v-if="isShowReject && isEnoughLevelApprove === 'True'"
                 size="medium"
                 type="danger"
                 @click="handleClickRejectSalary"
@@ -274,6 +274,7 @@ export default {
     }
     await this.getListPersonalSalary()
     this.loadingSalary = false
+    this.setListSalaryId([])
   },
 
   methods: {
@@ -320,6 +321,7 @@ export default {
         if (this.$refs[tableName].selectedRows[i].salaryStatus === 'REJECTED') {
           this.isShowCheck = true
           this.isShowReject = false
+          this.isShowApprove = false
         }
         if (this.$refs[tableName].selectedRows[i].salaryStatus === 'APPROVED') {
           this.isShowApprove = false
@@ -345,12 +347,7 @@ export default {
         .then(({ value }) => {
           this.rejectSalary(value)
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Input canceled',
-          })
-        })
+        .catch(() => {})
     },
 
     async handleClickCheckSalary() {
@@ -512,9 +509,9 @@ export default {
   margin-bottom: 12px;
 }
 
-.el-picker-panel {
+/* .el-picker-panel {
   top: 158px !important;
   right: 0 !important;
   left: auto !important;
-}
+} */
 </style>

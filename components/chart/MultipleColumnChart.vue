@@ -86,12 +86,17 @@ export default {
         scales: {
           x: {
             grid: {
-              display: false,
+              display: true,
             },
           },
           y: {
             grid: {
               display: false,
+            },
+            min: 0,
+            ticks: {
+              stepSize: 1,
+              maxTicksLimit: 3,
             },
           },
         },

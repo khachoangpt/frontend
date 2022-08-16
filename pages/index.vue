@@ -9,7 +9,7 @@
       <el-col class="dashboard__col" :lg="6" :md="8" :sm="24" :xs="24">
         <div class="grid-content bg-purple">
           <el-card class="box-card dashboard-column__height">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-dashboard">
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.holidayCompany')
               }}</span>
@@ -34,7 +34,7 @@
       >
         <div class="grid-content bg-purple">
           <el-card class="box-card dashboard-column__height">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-dashboard">
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.salaryHistory')
               }}</span>
@@ -127,7 +127,7 @@
       >
         <div class="grid-content bg-purple">
           <el-card class="box-card organization-chart">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-dashboard">
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.organization')
               }}</span>
@@ -342,12 +342,12 @@ export default {
   text-align: center;
 }
 
-/* .clearfix:before,
-.clearfix:after {
+/* .clearfix-dashboard:before,
+.clearfix-dashboard:after {
   display: table;
   content: '';
 }
-.clearfix:after {
+.clearfix-dashboard:after {
   clear: both;
 } */
 
@@ -366,7 +366,7 @@ export default {
   border-radius: 10px;
 }
 
-.clearfix {
+.clearfix-dashboard {
   display: flex;
   justify-content: space-between;
   align-items: center;

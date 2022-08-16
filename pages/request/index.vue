@@ -328,8 +328,4 @@ export default {
 .el-autocomplete-suggestion {
   width: fit-content !important;
 }
-
-.clearfix {
-  display: block;
-}
 </style>

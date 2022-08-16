@@ -25,42 +25,58 @@
           <span :class="'salary-status__' + salaryDetail.salaryStatus">
             {{ salaryDetail.salaryStatus }}
           </span>
+          <div
+            v-if="salaryDetail.salaryStatus === 'REJECTED'"
+            class="reject-salary-comment"
+            @click="openReviewComment"
+          >
+            Xem lý do từ chối
+          </div>
         </div>
       </div>
       <el-row class="salary-detail__row">
-        <el-col :span="9" :offset="1">
+        <el-col :span="16" :offset="4">
           <el-card>
             <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item name="1">
                 <template slot="title">
                   <span class="salary-detail-content__detail">
-                    Actual Point
+                    Actual Point: {{ salaryDetail.standardPoint }}
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <div class="salary-detail__actual-point">
                     <h3>
-                      Actual Working Hours:
-                      <span>{{ salaryDetail.standardPoint }}</span>
+                      Actual Working Days:
+                      <span>{{
+                        salaryDetail.pointResponses.actual_working_day
+                      }}</span>
                     </h3>
-                    <i
-                      class="salary-detail__edit-icon el-icon-edit-outline"
-                    ></i>
                   </div>
                   <div class="salary-detail__actual-point">
                     <h3>
-                      Unpaid Leave Hours:
-                      <span>2 hours</span>
+                      Unpaid Leave Days:
+                      <span>{{
+                        salaryDetail.pointResponses.unpaid_leave_day
+                      }}</span>
                     </h3>
-                    <i
-                      class="salary-detail__edit-icon el-icon-edit-outline"
-                    ></i>
+                  </div>
+                  <div class="salary-detail__actual-point">
+                    <h3>
+                      Paid Leave Days:
+                      <span>{{
+                        salaryDetail.pointResponses.paid_leave_day
+                      }}</span>
+                    </h3>
                   </div>
                 </div>
               </el-collapse-item>
               <el-collapse-item name="2">
                 <template slot="title">
-                  <span class="salary-detail-content__detail">OT Point</span>
+                  <span class="salary-detail-content__detail"
+                    >OT Point:
+                    {{ salaryDetail.otResponseList.totalOTPoint }}</span
+                  >
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <el-collapse-item
@@ -93,7 +109,8 @@
               <el-collapse-item name="3">
                 <template slot="title">
                   <span class="salary-detail-content__detail">
-                    Total Deduction
+                    Total Deduction:
+                    {{ salaryDetail.deductionSalaryResponseList.total }}
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -135,7 +152,10 @@
               </el-collapse-item>
               <el-collapse-item name="4">
                 <template slot="title">
-                  <span class="salary-detail-content__detail">Advances</span>
+                  <span class="salary-detail-content__detail"
+                    >Advances:
+                    {{ salaryDetail.advanceSalaryResponseList.total }}</span
+                  >
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <div>
@@ -170,15 +190,12 @@
                   </div>
                 </div>
               </el-collapse-item>
-            </el-collapse>
-          </el-card>
-        </el-col>
-        <el-col :span="9" :offset="4">
-          <el-card>
-            <el-collapse v-model="activeNames" @change="handleChange">
               <el-collapse-item name="5">
                 <template slot="title">
-                  <span class="salary-detail-content__detail">Tax Payment</span>
+                  <span class="salary-detail-content__detail"
+                    >Tax Payment:
+                    {{ salaryDetail.employeeTaxResponseList.total }}</span
+                  >
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <h3
@@ -193,7 +210,15 @@
               <el-collapse-item name="6">
                 <template slot="title">
                   <span class="salary-detail-content__detail">
-                    Insurance Payment
+                    Insurance Payment:
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(
+                        salaryDetail.employeeInsuranceResponseList.total
+                      )
+                    }}
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -217,7 +242,10 @@
               </el-collapse-item>
               <el-collapse-item name="7">
                 <template slot="title">
-                  <span class="salary-detail-content__detail">Bonus</span>
+                  <span class="salary-detail-content__detail"
+                    >Bonus:
+                    {{ salaryDetail.bonusSalaryResponseList.total }}</span
+                  >
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <h3
@@ -252,7 +280,10 @@
               </el-collapse-item>
               <el-collapse-item name="8">
                 <template slot="title">
-                  <span class="salary-detail-content__detail">Allowance</span>
+                  <span class="salary-detail-content__detail"
+                    >Allowance:
+                    {{ salaryDetail.employeeAllowanceResponseList.total }}</span
+                  >
                 </template>
                 <div class="salary-detail-content__sub-detail">
                   <h3
@@ -314,7 +345,7 @@
         Chuyển tiếp
       </el-button>
       <el-button
-        v-if="isShowReject"
+        v-if="isShowReject && isEnoughLevelApprove === 'True'"
         size="medium"
         type="danger"
         @click="handleClickRejectSalary"
@@ -325,7 +356,7 @@
         v-if="isShowApprove && isEnoughLevelApprove === 'True'"
         size="medium"
         type="success"
-        @click="approveSalary"
+        @click="handleClickApproveSalary"
       >
         Chốt bảng lương
       </el-button>
@@ -498,6 +529,31 @@
         </el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="Chuyển tiếp bảng lương"
+      :visible.sync="checkDialogVisible"
+      top="30vh"
+      width="30%"
+      :before-close="closeDialog"
+    >
+      <div class="dialog-check-salary__label">
+        Nhập tên người muốn chuyển tiếp:
+      </div>
+      <el-autocomplete
+        v-model="managerApprove"
+        :clearable="true"
+        placeholder="Tên quản lý"
+        :fetch-suggestions="querySearchManager"
+        @select="handleChangeManager"
+        @clear="handleChangeManager"
+      ></el-autocomplete>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="small" @click="closeDialog">Đóng</el-button>
+        <el-button size="small" type="primary" @click="submitCheckSalary">
+          Xác nhận
+        </el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -608,6 +664,7 @@ export default {
       isShowCheck: true,
       isShowReject: true,
       isShowApprove: true,
+      managerApprove: '',
     }
   },
 
@@ -620,6 +677,9 @@ export default {
       'editAdvanceDialogVisible',
       'editBonusDialogVisible',
       'isEnoughLevelApprove',
+      'searchManagerText',
+      'checkDialogVisible',
+      'listManagerOfArea',
     ]),
   },
 
@@ -633,6 +693,7 @@ export default {
     if (this.salaryDetail.salaryStatus === 'REJECTED') {
       this.isShowCheck = true
       this.isShowReject = false
+      this.isShowApprove = false
     }
     if (this.salaryDetail.salaryStatus === 'APPROVED') {
       this.isShowApprove = false
@@ -655,11 +716,18 @@ export default {
       'deleteAdvance',
       'editBonus',
       'deleteBonus',
+      'getManagerOfArea',
+      'checkSalary',
+      'rejectSalary',
+      'approveSalary',
     ]),
     ...mapMutations('salary', [
       'setEditDeductionDialogVisible',
       'setEditAdvanceDialogVisible',
       'setEditBonusDialogVisible',
+      'setCheckDialogVisible',
+      'setSearchManagerText',
+      'setListSalaryId',
     ]),
     handleChange(val) {},
 
@@ -764,6 +832,10 @@ export default {
       this.setEditBonusDialogVisible(false)
     },
 
+    async closeDialog() {
+      await this.setCheckDialogVisible(false)
+    },
+
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -780,8 +852,6 @@ export default {
       })
     },
 
-    approveSalary() {},
-
     handleClickRejectSalary() {
       this.$prompt('Nhập lý do từ chối:', 'Từ chối bảng lương', {
         confirmButtonText: 'Xong',
@@ -790,16 +860,51 @@ export default {
         .then(({ value }) => {
           this.rejectSalary(value)
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Input canceled',
-          })
-        })
+        .catch(() => {})
     },
 
-    handleClickCheckSalary() {
+    async handleClickCheckSalary() {
+      await this.setCheckDialogVisible(true)
+      await this.getManagerOfArea()
+    },
+
+    async openReviewComment() {
+      let reason = ''
+      if (this.salaryDetail.comment === null) {
+        reason = 'Không có lý do'
+      } else {
+        reason = this.salaryDetail.comment
+      }
+      await this.$alert(reason, 'Lý do từ chối', {
+        confirmButtonText: 'OK',
+        callback: (action) => {},
+      })
+    },
+
+    querySearchManager(queryString, cb) {
+      const results = queryString
+        ? this.listManagerOfArea.filter(this.createFilter(queryString))
+        : this.listManagerOfArea
+      cb(results)
+    },
+
+    createFilter(queryString) {
+      return (link) => {
+        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+      }
+    },
+
+    async handleChangeManager(data) {
+      await this.setSearchManagerText(data)
+    },
+
+    submitCheckSalary() {
       this.checkSalary()
+    },
+
+    handleClickApproveSalary() {
+      this.setListSalaryId(this.salaryDetail.salary_monthly_id)
+      this.approveSalary()
     },
   },
 }
@@ -1014,5 +1119,14 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-bottom: 10vh;
+}
+
+.reject-salary-comment {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #f56c6c;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

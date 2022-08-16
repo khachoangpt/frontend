@@ -77,21 +77,11 @@ export default {
 
   async getListPersonalSalary({ commit, state }) {
     try {
+      console.log(state.yearSearch)
       const salaryHistoryList = []
       const data = {
-        startDate: Date.parse(
-          state.yearSearch[0].getFullYear() +
-            '-' +
-            (state.yearSearch[0].getMonth() + 1) +
-            '-01'
-        ),
-        endDate: Date.parse(
-          new Date(
-            state.yearSearch[1].getFullYear(),
-            state.yearSearch[1].getMonth() + 1,
-            0
-          )
-        ),
+        startDate: Date.parse(state.yearSearch[0]),
+        endDate: Date.parse(state.yearSearch[1]),
       }
       const res = await this.$repository.salary.getListPersonalSalary(data)
       for (let i = 0; i < res.salaryMonthlyResponses.length; i++) {

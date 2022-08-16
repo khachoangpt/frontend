@@ -395,7 +395,12 @@ export default {
       const res = await this.$repository.user.getHoliday(data)
       const result = []
       for (let i = 0; i < res.length; i++) {
-        result.push(new Date(Date.parse(res[i])))
+        result.push({
+          end: res[i].end_date,
+          holiday_calender_id: res[i].holiday_calender_id,
+          holiday_name: res[i].holiday_name,
+          start: res[i].start_date,
+        })
       }
       await commit('setListHoliday', result)
     } catch (error) {

@@ -5,15 +5,19 @@
     type="primary"
     class="container"
   >
-    <h1 class="title">Tổng hợp biểu đồ quản lý nhân viên phòng ban</h1>
+    <div class="synthetic__header">
+      <div class="synthetic__header-text">
+        Tổng hợp biểu đồ quản lý nhân viên phòng ban
+      </div>
+    </div>
     <el-row :gutter="20">
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text"
-                >Tổng số nhân viên phòng ban</span
-              >
+          <el-card class="box-card dashboard-column__height">
+            <div slot="header" class="clearfix-synthetic">
+              <span class="box-card__header-text">
+                Tổng số nhân viên phòng ban
+              </span>
             </div>
             <doughnut-chart :values="employeeNumber" />
           </el-card>
@@ -21,9 +25,9 @@
       </el-col>
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span class="box-card__header-text">Mức tuổi</span>
+          <el-card class="box-card dashboard-column__height">
+            <div slot="header" class="clearfix-synthetic">
+              <span class="box-card__header-text">Độ tuổi</span>
             </div>
             <doughnut-chart :values="ageNumber" :background-color="ageColor" />
           </el-card>
@@ -31,8 +35,8 @@
       </el-col>
       <el-col class="dashboard__col" :span="8">
         <div class="grid-content">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
+          <el-card class="box-card dashboard-column__height">
+            <div slot="header" class="clearfix-synthetic">
               <span class="box-card__header-text">Full time/Part time</span>
             </div>
             <doughnut-chart
@@ -47,7 +51,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-synthetic">
               <span class="box-card__header-text">Thâm niên</span>
             </div>
             <bar-chart :values="seniorityNumber" />
@@ -59,7 +63,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-synthetic">
               <span class="box-card__header-text"
                 >Thống kê nghỉ việc theo năm</span
               >
@@ -80,7 +84,7 @@
       <el-col class="dashboard__col" :span="24">
         <div class="grid-content">
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div slot="header" class="clearfix-synthetic">
               <span class="box-card__header-text"
                 >Thống kê nghỉ phép theo năm</span
               >
@@ -238,5 +242,36 @@ export default {
 .title {
   font-size: 2.25rem;
   font-family: 'Roboto', sans-serif;
+}
+
+.synthetic__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.synthetic__header-text {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.clearfix-synthetic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard__col {
+  margin-bottom: 16px;
+}
+
+.dashboard-column__height {
+  height: 300px;
+}
+</style>
+<style>
+.el-card__header {
+  border: none;
+  padding: 18px 20px 0 20px;
 }
 </style>
