@@ -580,6 +580,7 @@ export default {
     async importFileExcel() {
       await this.setFullscreenLoading(true)
       await this.addEmployeeByExcel(this.$refs.excelFile.files[0])
+      this.$refs.excelFile.value = null;
     },
   },
 }
@@ -645,7 +646,7 @@ export default {
 }
 
 .download-template {
-  color: #409EFF;
+  color: #409eff;
   margin-right: 12px;
   font-size: 14px;
 }

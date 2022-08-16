@@ -37,6 +37,9 @@ export default {
               weekdays: [1, 7],
             },
           ],
+          popover: {
+            label: 'Weekend',
+          },
         },
         {
           key: 'today',
@@ -44,7 +47,9 @@ export default {
           dates: {
             start: new Date(),
             end: new Date(),
-            label: 'hello',
+          },
+          popover: {
+            label: 'Today',
           },
         },
       ],
