@@ -580,7 +580,7 @@ export default {
     async importFileExcel() {
       await this.setFullscreenLoading(true)
       await this.addEmployeeByExcel(this.$refs.excelFile.files[0])
-      this.$refs.excelFile.value = null;
+      this.$refs.excelFile.value = null
     },
   },
 }

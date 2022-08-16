@@ -376,6 +376,18 @@ class UserApi extends User {
     })
   }
 
+  addEmployeeByCsv(data) {
+    const formData = new FormData()
+    formData.append('file', data)
+    const accessToken = getToken()
+    return this.$axios.$post('/api/import_csv_employee', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
   insertHoliday(data) {
     const accessToken = getToken()
     return this.$axios.$post('/api/insert_holiday', data, {

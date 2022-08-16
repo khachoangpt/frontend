@@ -539,7 +539,12 @@ export default {
 
   async addEmployeeByExcel({ commit }, data) {
     try {
-      const res = await this.$repository.user.addEmployeeByExcel(data)
+      let res = ''
+      if (data.type === 'text/csv') {
+        res = await this.$repository.user.addEmployeeByCsv(data)
+      } else {
+        res = await this.$repository.user.addEmployeeByExcel(data)
+      }
       if (res.code === 201) {
         await commit('setFullscreenLoading', false)
         await this.$router.push(this.localePath('/personnel'))
