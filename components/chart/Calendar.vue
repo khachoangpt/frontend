@@ -41,11 +41,11 @@ export default {
         {
           key: 'today',
           highlight: true,
-          dates: new Date(),
-        },
-        {
-          highlight: 'yellow',
-          dates: [],
+          dates: {
+            start: new Date(),
+            end: new Date(),
+            label: 'hello',
+          },
         },
       ],
       dateRangeHoliday: '',
@@ -61,7 +61,7 @@ export default {
   async mounted() {
     await this.getHoliday(new Date().getFullYear())
     for (let i = 0; i < this.listHoliday.length; i++) {
-      this.attributes[2].dates.push(this.listHoliday[i])
+      this.attributes.push(this.listHoliday[i])
     }
   },
 
@@ -70,27 +70,21 @@ export default {
 
     onInputCalendar(data) {
       if (data !== null) {
-        for (let i = 0; i < this.attributes[2].dates.length; i++) {
+        for (let i = 2; i < this.attributes.length; i++) {
           if (
-            format(new Date(this.attributes[2].dates[i]), 'dd-MM-yyyy') ===
-            format(new Date(data), 'dd-MM-yyyy')
+            this.attributes[i].dates[0].start === format(data, 'yyyy-MM-dd')
           ) {
             return
           }
         }
-        this.$confirm(
-          `Set ${format(data, 'dd-MM-yyyy')} is day off?`,
-          'Confirm',
-          {
-            confirmButtonText: 'OK',
-            cancelButtonText: 'Cancel',
-            type: 'success',
-          }
-        )
-          .then(async () => {
-            await this.insertHoliday(data)
-            for (let i = 0; i < this.listHoliday.length; i++) {
-              await this.attributes[2].dates.push(this.listHoliday[i])
+        this.$prompt('Enter name of holiday', 'Set holiday', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+        })
+          .then(async (value) => {
+            await this.insertHoliday({ date: data, holidayName: value.value })
+            for (let i = 2; i < this.listHoliday.length; i++) {
+              this.attributes.push(this.listHoliday[i])
             }
           })
           .catch(() => {})

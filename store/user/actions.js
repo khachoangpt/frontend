@@ -396,10 +396,17 @@ export default {
       const result = []
       for (let i = 0; i < res.length; i++) {
         result.push({
-          end: res[i].end_date,
+          highlight: 'yellow',
+          dates: [
+            {
+              end: res[i].end_date,
+              start: res[i].start_date,
+            },
+          ],
+          popover: {
+            label: res[i].holiday_name,
+          },
           holiday_calender_id: res[i].holiday_calender_id,
-          holiday_name: res[i].holiday_name,
-          start: res[i].start_date,
         })
       }
       await commit('setListHoliday', result)
@@ -560,11 +567,12 @@ export default {
   },
 
   async insertHoliday({ commit, dispatch, state }, data) {
+    console.log(data)
     try {
       const value = {
-        holiday_name: 'holiday',
-        start_date: format(data, 'yyyy-MM-dd'),
-        end_date: format(data, 'yyyy-MM-dd'),
+        holiday_name: data.holidayName,
+        start_date: format(data.date, 'yyyy-MM-dd'),
+        end_date: format(data.date, 'yyyy-MM-dd'),
       }
       const res = await this.$repository.user.insertHoliday(value)
       if (res.code === 201) {
