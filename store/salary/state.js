@@ -1,8 +1,9 @@
+import { format } from 'date-fns'
 const now = new Date()
 const month = now.getMonth()
 const year = now.getFullYear()
-const startDate = new Date(year, month + 1, 1)
-const endDate = new Date(year, month + 1, 0)
+const startDate = new Date(year, month - 1, 1)
+const endDate = new Date(year, month, 0)
 
 export default () => ({
   monthSearch: new Date(year, month - 1, 1),
@@ -11,24 +12,8 @@ export default () => ({
     new Date(new Date().getFullYear(), 11, 31),
   ],
   selectedTimeRange: {
-    startDate:
-      startDate.getFullYear() +
-      '-' +
-      (startDate.getMonth() - 1 < 10
-        ? '0' + startDate.getMonth() - 1
-        : startDate.getMonth() - 1) +
-      '-' +
-      (startDate.getDate() < 10
-        ? '0' + startDate.getDate()
-        : startDate.getDate()),
-    endDate:
-      endDate.getFullYear() +
-      '-' +
-      (endDate.getMonth() < 10
-        ? '0' + endDate.getMonth()
-        : endDate.getMonth()) +
-      '-' +
-      (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()),
+    startDate: format(startDate, 'yyyy-MM-dd'),
+    endDate: format(endDate, 'yyyy-MM-dd'),
   },
   salaryListHeader: [
     {
