@@ -182,7 +182,7 @@ const en = {
       validateDegree: 'Degree is not blank',
       changeAvatar: 'Change avatar',
       seniority: 'Seniority',
-      numberRelative: 'Number of dependents'
+      numberRelative: 'Number of dependents',
     },
     table: {
       personnel: 'Personnel',
@@ -220,6 +220,44 @@ const en = {
     workingData: 'Working data',
     employee: 'Employee',
     id: 'ID',
+  },
+
+  request: {
+    listRequest: 'List of requests',
+    createRequest: 'Create request',
+    dateFrom: 'From',
+    dateTo: 'To',
+    requestType: 'Request type',
+    requestStatus: 'Request status',
+    'Working Time': 'Working Time',
+    'Paid Leave': 'Paid Leave',
+    Nomination: 'Nomination',
+    Advance: 'Advance',
+    requestSend: 'Request send',
+    requestReceive: 'Request receive',
+    table: {
+      rowSelected: 'rows selected',
+      clear: 'clear',
+    },
+    dialog: {
+      requestDetail: 'Request detail',
+      employeeName: 'Employee name',
+      requestName: 'Request',
+      employeeId: 'ID',
+      status: 'Status',
+      createDate: 'Create date',
+      duration: 'Duration',
+      checkedBy: 'Checked by',
+      rejectComment: 'Reason for rejection',
+      detail: 'Detail',
+      approve: 'Approve',
+      reject: 'Reject',
+      check: 'Forward',
+      chooseForward: 'Choose who you want to forward:',
+      manager: 'Manager',
+      close: 'Close',
+      confirm: 'Confirm',
+    },
   },
 
   salary: {

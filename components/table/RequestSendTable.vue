@@ -10,8 +10,8 @@
         enabled: true,
         selectOnCheckboxOnly: true,
         selectionInfoClass: 'select-info-class',
-        selectionText: 'hàng đã chọn',
-        clearSelectionText: 'Bỏ chọn tất cả',
+        selectionText: $i18n.t('request.table.rowSelected'),
+        clearSelectionText: $i18n.t('request.table.clear'),
       }"
       :sort-options="{
         enabled: true,
@@ -54,7 +54,7 @@
       </template>
     </vue-good-table>
     <el-dialog
-      title="Chi tiết yêu cầu"
+      :title="$i18n.t('request.dialog.requestDetail')"
       :visible.sync="detailRequestVisible"
       top="10vh"
       center
@@ -63,13 +63,13 @@
     >
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14"
-          >Nhân viên:
+          >{{ $i18n.t('request.dialog.employeeName') }}:
           <span class="request-detail-dialog__value">
             {{ requestSendDetail.full_name }}
           </span>
         </el-col>
         <el-col :span="10">
-          Mã NV:
+          {{ $i18n.t('request.dialog.employeeId') }}:
           <span class="request-detail-dialog__value">
             {{ requestSendDetail.employee_id }}
           </span>
@@ -77,13 +77,13 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          Yêu cầu:
+          {{ $i18n.t('request.dialog.requestName') }}:
           <span class="request-detail-dialog__value">
             {{ requestSendDetail.request_name }}
           </span>
         </el-col>
         <el-col :span="10">
-          Trạng thái:
+          {{ $i18n.t('request.dialog.status') }}:
           <span
             class="request-detail-dialog__value"
             :class="'request-status__' + requestSendDetail.request_status"
@@ -94,7 +94,7 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          Ngày tạo:
+          {{ $i18n.t('request.dialog.createDate') }}:
           <span class="request-detail-dialog__value">
             {{ new Date(requestSendDetail.create_date).getDate() }}/{{
               new Date(requestSendDetail.create_date).getMonth() + 1
@@ -102,7 +102,7 @@
           </span>
         </el-col>
         <el-col :span="10">
-          Thời hạn:
+          {{ $i18n.t('request.dialog.duration') }}:
           <span class="request-detail-dialog__value">
             {{ new Date(requestSendDetail.duration).getDate() }}/{{
               new Date(requestSendDetail.duration).getMonth() + 1
@@ -112,7 +112,7 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          <span>Đã xem bởi:</span>
+          <span>{{ $i18n.t('request.dialog.checkedBy') }}:</span>
           <div class="request-detail-dialog__tags">
             <el-tag
               v-for="(name, index) in requestSendDetail.checked_by"
@@ -128,13 +128,13 @@
           :span="10"
         >
           <span class="reject-reason" @click="getRejectReason">
-            Xem lý do từ chối
+            {{ $i18n.t('request.dialog.rejectComment') }}
           </span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
-          Chi tiết
+          {{ $i18n.t('request.dialog.detail') }}
           <div
             class="request-detail-dialog__description"
             v-html="requestSendDetail.description"

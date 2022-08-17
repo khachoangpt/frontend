@@ -5,11 +5,13 @@
     type="primary"
   >
     <div class="request__header">
-      <div class="request__header-text">Danh sách yêu cầu</div>
+      <div class="request__header-text">
+        {{ $i18n.t('request.listRequest') }}
+      </div>
       <div>
         <el-dropdown @command="createRequest">
           <el-button class="header-actions__button" type="primary">
-            Tạo yêu cầu
+            {{ $i18n.t('request.createRequest') }}
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
@@ -39,9 +41,9 @@
         v-model="requestDateRange"
         class="request-search__date-range request-search__input"
         type="daterange"
-        range-separator="To"
-        start-placeholder="Từ ngày"
-        end-placeholder="Đến ngày"
+        range-separator="-"
+        :start-placeholder="$i18n.t('request.dateFrom')"
+        :end-placeholder="$i18n.t('request.dateTo')"
         format="dd-MM-yyyy"
         value-format="timestamp"
         @change="onChangeDate"
@@ -50,7 +52,7 @@
       <el-select
         v-model="requestTypeSearch"
         class="request-search__request-type request-search__input"
-        placeholder="Loại yêu cầu"
+        :placeholder="$i18n.t('request.requestType')"
         :clearable="true"
         @clear="onClearRequestType"
         @change="onRequestTypeChange"
@@ -58,7 +60,7 @@
         <el-option
           v-for="(requestType, index) in listRequestType"
           :key="'requestType' + index"
-          :label="requestType.request_type_name"
+          :label="$i18n.t(`request['${requestType.request_type_name}']`)"
           :value="requestType.request_type_name"
         >
         </el-option>
@@ -66,7 +68,7 @@
       <el-select
         v-model="requestStatusSearch"
         class="request-search__status request-search__input"
-        placeholder="Trạng thái"
+        :placeholder="$i18n.t('request.requestStatus')"
         :clearable="true"
         @clear="onClearRequestStatus"
         @change="onRequestStatusChange"
@@ -83,10 +85,10 @@
     </div>
     <div class="request-table">
       <el-tabs :value="activeTable" type="border-card" @tab-click="clickTab">
-        <el-tab-pane label="Yêu cầu đi" name="first">
+        <el-tab-pane :label="$i18n.t('request.requestSend')" name="first">
           <request-send-table />
         </el-tab-pane>
-        <el-tab-pane label="Yêu cầu đến" name="second">
+        <el-tab-pane :label="$i18n.t('request.requestReceive')" name="second">
           <request-receive-table />
         </el-tab-pane>
       </el-tabs>

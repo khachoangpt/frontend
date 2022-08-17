@@ -48,7 +48,7 @@
       </template>
     </vue-good-table>
     <el-dialog
-      title="Chi tiết yêu cầu"
+      :title="$i18n.t('request.dialog.requestDetail')"
       :visible.sync="detailRequestReceiveVisible"
       center
       custom-class="request-detail-dialog"
@@ -56,13 +56,13 @@
     >
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14"
-          >Nhân viên:
+          >{{ $i18n.t('request.dialog.employeeName') }}:
           <span class="request-detail-dialog__value">
             {{ requestReceiveDetail.full_name }}
           </span>
         </el-col>
         <el-col :span="10">
-          Mã NV:
+          {{ $i18n.t('request.dialog.employeeId') }}:
           <span class="request-detail-dialog__value">
             {{ requestReceiveDetail.employee_id }}
           </span>
@@ -70,13 +70,13 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          Yêu cầu:
+          {{ $i18n.t('request.dialog.requestName') }}:
           <span class="request-detail-dialog__value">
             {{ requestReceiveDetail.request_name }}
           </span>
         </el-col>
         <el-col :span="10">
-          Trạng thái:
+          {{ $i18n.t('request.dialog.status') }}:
           <span
             class="request-detail-dialog__value"
             :class="'request-status__' + requestReceiveDetail.request_status"
@@ -87,7 +87,7 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          Ngày tạo:
+          {{ $i18n.t('request.dialog.createDate') }}:
           <span class="request-detail-dialog__value">
             {{ new Date(requestReceiveDetail.create_date).getDate() }}/{{
               new Date(requestReceiveDetail.create_date).getMonth() + 1
@@ -95,7 +95,7 @@
           </span>
         </el-col>
         <el-col :span="10">
-          Thời hạn:
+          {{ $i18n.t('request.dialog.duration') }}:
           <span class="request-detail-dialog__value">
             {{ new Date(requestReceiveDetail.duration).getDate() }}/{{
               new Date(requestReceiveDetail.duration).getMonth() + 1
@@ -105,7 +105,7 @@
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="14">
-          <span>Đã xem bởi:</span>
+          <span>{{ $i18n.t('request.dialog.checkedBy') }}:</span>
           <div class="request-detail-dialog__tags">
             <el-tag
               v-for="(name, index) in requestReceiveDetail.checked_by"
@@ -120,14 +120,14 @@
           v-if="requestReceiveDetail.request_status === 'REJECTED'"
           :span="10"
         >
-          <span class="reject-reason" @click="getRejectReason"
-            >Xem lý do từ chối</span
-          >
+          <span class="reject-reason" @click="getRejectReason">{{
+            $i18n.t('request.dialog.rejectComment')
+          }}</span>
         </el-col>
       </el-row>
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
-          Chi tiết
+          {{ $i18n.t('request.dialog.detail') }}
           <div
             class="request-detail-dialog__description"
             v-html="requestReceiveDetail.description"
@@ -136,43 +136,47 @@
       </el-row>
       <span v-if="isAction && isChecked" slot="footer" class="dialog-footer">
         <el-button v-if="isEnoughLevel" type="success" @click="approveRequest">
-          Chấp nhận
+          {{ $i18n.t('request.dialog.approve') }}
         </el-button>
         <el-button
           v-if="!isEnoughLevel"
           type="primary"
           @click="openChooseManagerDialog"
         >
-          Chuyển tiếp
+          {{ $i18n.t('request.dialog.check') }}
         </el-button>
-        <el-button type="danger" @click="open"> Từ chối </el-button>
+        <el-button type="danger" @click="open">
+          {{ $i18n.t('request.dialog.reject') }}
+        </el-button>
       </span>
     </el-dialog>
     <el-dialog
       top="40vh"
-      title="Chuyển tiếp"
+      :title="$i18n.t('request.dialog.check')"
       class="request-dialog__choose-manager"
       :visible.sync="chooseManagerDialogVisible"
       width="24%"
       :before-close="closeChooseManagerDialog"
     >
       <el-form label-position="top">
-        <el-form-item label="Chọn người muốn chuyển tiếp:" la>
+        <el-form-item :label="$i18n.t('request.dialog.chooseForward')">
           <el-autocomplete
             v-model="chooseManager"
             :clearable="true"
-            placeholder="Tên quản lý"
+            :placeholder="$i18n.t('request.dialog.manager')"
             :fetch-suggestions="querySearchManager"
           ></el-autocomplete>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeChooseManagerDialog">Đóng</el-button>
+        <el-button @click="closeChooseManagerDialog">{{
+          $i18n.t('request.dialog.close')
+        }}</el-button>
         <el-button
           type="primary"
           @click="reviewedRequest({ chooseManager, selectedRequest })"
         >
-          Xác nhận
+          {{ $i18n.t('request.dialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -425,5 +429,29 @@ export default {
   .request-detail-dialog {
     width: 40%;
   }
+}
+
+.request-des__dear {
+  color: #f56c6c;
+}
+
+.request-des__date {
+  color: #f56c6c;
+}
+
+.request-des__name {
+  color: #f56c6c;
+}
+
+.request-des__money {
+  color: #f56c6c;
+}
+
+.request-des__name-nomination {
+  color: #f56c6c;
+}
+
+.request-des__current {
+  color: #f56c6c;
 }
 </style>

@@ -184,7 +184,7 @@ const vi = {
       validateDegree: 'Bằng cấp không được để trống.',
       changeAvatar: 'Đổi avatar',
       seniority: 'Thâm niên',
-      numberRelative: 'Số người phụ thuộc'
+      numberRelative: 'Số người phụ thuộc',
     },
     table: {
       personnel: 'Nhân sự',
@@ -222,6 +222,43 @@ const vi = {
     workingData: 'Dữ liệu giờ làm',
     employee: 'Nhân viên',
     id: 'Mã',
+  },
+
+  request: {
+    listRequest: 'Danh sách yêu cầu',
+    createRequest: 'Tạo yêu cầu',
+    dateFrom: 'Từ ngày',
+    dateTo: 'Đến ngày',
+    requestType: 'Loại yêu cầu',
+    'Working Time': 'Sửa giờ làm',
+    'Paid Leave': 'Xin nghỉ',
+    Nomination: 'Đề cử',
+    Advance: 'Tạm ứng',
+    requestSend: 'Yêu cầu đi',
+    requestReceive: 'Yêu cầu đến',
+    table: {
+      rowSelected: 'hàng đã chọn',
+      clear: 'Bỏ chọn tất cả',
+    },
+    dialog: {
+      requestDetail: 'Chi tiết yêu cầu',
+      employeeName: 'Nhân viên',
+      requestName: 'Yêu cầu',
+      employeeId: 'Mã NV',
+      status: 'Trạng thái',
+      createDate: 'Ngày tạo',
+      duration: 'Thời hạn',
+      checkedBy: 'Đã xem bởi',
+      rejectComment: 'Xem lý do từ chối',
+      detail: 'Chi tiết',
+      approve: 'Chấp nhận',
+      reject: 'Từ chối',
+      check: 'Chuyển tiếp',
+      chooseForward: 'Chọn người muốn chuyển tiếp:',
+      manager: 'Tên quản lý',
+      close: 'Đóng',
+      confirm: 'Xác nhận',
+    },
   },
 
   salary: {
