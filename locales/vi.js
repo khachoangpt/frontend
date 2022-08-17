@@ -239,6 +239,12 @@ const vi = {
     table: {
       rowSelected: 'hàng đã chọn',
       clear: 'Bỏ chọn tất cả',
+      employeeName: 'Nhân viên',
+      employeeId: 'Mã NV',
+      request: 'Yêu cầu',
+      createDate: 'Ngày tạo',
+      status: 'Trạng thái',
+      duration: 'Ngày hết hạn',
     },
     dialog: {
       requestDetail: 'Chi tiết yêu cầu',
@@ -258,6 +264,14 @@ const vi = {
       manager: 'Tên quản lý',
       close: 'Đóng',
       confirm: 'Xác nhận',
+      requestWorkingTime: 'Yêu cầu sửa giờ làm',
+      date: 'Ngày',
+      content: 'Nội dung',
+      dayAndHour: 'Ngày & Giờ',
+      chooseDay: 'Chọn một ngày',
+      dateFrom: 'Từ ngày',
+      dateTo: 'Đến ngày',
+      sendRequest: 'Gửi yêu cầu',
     },
   },
 

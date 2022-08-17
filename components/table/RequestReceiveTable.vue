@@ -194,13 +194,54 @@ export default {
       chooseManager: '',
       isAction: true,
       isEnoughLevel: '',
+      requestTableHeader: [
+        {
+          label: this.$i18n.t('request.table.employeeName'),
+          field: 'full_name',
+          width: '150px',
+          thClass: 'request-table-header__center',
+        },
+        {
+          label: this.$i18n.t('request.table.employeeId'),
+          field: 'employee_id',
+          width: '80px',
+          sortable: false,
+          thClass: 'request-table-header__center',
+        },
+        {
+          label: this.$i18n.t('request.table.request'),
+          field: 'request_name',
+          width: '180px',
+          sortable: false,
+          thClass: 'request-table-header__center',
+        },
+        {
+          label: this.$i18n.t('request.table.createDate'),
+          field: 'create_date',
+          width: '80px',
+          thClass: 'request-table-header__center',
+        },
+        {
+          label: this.$i18n.t('request.table.status'),
+          field: 'request_status',
+          width: '100px',
+          sortable: false,
+          thClass: 'request-table-header__center',
+        },
+        {
+          label: this.$i18n.t('request.table.duration'),
+          field: 'duration',
+          width: '100px',
+          sortable: false,
+          thClass: 'request-table-header__center',
+        },
+      ],
     }
   },
 
   computed: {
     ...mapGetters('auth', ['id']),
     ...mapGetters('request', [
-      'requestTableHeader',
       'requestListReceive',
       'totalPageRequestListReceive',
       'requestListSelected',

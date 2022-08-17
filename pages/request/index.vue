@@ -94,15 +94,11 @@
       </el-tabs>
     </div>
     <request-advance-dialog />
-    <request-behaviour-dialog />
-    <request-company-asset-dialog />
-    <request-integrity-dialog />
     <request-nomination-dialog
       v-if="!roles.find((role) => role.authority === 'ROLE_USER')"
     />
     <request-paid-leave-dialog />
-    <request-tax-enrollment-dialog />
-    <request-working-schedule-dialod />
+    <request-working-schedule-dialog />
   </div>
 </template>
 
@@ -111,26 +107,18 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import RequestReceiveTable from '~/components/table/RequestReceiveTable.vue'
 import RequestSendTable from '~/components/table/RequestSendTable.vue'
 import RequestAdvanceDialog from '~/components/dialog/RequestAdvanceDialog.vue'
-import RequestBehaviourDialog from '~/components/dialog/RequestBehaviourDialog.vue'
-import RequestCompanyAssetDialog from '~/components/dialog/RequestCompanyAssetDialog.vue'
-import RequestIntegrityDialog from '~/components/dialog/RequestIntegrityDialog.vue'
 import RequestNominationDialog from '~/components/dialog/RequestNominationDialog.vue'
 import RequestPaidLeaveDialog from '~/components/dialog/RequestPaidLeaveDialog.vue'
-import RequestTaxEnrollmentDialog from '~/components/dialog/RequestTaxEnrollmentDialog.vue'
-import RequestWorkingScheduleDialod from '~/components/dialog/RequestWorkingScheduleDialod.vue'
+import RequestWorkingScheduleDialog from '~/components/dialog/RequestWorkingScheduleDialog.vue'
 export default {
   name: 'ViewRequestPage',
   components: {
     RequestReceiveTable,
     RequestSendTable,
     RequestAdvanceDialog,
-    RequestBehaviourDialog,
-    RequestCompanyAssetDialog,
-    RequestIntegrityDialog,
     RequestNominationDialog,
     RequestPaidLeaveDialog,
-    RequestTaxEnrollmentDialog,
-    RequestWorkingScheduleDialod,
+    RequestWorkingScheduleDialog,
   },
   layout: 'main',
   data() {

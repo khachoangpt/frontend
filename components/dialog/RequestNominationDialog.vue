@@ -242,7 +242,7 @@ export default {
       nominationForm: {
         createEmployeeId: '',
         requestTypeId: '',
-        requestNameId: '',
+        requestNameId: 'Salary increment',
         description: '',
         employeeId: '',
         employeeName: '',
@@ -353,6 +353,25 @@ export default {
     ...mapMutations('salary', ['setSearchEmployeeText']),
 
     closeDialog() {
+      this.nominationForm = {
+        createEmployeeId: '',
+        requestTypeId: '',
+        requestNameId: 'Salary increment',
+        description: '',
+        employeeId: '',
+        employeeName: '',
+        date: '',
+        currentTitle: '',
+        desiredTitle: '',
+        currentGrade: '',
+        desiredGrade: '',
+        currentArea: '',
+        desiredArea: '',
+        currentOffice: '',
+        desiredOffice: '',
+        type: '',
+        value: '',
+      }
       this.setRequestNominationDialogVisible(false)
     },
 

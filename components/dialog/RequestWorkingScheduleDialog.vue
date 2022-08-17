@@ -7,7 +7,9 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
-    <span slot="title" class="request-dialog__title">Yêu cầu giờ làm</span>
+    <span slot="title" class="request-dialog__title">{{
+      $i18n.t('request.dialog.requestWorkingTime')
+    }}</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Working schedule for all employees.
@@ -30,10 +32,14 @@
       label-width="120px"
       class="request-dialog__body"
     >
-      <el-form-item label="Yêu cầu" prop="requestName">
+      <el-form-item
+        :label="$i18n.t('request.dialog.requestName')"
+        prop="requestName"
+      >
         <el-select
           v-model="workingScheduleForm.requestName"
           class="request-form__input"
+          :value-key="workingScheduleForm.requestName"
           @change="onChangeRequestName"
         >
           <el-option
@@ -49,34 +55,37 @@
           workingScheduleForm.requestName === 'Work Late' ||
           workingScheduleForm.requestName === 'Leave Soon'
         "
-        label="Ngày"
+        :label="$i18n.t('request.dialog.date')"
         prop="requestDate"
       >
         <el-date-picker
           v-model="workingScheduleForm.requestDate"
           class="request-form__input"
           type="date"
-          placeholder="Chọn một ngày"
+          :placeholder="$i18n.t('request.dialog.chooseDay')"
           format="dd-MM-yyyy"
           value-format="yyyy-MM-dd"
         ></el-date-picker>
       </el-form-item>
       <el-form-item
         v-if="workingScheduleForm.requestName === 'OT'"
-        label="Ngày & Giờ"
+        :label="$i18n.t('request.dialog.dayAndHour')"
         prop="requestTimeOT"
       >
         <el-date-picker
           v-model="workingScheduleForm.requestTimeOT"
           class="request-form__input-area"
           type="datetimerange"
-          range-separator="To"
-          start-placeholder="Ngày bắt đầu"
-          end-placeholder="Ngày kết thúc"
+          range-separator="-"
+          :start-placeholder="$i18n.t('request.dialog.dateFrom')"
+          :end-placeholder="$i18n.t('request.dialog.dateTo')"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="Nội dung" prop="requestDescription">
+      <el-form-item
+        :label="$i18n.t('request.dialog.content')"
+        prop="requestDescription"
+      >
         <el-input
           v-model="workingScheduleForm.requestDescription"
           class="request-form__input-area"
@@ -86,14 +95,16 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog"> Đóng </el-button>
+      <el-button @click="closeDialog">
+        {{ $i18n.t('request.dialog.close') }}
+      </el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         element-loading-background="rgba(0, 0, 0, 0.2)"
         type="primary"
         @click="submitForm('workingScheduleForm')"
       >
-        Gửi yêu cầu
+        {{ $i18n.t('request.dialog.sendRequest') }}
       </el-button>
     </span>
   </el-dialog>
@@ -107,7 +118,7 @@ export default {
   data() {
     return {
       workingScheduleForm: {
-        requestName: '',
+        requestName: 'Leave Soon',
         requestDate: new Date(),
         requestTimeOT: '',
         requestDescription: '',
@@ -163,6 +174,12 @@ export default {
     ]),
 
     closeDialog() {
+      this.workingScheduleForm = {
+        requestName: 'Leave Soon',
+        requestDate: new Date(),
+        requestTimeOT: '',
+        requestDescription: '',
+      }
       this.setRequestWorkingScheduleDialogVisible(false)
     },
 

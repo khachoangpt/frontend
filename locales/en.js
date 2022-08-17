@@ -238,6 +238,12 @@ const en = {
     table: {
       rowSelected: 'rows selected',
       clear: 'clear',
+      employeeName: 'Employee',
+      employeeId: 'ID',
+      request: 'Request',
+      createDate: 'Create date',
+      status: 'Status',
+      duration: 'Duration',
     },
     dialog: {
       requestDetail: 'Request detail',
@@ -257,6 +263,14 @@ const en = {
       manager: 'Manager',
       close: 'Close',
       confirm: 'Confirm',
+      requestWorkingTime: 'Edit working hours',
+      date: 'Date',
+      content: 'Content',
+      dayAndHour: 'Day & Hour',
+      chooseDay: 'Choose a day',
+      dateFrom: 'From',
+      dateTo: 'To',
+      sendRequest: 'Send request',
     },
   },
 
