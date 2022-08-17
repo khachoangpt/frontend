@@ -124,34 +124,34 @@
         class="sub-title-policy"
         :index="localePath('/policy/working-rule')"
       >
-        Chính sách làm việc
+        {{ $i18n.t('sidebar.workingPolicy') }}
       </el-menu-item>
       <el-menu-item
         class="sub-title-policy"
         :index="localePath('/policy/benefit')"
       >
-        Phúc lợi
+        {{ $i18n.t('sidebar.welfare') }}
       </el-menu-item>
       <el-menu-item class="sub-title-policy" :index="localePath('/policy/tax')">
-        Thuế
+        {{ $i18n.t('sidebar.tax') }}
       </el-menu-item>
       <el-menu-item
         class="sub-title-policy"
         :index="localePath('/policy/insurance')"
       >
-        Bảo hiểm
+        {{ $i18n.t('sidebar.insurance') }}
       </el-menu-item>
       <el-menu-item
         class="sub-title-policy"
         :index="localePath('/policy/leave')"
       >
-        Nghỉ phép
+        {{ $i18n.t('sidebar.paidLeave') }}
       </el-menu-item>
       <el-menu-item
         class="sub-title-policy"
         :index="localePath('/policy/salary')"
       >
-        Lương
+        {{ $i18n.t('sidebar.salaryPolicy') }}
       </el-menu-item>
     </el-submenu>
   </el-menu>

@@ -7,7 +7,7 @@
   >
     <div class="synthetic__header">
       <div class="synthetic__header-text">
-        Tổng hợp biểu đồ quản lý nhân viên phòng ban
+        {{ $i18n.t('synthetic.syntheticHeader') }}
       </div>
     </div>
     <el-row :gutter="20">
@@ -16,7 +16,7 @@
           <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix-synthetic">
               <span class="box-card__header-text">
-                Tổng số nhân viên phòng ban
+                {{ $i18n.t('synthetic.totalEmployee') }}
               </span>
             </div>
             <doughnut-chart :values="employeeNumber" />
@@ -27,7 +27,9 @@
         <div class="grid-content">
           <el-card class="box-card dashboard-column__height">
             <div slot="header" class="clearfix-synthetic">
-              <span class="box-card__header-text">Độ tuổi</span>
+              <span class="box-card__header-text">{{
+                $i18n.t('synthetic.age')
+              }}</span>
             </div>
             <doughnut-chart :values="ageNumber" :background-color="ageColor" />
           </el-card>
@@ -52,7 +54,9 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix-synthetic">
-              <span class="box-card__header-text">Thâm niên</span>
+              <span class="box-card__header-text">{{
+                $i18n.t('synthetic.seniority')
+              }}</span>
             </div>
             <bar-chart :values="seniorityNumber" />
           </el-card>
@@ -64,13 +68,13 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix-synthetic">
-              <span class="box-card__header-text"
-                >Thống kê nghỉ việc theo năm</span
-              >
+              <span class="box-card__header-text">{{
+                $i18n.t('synthetic.reasonLeave')
+              }}</span>
               <el-date-picker
                 v-model="leaveCompanyReasonChartOption"
                 type="year"
-                placeholder="Ngày"
+                :clearable="false"
                 :default-value="new Date()"
               >
               </el-date-picker>
@@ -85,13 +89,12 @@
         <div class="grid-content">
           <el-card class="box-card">
             <div slot="header" class="clearfix-synthetic">
-              <span class="box-card__header-text"
-                >Thống kê nghỉ phép theo năm</span
-              >
+              <span class="box-card__header-text">{{
+                $i18n.t('synthetic.reasonOnLeave')
+              }}</span>
               <el-select
                 v-if="!roles.includes('user')"
                 v-model="paidLeaveReasonChartEmployeeId"
-                placeholder="Mã nhân viên"
               >
                 <el-option
                   v-for="item in employeeByIdOptions"
@@ -105,7 +108,7 @@
               <el-date-picker
                 v-model="paidLeaveReasonChartOption"
                 type="year"
-                placeholder="Ngày"
+                :clearable="false"
                 :default-value="new Date()"
               >
               </el-date-picker>
@@ -159,8 +162,14 @@ export default {
     },
     employeeNumber() {
       return [
-        { label: 'Nam', value: this.generalDataChart.totalMaleEmployee },
-        { label: 'Nữ', value: this.generalDataChart.totalFemaleEmployee },
+        {
+          label: this.$i18n.t('synthetic.male'),
+          value: this.generalDataChart.totalMaleEmployee,
+        },
+        {
+          label: this.$i18n.t('synthetic.female'),
+          value: this.generalDataChart.totalFemaleEmployee,
+        },
       ]
     },
     ageNumber() {
@@ -175,7 +184,7 @@ export default {
   },
   watch: {
     leaveCompanyReasonChartOption(year) {
-      this.getLeaveCompanyReasonChart(year)
+      this.getLeaveCompanyReasonChart(year.getFullYear())
     },
     paidLeaveReasonChartOption(year) {
       this.getPaidLeaveReasonChart({

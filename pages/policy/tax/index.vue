@@ -1,7 +1,7 @@
 <template>
   <div class="policy">
     <div class="policy__header">
-      <div class="policy__header-text">Chính sách làm việc</div>
+      <div class="policy__header-text">{{ $i18n.t('sidebar.tax') }}</div>
     </div>
     <div class="policy-table">
       <vue-good-table
@@ -29,40 +29,42 @@
       </vue-good-table>
     </div>
     <el-dialog
-      title="Chi tiết chính sách"
+      :title="$i18n.t('policy.dialog.policyDetail')"
       :visible.sync="policyDetailDialogVisible"
       width="38%"
       center
     >
       <el-row :gutter="20">
         <el-col class="detail-policy" :span="12">
-          Loại chính sách: <span>{{ policyDetail[0].policy_type }}</span>
+          {{ $i18n.t('policy.dialog.policyType') }}:
+          <span>{{ policyDetail[0].policy_type }}</span>
         </el-col>
         <el-col class="detail-policy" :span="12">
-          Tên chính sách: <span>{{ policyDetail[0].policy_name }}</span>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col class="detail-policy" :span="12">
-          Ngày tạo: <span>{{ policyDetail[0].created_date }}</span>
-        </el-col>
-        <el-col class="detail-policy" :span="12">
-          Ngày có hiệu lực: <span>{{ policyDetail[0].effective_date }}</span>
+          {{ $i18n.t('policy.dialog.policyName') }}:
+          <span>{{ policyDetail[0].policy_name }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col class="detail-policy" :span="12">
-          Trạng thái:
+          {{ $i18n.t('policy.dialog.createDate') }}:
+          <span>{{ policyDetail[0].created_date }}</span>
+        </el-col>
+        <el-col class="detail-policy" :span="12">
+          {{ $i18n.t('policy.dialog.effectiveDate') }}:
+          <span>{{ policyDetail[0].effective_date }}</span>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col class="detail-policy" :span="12">
+          {{ $i18n.t('policy.dialog.status') }}:
           <span>{{
-            policyDetail[0].policy_status === true
-              ? 'Đang áp dụng'
-              : 'Không được áp dụng'
+            policyDetail[0].policy_status === true ? 'Active' : 'Deactivate'
           }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col class="detail-policy" :span="24">
-          Nội dung:
+          {{ $i18n.t('policy.dialog.content') }}:
           <el-input
             type="textarea"
             :rows="6"
@@ -85,16 +87,43 @@ export default {
     return {
       searchText: '',
       policyDetailDialogVisible: false,
+      columns: [
+        {
+          label: this.$i18n.t('policy.dialog.policyType'),
+          field: 'policy_type',
+          thClass: 'policy-table-header__center',
+        },
+        {
+          label: this.$i18n.t('policy.dialog.policyName'),
+          field: 'policy_name',
+          thClass: 'policy-table-header__center',
+        },
+        {
+          label: this.$i18n.t('policy.dialog.description'),
+          field: 'description',
+          thClass: 'policy-table-header__center',
+        },
+        {
+          label: this.$i18n.t('policy.dialog.createDate'),
+          field: 'created_date',
+          thClass: 'policy-table-header__center',
+        },
+        {
+          label: this.$i18n.t('policy.dialog.effectiveDate'),
+          field: 'effective_date',
+          thClass: 'policy-table-header__center',
+        },
+        {
+          label: this.$i18n.t('policy.dialog.status'),
+          field: 'policy_status',
+          thClass: 'policy-table-header__center',
+        },
+      ],
     }
   },
 
   computed: {
-    ...mapGetters('policy', [
-      'policyList',
-      'columns',
-      'totalPage',
-      'policyDetail',
-    ]),
+    ...mapGetters('policy', ['policyList', 'totalPage', 'policyDetail']),
   },
 
   async mounted() {
@@ -149,5 +178,11 @@ export default {
 .detail-policy {
   margin-bottom: 24px;
   font-size: 16px;
+}
+
+.el-pagination {
+  margin-top: 16px;
+  text-align: center;
+  padding-bottom: 16px;
 }
 </style>

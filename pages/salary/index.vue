@@ -6,7 +6,9 @@
     class="salary"
   >
     <div class="salary__header">
-      <div class="salary__header-text">Quản lý tiền lương</div>
+      <div class="salary__header-text">
+        {{ $i18n.t('salary.payrollAccounting') }}
+      </div>
     </div>
     <div class="salary__header-actions">
       <el-autocomplete
@@ -14,7 +16,7 @@
         v-model="employeeSearch"
         :clearable="true"
         class="header-actions__search"
-        placeholder="Tên nhân viên"
+        :placeholder="$i18n.t('salary.employeeName')"
         :fetch-suggestions="querySearch"
         @select="handleChangeEmployee"
         @clear="handleChangeEmployee"
@@ -23,7 +25,7 @@
         v-if="activeName === 'second'"
         v-model="statusText"
         class="header-actions__search-status"
-        placeholder="Select"
+        :placeholder="$i18n.t('salary.status')"
         @change="handleChangeSalaryStatus"
       >
         <el-option
@@ -116,7 +118,7 @@
         type="border-card"
         @tab-click="handleChangeTabSalary"
       >
-        <el-tab-pane label="Bảng lương của tôi" name="first">
+        <el-tab-pane :label="$i18n.t('salary.myPayroll')" name="first">
           <vue-good-table
             ref="salary-table-2"
             :columns="salaryHistoryListHeader"
@@ -138,7 +140,7 @@
             </template>
           </vue-good-table>
         </el-tab-pane>
-        <el-tab-pane label="Bảng lương nhân viên" name="second">
+        <el-tab-pane :label="$i18n.t('salary.employeePayroll')" name="second">
           <vue-good-table
             ref="salary-table-3"
             :columns="salaryListHeader"
@@ -245,6 +247,78 @@ export default {
       isShowReject: true,
       isShowApprove: true,
       loadingSalary: true,
+      salaryHistoryListHeader: [
+        {
+          label: this.$i18n.t('salary.month'),
+          field: 'month',
+          width: '50px',
+          sortable: true,
+        },
+        {
+          label: this.$i18n.t('salary.status'),
+          field: 'salaryStatus',
+          width: '80px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.position'),
+          field: 'position',
+          width: '80px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.standardWorkingDay'),
+          field: 'standardPoint',
+          width: '168px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.actualWorkingDay'),
+          field: 'actualPoint',
+          width: '148px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.otPoint'),
+          field: 'otPoint',
+          width: '70px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.deduction'),
+          field: 'totalDeduction',
+          width: '68px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.insurance'),
+          field: 'totalInsurance',
+          width: '74px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.tax'),
+          field: 'totalTax',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.bonus'),
+          field: 'totalBonus',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.advance'),
+          field: 'totalAdvance',
+          width: '70px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.salaryReceived'),
+          field: 'finalSalary',
+          width: '140px',
+          sortable: false,
+        },
+      ],
     }
   },
 
@@ -258,7 +332,6 @@ export default {
       'totalPage',
       'salaryDataList',
       'listSalaryId',
-      'salaryHistoryListHeader',
       'salaryHistoryList',
       'listEmployeeByManager',
       'checkDialogVisible',

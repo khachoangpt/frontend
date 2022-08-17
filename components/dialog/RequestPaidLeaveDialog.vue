@@ -7,7 +7,9 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
-    <span slot="title" class="request-dialog__title">Xin nghỉ</span>
+    <span slot="title" class="request-dialog__title">{{
+      $i18n.t('request.dialog.requestPaidLeave')
+    }}</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Paid Leave for only official employee.
@@ -32,11 +34,14 @@
     >
       <el-form-item>
         <span class="request-form__day-off"
-          >Quỹ ngày nghỉ còn lại:
-          <span> {{ dayOffRemaining }} ngày </span>
+          >{{ $i18n.t('request.dialog.remainingDayOff') }}:
+          <span> {{ dayOffRemaining }} </span>
         </span>
       </el-form-item>
-      <el-form-item label="Yêu cầu" prop="requestName">
+      <el-form-item
+        :label="$i18n.t('request.dialog.requestName')"
+        prop="requestName"
+      >
         <el-select
           v-model="paidLeaveForm.requestName"
           class="request-form__input"
@@ -50,19 +55,22 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Ngày" prop="requestDateRange">
+      <el-form-item
+        :label="$i18n.t('request.dialog.date')"
+        prop="requestDateRange"
+      >
         <el-date-picker
           v-model="paidLeaveForm.requestDateRange"
           class="request-form__input-area"
           type="daterange"
-          range-separator="To"
-          start-placeholder="Từ ngày"
-          end-placeholder="Đến ngày"
+          range-separator="-"
+          :start-placeholder="$i18n.t('request.dialog.dateFrom')"
+          :end-placeholder="$i18n.t('request.dialog.dateTo')"
           :picker-options="pickerOptions"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="Lý do" prop="reason">
+      <el-form-item :label="$i18n.t('request.dialog.reason')" prop="reason">
         <el-select
           v-model="paidLeaveForm.reason"
           class="request-form__input"
@@ -78,7 +86,7 @@
       </el-form-item>
       <el-form-item
         v-if="paidLeaveForm.reason === 3"
-        label="Nhập lý do"
+        :label="$i18n.t('request.dialog.inputReason')"
         prop="requestDescription"
       >
         <el-input
@@ -90,9 +98,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog"> Đóng </el-button>
+      <el-button @click="closeDialog">
+        {{ $i18n.t('request.dialog.close') }}
+      </el-button>
       <el-button type="primary" @click="submitForm('paidLeaveForm')">
-        Tạo yêu cầu
+        {{ $i18n.t('request.dialog.sendRequest') }}
       </el-button>
     </span>
   </el-dialog>
