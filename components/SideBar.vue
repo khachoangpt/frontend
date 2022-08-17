@@ -303,7 +303,12 @@ export default {
 }
 
 .el-submenu .el-menu {
-  height: 250px;
+  height: 230px;
+  overflow-y: scroll;
+}
+
+.el-menu--popup-right-start {
+  height: 230px;
   overflow-y: scroll;
 }
 </style>
