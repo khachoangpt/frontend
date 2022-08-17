@@ -362,6 +362,7 @@ export default {
   border: 2px solid #ccc;
   border-radius: 5px;
   padding: 8px;
+  word-break: break-word;
 }
 
 .request-detail-dialog__description::-webkit-scrollbar {

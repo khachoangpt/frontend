@@ -106,12 +106,298 @@ export default {
   async getDetailSendRequest({ commit }, requestId) {
     try {
       const res = await this.$repository.request.getDetailSendRequest(requestId)
-      const description = res.applicationsRequestResponseList[0].description
+      let description = res.applicationsRequestResponseList[0].description
       const regexDes = /(\[(.*?)\])/gm
       const value = description.match(regexDes)
-      for (let i = 0; i < value.length; i++) {
-        value[i] = value[i].substring(1, value[i].length - 1)
+      if (
+        res.applicationsRequestResponseList[0].request_name === 'Leave Soon' ||
+        res.applicationsRequestResponseList[0].request_name === 'Work Late'
+      ) {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace('After', '<br /><br />After')
+        description = description.replace(
+          value[1],
+          `<span class="request-des__date">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[2],
+          `<br /><span class="request-des__name">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span><br />`
+        )
       }
+      if (res.applicationsRequestResponseList[0].request_name === 'Advances') {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace('I’ve got', '<br /><br />I’ve got')
+        description = description.replace(
+          value[1],
+          `<span class="request-des__money">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[2],
+          `<span class="request-des__date">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[3],
+          `<br /><span class="request-des__name">${value[3].substring(
+            1,
+            value[3].length - 1
+          )}</span><br />`
+        )
+      }
+      if (res.applicationsRequestResponseList[0].request_name === 'Bonus') {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace('During', '<br /><br />During')
+        description = description.replace(
+          value[1],
+          `<span class="request-des__name-nomination">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[2],
+          `<span class="request-des__current">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[3],
+          `<span class="request-des__current">${value[3].substring(
+            1,
+            value[3].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[4],
+          `<span class="request-des__current">${value[4].substring(
+            1,
+            value[4].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[5],
+          `<span class="request-des__current">${value[5].substring(
+            1,
+            value[5].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[6],
+          `<span class="request-des__current">${value[6].substring(
+            1,
+            value[6].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[7],
+          `<br /><span class="request-des__name">${value[7].substring(
+            1,
+            value[7].length - 1
+          )}</span><br />`
+        )
+      }
+      if (
+        res.applicationsRequestResponseList[0].request_name === 'Paid Leave'
+      ) {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace('I’ve got', '<br /><br />I’ve got')
+        description = description.replace(
+          value[1],
+          `<span class="request-des__date">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[2],
+          `<span class="request-des__date">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[3],
+          `<span class="request-des__current">${value[3].substring(
+            1,
+            value[3].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[4],
+          `<br /><span class="request-des__name">${value[4].substring(
+            1,
+            value[4].length - 1
+          )}</span><br />`
+        )
+      }
+      if (res.applicationsRequestResponseList[0].request_name === 'OT') {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'I’ve completed',
+          '<br /><br />I’ve completed'
+        )
+        description = description.replace(
+          value[1],
+          `<span class="request-des__date">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[2],
+          `<span class="request-des__date">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[3],
+          `<span class="request-des__date">${value[3].substring(
+            1,
+            value[3].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[4],
+          `<span class="request-des__date">${value[4].substring(
+            1,
+            value[4].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[5],
+          `<br /><span class="request-des__name">${value[5].substring(
+            1,
+            value[5].length - 1
+          )}</span><br />`
+        )
+      }
+      if (
+        res.applicationsRequestResponseList[0].request_name ===
+        'Salary increment'
+      ) {
+        description = description.replace(
+          value[0],
+          `<span class="request-des__dear">${value[0].substring(
+            1,
+            value[0].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'In the past',
+          '<br /><br />In the past'
+        )
+        description = description.replace(
+          value[1],
+          `<span class="request-des__name-nomination">${value[1].substring(
+            1,
+            value[1].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[2],
+          `<span class="request-des__current">${value[2].substring(
+            1,
+            value[2].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[3],
+          `<span class="request-des__current">${value[3].substring(
+            1,
+            value[3].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[4],
+          `<span class="request-des__current">${value[4].substring(
+            1,
+            value[4].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          value[5],
+          `<span class="request-des__current">${value[5].substring(
+            1,
+            value[5].length - 1
+          )}</span>`
+        )
+        description = description.replace(
+          'Best regard',
+          '<br /><br />Best regard'
+        )
+        description = description.replace(
+          value[6],
+          `<br /><span class="request-des__name">${value[6].substring(
+            1,
+            value[6].length - 1
+          )}</span><br />`
+        )
+      }
+      res.applicationsRequestResponseList[0].description = description
+
       commit('setRequestSendDetail', res.applicationsRequestResponseList[0])
     } catch (error) {
       Message.error(error.response.data.message)
@@ -366,18 +652,9 @@ export default {
         description: form.description,
         employeeId: rootState.auth.id,
         employeeName: rootState.auth.name,
-        date:
-          form.requestDate.getFullYear() +
-          '-' +
-          (form.requestDate.getMonth() + 1 < 10
-            ? '0' + (form.requestDate.getMonth() + 1)
-            : form.requestDate.getMonth() + 1) +
-          '-' +
-          (form.requestDate.getDate() < 10
-            ? '0' + form.requestDate.getDate()
-            : form.requestDate.getDate()),
-        currentTitle: 'DEV 1',
-        currentArea: 'IT',
+        date: format(new Date(form.requestDate), 'yyyy-MM-dd'),
+        currentTitle: rootState.user.personnelDetail.position_name,
+        currentArea: rootState.user.personnelDetail.area_name,
         type: 'Yearly Bonus',
         value: form.bonusValue,
       }

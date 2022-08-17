@@ -135,9 +135,10 @@
       <el-row class="request-detail-dialog__row" :gutter="20">
         <el-col :span="24">
           Chi tiết
-          <div class="request-detail-dialog__description">
-            {{ requestSendDetail.description }}
-          </div>
+          <div
+            class="request-detail-dialog__description"
+            v-html="requestSendDetail.description"
+          ></div>
         </el-col>
       </el-row>
       <!-- <span slot="footer" class="dialog-footer">
@@ -280,7 +281,6 @@ export default {
   border: 2px solid #ccc;
   border-radius: 5px;
   padding: 8px;
-  white-space: pre-line;
   word-break: break-word;
 }
 
@@ -330,5 +330,29 @@ export default {
   .request-detail-dialog {
     width: 40%;
   }
+}
+
+.request-des__dear {
+  color: #f56c6c;
+}
+
+.request-des__date {
+  color: #f56c6c;
+}
+
+.request-des__name {
+  color: #f56c6c;
+}
+
+.request-des__money {
+  color: #f56c6c;
+}
+
+.request-des__name-nomination {
+  color: #f56c6c;
+}
+
+.request-des__current {
+  color: #f56c6c;
 }
 </style>

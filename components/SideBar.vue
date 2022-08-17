@@ -3,6 +3,7 @@
     class="el-menu-vertical-demo"
     background-color="#003c8a"
     text-color="#fff"
+    :default-active="localePath('/')"
     :collapse="isCollapse"
     :router="true"
   >

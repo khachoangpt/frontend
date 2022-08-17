@@ -77,7 +77,6 @@ export default {
 
   async getListPersonalSalary({ commit, state }) {
     try {
-      console.log(state.yearSearch)
       const salaryHistoryList = []
       const data = {
         startDate: Date.parse(state.yearSearch[0]),

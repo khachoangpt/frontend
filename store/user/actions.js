@@ -525,7 +525,6 @@ export default {
         facebook: state.additionInfo.facebook,
         employee_id: state.personnelDetail.employee_id,
       }
-      console.log(data)
       const res = await this.$repository.user.confirmEditAdditionalInfo(data)
       if (res.code === 202) {
         await commit('setIsEditAdditionInfo', true)
@@ -572,7 +571,6 @@ export default {
   },
 
   async insertHoliday({ commit, dispatch, state }, data) {
-    console.log(data)
     try {
       const value = {
         holiday_name: data.holidayName,
