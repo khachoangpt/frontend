@@ -68,7 +68,6 @@
               :disabled="true"
               :value="insurance.insuranceName"
               class="edit-input"
-              @input="updateInsuranceName"
             ></el-input>
           </div>
         </div>
@@ -87,7 +86,7 @@
               size="medium"
               :value="insurance.insuranceID"
               class="edit-input"
-              @input="updateInsuranceId"
+              @input="updateInsuranceIdMethod($event, index)"
             ></el-input>
           </div>
         </div>
@@ -106,7 +105,7 @@
               size="medium"
               :value="insurance.address"
               class="edit-input"
-              @input="updateTaxAddress"
+              @input="updateTaxAddressMethod($event, index)"
             ></el-input>
           </div>
         </div>
@@ -159,6 +158,14 @@ export default {
     async closeEdit() {
       this.setIsEditTaxInfo(true)
       await this.getTaxList(this.$route.params.employeeId)
+    },
+
+    updateInsuranceIdMethod(event, index) {
+      this.updateInsuranceId({ event, index })
+    },
+
+    updateTaxAddressMethod(event, index) {
+      this.updateTaxAddress({ event, index })
     },
   },
 }

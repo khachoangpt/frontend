@@ -174,7 +174,7 @@ export default {
   },
 
   updateInsuranceId(state, data) {
-    state.taxList.insurance_id = data
+    state.taxList.insuranceDtos[data.index].insuranceID = data.event
   },
 
   updateInsuranceName(state, data) {
@@ -182,7 +182,7 @@ export default {
   },
 
   updateTaxAddress(state, data) {
-    state.taxList.address = data
+    state.taxList.insuranceDtos[data.index].address = data.event
   },
 
   updatePersonnelFullName(state, data) {

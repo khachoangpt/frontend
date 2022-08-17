@@ -197,12 +197,20 @@ export default {
     try {
       const taxInfo = {
         taxCode: state.taxList.tax_code,
-        insuranceId: state.taxList.insurance_id,
         employeeId: state.personnelDetail.employee_id,
-        insuranceName: state.taxList.insurance_name,
-        insuranceAddress: state.taxList.address,
       }
       const res = await this.$repository.user.updateTaxInfo(taxInfo)
+
+      // for (let i = 0; i < state.taxList.insuranceDtos.length; i++) {
+      //   const insuranceInfo = {
+      //     insuranceId: state.taxList.insuranceDtos[i].insuranceID,
+      //     employeeId: state.personnelDetail.employee_id,
+      //     insuranceCode: state.taxList.insuranceDtos[i].insuranceName,
+      //     insuranceAddress: state.taxList.insuranceDtos[i].address,
+      //     policyNameId: state.taxList.insuranceDtos[i].policyNameID,
+      //   }
+      //   await this.$repository.user.updateInsuranceInfo(insuranceInfo)
+      // }
       if (res.code === 202) {
         Message.success('Thay đổi thông tin thành công.')
         await commit('setIsEditTaxInfo', true)

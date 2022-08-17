@@ -209,7 +209,20 @@ class UserApi extends User {
   updateTaxInfo(data) {
     const accessToken = getToken()
     return this.$axios.$put(
-      '/api/employee/detail/tax_and_insurance/update',
+      '/api/employee/detail/update_tax_and_insurance',
+      data,
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
+  }
+
+  updateInsuranceInfo(data) {
+    const accessToken = getToken()
+    return this.$axios.$put(
+      '/api/employee/detail/update_tax_and_insurance',
       data,
       {
         headers: {
