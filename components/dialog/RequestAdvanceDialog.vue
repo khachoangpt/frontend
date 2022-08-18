@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       advanceForm: {
-        requestName: 'Advances',
+        requestName: '',
         requestDate: '',
         requestAdvance: '',
         requestDescription: '',
@@ -144,7 +144,7 @@ export default {
 
     closeDialog() {
       this.advanceForm = {
-        requestName: 'Advances',
+        requestName: '',
         requestDate: '',
         requestAdvance: '',
         requestDescription: '',

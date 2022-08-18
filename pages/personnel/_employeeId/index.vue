@@ -259,6 +259,7 @@ export default {
       'educationInfo',
       'screenLoadingAvatar',
       'imageUrl',
+      'personnelList',
     ]),
   },
 
@@ -274,7 +275,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['updateAvatar']),
+    ...mapActions('user', ['updateAvatar', 'getPersonnelList']),
     ...mapMutations('user', [
       'setIsEditLineRelative',
       'setIsEditAdditionInfo',

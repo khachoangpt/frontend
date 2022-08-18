@@ -5,18 +5,10 @@
     type="primary"
     :gutter="20"
   >
-    <el-col :span="4">
+    <el-col :span="1">
       <el-page-header @back="back"> </el-page-header>
-      <div class="working-data-emp">
-        <span class="working-data-emp__label">{{
-          $i18n.t('timekeeping.workingDataOf')
-        }}</span>
-        <span class="working-data-emp__label working-data-emp__name">
-          {{ selectedEmployeeName }} ({{ $route.params.employeeId }})
-        </span>
-      </div>
     </el-col>
-    <el-col :span="20">
+    <el-col :span="23">
       <div class="time-keeping__header">
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-finished custom-calendar__status-finished"></i>
@@ -33,6 +25,14 @@
         <div class="time-keeping__header-bookmark">
           <i class="el-icon-sunrise-1 custom-calendar__status-half"></i>
           <span>{{ $i18n.t('timekeeping.status.half') }}</span>
+        </div>
+        <div class="working-data-emp">
+          <!-- <span class="working-data-emp__label">{{
+            $i18n.t('timekeeping.workingDataOf')
+          }}</span> -->
+          <span class="working-data-emp__label working-data-emp__name">
+            {{ selectedEmployeeName }} ({{ $route.params.employeeId }})
+          </span>
         </div>
         <div class="time-keeping__header-bookmark">
           <el-tag type="info" effect="dark" size="mini"> off </el-tag>
@@ -527,7 +527,6 @@ export default {
 }
 
 .working-data-emp {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
 }

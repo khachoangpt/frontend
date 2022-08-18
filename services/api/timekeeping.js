@@ -1,7 +1,6 @@
 import makeFactoryClass from '../class_factory'
 import BaseClass from './base_class'
 import { getToken } from '~/helper/jwt'
-import { PageLimit } from '~/constants/index'
 
 class TimeKeeping extends BaseClass {
   login() {
@@ -77,8 +76,7 @@ class UserApi extends TimeKeeping {
         areaFilter +
         '&paging=offset:' +
         (data.page - 1) +
-        ',limit:' +
-        PageLimit,
+        ',limit:8',
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,

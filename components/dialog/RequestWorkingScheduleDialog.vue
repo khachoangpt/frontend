@@ -118,7 +118,7 @@ export default {
   data() {
     return {
       workingScheduleForm: {
-        requestName: 'Leave Soon',
+        requestName: '',
         requestDate: new Date(),
         requestTimeOT: '',
         requestDescription: '',
@@ -175,7 +175,7 @@ export default {
 
     closeDialog() {
       this.workingScheduleForm = {
-        requestName: 'Leave Soon',
+        requestName: '',
         requestDate: new Date(),
         requestTimeOT: '',
         requestDescription: '',

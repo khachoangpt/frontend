@@ -228,6 +228,8 @@ const vi = {
     workingData: 'Dữ liệu giờ làm',
     employee: 'Nhân viên',
     id: 'Mã',
+    rowSelected: 'hàng đã chọn',
+    clear: 'Bỏ chọn tất cả',
   },
 
   request: {

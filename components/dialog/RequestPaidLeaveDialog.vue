@@ -116,7 +116,7 @@ export default {
   data() {
     return {
       paidLeaveForm: {
-        requestName: 'Paid Leave',
+        requestName: '',
         requestDateRange: '',
         requestDescription: '',
         reason: '',
@@ -202,7 +202,7 @@ export default {
 
     closeDialog() {
       this.paidLeaveForm = {
-        requestName: 'Paid Leave',
+        requestName: '',
         requestDateRange: '',
         requestDescription: '',
         reason: '',

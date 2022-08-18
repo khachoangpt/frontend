@@ -226,6 +226,8 @@ const en = {
     workingData: 'Working data',
     employee: 'Employee',
     id: 'ID',
+    rowSelected: 'row selected',
+    clear: 'clear',
   },
 
   request: {
@@ -269,7 +271,7 @@ const en = {
       manager: 'Manager',
       close: 'Close',
       confirm: 'Confirm',
-      requestWorkingTime: 'Edit working hours',
+      requestWorkingTime: 'Edit working time',
       date: 'Date',
       content: 'Content',
       dayAndHour: 'Day & Hour',
@@ -308,7 +310,7 @@ const en = {
   },
   synthetic: {
     syntheticHeader: 'Departmental employee management chart',
-    totalEmployee: 'Total number of departmental employee',
+    totalEmployee: 'Total number of employees',
     age: 'Age',
     seniority: 'Seniority',
     reasonLeave: 'Statistics of reasons for leaving work',

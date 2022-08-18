@@ -161,13 +161,13 @@
             </div>
           </el-col>
           <el-col :span="4">
-            <div class="detail-history__separate">------------</div>
+            <div class="detail-history__separate">----------</div>
             <div
               v-for="(time, index) in timekeepingInDay.check_in_check_outs"
               :key="index"
               class="detail-history__separate"
             >
-              ------------
+              ----------
             </div>
           </el-col>
           <el-col :span="10">

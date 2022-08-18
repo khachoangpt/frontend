@@ -242,7 +242,7 @@ export default {
       nominationForm: {
         createEmployeeId: '',
         requestTypeId: '',
-        requestNameId: 'Salary increment',
+        requestNameId: '',
         description: '',
         employeeId: '',
         employeeName: '',
@@ -356,7 +356,7 @@ export default {
       this.nominationForm = {
         createEmployeeId: '',
         requestTypeId: '',
-        requestNameId: 'Salary increment',
+        requestNameId: '',
         description: '',
         employeeId: '',
         employeeName: '',

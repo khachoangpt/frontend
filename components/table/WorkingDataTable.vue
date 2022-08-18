@@ -7,8 +7,8 @@
       enabled: true,
       selectOnCheckboxOnly: true,
       selectionInfoClass: 'select-info-class',
-      selectionText: 'hàng đã chọn',
-      clearSelectionText: 'Bỏ chọn tất cả',
+      selectionText: $i18n.t('workingData.rowSelected'),
+      clearSelectionText: $i18n.t('workingData.clear'),
     }"
     :pagination-options="{
       enabled: true,
@@ -20,7 +20,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :page-size="10"
+        :page-size="8"
         :total="totalPage"
         @current-change="currentChange"
       >
