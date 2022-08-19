@@ -7,7 +7,9 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
-    <span slot="title" class="request-dialog__title">Đề cử</span>
+    <span slot="title" class="request-dialog__title">{{
+      $i18n.t('request.Nomination')
+    }}</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Nomination for all employees.
@@ -33,7 +35,7 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item
-            label="Yêu cầu"
+            :label="$i18n.t('request.dialog.requestName')"
             :rules="{
               required: true,
               message: 'Yêu cầu không được để trống.',
@@ -57,11 +59,14 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="Nhân viên" prop="employeeName">
+          <el-form-item
+            :label="$i18n.t('request.dialog.employeeName')"
+            prop="employeeName"
+          >
             <el-autocomplete
               v-model="nominationForm.employeeName"
               class="header-actions__search request-form__input"
-              placeholder="Tên nhân viên"
+              :placeholder="$i18n.t('request.dialog.employeeName')"
               :clearable="true"
               :fetch-suggestions="querySearch"
               @select="handleChangeEmployee"
@@ -69,12 +74,15 @@
             ></el-autocomplete> </el-form-item
         ></el-col>
         <el-col :span="12">
-          <el-form-item label="Ngày" prop="requestDate">
+          <el-form-item
+            :label="$i18n.t('request.dialog.date')"
+            prop="requestDate"
+          >
             <el-date-picker
               v-model="nominationForm.requestDate"
               class="request-form__input"
               type="date"
-              placeholder="Chọn một ngày"
+              :placeholder="$i18n.t('request.dialog.chooseDay')"
               format="dd-MM-yyyy"
             ></el-date-picker>
           </el-form-item>
@@ -147,7 +155,7 @@
           v-if="nominationForm.requestNameId.trim() === 'Bonus'"
           :span="12"
         >
-          <el-form-item label="Tiền thưởng">
+          <el-form-item :label="$i18n.t('request.dialog.bonus')">
             <el-input
               v-model="nominationForm.bonusValue"
               class="request-form__input"
@@ -160,7 +168,7 @@
         :gutter="20"
       >
         <el-col :span="12">
-          <el-form-item label="Lương">
+          <el-form-item :label="$i18n.t('request.dialog.salary')">
             <el-input
               v-model="currentSalary"
               class="request-form__input"
@@ -184,7 +192,7 @@
         :gutter="20"
       >
         <el-col :span="12">
-          <el-form-item label="Loại" prop="type">
+          <el-form-item :label="$i18n.t('request.dialog.type')" prop="type">
             <el-select
               v-model="nominationForm.type"
               class="request-form__input"
@@ -206,7 +214,10 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item label="Ghi chú" prop="requestDescription">
+      <el-form-item
+        :label="$i18n.t('request.dialog.note')"
+        prop="requestDescription"
+      >
         <el-input
           v-model="nominationForm.description"
           class="request-form__input-area"
@@ -216,14 +227,16 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog"> Đóng </el-button>
+      <el-button @click="closeDialog">
+        {{ $i18n.t('request.dialog.close') }}
+      </el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         element-loading-background="rgba(0, 0, 0, 0.2)"
         type="primary"
         @click="submitForm('nominationForm')"
       >
-        Tạo yêu cầu
+        {{ $i18n.t('request.dialog.sendRequest') }}
       </el-button>
     </span>
   </el-dialog>
@@ -423,7 +436,9 @@ export default {
 
     createFilter(queryString) {
       return (link) => {
-        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        return (
+          link.value.toLowerCase().includes(queryString.toLowerCase()) === true
+        )
       }
     },
 
@@ -520,7 +535,7 @@ export default {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .request-detail-dialog {
-    width: 50%;
+    width: 54%;
   }
 }
 </style>

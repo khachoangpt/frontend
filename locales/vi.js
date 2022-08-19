@@ -284,6 +284,10 @@ const vi = {
       remainingDayOff: 'Số ngày nghỉ còn lại',
       reason: 'Lý do',
       inputReason: 'Nhập lý do',
+      bonus: 'Tiền thưởng',
+      salary: 'Lương',
+      type: 'Loại',
+      note: 'Ghi chú',
     },
   },
 

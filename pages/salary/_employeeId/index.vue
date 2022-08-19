@@ -890,7 +890,9 @@ export default {
 
     createFilter(queryString) {
       return (link) => {
-        return link.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        return (
+          link.value.toLowerCase().includes(queryString.toLowerCase()) === true
+        )
       }
     },
 

@@ -255,7 +255,7 @@ const en = {
     },
     dialog: {
       requestDetail: 'Request detail',
-      employeeName: 'Employee name',
+      employeeName: 'Employee',
       requestName: 'Request',
       employeeId: 'ID',
       status: 'Status',
@@ -283,6 +283,10 @@ const en = {
       remainingDayOff: 'Number of remaining days off',
       reason: 'Reason',
       inputReason: 'Input reason',
+      bonus: 'Bonus',
+      salary: 'Salary',
+      type: 'Type',
+      note: 'Note',
     },
   },
 

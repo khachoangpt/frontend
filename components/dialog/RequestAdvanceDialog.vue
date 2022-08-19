@@ -7,7 +7,9 @@
     :before-close="closeDialog"
     :destroy-on-close="true"
   >
-    <span slot="title" class="request-dialog__title">Yêu cầu tạm ứng</span>
+    <span slot="title" class="request-dialog__title">{{
+      $i18n.t('request.Advance')
+    }}</span>
     <ul class="request-dialog__header">
       <li class="request-dialog__header-line">
         1. Advance for only official staff.
@@ -30,7 +32,10 @@
       label-width="120px"
       class="request-dialog__body"
     >
-      <el-form-item label="Yêu cầu" prop="requestName">
+      <el-form-item
+        :label="$i18n.t('request.dialog.requestName')"
+        prop="requestName"
+      >
         <el-select
           v-model="advanceForm.requestName"
           class="request-form__input"
@@ -44,19 +49,22 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Ngày" prop="requestDate">
+      <el-form-item :label="$i18n.t('request.dialog.date')" prop="requestDate">
         <el-date-picker
           v-model="advanceForm.requestDate"
           class="request-form__input"
           type="date"
-          placeholder="Chọn một ngày"
+          :placeholder="$i18n.t('request.dialog.chooseDay')"
           format="dd-MM-yyyy"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="Tạm ứng" prop="requestAdvance">
+      <el-form-item :label="$i18n.t('request.Advance')" prop="requestAdvance">
         <el-input v-model="advanceForm.requestAdvance"></el-input>
       </el-form-item>
-      <el-form-item label="Ghi chú" prop="requestDescription">
+      <el-form-item
+        :label="$i18n.t('request.dialog.note')"
+        prop="requestDescription"
+      >
         <el-input
           v-model="advanceForm.requestDescription"
           class="request-form__input-area"
@@ -66,14 +74,16 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog"> Cancel </el-button>
+      <el-button @click="closeDialog">
+        {{ $i18n.t('request.dialog.close') }}
+      </el-button>
       <el-button
         v-loading.fullscreen.lock="fullscreenLoading"
         element-loading-background="rgba(0, 0, 0, 0.2)"
         type="primary"
         @click="submitForm('advanceForm')"
       >
-        Confirm
+        {{ $i18n.t('request.dialog.sendRequest') }}
       </el-button>
     </span>
   </el-dialog>
