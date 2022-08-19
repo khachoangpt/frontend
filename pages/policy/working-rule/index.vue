@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="policy">
     <div class="policy__header">
@@ -27,6 +28,22 @@
             @current-change="currentChange"
           >
           </el-pagination>
+        </template>
+        <template slot="table-row" slot-scope="props">
+          <span v-if="props.column.field == 'description'">
+            <div
+              style="
+                text-align: left !important;
+                height: 56px;
+                width: 300px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              "
+              v-html="props.row.description"
+            ></div>
+          </span>
+          <span v-else> {{ props.formattedRow[props.column.field] }}</span>
         </template>
       </vue-good-table>
     </div>
@@ -66,14 +83,14 @@
       </el-row>
       <el-row :gutter="20">
         <el-col class="detail-policy" :span="24">
-          {{ $i18n.t('policy.dialog.content') }}:
-          <el-input
+          {{ $i18n.t('policy.dialog.description') }}:
+          <div
+            class="policy-detail__description"
             type="textarea"
             :rows="6"
-            :value="policyDetail[0].description"
             readonly
-          >
-          </el-input>
+            v-html="policyDetail[0].description"
+          ></div>
         </el-col>
       </el-row>
     </el-dialog>
@@ -104,6 +121,7 @@ export default {
           label: this.$i18n.t('policy.dialog.description'),
           field: 'description',
           thClass: 'policy-table-header__center',
+          width: '30%',
         },
         {
           label: this.$i18n.t('policy.dialog.createDate'),
@@ -186,5 +204,12 @@ export default {
   margin-top: 16px;
   text-align: center;
   padding-bottom: 16px;
+}
+
+.policy-detail__description {
+  border: 1px solid #ccc;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
 }
 </style>

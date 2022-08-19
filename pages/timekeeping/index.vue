@@ -323,6 +323,7 @@ export default {
   float: right;
   margin-top: 4px;
   font-weight: 600;
+  margin-right: 8px;
 }
 
 .custom-calendar__status-finished {

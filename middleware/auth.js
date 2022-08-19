@@ -12,7 +12,14 @@ export default function ({ app, store, redirect, i18n }) {
       store.commit('auth/setEmail', decoded.User_Data.email)
       store.commit('auth/setRoles', decoded.User_Data.authorities)
       store.commit('auth/setFullName', decoded.User_Data.fullName)
-      store.dispatch('auth/getEmployeeInfo', decoded.User_Data.id)
+      if (
+        !decoded.User_Data.authorities.find(
+          (role) => role.authority === 'ROLE_ADMIN'
+        )
+      ) {
+        console.log('asd')
+        store.dispatch('auth/getEmployeeInfo', decoded.User_Data.id)
+      }
       store.commit(
         'auth/setCountry',
         i18n.locale === 'vi' ? 'vn' : i18n.locale === 'en' ? 'us' : 'us'

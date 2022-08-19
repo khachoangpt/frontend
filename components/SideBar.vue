@@ -25,7 +25,11 @@
         <i class="el-icon-s-fold collapse-icon" @click="collapseSidebar"></i>
       </el-tooltip>
     </el-card>
-    <el-menu-item class="avatar" :index="localePath('/personnel/' + id)">
+    <el-menu-item
+      v-if="!roles.find((role) => role.authority === 'ROLE_ADMIN')"
+      class="avatar"
+      :index="localePath('/personnel/' + id)"
+    >
       <div
         class="avatar__background"
         :style="{ backgroundImage: 'url(' + avatar + ')' }"
@@ -33,6 +37,16 @@
       <div v-if="!isCollapse">
         <p class="avatar__name">{{ name }}</p>
         <p class="avatar__role">{{ grade }}</p>
+      </div>
+    </el-menu-item>
+    <el-menu-item v-else class="avatar">
+      <div
+        class="avatar__background"
+        :style="{ backgroundImage: 'url(' + avatar + ')' }"
+      ></div>
+      <div v-if="!isCollapse">
+        <p class="avatar__name">Admin</p>
+        <p class="avatar__role">Admin</p>
       </div>
     </el-menu-item>
     <el-menu-item class="sidebar-item" :index="localePath('/')">
@@ -178,7 +192,9 @@ export default {
   },
 
   async mounted() {
-    await this.getEmployeeInfo(this.id)
+    if (!this.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
+      await this.getEmployeeInfo(this.id)
+    }
   },
 
   methods: {

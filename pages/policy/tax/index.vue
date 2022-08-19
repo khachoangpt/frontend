@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="policy">
     <div class="policy__header">
@@ -25,6 +26,22 @@
             @current-change="currentChange"
           >
           </el-pagination>
+        </template>
+        <template slot="table-row" slot-scope="props">
+          <span v-if="props.column.field == 'description'">
+            <div
+              style="
+                text-align: left !important;
+                height: 56px;
+                width: 300px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              "
+              v-html="props.row.description"
+            ></div>
+          </span>
+          <span v-else> {{ props.formattedRow[props.column.field] }}</span>
         </template>
       </vue-good-table>
     </div>
