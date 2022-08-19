@@ -79,12 +79,12 @@
               $i18n.t('personnel.detail.insuranceNumber')
             }}</span>
             <span v-if="isEditTaxInfo" class="content-item__detail">
-              {{ insurance.insuranceID }}
+              {{ insurance.insuranceCode }}
             </span>
             <el-input
               v-else
               size="medium"
-              :value="insurance.insuranceID"
+              :value="insurance.insuranceCode"
               class="edit-input"
               @input="updateInsuranceIdMethod($event, index)"
             ></el-input>
