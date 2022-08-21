@@ -945,17 +945,20 @@ export default {
 
   async createRequestBonus({ rootState, state, commit, dispatch }, form) {
     try {
+      const regexEmp = /(.+)\((.+)\)/i
+      const employeeId = form.employeeName.match(regexEmp)[2]
+      const employeeName = form.employeeName.match(regexEmp)[1]
       const data = {
         createEmployeeId: rootState.auth.id,
         requestTypeId: state.currentRequestTypeId,
         requestNameId: state.currentRequestNameId,
         description: form.description,
-        employeeId: rootState.auth.id,
-        employeeName: rootState.auth.name,
+        employeeId,
+        employeeName: employeeName.trim(),
         date: format(new Date(form.requestDate), 'yyyy-MM-dd'),
         currentTitle: rootState.user.personnelDetail.position_name,
         currentArea: rootState.user.personnelDetail.area_name,
-        type: 'Yearly Bonus',
+        type: form.type,
         value: form.bonusValue,
       }
       const res = await this.$repository.request.createRequest(data)
@@ -981,16 +984,16 @@ export default {
       const employeeName = form.employeeName.match(regexEmp)[1]
       const data = {
         createEmployeeId: rootState.auth.id,
-        requestTypeId: String(state.currentRequestTypeId),
-        requestNameId: String(state.currentRequestNameId),
+        requestTypeId: state.currentRequestTypeId,
+        requestNameId: state.currentRequestNameId,
         description: form.description,
         employeeId,
-        employeeName,
-        date: format(form.requestDate, 'yyyy-MM-dd'),
-        currentTitle: 'DEV 1',
-        currentArea: 'IT',
-        value: String(form.salary),
+        employeeName: employeeName.trim(),
+        date: format(new Date(form.requestDate), 'yyyy-MM-dd'),
+        currentTitle: rootState.user.personnelDetail.position_name,
+        currentArea: rootState.user.personnelDetail.area_name,
         type: form.type,
+        value: form.salary,
       }
       const res = await this.$repository.request.createRequest(data)
       if (res.code === 202) {

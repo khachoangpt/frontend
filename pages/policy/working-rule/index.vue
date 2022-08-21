@@ -12,7 +12,7 @@
         :columns="columns"
         :rows="policyList"
         :sort-options="{
-          enabled: true,
+          enabled: false,
         }"
         :pagination-options="{
           enabled: true,
@@ -43,6 +43,13 @@
               v-html="props.row.description"
             ></div>
           </span>
+          <span v-else-if="props.column.field == 'policy_name'">
+            {{
+              props.row.policy_name === ''
+                ? props.row.policy_type
+                : props.row.policy_name
+            }}
+          </span>
           <span v-else> {{ props.formattedRow[props.column.field] }}</span>
         </template>
       </vue-good-table>
@@ -60,7 +67,11 @@
         </el-col>
         <el-col class="detail-policy" :span="12">
           {{ $i18n.t('policy.dialog.policyName') }}:
-          <span>{{ policyDetail[0].policy_name }}</span>
+          <span>{{
+            policyDetail[0].policy_name === ''
+              ? policyDetail[0].policy_type
+              : policyDetail[0].policy_name
+          }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">

@@ -162,6 +162,23 @@
             ></el-input>
           </el-form-item>
         </el-col>
+        <el-col
+          v-if="nominationForm.requestNameId.trim() === 'Bonus'"
+          :span="12"
+        >
+          <el-form-item :label="$i18n.t('request.dialog.type')" prop="type">
+            <el-select
+              v-model="nominationForm.type"
+              class="request-form__input"
+              placeholder="Select"
+            >
+              <el-option label="Project bonus" value="1"></el-option>
+              <el-option label="Reward bonus" value="2"></el-option>
+              <el-option label="KPI bonus" value="3"></el-option>
+              <el-option label="Out source bonus" value="4"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row
         v-if="nominationForm.requestNameId.trim() === 'Salary increment'"

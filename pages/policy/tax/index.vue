@@ -2,7 +2,9 @@
 <template>
   <div class="policy">
     <div class="policy__header">
-      <div class="policy__header-text">{{ $i18n.t('sidebar.tax') }}</div>
+      <div class="policy__header-text">
+        {{ $i18n.t('sidebar.workingPolicy') }}
+      </div>
     </div>
     <div class="policy-table">
       <vue-good-table
@@ -10,7 +12,7 @@
         :columns="columns"
         :rows="policyList"
         :sort-options="{
-          enabled: true,
+          enabled: false,
         }"
         :pagination-options="{
           enabled: true,
@@ -41,6 +43,13 @@
               v-html="props.row.description"
             ></div>
           </span>
+          <span v-else-if="props.column.field == 'policy_name'">
+            {{
+              props.row.policy_name === ''
+                ? props.row.policy_type
+                : props.row.policy_name
+            }}
+          </span>
           <span v-else> {{ props.formattedRow[props.column.field] }}</span>
         </template>
       </vue-good-table>
@@ -58,7 +67,11 @@
         </el-col>
         <el-col class="detail-policy" :span="12">
           {{ $i18n.t('policy.dialog.policyName') }}:
-          <span>{{ policyDetail[0].policy_name }}</span>
+          <span>{{
+            policyDetail[0].policy_name === ''
+              ? policyDetail[0].policy_type
+              : policyDetail[0].policy_name
+          }}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
@@ -81,14 +94,14 @@
       </el-row>
       <el-row :gutter="20">
         <el-col class="detail-policy" :span="24">
-          {{ $i18n.t('policy.dialog.content') }}:
-          <el-input
+          {{ $i18n.t('policy.dialog.description') }}:
+          <div
+            class="policy-detail__description"
             type="textarea"
             :rows="6"
-            :value="policyDetail[0].description"
             readonly
-          >
-          </el-input>
+            v-html="policyDetail[0].description"
+          ></div>
         </el-col>
       </el-row>
     </el-dialog>
@@ -119,6 +132,7 @@ export default {
           label: this.$i18n.t('policy.dialog.description'),
           field: 'description',
           thClass: 'policy-table-header__center',
+          width: '30%',
         },
         {
           label: this.$i18n.t('policy.dialog.createDate'),
@@ -201,5 +215,12 @@ export default {
   margin-top: 16px;
   text-align: center;
   padding-bottom: 16px;
+}
+
+.policy-detail__description {
+  border: 1px solid #ccc;
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 8px;
 }
 </style>

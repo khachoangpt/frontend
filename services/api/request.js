@@ -164,6 +164,7 @@ class UserApi extends Request {
   }
 
   createRequest(data) {
+    console.log(data)
     const accessToken = getToken()
     return this.$axios.$post('/api/create_request', data, {
       headers: {

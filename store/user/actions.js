@@ -441,9 +441,13 @@ export default {
       const res = await this.$repository.user.updateAvatar(value)
       if (res.code === 202) {
         await dispatch('getPersonnelDetail', state.personnelDetail.employee_id)
-        await dispatch('auth/getEmployeeInfo', rootState.auth.id, {
-          root: true,
-        })
+        if (
+          !rootState.auth.roles.find((role) => role.authority === 'ROLE_ADMIN')
+        ) {
+          await dispatch('auth/getEmployeeInfo', rootState.auth.id, {
+            root: true,
+          })
+        }
         await commit('setImageUrl', data)
         await commit('setScreenLoadingAvatar', false)
         Message.success('Đổi avatar thành công.')
