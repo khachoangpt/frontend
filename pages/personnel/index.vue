@@ -141,4 +141,8 @@ export default {
   text-decoration: none;
   color: #fff !important;
 }
+
+.header-actions__button {
+  margin-left: 16px;
+}
 </style>
