@@ -3,7 +3,7 @@
   <div class="policy">
     <div class="policy__header">
       <div class="policy__header-text">
-        {{ $i18n.t('sidebar.workingPolicy') }}
+        {{ $i18n.t('sidebar.insurance') }}
       </div>
     </div>
     <div class="policy-table">

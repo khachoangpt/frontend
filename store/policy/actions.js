@@ -11,9 +11,9 @@ export default {
       const policyList = res.policyResponseList
       for (let i = 0; i < policyList.length; i++) {
         if (policyList[i].policy_status === true) {
-          policyList[i].policy_status = 'Đang áp dụng'
+          policyList[i].policy_status = 'Active'
         } else {
-          policyList[i].policy_status = 'Không áp dụng'
+          policyList[i].policy_status = 'Deactivate'
         }
       }
       await commit('setPolicyList', policyList)
