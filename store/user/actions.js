@@ -5,7 +5,7 @@ export default {
   async getPersonnelList({ commit }, data) {
     const res = await this.$repository.user.getPersonnelList(data)
     await commit('setTotalPage', res.total)
-    await commit('setPersonnelList', res)
+    await commit('setPersonnelList', res.hrmResponse)
   },
 
   async addEmployee({ commit, state }, data) {
@@ -23,7 +23,7 @@ export default {
           searchText: state.searchText,
           page: 1,
         })
-        await commit('setPersonnelList', res)
+        await commit('setPersonnelList', res.hrmResponse)
         await commit('setFullscreenLoading', false)
         this.$router.push(this.localePath('/personnel'))
       }
@@ -575,7 +575,7 @@ export default {
         page: 1,
       })
       await commit('setTotalPage', res.total)
-      await commit('setPersonnelList', res)
+      await commit('setPersonnelList', res.hrmResponse)
       await commit('setLoadingOnSearchEmployee', false)
     } catch (error) {
       Message.error(error.response.data.message)
@@ -598,4 +598,22 @@ export default {
       Message.error(error.response.data.message)
     }
   },
+
+  async exportPersonal({state}) {
+    try {
+      let res = await this.$repository.user.exportPersonal(
+        state.listPersonalId
+      )
+      if (!res.match(/^data:text\/csv/i)) {
+        res = 'data:text/csv;charset=utf-8,' + res
+      }
+      const data1 = encodeURI(res)
+      const link = document.createElement('a')
+      link.setAttribute('href', data1)
+      link.setAttribute('download', 'employees')
+      link.click()
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  }
 }

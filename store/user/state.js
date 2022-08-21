@@ -61,4 +61,6 @@ export default () => ({
   loadingOnSearchEmployee: false,
   dateRangeHoliday: '',
   enableEditCalendar: false,
+  personalListSelected: 0,
+  listPersonalId: [],
 })

@@ -42,4 +42,6 @@ export default {
   loadingOnSearchEmployee: (state) => state.loadingOnSearchEmployee,
   dateRangeHoliday: (state) => state.dateRangeHoliday,
   enableEditCalendar: (state) => state.enableEditCalendar,
+  personalListSelected: (state) => state.personalListSelected,
+  listPersonalId: (state) => state.listPersonalId,
 }

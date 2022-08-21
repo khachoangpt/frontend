@@ -27,6 +27,14 @@
             {{ $i18n.t('personnel.addNew') }}
           </el-button>
         </nuxt-link>
+        <el-button
+          class="header-actions__button"
+          type="success"
+          :disabled="personalListSelected <= 0"
+          @click="exportPersonal"
+        >
+          Export
+        </el-button>
       </div>
     </div>
     <div class="personnel-table">
@@ -59,6 +67,7 @@ export default {
       'searchText',
       'loadingOnSearchEmployee',
       'personnelList',
+      'personalListSelected',
     ]),
   },
 
@@ -67,7 +76,7 @@ export default {
   },
 
   methods: {
-    ...mapActions('user', ['onChangeSearchEmployee']),
+    ...mapActions('user', ['onChangeSearchEmployee', 'exportPersonal']),
     ...mapMutations('user', [
       'setSearchText',
       'setLoadingOnSearchEmployee',

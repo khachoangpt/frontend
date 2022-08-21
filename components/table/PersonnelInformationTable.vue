@@ -1,11 +1,19 @@
 <template>
   <vue-good-table
+    ref="personal-table"
     v-loading.fullscreen.lock="loadingPersonnelTable"
     element-loading-background="rgba(0, 0, 0, 0.2)"
     type="primary"
     :fixed-header="false"
     :columns="columns"
-    :rows="personnelList.hrmResponse"
+    :rows="personnelList"
+    :select-options="{
+      enabled: true,
+      selectOnCheckboxOnly: true,
+      selectionInfoClass: 'select-info-class',
+      selectionText: $i18n.t('request.table.rowSelected'),
+      clearSelectionText: $i18n.t('request.table.clear'),
+    }"
     :sort-options="{
       enabled: true,
     }"
@@ -13,6 +21,7 @@
       enabled: true,
     }"
     @on-row-dblclick="onRowDoubleClick"
+    @on-selected-rows-change="onSelectedRowsChange"
   >
     <template slot="table-row" slot-scope="props">
       <span v-if="props.column.field == 'full_name'" class="full-name-column">
@@ -38,7 +47,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'PersonnelInformationTable',
   data() {
@@ -139,7 +148,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('user', ['personnelList', 'searchText', 'totalPage']),
+    ...mapGetters('user', [
+      'personnelList',
+      'searchText',
+      'totalPage',
+      'personalListSelected',
+    ]),
   },
 
   async mounted() {
@@ -152,12 +166,26 @@ export default {
 
   methods: {
     ...mapActions('user', ['getPersonnelList', 'onRowDoubleClick']),
+    ...mapMutations('user', ['setPersonalListSelected', 'setListPersonalId']),
 
     async currentChange(page) {
       await this.getPersonnelList({
         searchText: this.searchText,
         page,
       })
+    },
+
+    onSelectedRowsChange() {
+      const personalIdSelectedList = []
+      this.setPersonalListSelected(
+        this.$refs['personal-table'].selectedRows.length
+      )
+      for (let i = 0; i < this.personalListSelected; i++) {
+        personalIdSelectedList.push(
+          this.$refs['personal-table'].selectedRows[i].employee_id
+        )
+      }
+      this.setListPersonalId(personalIdSelectedList)
     },
   },
 }

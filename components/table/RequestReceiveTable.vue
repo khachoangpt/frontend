@@ -6,7 +6,13 @@
       :fixed-header="false"
       :columns="requestTableHeader"
       :rows="requestListReceive"
-      :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+      :select-options="{
+        enabled: true,
+        selectOnCheckboxOnly: true,
+        selectionInfoClass: 'select-info-class',
+        selectionText: $i18n.t('request.table.rowSelected'),
+        clearSelectionText: $i18n.t('request.table.clear'),
+      }"
       :sort-options="{
         enabled: true,
       }"

@@ -409,6 +409,15 @@ class UserApi extends User {
       },
     })
   }
+
+  exportPersonal(data) {
+    const accessToken = getToken()
+    return this.$axios.$post('/api/download_csv_employee', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

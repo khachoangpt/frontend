@@ -379,4 +379,12 @@ export default {
   setEnableEditCalendar(state, enableEditCalendar) {
     state.enableEditCalendar = enableEditCalendar
   },
+
+  setPersonalListSelected(state, personalListSelected) {
+    state.personalListSelected = personalListSelected
+  },
+
+  setListPersonalId(state, listPersonalId) {
+    state.listPersonalId = listPersonalId
+  },
 }
