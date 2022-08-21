@@ -2,29 +2,52 @@ import { Message } from 'element-ui'
 import { format } from 'date-fns'
 
 export default {
-  async exportTimekeeping({ state }) {
+  async exportTimekeeping({ state }, data) {
     try {
-      let res = await this.$repository.timekeeping.exportTimekeeping(
-        state.listEmployeeId
-      )
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
+      if (data === 'excel') {
+        await this.$repository.timekeeping
+          .exportTimekeeping([state.listEmployeeId, data])
+          .then((response) => {
+            const url = URL.createObjectURL(new Blob([response]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+              'download',
+              'timekeeping ' +
+                format(new Date(), 'dd-MM-yyyy') +
+                ' ' +
+                new Date().getHours() +
+                new Date().getMinutes() +
+                new Date().getSeconds() +
+                '.xlsx'
+            )
+            document.body.appendChild(link)
+            link.click()
+          })
+      } else {
+        let res = await this.$repository.timekeeping.exportTimekeeping([
+          state.listEmployeeId,
+          data,
+        ])
+        if (!res.match(/^data:text\/csv/i)) {
+          res = 'data:text/csv;charset=utf-8,' + res
+        }
+
+        const data1 = encodeURI(res)
+
+        const link = document.createElement('a')
+        link.setAttribute('href', data1)
+        link.setAttribute(
+          'download',
+          'timekeeping ' +
+            format(new Date(), 'dd-MM-yyyy') +
+            ' ' +
+            new Date().getHours() +
+            new Date().getMinutes() +
+            new Date().getSeconds()
+        )
+        link.click()
       }
-
-      const data1 = encodeURI(res)
-
-      const link = document.createElement('a')
-      link.setAttribute('href', data1)
-      link.setAttribute(
-        'download',
-        'timekeeping ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
     } catch (error) {
       Message.error(error.response.data.message)
     }

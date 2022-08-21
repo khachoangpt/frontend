@@ -217,6 +217,15 @@ class UserApi extends Policy {
       },
     })
   }
+
+  getListDeductionType() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_list_deduction_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

@@ -104,4 +104,8 @@ export default {
   setListManagerLowerOfArea(state, listManagerLowerOfArea) {
     state.listManagerLowerOfArea = listManagerLowerOfArea
   },
+
+  setListDeductionType(state, listDeductionType) {
+    state.listDeductionType = listDeductionType
+  },
 }

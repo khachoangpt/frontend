@@ -308,8 +308,9 @@ const en = {
     advance: 'Advance',
     salaryReceived: 'Salary received',
     deductionDialog: {
-      'Work Late': 'Work Late',
-      'Leave Soon': 'Leave Soon',
+      'Work late': 'Work late',
+      'Leave soon': 'Leave soon',
+      'Business responsibility': 'Business responsibility',
     },
   },
   synthetic: {

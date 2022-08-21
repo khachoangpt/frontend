@@ -42,7 +42,10 @@
     <el-menu-item v-else class="avatar">
       <div
         class="avatar__background"
-        :style="{ backgroundImage: 'url(' + avatar + ')' }"
+        :style="{
+          backgroundImage:
+            'url(https://res.cloudinary.com/pingdaily/image/upload/v1660501341/hrm-avatar/zqibwxqus0c4w6fzwek0.jpg)',
+        }"
       ></div>
       <div v-if="!isCollapse">
         <p class="avatar__name">Admin</p>

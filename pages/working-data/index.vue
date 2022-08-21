@@ -19,14 +19,18 @@
           @change="onChangeMonth"
         >
         </el-date-picker>
-        <el-button
+        <el-dropdown
           :disabled="workingDataList <= 0"
-          class="time-keeping__export"
-          type="success"
-          @click="exportTimekeeping"
+          @command="exportTimekeeping"
         >
-          Export
-        </el-button>
+          <el-button class="header-actions__button" type="success">
+            Export
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="excel"> Excel </el-dropdown-item>
+            <el-dropdown-item command="csv"> CSV </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
     <el-row :gutter="20">
@@ -195,5 +199,9 @@ export default {
   margin-top: 16px;
   text-align: center;
   padding-bottom: 16px;
+}
+
+.header-actions__button {
+  margin-left: 16px;
 }
 </style>

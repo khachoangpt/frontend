@@ -391,12 +391,18 @@
             class="deduction-dialog__input"
           >
             <el-option
-              :label="$i18n.t('salary.deductionDialog[\'Work Late\']')"
-              :value="1"
+              :label="$i18n.t('salary.deductionDialog[\'Work late\']')"
+              value="Work late"
             ></el-option>
             <el-option
-              :label="$i18n.t('salary.deductionDialog[\'Leave Soon\']')"
-              :value="2"
+              :label="$i18n.t('salary.deductionDialog[\'Leave soon\']')"
+              value="Leave soon"
+            ></el-option>
+            <el-option
+              :label="
+                $i18n.t('salary.deductionDialog[\'Business responsibility\']')
+              "
+              value="Business responsibility"
             ></el-option>
           </el-select>
         </el-form-item>

@@ -231,4 +231,5 @@ export default () => ({
   organizational: [],
   employeeById: [],
   listManagerLowerOfArea: [],
+  listDeductionType: [],
 })

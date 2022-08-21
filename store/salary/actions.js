@@ -148,6 +148,10 @@ export default {
 
   async editDeduction({ commit, dispatch, state }, data) {
     try {
+      const deductionTypeId = state.listDeductionType.find(
+        (type) => type.deduction_type_name === data.deductionTypeId
+      ).deduction_type_id
+      data.deductionTypeId = deductionTypeId
       const res = await this.$repository.salary.editDeduction(data)
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
@@ -328,5 +332,15 @@ export default {
       'setEmployeeById',
       await this.$repository.salary.getEmployeeById()
     )
+  },
+
+  async getListDeductionType({ commit }) {
+    console.log('vfdvfd')
+    try {
+      const res = await this.$repository.salary.getListDeductionType()
+      await commit('setListDeductionType', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
   },
 }

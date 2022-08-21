@@ -26,4 +26,5 @@ export default {
   organizational: (state) => state.organizational,
   employeeById: (state) => state.employeeById,
   listManagerLowerOfArea: (state) => state.listManagerLowerOfArea,
+  listDeductionType: (state) => state.listDeductionType,
 }

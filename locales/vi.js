@@ -311,6 +311,7 @@ const vi = {
     deductionDialog: {
       'Work Late': 'Đi làm muộn',
       'Leave Soon': 'Về sớm',
+      'Business responsibility': 'Trách nhiệm trong công việc',
     },
   },
 
