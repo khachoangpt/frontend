@@ -342,6 +342,7 @@ export default {
   },
 
   async mounted() {
+    this.setSalaryDataList(0)
     if (!this.roles.find((role) => role.authority === 'ROLE_USER')) {
       await this.getEmployeeByManager()
     }

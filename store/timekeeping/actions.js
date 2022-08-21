@@ -17,7 +17,7 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute(
         'download',
-        'timekeeping' +
+        'timekeeping ' +
           format(new Date(), 'dd-MM-yyyy') +
           ' ' +
           new Date().getHours() +

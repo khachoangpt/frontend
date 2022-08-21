@@ -133,7 +133,7 @@ export default {
       link.setAttribute('href', data)
       link.setAttribute(
         'download',
-        'salary' +
+        'salary ' +
           format(new Date(), 'dd-MM-yyyy') +
           ' ' +
           new Date().getHours() +

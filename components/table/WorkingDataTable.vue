@@ -20,7 +20,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
-        :page-size="8"
+        :page-size="5"
         :total="totalPage"
         @current-change="currentChange"
       >

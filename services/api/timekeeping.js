@@ -76,7 +76,7 @@ class UserApi extends TimeKeeping {
         areaFilter +
         '&paging=offset:' +
         (data.page - 1) +
-        ',limit:8',
+        ',limit:5',
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,

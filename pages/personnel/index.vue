@@ -27,14 +27,18 @@
             {{ $i18n.t('personnel.addNew') }}
           </el-button>
         </nuxt-link>
-        <el-button
-          class="header-actions__button"
-          type="success"
+        <el-dropdown
           :disabled="personalListSelected <= 0"
-          @click="exportPersonal"
+          @command="exportPersonal"
         >
-          Export
-        </el-button>
+          <el-button class="header-actions__button" type="success">
+            Export
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="excel"> Excel </el-dropdown-item>
+            <el-dropdown-item command="csv"> CSV </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
     <div class="personnel-table">

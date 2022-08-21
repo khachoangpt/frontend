@@ -98,7 +98,7 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute(
         'download',
-        'request' +
+        'request ' +
           format(new Date(), 'dd-MM-yyyy') +
           ' ' +
           new Date().getHours() +
@@ -1114,7 +1114,7 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute(
         'download',
-        'request' +
+        'request ' +
           format(new Date(), 'dd-MM-yyyy') +
           ' ' +
           new Date().getHours() +
@@ -1140,7 +1140,7 @@ export default {
       link.setAttribute('href', data1)
       link.setAttribute(
         'download',
-        'request' +
+        'request ' +
           format(new Date(), 'dd-MM-yyyy') +
           ' ' +
           new Date().getHours() +

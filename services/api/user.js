@@ -412,11 +412,20 @@ class UserApi extends User {
 
   exportPersonal(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/download_csv_employee', data, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    })
+    if (data[1] === 'excel') {
+      return this.$axios.$post('/api/download_excel_employee', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+        responseType: 'arraybuffer',
+      })
+    } else if (data[1] === 'csv') {
+      return this.$axios.$post('/api/download_csv_employee', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      })
+    }
   }
 }
 

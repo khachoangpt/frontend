@@ -599,25 +599,50 @@ export default {
     }
   },
 
-  async exportPersonal({ state }) {
+  async exportPersonal({ state }, data) {
     try {
-      let res = await this.$repository.user.exportPersonal(state.listPersonalId)
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
+      if (data === 'excel') {
+        await this.$repository.user
+          .exportPersonal([state.listPersonalId, data])
+          .then((response) => {
+            const url = URL.createObjectURL(new Blob([response]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+              'download',
+              'employees ' +
+                format(new Date(), 'dd-MM-yyyy') +
+                ' ' +
+                new Date().getHours() +
+                new Date().getMinutes() +
+                new Date().getSeconds() +
+                '.xlsx'
+            )
+            document.body.appendChild(link)
+            link.click()
+          })
+      } else {
+        let res = await this.$repository.user.exportPersonal([
+          state.listPersonalId,
+          data,
+        ])
+        if (!res.match(/^data:text\/csv/i)) {
+          res = 'data:text/csv;charset=utf-8,' + res
+        }
+        const data1 = encodeURI(res)
+        const link = document.createElement('a')
+        link.setAttribute('href', data1)
+        link.setAttribute(
+          'download',
+          'employees ' +
+            format(new Date(), 'dd-MM-yyyy') +
+            ' ' +
+            new Date().getHours() +
+            new Date().getMinutes() +
+            new Date().getSeconds()
+        )
+        link.click()
       }
-      const data1 = encodeURI(res)
-      const link = document.createElement('a')
-      link.setAttribute('href', data1)
-      link.setAttribute(
-        'download',
-        'employees ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
     } catch (error) {
       Message.error(error.response.data.message)
     }
