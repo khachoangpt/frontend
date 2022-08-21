@@ -258,6 +258,10 @@ export default {
     ...mapGetters('salary', ['listManagerOfArea', 'searchManagerText']),
   },
 
+  mounted() {
+    this.setRequestListSelected(0)
+  },
+
   methods: {
     ...mapActions('request', [
       'currentChangePageReceive',

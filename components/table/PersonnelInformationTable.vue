@@ -157,6 +157,7 @@ export default {
   },
 
   async mounted() {
+    this.setPersonalListSelected(0)
     await this.getPersonnelList({
       searchText: '',
       page: 1,

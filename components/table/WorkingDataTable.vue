@@ -48,6 +48,7 @@ export default {
   },
 
   async mounted() {
+    this.setWorkingDataList(0)
     await this.getDaysInMonth({
       month: new Date().getMonth() + 1,
       year: new Date().getFullYear(),

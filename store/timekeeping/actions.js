@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import { format } from 'date-fns'
 
 export default {
   async exportTimekeeping({ state }) {
@@ -14,7 +15,15 @@ export default {
 
       const link = document.createElement('a')
       link.setAttribute('href', data1)
-      link.setAttribute('download', 'timekeeping')
+      link.setAttribute(
+        'download',
+        'timekeeping' +
+          format(new Date(), 'dd-MM-yyyy') +
+          ' ' +
+          new Date().getHours() +
+          new Date().getMinutes() +
+          new Date().getSeconds()
+      )
       link.click()
     } catch (error) {
       Message.error(error.response.data.message)

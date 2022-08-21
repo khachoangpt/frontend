@@ -32,7 +32,7 @@
         >
         </el-pagination>
       </template>
-      <template slot="table-row" slot-scope="props"> 
+      <template slot="table-row" slot-scope="props">
         <span v-if="props.column.field == 'request_status'">
           <span :class="'request-status__' + props.row.request_status">{{
             props.row.request_status
@@ -209,6 +209,10 @@ export default {
       'requestSendDetail',
       'detailRequestVisible',
     ]),
+  },
+
+  mounted() {
+    this.setRequestListSelected(0)
   },
 
   methods: {

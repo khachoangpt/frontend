@@ -1,4 +1,5 @@
 import { Message } from 'element-ui'
+import { format } from 'date-fns'
 // import { EOvertime } from '~/constants/enums'
 
 export default {
@@ -130,7 +131,15 @@ export default {
 
       const link = document.createElement('a')
       link.setAttribute('href', data)
-      link.setAttribute('download', 'salary')
+      link.setAttribute(
+        'download',
+        'salary' +
+          format(new Date(), 'dd-MM-yyyy') +
+          ' ' +
+          new Date().getHours() +
+          new Date().getMinutes() +
+          new Date().getSeconds()
+      )
       link.click()
     } catch (error) {
       Message.error(error.response.data.message)
