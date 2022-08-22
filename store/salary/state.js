@@ -214,7 +214,7 @@ export default () => ({
   totalPage: 1,
   salaryDataList: [],
   listSalaryId: [],
-  editDeductionDialogVisible: true,
+  editDeductionDialogVisible: false,
   editAdvanceDialogVisible: false,
   editBonusDialogVisible: false,
   salaryHistoryDataList: [],
