@@ -348,7 +348,6 @@ export default {
       await this.getEmployeeByManager()
     }
     await this.getListPersonalSalary()
-    await this.getListDeductionType()
     this.loadingSalary = false
     this.setListSalaryId([])
   },

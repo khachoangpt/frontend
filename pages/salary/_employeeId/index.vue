@@ -690,6 +690,7 @@ export default {
   },
 
   async mounted() {
+    await this.getListDeductionType()
     await this.getSalaryDetail(this.$route.params.employeeId)
     if (this.personnelDetail.employee_id === this.id) {
       this.isShowCheck = false
@@ -726,6 +727,7 @@ export default {
       'checkSalary',
       'rejectSalary',
       'approveSalary',
+      'getListDeductionType',
     ]),
     ...mapMutations('salary', [
       'setEditDeductionDialogVisible',

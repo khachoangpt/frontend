@@ -335,7 +335,6 @@ export default {
   },
 
   async getListDeductionType({ commit }) {
-    console.log('vfdvfd')
     try {
       const res = await this.$repository.salary.getListDeductionType()
       await commit('setListDeductionType', res)
