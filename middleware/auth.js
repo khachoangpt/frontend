@@ -17,7 +17,6 @@ export default function ({ app, store, redirect, i18n }) {
           (role) => role.authority === 'ROLE_ADMIN'
         )
       ) {
-        console.log('asd')
         store.dispatch('auth/getEmployeeInfo', decoded.User_Data.id)
       }
       store.commit(

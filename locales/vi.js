@@ -309,9 +309,23 @@ const vi = {
     advance: 'Tạm ứng',
     salaryReceived: 'Lương thực nhận',
     deductionDialog: {
+      editDeduction: 'Sửa khấu trừ',
+      date: 'Ngày',
+      chooseDay: 'Chọn một ngày',
+      deductionType: 'Loại khấu trừ',
+      amount: 'Số tiền',
+      close: 'Đóng',
+      confirm: 'Xác nhận',
+      description: 'Chi tiết',
       'Work Late': 'Đi làm muộn',
       'Leave Soon': 'Về sớm',
       'Business responsibility': 'Trách nhiệm trong công việc',
+    },
+    bonusDialog: {
+      'Project bonus': 'Thưởng dự án',
+      'Reward bonus': 'Thưởng',
+      'KPI bonus': 'Thưởng KPI',
+      'Out source bonus': 'Thưởng ngoài',
     },
   },
 

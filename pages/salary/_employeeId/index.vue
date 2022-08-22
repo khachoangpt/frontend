@@ -110,7 +110,12 @@
                 <template slot="title">
                   <span class="salary-detail-content__detail">
                     Total Deduction:
-                    {{ salaryDetail.deductionSalaryResponseList.total }}
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(salaryDetail.deductionSalaryResponseList.total)
+                    }}
                   </span>
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -154,7 +159,12 @@
                 <template slot="title">
                   <span class="salary-detail-content__detail"
                     >Advances:
-                    {{ salaryDetail.advanceSalaryResponseList.total }}</span
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(salaryDetail.advanceSalaryResponseList.total)
+                    }}</span
                   >
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -194,7 +204,12 @@
                 <template slot="title">
                   <span class="salary-detail-content__detail"
                     >Tax Payment:
-                    {{ salaryDetail.employeeTaxResponseList.total }}</span
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(salaryDetail.employeeTaxResponseList.total)
+                    }}</span
                   >
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -244,7 +259,12 @@
                 <template slot="title">
                   <span class="salary-detail-content__detail"
                     >Bonus:
-                    {{ salaryDetail.bonusSalaryResponseList.total }}</span
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(salaryDetail.bonusSalaryResponseList.total)
+                    }}</span
                   >
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -282,7 +302,14 @@
                 <template slot="title">
                   <span class="salary-detail-content__detail"
                     >Allowance:
-                    {{ salaryDetail.employeeAllowanceResponseList.total }}</span
+                    {{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(
+                        salaryDetail.employeeAllowanceResponseList.total
+                      )
+                    }}</span
                   >
                 </template>
                 <div class="salary-detail-content__sub-detail">
@@ -291,11 +318,8 @@
                       .employeeAllowanceResponseList
                       .employeeAllowanceResponseList"
                     :key="'allowance' + index"
-                    class="salary-detail__flex"
                   >
-                    <span>
-                      {{ allowance.allowance_name }}
-                    </span>
+                    <span> {{ allowance.allowance_name }}: </span>
                     <span>
                       {{
                         new Intl.NumberFormat('vi-VN', {
@@ -304,20 +328,6 @@
                         }).format(allowance.value)
                       }}</span
                     >
-                    <div>
-                      <i
-                        class="salary-detail__edit-icon el-icon-edit-outline"
-                        @click="openEditAllowanceDialog(allowance)"
-                      ></i>
-                      <i
-                        class="salary-detail__delete-icon el-icon-delete"
-                        @click="
-                          confirmDeleteAllowance(
-                            allowance.employee_allowance_id
-                          )
-                        "
-                      ></i>
-                    </div>
                   </h3>
                 </div>
               </el-collapse-item>
@@ -369,7 +379,9 @@
       :before-close="closeDialogDeduction"
     >
       <template slot="title">
-        <div class="dialog-title">Sửa khấu trừ</div>
+        <div class="dialog-title">
+          {{ $i18n.t('salary.deductionDialog.editDeduction') }}
+        </div>
       </template>
       <el-form
         ref="deductionForm"
@@ -377,15 +389,21 @@
         :model="deductionForm"
         label-width="120px"
       >
-        <el-form-item label="Ngày" prop="date">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.date')"
+          prop="date"
+        >
           <el-date-picker
             v-model="deductionForm.date"
             type="date"
-            placeholder="Chọn một ngày"
+            :placeholder="$i18n.t('salary.deductionDialog.chooseDay')"
             class="deduction-dialog__input"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="Loại khấu trừ" prop="deduction">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.deductionType')"
+          prop="deduction"
+        >
           <el-select
             v-model="deductionForm.deductionTypeId"
             class="deduction-dialog__input"
@@ -406,13 +424,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Số tiền" prop="value">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.amount')"
+          prop="value"
+        >
           <el-input
             v-model.trim.number="deductionForm.value"
             class="deduction-dialog__input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Chi tiết" prop="description">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.description')"
+          prop="description"
+        >
           <el-input
             v-model="deductionForm.description"
             type="textarea"
@@ -422,9 +446,11 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialogDeduction">Đóng</el-button>
+        <el-button @click="closeDialogDeduction">{{
+          $i18n.t('salary.deductionDialog.close')
+        }}</el-button>
         <el-button type="primary" @click="submitForm('deductionForm')">
-          Xác nhận
+          {{ $i18n.t('salary.deductionDialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -504,12 +530,20 @@
             class="deduction-dialog__input"
           >
             <el-option
-              :label="$i18n.t('salary.deductionDialog[\'Work Late\']')"
-              :value="1"
+              :label="$i18n.t('salary.bonusDialog[\'Project bonus\']')"
+              value="Project bonus"
             ></el-option>
             <el-option
-              :label="$i18n.t('salary.deductionDialog[\'Leave Soon\']')"
-              :value="2"
+              :label="$i18n.t('salary.bonusDialog[\'Reward bonus\']')"
+              value="Reward bonus"
+            ></el-option>
+            <el-option
+              :label="$i18n.t('salary.bonusDialog[\'KPI bonus\']')"
+              value="KPI bonus"
+            ></el-option>
+            <el-option
+              :label="$i18n.t('salary.bonusDialog[\'Out source bonus\']')"
+              value="Out source bonus"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -690,8 +724,13 @@ export default {
   },
 
   async mounted() {
+    await this.getListSalary(1)
     await this.getListDeductionType()
+    await this.getListBonusType()
     await this.getSalaryDetail(this.$route.params.employeeId)
+    this.isShowCheck = true
+    this.isShowReject = true
+    this.isShowApprove = true
     if (this.personnelDetail.employee_id === this.id) {
       this.isShowCheck = false
       this.isShowReject = false
@@ -700,7 +739,7 @@ export default {
     if (this.salaryDetail.salaryStatus === 'REJECTED') {
       this.isShowCheck = true
       this.isShowReject = false
-      this.isShowApprove = false
+      this.isShowApprove = true
     }
     if (this.salaryDetail.salaryStatus === 'APPROVED') {
       this.isShowApprove = false
@@ -728,6 +767,8 @@ export default {
       'rejectSalary',
       'approveSalary',
       'getListDeductionType',
+      'getListBonusType',
+      'getListSalary',
     ]),
     ...mapMutations('salary', [
       'setEditDeductionDialogVisible',
@@ -844,15 +885,37 @@ export default {
       await this.setCheckDialogVisible(false)
     },
 
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    async submitForm(formName) {
+      await this.$refs[formName].validate(async (valid) => {
         if (valid) {
           if (formName === 'advanceForm') {
-            this.editAdvance(this.advanceForm)
+            await this.editAdvance(this.advanceForm)
           } else if (formName === 'deductionForm') {
-            this.editDeduction(this.deductionForm)
+            await this.editDeduction(this.deductionForm)
           } else if (formName === 'bonusForm') {
-            this.editBonus(this.bonusForm)
+            await this.editBonus(this.bonusForm)
+          }
+          this.isShowCheck = true
+          this.isShowReject = true
+          this.isShowApprove = true
+          if (this.personnelDetail.employee_id === this.id) {
+            this.isShowCheck = false
+            this.isShowReject = false
+            this.isShowApprove = false
+          }
+          if (this.salaryDetail.salaryStatus === 'REJECTED') {
+            this.isShowCheck = true
+            this.isShowReject = false
+            this.isShowApprove = true
+          }
+          if (this.salaryDetail.salaryStatus === 'APPROVED') {
+            this.isShowApprove = false
+            this.isShowCheck = false
+            this.isShowReject = false
+          }
+          if (this.salaryDetail.salaryStatus === 'PENDING') {
+            this.isShowCheck = true
+            this.isShowReject = true
           }
         } else {
           return false
@@ -865,8 +928,9 @@ export default {
         confirmButtonText: 'Xong',
         cancelButtonText: 'Đóng',
       })
-        .then(({ value }) => {
-          this.rejectSalary(value)
+        .then(async ({ value }) => {
+          await this.setListSalaryId([this.salaryDetail.salary_monthly_id])
+          await this.rejectSalary(value)
         })
         .catch(() => {})
     },
@@ -908,13 +972,14 @@ export default {
       await this.setSearchManagerText(data)
     },
 
-    submitCheckSalary() {
-      this.checkSalary()
+    async submitCheckSalary() {
+      await this.setListSalaryId([this.salaryDetail.salary_monthly_id])
+      await this.checkSalary()
     },
 
-    handleClickApproveSalary() {
-      this.setListSalaryId(this.salaryDetail.salary_monthly_id)
-      this.approveSalary()
+    async handleClickApproveSalary() {
+      await this.setListSalaryId([this.salaryDetail.salary_monthly_id])
+      await this.approveSalary()
     },
   },
 }

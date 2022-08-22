@@ -93,7 +93,6 @@ class UserApi extends Policy {
     const accessToken = getToken()
     return this.$axios.$delete(
       '/api/delete_deduction_salary?deductionId=' + data,
-      {},
       {
         headers: {
           Authorization: 'Bearer ' + accessToken,
@@ -131,15 +130,11 @@ class UserApi extends Policy {
 
   deleteBonus(data) {
     const accessToken = getToken()
-    return this.$axios.$delete(
-      '/api/delete_bonus_salary?bonusId=' + data,
-      {},
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    return this.$axios.$delete('/api/delete_bonus_salary?bonusId=' + data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   approveSalary(data) {
@@ -221,6 +216,15 @@ class UserApi extends Policy {
   getListDeductionType() {
     const accessToken = getToken()
     return this.$axios.$get('/api/get_list_deduction_type', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
+
+  getListBonusType() {
+    const accessToken = getToken()
+    return this.$axios.$get('/api/get_list_bonus_type', {
       headers: {
         Authorization: 'Bearer ' + accessToken,
       },

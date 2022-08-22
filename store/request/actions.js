@@ -427,7 +427,6 @@ export default {
       let description = res.applicationsRequestResponseList[0].description
       const regexDes = /(\[(.*?)\])/gm
       const value = description.match(regexDes)
-      console.log(value)
       if (
         res.applicationsRequestResponseList[0].request_name === 'Leave Soon' ||
         res.applicationsRequestResponseList[0].request_name === 'Work Late'

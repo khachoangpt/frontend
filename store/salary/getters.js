@@ -27,4 +27,5 @@ export default {
   employeeById: (state) => state.employeeById,
   listManagerLowerOfArea: (state) => state.listManagerLowerOfArea,
   listDeductionType: (state) => state.listDeductionType,
+  listBonusType: (state) => state.listBonusType,
 }

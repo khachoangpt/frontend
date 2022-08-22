@@ -202,6 +202,10 @@ export default {
 
   async editBonus({ commit, dispatch, state }, data) {
     try {
+      const bonusTypeId = state.listDeductionType.find(
+        (type) => type.bonus_type_name === data.bonusTypeId
+      ).bonus_type_id
+      data.bonusTypeId = bonusTypeId
       const res = await this.$repository.salary.editBonus(data)
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
@@ -231,6 +235,7 @@ export default {
         await this.$repository.salary.approveSalary(state.listSalaryId[i])
       }
       await dispatch('getListSalary', 1)
+      await dispatch('getSalaryDetail', state.listSalaryId[0])
       Message.success('Xác nhận lương thành công.')
     } catch (error) {
       Message.error(error.response.data.message)
@@ -246,6 +251,7 @@ export default {
         })
       }
       await dispatch('getListSalary', 1)
+      await dispatch('getSalaryDetail', state.listSalaryId[0])
       Message.success('Đã từ chối bảng lương.')
     } catch (error) {
       Message.error(error.response.data.message)
@@ -269,6 +275,7 @@ export default {
           approverId: employeeID,
         })
       }
+      await dispatch('getSalaryDetail', state.listSalaryId[0])
       await commit('setCheckDialogVisible', false)
       await dispatch('getListSalary', 1)
       Message.success('Chuyển tiếp bảng lương thành công.')
@@ -338,6 +345,15 @@ export default {
     try {
       const res = await this.$repository.salary.getListDeductionType()
       await commit('setListDeductionType', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async getListBonusType({ commit }) {
+    try {
+      const res = await this.$repository.salary.getListBonusType()
+      await commit('setListBonusType', res)
     } catch (error) {
       Message.error(error.response.data.message)
     }

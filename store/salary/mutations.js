@@ -108,4 +108,8 @@ export default {
   setListDeductionType(state, listDeductionType) {
     state.listDeductionType = listDeductionType
   },
+
+  setListBonusType(state, listBonusType) {
+    state.listBonusType = listBonusType
+  },
 }

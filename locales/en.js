@@ -308,9 +308,23 @@ const en = {
     advance: 'Advance',
     salaryReceived: 'Salary received',
     deductionDialog: {
+      editDeduction: 'Edit deduction',
+      date: 'Date',
+      chooseDay: 'Pick a day',
+      deductionType: 'Deduction type',
+      amount: 'Amount',
+      description: 'Description',
+      close: 'Close',
+      confirm: 'Confirm',
       'Work late': 'Work late',
       'Leave soon': 'Leave soon',
       'Business responsibility': 'Business responsibility',
+    },
+    bonusDialog: {
+      'Project bonus': 'Project bonus',
+      'Reward bonus': 'Reward bonus',
+      'KPI bonus': 'KPI bonus',
+      'Out source bonus': 'Out source bonus',
     },
   },
   synthetic: {

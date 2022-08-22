@@ -48,7 +48,7 @@
         </el-option>
       </el-select>
       <el-date-picker
-        v-if="activeName === 'second'"
+        v-show="activeName === 'second'"
         :value="monthSearch"
         type="month"
         placeholder="Tìm kiếm"
@@ -70,7 +70,7 @@
       >
       </el-date-picker> -->
       <el-date-picker
-        v-if="activeName === 'first'"
+        v-show="activeName === 'first'"
         :value="yearSearch"
         type="monthrange"
         :clearable="false"
@@ -396,7 +396,7 @@ export default {
         if (this.$refs[tableName].selectedRows[i].salaryStatus === 'REJECTED') {
           this.isShowCheck = true
           this.isShowReject = false
-          this.isShowApprove = false
+          this.isShowApprove = true
         }
         if (this.$refs[tableName].selectedRows[i].salaryStatus === 'APPROVED') {
           this.isShowApprove = false
@@ -585,10 +585,4 @@ export default {
 .dialog-check-salary__label {
   margin-bottom: 12px;
 }
-
-/* .el-picker-panel {
-  top: 158px !important;
-  right: 0 !important;
-  left: auto !important;
-} */
 </style>
