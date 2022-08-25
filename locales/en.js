@@ -8,6 +8,7 @@ const en = {
     year: 'Year',
     salaryStructure: 'Salary structure',
     organization: 'Organization structure',
+    generateSalary: 'Regenerate payroll',
   },
 
   login: {

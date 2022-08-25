@@ -8,6 +8,7 @@ const vi = {
     year: 'Năm',
     salaryStructure: 'Cơ cấu lương',
     organization: 'Cơ cấu tổ chức',
+    generateSalary: 'Tạo lại bảng lương',
   },
 
   login: {

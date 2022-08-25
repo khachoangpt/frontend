@@ -22,6 +22,38 @@
             </div>
             <Calendar />
           </el-card>
+          <el-card class="box-card card-generate-payroll">
+            <div slot="header" class="clearfix-dashboard">
+              <span class="box-card__header-text">{{
+                $i18n.t('dashboard.generateSalary')
+              }}</span>
+              <el-switch
+                v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+                v-model="isEditPayroll"
+                @change="onChangeEditPayroll"
+              >
+              </el-switch>
+            </div>
+            <div class="generate-payroll-body">
+              <el-date-picker
+                v-model="salaryMonth"
+                type="month"
+                class="generate-date-picker"
+                placeholder="Month"
+                :disabled="!isEditPayroll"
+                :picker-options="pickerSalaryOptions"
+              >
+              </el-date-picker>
+              <el-button
+                type="primary"
+                size="medium"
+                :disabled="!isEditPayroll"
+                @click="generatePayroll"
+              >
+                Generate
+              </el-button>
+            </div>
+          </el-card>
         </div>
       </el-col>
       <el-col
@@ -187,6 +219,16 @@ export default {
       ),
       salaryStructureEmployeeById: '',
       isEditCalendar: false,
+      isEditPayroll: false,
+      salaryMonth: '',
+      pickerSalaryOptions: {
+        disabledDate(time) {
+          return (
+            time.getTime() >
+            new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1)
+          )
+        },
+      },
     }
   },
 
@@ -337,6 +379,20 @@ export default {
         Message.success('Closed edit calendar')
       }
     },
+
+    onChangeEditPayroll() {
+      this.setEnableEditCalendar(!this.enableEditCalendar)
+      if (this.enableEditCalendar === true) {
+        Message.success('Opened generate payroll')
+      } else {
+        Message.success('Closed generate payroll')
+      }
+    },
+
+    generatePayroll() {
+      console.log(this.salaryMonth)
+      Message.success('Generate payroll successfully')
+    },
   },
 }
 </script>
@@ -430,5 +486,18 @@ export default {
 
 .salary-history__search-input {
   width: 100px !important;
+}
+
+.card-generate-payroll {
+  margin-top: 24px;
+}
+
+.generate-date-picker {
+  width: 120px !important;
+}
+
+.generate-payroll-body {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
