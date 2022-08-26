@@ -80,7 +80,8 @@ class UserApi extends Request {
     const accessToken = getToken()
     let url = '/api/list_all_application_request_receive?'
     if (data.dateRange.length > 0) {
-      url += 'filter=createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
+      url +=
+        'filter=createDate:ABT' + data.dateRange[0] + '-' + data.dateRange[1]
     }
     if (data.requestTypeId !== '' && data.dateRange.length > 0) {
       url += ',requestType:AEQ' + data.requestTypeId
@@ -196,20 +197,38 @@ class UserApi extends Request {
 
   exportRequestSend(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/download_csv_request_send', data, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    })
+    if (data[1] === 'excel') {
+      return this.$axios.$post('/api/download_excel_request_send', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+        responseType: 'arraybuffer',
+      })
+    } else if (data[1] === 'csv') {
+      return this.$axios.$post('/api/download_csv_request_send', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      })
+    }
   }
 
   exportRequestReceive(data) {
     const accessToken = getToken()
-    return this.$axios.$post('/api/download_csv_request_receive', data, {
-      headers: {
-        Authorization: 'Bearer ' + accessToken,
-      },
-    })
+    if (data[1] === 'excel') {
+      return this.$axios.$post('/api/download_excel_request_receive', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+        responseType: 'arraybuffer',
+      })
+    } else if (data[1] === 'csv') {
+      return this.$axios.$post('/api/download_csv_request_receive', data[0], {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      })
+    }
   }
 
   getPaidLeaveRemaining(data) {

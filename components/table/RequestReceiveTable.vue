@@ -33,9 +33,9 @@
         </el-pagination>
       </template>
       <template slot="table-row" slot-scope="props">
-        <span v-if="props.column.field == 'request_status'">
-          <span :class="'request-status__' + props.row.request_status">{{
-            props.row.request_status
+        <span v-if="props.column.field == 'request_status_name'">
+          <span :class="'request-status__' + props.row.request_status_name">{{
+            props.row.request_status_name
           }}</span>
         </span>
         <!-- <span
@@ -85,9 +85,9 @@
           {{ $i18n.t('request.dialog.status') }}:
           <span
             class="request-detail-dialog__value"
-            :class="'request-status__' + requestReceiveDetail.request_status"
+            :class="'request-status__' + requestReceiveDetail.request_status_name"
           >
-            <span>{{ requestReceiveDetail.request_status }}</span>
+            <span>{{ requestReceiveDetail.request_status_name }}</span>
           </span>
         </el-col>
       </el-row>
@@ -123,7 +123,7 @@
           </div>
         </el-col>
         <el-col
-          v-if="requestReceiveDetail.request_status === 'REJECTED'"
+          v-if="requestReceiveDetail.request_status_name === 'REJECTED'"
           :span="10"
         >
           <span class="reject-reason" @click="getRejectReason">{{
@@ -229,7 +229,7 @@ export default {
         },
         {
           label: this.$i18n.t('request.table.status'),
-          field: 'request_status',
+          field: 'request_status_name',
           width: '100px',
           sortable: false,
           thClass: 'request-table-header__center',
@@ -285,7 +285,7 @@ export default {
       } else {
         this.isEnoughLevel = false
       }
-      if (data.row.request_status === 'PENDING') {
+      if (data.row.request_status_name === 'PENDING') {
         this.isAction = true
       } else {
         this.isAction = false

@@ -28,7 +28,7 @@ export default () => ({
     },
     {
       label: 'Trạng thái',
-      field: 'request_status',
+      field: 'request_status_name',
       width: '100px',
       sortable: false,
       thClass: 'request-table-header__center',

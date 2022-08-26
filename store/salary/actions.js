@@ -114,33 +114,98 @@ export default {
     }
   },
 
-  async exportSalary({ state }, activeName) {
+  async exportSalary({ state }, payload) {
     try {
       let res = []
-      if (activeName === 'second') {
-        res = await this.$repository.salary.exportSalary(state.listSalaryId)
-      } else {
-        res = await this.$repository.salary.exportSalaryPersonnel(
-          state.listSalaryId
-        )
-      }
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
-      }
-      const data = encodeURI(res)
+      if (payload[0] === 'second') {
+        if (payload[1] === 'excel') {
+          await this.$repository.salary
+            .exportSalary([state.listSalaryId, payload[1]])
+            .then((response) => {
+              const url = URL.createObjectURL(new Blob([response]))
+              const link = document.createElement('a')
+              link.href = url
+              link.setAttribute(
+                'download',
+                'salary ' +
+                  format(new Date(), 'dd-MM-yyyy') +
+                  ' ' +
+                  new Date().getHours() +
+                  new Date().getMinutes() +
+                  new Date().getSeconds() +
+                  '.xlsx'
+              )
+              document.body.appendChild(link)
+              link.click()
+            })
+        } else {
+          res = await this.$repository.salary.exportSalary([
+            state.listSalaryId,
+            payload[1],
+          ])
+          if (!res.match(/^data:text\/csv/i)) {
+            res = 'data:text/csv;charset=utf-8,' + res
+          }
+          const data = encodeURI(res)
 
-      const link = document.createElement('a')
-      link.setAttribute('href', data)
-      link.setAttribute(
-        'download',
-        'salary ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
+          const link = document.createElement('a')
+          link.setAttribute('href', data)
+          link.setAttribute(
+            'download',
+            'salary ' +
+              format(new Date(), 'dd-MM-yyyy') +
+              ' ' +
+              new Date().getHours() +
+              new Date().getMinutes() +
+              new Date().getSeconds()
+          )
+          link.click()
+        }
+      } else if (payload[0] === 'first') {
+        if (payload[1] === 'excel') {
+          await this.$repository.salary
+            .exportSalaryPersonnel([state.listSalaryId, payload[1]])
+            .then((response) => {
+              const url = URL.createObjectURL(new Blob([response]))
+              const link = document.createElement('a')
+              link.href = url
+              link.setAttribute(
+                'download',
+                'salary ' +
+                  format(new Date(), 'dd-MM-yyyy') +
+                  ' ' +
+                  new Date().getHours() +
+                  new Date().getMinutes() +
+                  new Date().getSeconds() +
+                  '.xlsx'
+              )
+              document.body.appendChild(link)
+              link.click()
+            })
+        } else {
+          res = await this.$repository.salary.exportSalaryPersonnel([
+            state.listSalaryId,
+            payload[1],
+          ])
+          if (!res.match(/^data:text\/csv/i)) {
+            res = 'data:text/csv;charset=utf-8,' + res
+          }
+          const data = encodeURI(res)
+
+          const link = document.createElement('a')
+          link.setAttribute('href', data)
+          link.setAttribute(
+            'download',
+            'salary ' +
+              format(new Date(), 'dd-MM-yyyy') +
+              ' ' +
+              new Date().getHours() +
+              new Date().getMinutes() +
+              new Date().getSeconds()
+          )
+          link.click()
+        }
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -354,6 +419,15 @@ export default {
     try {
       const res = await this.$repository.salary.getListBonusType()
       await commit('setListBonusType', res)
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async reGeneratePayroll({ commit }, data) {
+    try {
+      const res = await this.$repository.salary.reGeneratePayroll(data)
+      console.log(res)
     } catch (error) {
       Message.error(error.response.data.message)
     }

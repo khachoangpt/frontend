@@ -101,7 +101,11 @@
               $i18n.t('personnel.detail.gender')
             }}</span>
             <span v-if="isEditMainInfo" class="content-item__detail">
-              <i class="el-icon-female content-item__detail-icon"></i>
+              <i
+                v-if="personnelDetail.gender === 'Male'"
+                class="el-icon-male content-item__detail-icon"
+              ></i>
+              <i v-else class="el-icon-female content-item__detail-icon"></i>
               {{ personnelDetail.gender }}
             </span>
             <el-select

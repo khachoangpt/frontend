@@ -44,4 +44,5 @@ export default {
   enableEditCalendar: (state) => state.enableEditCalendar,
   personalListSelected: (state) => state.personalListSelected,
   listPersonalId: (state) => state.listPersonalId,
+  listEmployeeAutocomplete: (state) => state.listEmployeeAutocomplete,
 }

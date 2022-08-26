@@ -4,8 +4,27 @@ import { format } from 'date-fns'
 export default {
   async getPersonnelList({ commit }, data) {
     const res = await this.$repository.user.getPersonnelList(data)
+    for (let i = 0; i < res.hrmResponse.length; i++) {
+      res.hrmResponse[i].value =
+        res.hrmResponse[i].full_name +
+        ' (' +
+        res.hrmResponse[i].employee_id +
+        ')'
+    }
     await commit('setTotalPage', res.total)
     await commit('setPersonnelList', res.hrmResponse)
+  },
+
+  async getAllPersonnelList({ commit }) {
+    const res = await this.$repository.user.getAllPersonnelList()
+    for (let i = 0; i < res.hrmResponse.length; i++) {
+      res.hrmResponse[i].value =
+        res.hrmResponse[i].full_name +
+        ' (' +
+        res.hrmResponse[i].employee_id +
+        ')'
+    }
+    await commit('setListEmployeeAutocomplete', res.hrmResponse)
   },
 
   async addEmployee({ commit, state }, data) {
@@ -426,6 +445,7 @@ export default {
   async getWorkingInfo({ commit }, data) {
     try {
       const res = await this.$repository.user.getWorkingInfo(data)
+      res.start_date = format(new Date(res.start_date), 'yyyy-MM')
       await commit('setWorkingInfo', res)
     } catch (error) {
       Message.error(error.response.data.message)
@@ -569,9 +589,12 @@ export default {
 
   async onChangeSearchEmployee({ commit, state }) {
     try {
+      let searchText = state.searchText
+      searchText = searchText.replace(/\s+/g, ' ')
+      searchText = searchText.trim()
       await commit('setLoadingOnSearchEmployee', true)
       const res = await this.$repository.user.getPersonnelList({
-        searchText: state.searchText,
+        searchText,
         page: 1,
       })
       await commit('setTotalPage', res.total)

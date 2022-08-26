@@ -31,20 +31,51 @@ class UserApi extends User {
   }
 
   getPersonnelList(data) {
+    const regexEmp = /(.+)\((.+)\)/i
+    if (regexEmp.test(data.searchText) === true) {
+      const employeeId = data.searchText.match(regexEmp)[2]
+      const employeeName = data.searchText.match(regexEmp)[1].trim()
+      const accessToken = getToken()
+      return this.$axios.$get(
+        '/api/get_all_employee?filter=fullName:ALK' +
+          employeeName +
+          ',employeeId:AEQ' +
+          employeeId +
+          '&paging=offset:' +
+          (data.page - 1) +
+          ',limit:' +
+          PageLimit,
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      )
+    } else {
+      const accessToken = getToken()
+      return this.$axios.$get(
+        '/api/get_all_employee?filter=fullName:ALK' +
+          data.searchText +
+          '&paging=offset:' +
+          (data.page - 1) +
+          ',limit:' +
+          PageLimit,
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      )
+    }
+  }
+
+  getAllPersonnelList() {
     const accessToken = getToken()
-    return this.$axios.$get(
-      '/api/get_all_employee?filter=fullName:ALK' +
-        data.searchText +
-        '&paging=offset:' +
-        (data.page - 1) +
-        ',limit:' +
-        PageLimit,
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    return this.$axios.$get('/api/get_all_employee?paging=offset:0,limit:999', {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
   }
 
   addEmployee(data) {

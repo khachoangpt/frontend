@@ -81,14 +81,26 @@
         @change="onChangeYear"
       >
       </el-date-picker>
-      <el-button
+      <el-dropdown
+        :disabled="salaryDataList <= 0"
+        @command="exportRequestSelected"
+      >
+        <el-button class="header-actions__button" type="success">
+          Export
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="excel"> Excel </el-dropdown-item>
+          <el-dropdown-item command="csv"> CSV </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <!-- <el-button
         class="salary__export"
         type="success"
         :disabled="salaryDataList <= 0"
         @click="exportSalary(activeName)"
       >
         Export
-      </el-button>
+      </el-button> -->
     </div>
     <div class="salary-table">
       <vue-good-table
@@ -509,6 +521,10 @@ export default {
     },
 
     currentChange() {},
+
+    exportRequestSelected(data) {
+      this.exportSalary([this.activeName, data])
+    },
   },
 }
 </script>

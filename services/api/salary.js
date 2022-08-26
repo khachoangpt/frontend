@@ -56,28 +56,54 @@ class UserApi extends Policy {
 
   exportSalary(data) {
     const accessToken = getToken()
-    return this.$axios.$post(
-      '/api/download_csv_management_salary_monthly',
-      data,
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    if (data[1] === 'excel') {
+      return this.$axios.$post(
+        '/api/download_excel_management_salary_monthly',
+        data[0],
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+          responseType: 'arraybuffer',
+        }
+      )
+    } else if (data[1] === 'csv') {
+      return this.$axios.$post(
+        '/api/download_csv_management_salary_monthly',
+        data[0],
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      )
+    }
   }
 
   exportSalaryPersonnel(data) {
     const accessToken = getToken()
-    return this.$axios.$post(
-      '/api/download_csv_personal_salary_monthly',
-      data,
-      {
-        headers: {
-          Authorization: 'Bearer ' + accessToken,
-        },
-      }
-    )
+    if (data[1] === 'excel') {
+      return this.$axios.$post(
+        '/api/download_excel_personal_salary_monthly',
+        data[0],
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+          responseType: 'arraybuffer',
+        }
+      )
+    } else if (data[1] === 'csv') {
+      return this.$axios.$post(
+        '/api/download_csv_personal_salary_monthly',
+        data[0],
+        {
+          headers: {
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }
+      )
+    }
   }
 
   editDeduction(data) {
@@ -229,6 +255,19 @@ class UserApi extends Policy {
         Authorization: 'Bearer ' + accessToken,
       },
     })
+  }
+
+  reGeneratePayroll(data) {
+    const accessToken = getToken()
+    return this.$axios.$post(
+      '/api/generate_salary_monthly?generateDate=' + data,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
+      }
+    )
   }
 }
 

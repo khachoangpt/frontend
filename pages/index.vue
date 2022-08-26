@@ -22,16 +22,15 @@
             </div>
             <Calendar />
           </el-card>
-          <el-card class="box-card card-generate-payroll">
+          <el-card
+            v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+            class="box-card card-generate-payroll"
+          >
             <div slot="header" class="clearfix-dashboard">
               <span class="box-card__header-text">{{
                 $i18n.t('dashboard.generateSalary')
               }}</span>
-              <el-switch
-                v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
-                v-model="isEditPayroll"
-                @change="onChangeEditPayroll"
-              >
+              <el-switch v-model="isEditPayroll" @change="onChangeEditPayroll">
               </el-switch>
             </div>
             <div class="generate-payroll-body">
@@ -40,6 +39,7 @@
                 type="month"
                 class="generate-date-picker"
                 placeholder="Month"
+                value-format="yyyy-MM-dd"
                 :disabled="!isEditPayroll"
                 :picker-options="pickerSalaryOptions"
               >
@@ -320,6 +320,7 @@ export default {
       'getHistorySalary',
       'getSalaryStructure',
       'getEmployeeById',
+      'reGeneratePayroll',
     ]),
     ...mapMutations('user', [
       'updateEmployeeNameSalaryHistory',
@@ -389,9 +390,8 @@ export default {
       }
     },
 
-    generatePayroll() {
-      console.log(this.salaryMonth)
-      Message.success('Generate payroll successfully')
+    async generatePayroll() {
+      await this.reGeneratePayroll(this.salaryMonth)
     },
   },
 }

@@ -77,39 +77,41 @@ export default {
   async handleClickTab({ dispatch, commit }, tab) {
     await commit('setRequestListSelected', 0)
     if (tab.name === 'first') {
+      await commit('setActiveTable', 'first')
       await dispatch('getListRequestSend', 1)
     } else if (tab.name === 'second') {
+      await commit('setActiveTable', 'second')
       await dispatch('getListRequestReceive', 1)
     }
   },
 
-  async exportRequest({ state }) {
-    try {
-      let res = await this.$repository.timekeeping.exportRequest(
-        state.listEmployeeId
-      )
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
-      }
+  // async exportRequest({ state }) {
+  //   try {
+  //     let res = await this.$repository.timekeeping.exportRequest(
+  //       state.listEmployeeId
+  //     )
+  //     if (!res.match(/^data:text\/csv/i)) {
+  //       res = 'data:text/csv;charset=utf-8,' + res
+  //     }
 
-      const data1 = encodeURI(res)
+  //     const data1 = encodeURI(res)
 
-      const link = document.createElement('a')
-      link.setAttribute('href', data1)
-      link.setAttribute(
-        'download',
-        'request ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
-    } catch (error) {
-      Message.error(error.response.data.message)
-    }
-  },
+  //     const link = document.createElement('a')
+  //     link.setAttribute('href', data1)
+  //     link.setAttribute(
+  //       'download',
+  //       'request ' +
+  //         format(new Date(), 'dd-MM-yyyy') +
+  //         ' ' +
+  //         new Date().getHours() +
+  //         new Date().getMinutes() +
+  //         new Date().getSeconds()
+  //     )
+  //     link.click()
+  //   } catch (error) {
+  //     Message.error(error.response.data.message)
+  //   }
+  // },
 
   async getDetailSendRequest({ commit }, requestId) {
     try {
@@ -1100,53 +1102,99 @@ export default {
     }
   },
 
-  async exportRequestSend({ state }) {
+  async exportRequestSend({ state }, data) {
     try {
-      let res = await this.$repository.request.exportRequestSend(
-        state.listRequestId
-      )
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
+      if (data === 'excel') {
+        await this.$repository.request
+          .exportRequestSend([state.listRequestId, data])
+          .then((response) => {
+            const url = URL.createObjectURL(new Blob([response]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+              'download',
+              'employees ' +
+                format(new Date(), 'dd-MM-yyyy') +
+                ' ' +
+                new Date().getHours() +
+                new Date().getMinutes() +
+                new Date().getSeconds() +
+                '.xlsx'
+            )
+            document.body.appendChild(link)
+            link.click()
+          })
+      } else {
+        let res = await this.$repository.request.exportRequestSend([
+          state.listRequestId,
+          data,
+        ])
+        if (!res.match(/^data:text\/csv/i)) {
+          res = 'data:text/csv;charset=utf-8,' + res
+        }
+        const data1 = encodeURI(res)
+        const link = document.createElement('a')
+        link.setAttribute('href', data1)
+        link.setAttribute(
+          'download',
+          'request ' +
+            format(new Date(), 'dd-MM-yyyy') +
+            ' ' +
+            new Date().getHours() +
+            new Date().getMinutes() +
+            new Date().getSeconds()
+        )
+        link.click()
       }
-      const data1 = encodeURI(res)
-      const link = document.createElement('a')
-      link.setAttribute('href', data1)
-      link.setAttribute(
-        'download',
-        'request ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
     } catch (error) {
       Message.error(error.response.data.message)
     }
   },
 
-  async exportRequestReceive({ state }) {
+  async exportRequestReceive({ state }, data) {
     try {
-      let res = await this.$repository.request.exportRequestReceive(
-        state.listRequestId
-      )
-      if (!res.match(/^data:text\/csv/i)) {
-        res = 'data:text/csv;charset=utf-8,' + res
+      if (data === 'excel') {
+        await this.$repository.request
+          .exportRequestReceive([state.listRequestId, data])
+          .then((response) => {
+            const url = URL.createObjectURL(new Blob([response]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+              'download',
+              'employees ' +
+                format(new Date(), 'dd-MM-yyyy') +
+                ' ' +
+                new Date().getHours() +
+                new Date().getMinutes() +
+                new Date().getSeconds() +
+                '.xlsx'
+            )
+            document.body.appendChild(link)
+            link.click()
+          })
+      } else {
+        let res = await this.$repository.request.exportRequestReceive([
+          state.listRequestId,
+          data,
+        ])
+        if (!res.match(/^data:text\/csv/i)) {
+          res = 'data:text/csv;charset=utf-8,' + res
+        }
+        const data1 = encodeURI(res)
+        const link = document.createElement('a')
+        link.setAttribute('href', data1)
+        link.setAttribute(
+          'download',
+          'request ' +
+            format(new Date(), 'dd-MM-yyyy') +
+            ' ' +
+            new Date().getHours() +
+            new Date().getMinutes() +
+            new Date().getSeconds()
+        )
+        link.click()
       }
-      const data1 = encodeURI(res)
-      const link = document.createElement('a')
-      link.setAttribute('href', data1)
-      link.setAttribute(
-        'download',
-        'request ' +
-          format(new Date(), 'dd-MM-yyyy') +
-          ' ' +
-          new Date().getHours() +
-          new Date().getMinutes() +
-          new Date().getSeconds()
-      )
-      link.click()
     } catch (error) {
       Message.error(error.response.data.message)
     }

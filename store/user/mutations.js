@@ -387,4 +387,8 @@ export default {
   setListPersonalId(state, listPersonalId) {
     state.listPersonalId = listPersonalId
   },
+
+  setListEmployeeAutocomplete(state, listEmployeeAutocomplete) {
+    state.listEmployeeAutocomplete = listEmployeeAutocomplete
+  },
 }

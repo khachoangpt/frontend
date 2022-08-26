@@ -63,4 +63,5 @@ export default () => ({
   enableEditCalendar: false,
   personalListSelected: 0,
   listPersonalId: [],
+  listEmployeeAutocomplete: [],
 })

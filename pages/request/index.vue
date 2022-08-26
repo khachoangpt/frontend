@@ -26,14 +26,26 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button
+        <el-dropdown
+          :disabled="requestListSelected <= 0"
+          @command="exportRequest"
+        >
+          <el-button class="header-actions__button" type="success">
+            Export
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="excel"> Excel </el-dropdown-item>
+            <el-dropdown-item command="csv"> CSV </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <!-- <el-button
           class="header-actions__button"
           type="success"
           :disabled="requestListSelected <= 0"
-          @click="exportRequestSend"
+          @click="exportRequest"
         >
           Export
-        </el-button>
+        </el-button> -->
       </div>
     </div>
     <div class="request__search">
@@ -75,7 +87,7 @@
       >
         <el-option
           v-for="requestStatus in listRequestStatus"
-          :key="'status_' + requestStatus.request_status_id"
+          :key="'status_' + requestStatus.request_status_name_id"
           :class="'request-status-select__' + requestStatus.request_status_name"
           :label="requestStatus.request_status_name"
           :value="requestStatus.request_status_name"
@@ -159,6 +171,7 @@ export default {
       'getListRequestStatus',
       'createRequest',
       'exportRequestSend',
+      'exportRequestReceive',
     ]),
     ...mapMutations('request', [
       'setRequestAdvanceDialogVisible',
@@ -204,6 +217,14 @@ export default {
       this.requestTypeSearch = ''
       this.requestStatusSearch = ''
       this.handleClickTab(tab)
+    },
+
+    exportRequest(data) {
+      if (this.activeTable === 'first') {
+        this.exportRequestSend(data)
+      } else if (this.activeTable === 'second') {
+        this.exportRequestReceive(data)
+      }
     },
   },
 }

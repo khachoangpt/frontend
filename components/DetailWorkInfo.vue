@@ -5,16 +5,346 @@
         <span id="sub-2" class="main-info-header__text">
           {{ $i18n.t('personnel.detail.jobInfo') }}
         </span>
-        <span
+        <div
           v-if="
             isEditWorkInfo &&
             roles.find((role) => role.authority === 'ROLE_ADMIN')
           "
-          class="main-info-header__edit"
-          @click="editWorkInfo"
         >
-          {{ $i18n.t('personnel.detail.editJobInformation') }}
-        </span>
+          <el-popover
+            popper-class="popover-new-salary"
+            placement="left-start"
+            :visible-arrow="false"
+            :width="800"
+            trigger="hover"
+          >
+            <div class="new-salary-header">
+              <span class="new-salary">
+                New salary apply from {{ workingInfo.start_date }}
+              </span>
+              <el-button
+                type="primary"
+                size="medium"
+                class="new-salary-action"
+                @click="applyNewSalary"
+              >
+                Apply now
+              </el-button>
+            </div>
+            <el-row class="main-info__content">
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.salary')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(workingInfo.final_salary)
+                    }}</span>
+                    <el-input
+                      v-else
+                      size="medium"
+                      :value="workingInfo.final_salary"
+                      class="edit-input"
+                      @input="updateWorkingFinalSalary"
+                    ></el-input>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.baseSalary')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                      }).format(workingInfo.base_salary)
+                    }}</span>
+                    <el-input
+                      v-else
+                      size="medium"
+                      :value="workingInfo.base_salary"
+                      class="edit-input"
+                      @input="updateWorkingBaseSalary"
+                    ></el-input>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.startDate')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      workingInfo.start_date
+                    }}</span>
+                    <el-date-picker
+                      v-else
+                      size="medium"
+                      :value="workingInfo.start_date"
+                      type="month"
+                      class="edit-input"
+                      value-format="yyyy-MM"
+                      placeholder="Pick a day"
+                      :picker-options="pickerOptions"
+                      @input="updateWorkingStartDate"
+                    >
+                    </el-date-picker>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.workingSchedule')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      workingInfo.working_type
+                    }}</span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.working_type"
+                      placeholder="Select"
+                      @input="updateWorkingWorkingName"
+                    >
+                      <el-option
+                        v-for="workingType in workingTypes"
+                        :key="workingType.type_id"
+                        :label="workingType.name"
+                        :value="workingType.name"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row class="main-info__content">
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.office')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">
+                      {{ workingInfo.office }}</span
+                    >
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.office"
+                      placeholder="Select"
+                      @input="updateWorkingOfficeName"
+                    >
+                      <el-option
+                        v-for="office in listOffice"
+                        :key="office.office_id"
+                        :label="office.name"
+                        :value="office.name"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.area')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      workingInfo.area
+                    }}</span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.area"
+                      placeholder="Select"
+                      @input="updateWorkingAreaName"
+                    >
+                      <el-option
+                        v-for="area in listArea"
+                        :key="area.area_id"
+                        :label="area.name"
+                        :value="area.name"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.position')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      workingInfo.position
+                    }}</span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.position"
+                      placeholder="Select"
+                      @input="updateWorkingPositionName"
+                      @change="onChangePosition"
+                    >
+                      <el-option
+                        v-for="position in listPositions"
+                        :key="position.job_id"
+                        :label="position.position"
+                        :value="position.position"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.grade')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">{{
+                      workingInfo.grade
+                    }}</span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.grade"
+                      placeholder="Select"
+                      @input="updateWorkingGrade"
+                    >
+                      <el-option
+                        v-for="grade in listGrade"
+                        :key="grade.grade_id"
+                        :label="grade.name"
+                        :value="grade.name"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-row class="main-info__content">
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.personnelClassification')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">
+                      {{ workingInfo.employee_type }}
+                    </span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="workingInfo.employee_type"
+                      placeholder="Select"
+                      @input="updateWorkingEmployeeType"
+                    >
+                      <el-option
+                        v-for="employeeType in employeeTypes"
+                        :key="employeeType.type_id"
+                        :label="employeeType.name"
+                        :value="employeeType.name"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.manager')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">
+                      {{ workingInfo.manager_name }} ({{
+                        workingInfo.manager_id
+                      }})
+                    </span>
+                    <el-autocomplete
+                      v-else
+                      :value="workingInfo.manager_name"
+                      class="edit-input"
+                      :fetch-suggestions="querySearch"
+                      :placeholder="$i18n.t('personnel.manager')"
+                      @input="updateWorkingManager"
+                      @select="handleSelect"
+                    ></el-autocomplete>
+                  </div>
+                </div>
+              </el-col>
+              <el-col
+                v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
+                :xs="24"
+                :sm="12"
+                :md="6"
+                :lg="6"
+                :xl="6"
+              >
+                <div class="grid-content">
+                  <div class="main-info__content-item">
+                    <span class="content-item__head">{{
+                      $i18n.t('personnel.detail.role')
+                    }}</span>
+                    <span v-if="isEditWorkInfo" class="content-item__detail">
+                      {{ employeeRole.roleName }}
+                    </span>
+                    <el-select
+                      v-else
+                      size="medium"
+                      class="edit-input"
+                      :value="employeeRole.roleName"
+                      placeholder="Select"
+                      @input="updateWorkingRole"
+                    >
+                      <el-option
+                        v-for="role in $store.state.user.roles"
+                        :key="role.type_id"
+                        :label="role.role"
+                        :value="role.role"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+            <el-tag
+              slot="reference"
+              class="salary-tag"
+              type="danger"
+              effect="dark"
+            >
+              New salary
+            </el-tag>
+          </el-popover>
+          <span class="main-info-header__edit" @click="editWorkInfo">
+            {{ $i18n.t('personnel.detail.editJobInformation') }}
+          </span>
+        </div>
         <span
           v-else-if="
             isEditWorkInfo === false &&
@@ -89,10 +419,11 @@
                 v-else
                 size="medium"
                 :value="workingInfo.start_date"
-                type="date"
+                type="month"
                 class="edit-input"
-                value-format="yyyy-MM-dd"
+                value-format="yyyy-MM"
                 placeholder="Pick a day"
+                :picker-options="pickerOptions"
                 @input="updateWorkingStartDate"
               >
               </el-date-picker>
@@ -337,7 +668,16 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
-    return {}
+    return {
+      pickerOptions: {
+        disabledDate(time) {
+          return (
+            time.getTime() <
+            new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1)
+          )
+        },
+      },
+    }
   },
 
   computed: {
@@ -452,6 +792,21 @@ export default {
       str = str.replace(/Đ/g, 'D')
       return str
     },
+
+    applyNewSalary() {
+      this.$confirm('Are you sure to apply?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Delete completed',
+          })
+        })
+        .catch(() => {})
+    },
   },
 }
 </script>
@@ -459,5 +814,25 @@ export default {
 <style>
 .el-autocomplete-suggestion {
   width: fit-content !important;
+}
+
+.new-salary {
+  font-size: 20px;
+  font-weight: 600;
+  color: #67c23a;
+}
+
+.new-salary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.salary-tag {
+  margin-right: 8px;
+}
+
+.popover-new-salary {
+  border-color: #F56C6C;
 }
 </style>
