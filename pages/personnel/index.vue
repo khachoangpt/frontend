@@ -203,4 +203,8 @@ export default {
 .header-actions__button {
   margin-left: 16px;
 }
+
+.el-autocomplete-suggestion {
+  width: fit-content !important;
+}
 </style>

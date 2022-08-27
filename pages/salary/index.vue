@@ -651,7 +651,7 @@ export default {
 }
 
 .el-autocomplete-suggestion {
-  width: auto !important;
+  width: fit-content !important;
 }
 .dialog-check-salary__label {
   margin-bottom: 12px;

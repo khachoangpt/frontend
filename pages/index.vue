@@ -500,4 +500,8 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
+.el-autocomplete-suggestion {
+  width: fit-content !important;
+}
 </style>

@@ -135,7 +135,7 @@ export default {
   layout: 'main',
   data() {
     return {
-      ageColor: ['#64a340', '#348c75', '#348c75', '#05ffd1'],
+      ageColor: ['#4287f5', '#dd42f5', '#f5427e', '#f54242', '#f5d442'],
       workTimeColor: ['#328fa8', '#ffde05', '#64a340'],
       leaveCompanyReasonChartOption: new Date(),
       paidLeaveReasonChartOption: new Date(),
