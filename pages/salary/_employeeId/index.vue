@@ -26,7 +26,10 @@
             {{ salaryDetail.salaryStatus }}
           </span>
           <div
-            v-if="salaryDetail.salaryStatus === 'REJECTED'"
+            v-if="
+              salaryDetail.comment !== null &&
+              salaryDetail.salaryStatus !== 'APPROVED'
+            "
             class="reject-salary-comment"
             @click="openReviewComment"
           >
@@ -1041,6 +1044,28 @@ export default {
     async handleClickApproveSalary() {
       await this.setListSalaryId([this.salaryDetail.salary_monthly_id])
       await this.approveSalary()
+      this.isShowCheck = true
+      this.isShowReject = true
+      this.isShowApprove = true
+      if (this.personnelDetail.employee_id === this.id) {
+        this.isShowCheck = false
+        this.isShowReject = false
+        this.isShowApprove = false
+      }
+      if (this.salaryDetail.salaryStatus === 'REJECTED') {
+        this.isShowCheck = true
+        this.isShowReject = false
+        this.isShowApprove = true
+      }
+      if (this.salaryDetail.salaryStatus === 'APPROVED') {
+        this.isShowApprove = false
+        this.isShowCheck = false
+        this.isShowReject = false
+      }
+      if (this.salaryDetail.salaryStatus === 'PENDING') {
+        this.isShowCheck = true
+        this.isShowReject = true
+      }
     },
   },
 }

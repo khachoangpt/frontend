@@ -4,27 +4,14 @@ import { format } from 'date-fns'
 
 export default {
   async onChangeMonth({ dispatch, state, commit }) {
-    const startDate = new Date(
-      state.monthSearch.getFullYear(),
-      state.monthSearch.getMonth() + 1,
-      1
-    )
+    const startDate = format(state.monthSearch, 'yyyy-MM-dd')
     const endDate = new Date(
       state.monthSearch.getFullYear(),
       state.monthSearch.getMonth() + 1,
       0
     )
     const timeRange = {
-      startDate:
-        startDate.getFullYear() +
-        '-' +
-        (startDate.getMonth() < 10
-          ? '0' + startDate.getMonth()
-          : startDate.getMonth()) +
-        '-' +
-        (startDate.getDate() < 10
-          ? '0' + startDate.getDate()
-          : startDate.getDate()),
+      startDate,
       endDate:
         endDate.getFullYear() +
         '-' +
@@ -316,8 +303,8 @@ export default {
           comment: value,
         })
       }
-      await dispatch('getListSalary', 1)
       await dispatch('getSalaryDetail', state.listSalaryId[0])
+      await dispatch('getListSalary', 1)
       Message.success(this.$i18n.t('message.rejectPayrollSuccess'))
     } catch (error) {
       Message.error(error.response.data.message)
