@@ -100,7 +100,7 @@
                 type="year"
                 size="small"
                 class="salary-history__search-input"
-                placeholder="Ngày"
+                :placeholder="$i18n.t('datepicker.date')"
                 :disabled="historySalaryOption.type !== 'monthly'"
                 :picker-options="pickerOptions"
               >
@@ -140,7 +140,7 @@
                   class="salary-structure__search-text"
                   size="small"
                   type="month"
-                  placeholder="Ngày"
+                  :placeholder="$i18n.t('datepicker.date')"
                   :picker-options="pickerOptions"
                 >
                 </el-date-picker>

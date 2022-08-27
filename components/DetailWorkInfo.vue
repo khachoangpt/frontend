@@ -5,12 +5,7 @@
         <span id="sub-2" class="main-info-header__text">
           {{ $i18n.t('personnel.detail.jobInfo') }}
         </span>
-        <div
-          v-if="
-            isEditWorkInfo &&
-            roles.find((role) => role.authority === 'ROLE_ADMIN')
-          "
-        >
+        <div v-if="workingInfo.newWorkingInfo !== null">
           <el-popover
             popper-class="popover-new-salary"
             placement="left-start"
@@ -20,7 +15,8 @@
           >
             <div class="new-salary-header">
               <span class="new-salary">
-                New salary apply from {{ workingInfo.start_date }}
+                {{ $i18n.t('personnel.detail.salaryApplyFrom') }}
+                {{ workingInfo.newWorkingInfo.start_date }}
               </span>
               <el-button
                 type="primary"
@@ -28,7 +24,7 @@
                 class="new-salary-action"
                 @click="applyNewSalary"
               >
-                Apply now
+                {{ $i18n.t('personnel.detail.applyNow') }}
               </el-button>
             </div>
             <el-row class="main-info__content">
@@ -42,12 +38,12 @@
                       new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND',
-                      }).format(workingInfo.final_salary)
+                      }).format(workingInfo.newWorkingInfo.final_salary)
                     }}</span>
                     <el-input
                       v-else
                       size="medium"
-                      :value="workingInfo.final_salary"
+                      :value="workingInfo.newWorkingInfo.final_salary"
                       class="edit-input"
                       @input="updateWorkingFinalSalary"
                     ></el-input>
@@ -64,12 +60,12 @@
                       new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND',
-                      }).format(workingInfo.base_salary)
+                      }).format(workingInfo.newWorkingInfo.base_salary)
                     }}</span>
                     <el-input
                       v-else
                       size="medium"
-                      :value="workingInfo.base_salary"
+                      :value="workingInfo.newWorkingInfo.base_salary"
                       class="edit-input"
                       @input="updateWorkingBaseSalary"
                     ></el-input>
@@ -83,12 +79,12 @@
                       $i18n.t('personnel.detail.startDate')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                      workingInfo.start_date
+                      workingInfo.newWorkingInfo.start_date
                     }}</span>
                     <el-date-picker
                       v-else
                       size="medium"
-                      :value="workingInfo.start_date"
+                      :value="workingInfo.newWorkingInfo.start_date"
                       type="month"
                       class="edit-input"
                       value-format="yyyy-MM"
@@ -107,13 +103,13 @@
                       $i18n.t('personnel.detail.workingSchedule')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                      workingInfo.working_type
+                      workingInfo.newWorkingInfo.working_type
                     }}</span>
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.working_type"
+                      :value="workingInfo.newWorkingInfo.working_type"
                       placeholder="Select"
                       @input="updateWorkingWorkingName"
                     >
@@ -137,13 +133,13 @@
                       $i18n.t('personnel.detail.office')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">
-                      {{ workingInfo.office }}</span
+                      {{ workingInfo.newWorkingInfo.office }}</span
                     >
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.office"
+                      :value="workingInfo.newWorkingInfo.office"
                       placeholder="Select"
                       @input="updateWorkingOfficeName"
                     >
@@ -165,13 +161,13 @@
                       $i18n.t('personnel.detail.area')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                      workingInfo.area
+                      workingInfo.newWorkingInfo.area
                     }}</span>
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.area"
+                      :value="workingInfo.newWorkingInfo.area"
                       placeholder="Select"
                       @input="updateWorkingAreaName"
                     >
@@ -193,13 +189,13 @@
                       $i18n.t('personnel.detail.position')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                      workingInfo.position
+                      workingInfo.newWorkingInfo.position
                     }}</span>
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.position"
+                      :value="workingInfo.newWorkingInfo.position"
                       placeholder="Select"
                       @input="updateWorkingPositionName"
                       @change="onChangePosition"
@@ -222,13 +218,13 @@
                       $i18n.t('personnel.detail.grade')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">{{
-                      workingInfo.grade
+                      workingInfo.newWorkingInfo.grade
                     }}</span>
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.grade"
+                      :value="workingInfo.newWorkingInfo.grade"
                       placeholder="Select"
                       @input="updateWorkingGrade"
                     >
@@ -252,13 +248,13 @@
                       $i18n.t('personnel.detail.personnelClassification')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">
-                      {{ workingInfo.employee_type }}
+                      {{ workingInfo.newWorkingInfo.employee_type }}
                     </span>
                     <el-select
                       v-else
                       size="medium"
                       class="edit-input"
-                      :value="workingInfo.employee_type"
+                      :value="workingInfo.newWorkingInfo.employee_type"
                       placeholder="Select"
                       @input="updateWorkingEmployeeType"
                     >
@@ -280,13 +276,13 @@
                       $i18n.t('personnel.detail.manager')
                     }}</span>
                     <span v-if="isEditWorkInfo" class="content-item__detail">
-                      {{ workingInfo.manager_name }} ({{
-                        workingInfo.manager_id
+                      {{ workingInfo.newWorkingInfo.manager_name }} ({{
+                        workingInfo.newWorkingInfo.manager_id
                       }})
                     </span>
                     <el-autocomplete
                       v-else
-                      :value="workingInfo.manager_name"
+                      :value="workingInfo.newWorkingInfo.manager_name"
                       class="edit-input"
                       :fetch-suggestions="querySearch"
                       :placeholder="$i18n.t('personnel.manager')"
@@ -338,7 +334,7 @@
               type="danger"
               effect="dark"
             >
-              New salary
+              {{ $i18n.t('personnel.detail.newSalary') }}
             </el-tag>
           </el-popover>
           <span class="main-info-header__edit" @click="editWorkInfo">
@@ -729,6 +725,7 @@ export default {
       'getListRoleType',
       'confirmEditWorkingInfo',
       'onChangePosition',
+      'applyWorkingInfoNow',
     ]),
     ...mapMutations('user', [
       'setIsEditWorkInfo',
@@ -795,15 +792,12 @@ export default {
 
     applyNewSalary() {
       this.$confirm('Are you sure to apply?', 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
+        confirmButtonText: this.$i18n.t('personnel.detail.confirm'),
+        cancelButtonText: this.$i18n.t('personnel.detail.close'),
         type: 'warning',
       })
         .then(() => {
-          this.$message({
-            type: 'success',
-            message: 'Delete completed',
-          })
+          this.applyWorkingInfoNow()
         })
         .catch(() => {})
     },
@@ -833,6 +827,6 @@ export default {
 }
 
 .popover-new-salary {
-  border-color: #F56C6C;
+  border-color: #f56c6c;
 }
 </style>

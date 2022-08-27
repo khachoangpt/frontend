@@ -458,6 +458,15 @@ class UserApi extends User {
       })
     }
   }
+
+  applyWorkingInfoNow(data) {
+    const accessToken = getToken()
+    return this.$axios.$put('/api/employee/detail/apply_new_salary', data, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+      },
+    })
+  }
 }
 
 export default makeFactoryClass(UserMock, UserApi)

@@ -18,7 +18,7 @@ export default {
       } else if (error.response.data.message === 'Bad credentials') {
         Message.error(this.$i18n.t('login.loginIncorrect'))
       } else {
-        Message.error(error.response.data.message)
+        Message.error(this.$i18n.t('login.loginError'))
       }
     }
   },
@@ -27,7 +27,7 @@ export default {
     try {
       const res = await this.$repository.user.forgot(data.email)
       if (res.code === 201) {
-        Message.success('Password was change. Check your email, please.')
+        Message.success(this.$i18n.t('message.passwordChanged'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -45,7 +45,7 @@ export default {
     try {
       const res = await this.$repository.user.changePassword(data)
       if (res.code === 201) {
-        Message.success('Password changed successfully.')
+        Message.success(this.$i18n.t('message.passwordChangeSuccess'))
         destroyToken()
         this.$router.push(this.localePath('/login'))
       }

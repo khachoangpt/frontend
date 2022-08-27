@@ -115,6 +115,7 @@ export default {
   },
 
   async exportSalary({ state }, payload) {
+    console.log(state.listSalaryId[0])
     try {
       let res = []
       if (payload[0] === 'second') {
@@ -221,7 +222,7 @@ export default {
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
         await commit('setEditDeductionDialogVisible', false)
-        await Message.success('Sửa khấu trừ thành công.')
+        await Message.success(this.$i18n.t('message.editDeductionSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -233,7 +234,7 @@ export default {
       const res = await this.$repository.salary.deleteDeduction(data)
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
-        Message.success('Xóa khấu trừ thành công.')
+        Message.success(this.$i18n.t('message.removeDeductionSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -246,7 +247,7 @@ export default {
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
         await commit('setEditAdvanceDialogVisible', false)
-        await Message.success('Sửa tạm ứng thành công.')
+        await Message.success(this.$i18n.t('message.editAdvanceSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -258,7 +259,7 @@ export default {
       const res = await this.$repository.salary.deleteAdvance(data)
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
-        Message.success('Xóa tạm ứng thành công.')
+        Message.success(this.$i18n.t('message.removeAdvanceSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -275,7 +276,7 @@ export default {
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
         await commit('setEditBonusDialogVisible', false)
-        await Message.success('Sửa tiền thưởng thành công.')
+        await Message.success(this.$i18n.t('message.editBonusSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -287,7 +288,7 @@ export default {
       const res = await this.$repository.salary.deleteBonus(data)
       if (res.code === 201) {
         await dispatch('getSalaryDetail', state.salaryDetail.salary_monthly_id)
-        Message.success('Xóa tiền thưởng thành công.')
+        Message.success(this.$i18n.t('message.removeBonusSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -299,9 +300,9 @@ export default {
       for (let i = 0; i < state.listSalaryId.length; i++) {
         await this.$repository.salary.approveSalary(state.listSalaryId[i])
       }
-      await dispatch('getListSalary', 1)
       await dispatch('getSalaryDetail', state.listSalaryId[0])
-      Message.success('Xác nhận lương thành công.')
+      await dispatch('getListSalary', 1)
+      Message.success(this.$i18n.t('message.approvePayrollSuccess'))
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -317,7 +318,7 @@ export default {
       }
       await dispatch('getListSalary', 1)
       await dispatch('getSalaryDetail', state.listSalaryId[0])
-      Message.success('Đã từ chối bảng lương.')
+      Message.success(this.$i18n.t('message.rejectPayrollSuccess'))
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -343,7 +344,7 @@ export default {
       await dispatch('getSalaryDetail', state.listSalaryId[0])
       await commit('setCheckDialogVisible', false)
       await dispatch('getListSalary', 1)
-      Message.success('Chuyển tiếp bảng lương thành công.')
+      Message.success(this.$i18n.t('message.forwardPayrollSuccess'))
     } catch (error) {
       Message.error(error.response.data.message)
     }
@@ -427,9 +428,15 @@ export default {
   async reGeneratePayroll({ commit }, data) {
     try {
       const res = await this.$repository.salary.reGeneratePayroll(data)
-      console.log(res)
+      if (res.code === 201) {
+        Message.success(this.$i18n.t('message.reGenerateSuccess'))
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }
+  },
+
+  async currentChangeSalary({ dispatch }, data) {
+    await dispatch('getListSalary', data)
   },
 }

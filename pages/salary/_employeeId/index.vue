@@ -352,7 +352,7 @@
         type="primary"
         @click="handleClickCheckSalary"
       >
-        Chuyển tiếp
+        {{ $i18n.t('salary.forward') }}
       </el-button>
       <el-button
         v-if="isShowReject && isEnoughLevelApprove === 'True'"
@@ -360,7 +360,7 @@
         type="danger"
         @click="handleClickRejectSalary"
       >
-        Từ chối
+        {{ $i18n.t('salary.reject') }}
       </el-button>
       <el-button
         v-if="isShowApprove && isEnoughLevelApprove === 'True'"
@@ -368,7 +368,7 @@
         type="success"
         @click="handleClickApproveSalary"
       >
-        Chốt bảng lương
+        {{ $i18n.t('salary.approve') }}
       </el-button>
     </div>
     <el-dialog
@@ -462,7 +462,9 @@
       :before-close="closeDialogAdvance"
     >
       <template slot="title">
-        <div class="dialog-title">Sửa tạm ứng</div>
+        <div class="dialog-title">
+          {{ $i18n.t('salary.advanceDialog.editAdvance') }}
+        </div>
       </template>
       <el-form
         ref="advanceForm"
@@ -470,21 +472,30 @@
         :model="advanceForm"
         label-width="120px"
       >
-        <el-form-item label="Ngày" prop="date">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.date')"
+          prop="date"
+        >
           <el-date-picker
             v-model="advanceForm.date"
             type="date"
-            placeholder="Chọn một ngày"
+            :placeholder="$i18n.t('salary.deductionDialog.chooseDay')"
             class="deduction-dialog__input"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="Số tiền" prop="value">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.amount')"
+          prop="value"
+        >
           <el-input
             v-model.trim.number="advanceForm.value"
             class="deduction-dialog__input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Chi tiết" prop="description">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.description')"
+          prop="description"
+        >
           <el-input
             v-model="advanceForm.description"
             type="textarea"
@@ -494,9 +505,11 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialogAdvance">Đóng</el-button>
+        <el-button @click="closeDialogAdvance">{{
+          $i18n.t('salary.deductionDialog.close')
+        }}</el-button>
         <el-button type="primary" @click="submitForm('advanceForm')">
-          Xác nhận
+          {{ $i18n.t('salary.deductionDialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -508,7 +521,9 @@
       :before-close="closeDialogBonus"
     >
       <template slot="title">
-        <div class="dialog-title">Sửa tiền thưởng</div>
+        <div class="dialog-title">
+          {{ $i18n.t('salary.bonusDialog.editBonus') }}
+        </div>
       </template>
       <el-form
         ref="bonusForm"
@@ -516,15 +531,21 @@
         :model="bonusForm"
         label-width="120px"
       >
-        <el-form-item label="Ngày" prop="date">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.date')"
+          prop="date"
+        >
           <el-date-picker
             v-model="bonusForm.date"
             type="date"
-            placeholder="Chọn một ngày"
+            :placeholder="$i18n.t('salary.deductionDialog.chooseDay')"
             class="deduction-dialog__input"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="Loại tiền thưởng" prop="bonus">
+        <el-form-item
+          :label="$i18n.t('salary.bonusDialog.bonusType')"
+          prop="bonus"
+        >
           <el-select
             v-model="bonusForm.bonusTypeId"
             class="deduction-dialog__input"
@@ -547,13 +568,19 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Số tiền" prop="value">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.amount')"
+          prop="value"
+        >
           <el-input
             v-model.trim.number="bonusForm.value"
             class="deduction-dialog__input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Chi tiết" prop="description">
+        <el-form-item
+          :label="$i18n.t('salary.deductionDialog.description')"
+          prop="description"
+        >
           <el-input
             v-model="bonusForm.description"
             type="textarea"
@@ -563,34 +590,38 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="closeDialogBonus">Đóng</el-button>
+        <el-button @click="closeDialogBonus">{{
+          $i18n.t('salary.deductionDialog.close')
+        }}</el-button>
         <el-button type="primary" @click="submitForm('bonusForm')">
-          Xác nhận
+          {{ $i18n.t('salary.deductionDialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
     <el-dialog
-      title="Chuyển tiếp bảng lương"
+      :title="$i18n.t('salary.forwardPayroll')"
       :visible.sync="checkDialogVisible"
       top="30vh"
       width="30%"
       :before-close="closeDialog"
     >
       <div class="dialog-check-salary__label">
-        Nhập tên người muốn chuyển tiếp:
+        {{ $i18n.t('salary.enterManagerForward') }}:
       </div>
       <el-autocomplete
         v-model="managerApprove"
         :clearable="true"
-        placeholder="Tên quản lý"
+        :placeholder="$i18n.t('salary.manager')"
         :fetch-suggestions="querySearchManager"
         @select="handleChangeManager"
         @clear="handleChangeManager"
       ></el-autocomplete>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="closeDialog">Đóng</el-button>
+        <el-button size="small" @click="closeDialog">{{
+          $i18n.t('salary.deductionDialog.close')
+        }}</el-button>
         <el-button size="small" type="primary" @click="submitCheckSalary">
-          Xác nhận
+          {{ $i18n.t('salary.deductionDialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -631,17 +662,20 @@ export default {
         date: [
           {
             required: true,
-            message: 'Ngày không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.dateValidate'),
             trigger: 'blur',
           },
         ],
         value: [
           {
             required: true,
-            message: 'Số tiền không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.amountValidate'),
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số' },
+          {
+            type: 'number',
+            message: this.$i18n.t('salary.deductionDialog.numberValidate'),
+          },
         ],
         description: [
           {
@@ -656,17 +690,20 @@ export default {
         date: [
           {
             required: true,
-            message: 'Ngày không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.dateValidate'),
             trigger: 'blur',
           },
         ],
         value: [
           {
             required: true,
-            message: 'Số tiền không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.amountValidate'),
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số' },
+          {
+            type: 'number',
+            message: this.$i18n.t('salary.deductionDialog.numberValidate'),
+          },
         ],
         description: [
           {
@@ -681,22 +718,25 @@ export default {
         date: [
           {
             required: true,
-            message: 'Ngày không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.dateValidate'),
             trigger: 'blur',
           },
         ],
         value: [
           {
             required: true,
-            message: 'Số tiền không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.amountValidate'),
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số' },
+          {
+            type: 'number',
+            message: this.$i18n.t('salary.deductionDialog.numberValidate'),
+          },
         ],
         description: [
           {
             required: true,
-            message: 'Chi tiết không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.descriptionValidate'),
             trigger: 'blur',
           },
         ],
@@ -808,32 +848,27 @@ export default {
 
     confirmDeleteAdvance(data) {
       this.$confirm(
-        'Bạn có chắc chắn muốn xóa tạm ứng này không?',
-        'Cảnh báo',
+        this.$i18n.t('salary.confirmDeleteAdvance'),
+        this.$i18n.t('salary.warning'),
         {
-          confirmButtonText: 'Xóa',
-          cancelButtonText: 'Đóng',
+          confirmButtonText: this.$i18n.t('salary.remove'),
+          cancelButtonText: this.$i18n.t('salary.close'),
           type: 'warning',
         }
       )
         .then(() => {
           this.deleteAdvance(data)
         })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: 'Delete canceled',
-          })
-        })
+        .catch(() => {})
     },
 
     confirmDeleteDeduction(data) {
       this.$confirm(
-        'Bạn có chắc chắn muốn xóa khấu trừ này không?',
-        'Cảnh báo',
+        this.$i18n.t('salary.confirmDeleteDeduction'),
+        this.$i18n.t('salary.warning'),
         {
-          confirmButtonText: 'Xóa',
-          cancelButtonText: 'Đóng',
+          confirmButtonText: this.$i18n.t('salary.remove'),
+          cancelButtonText: this.$i18n.t('salary.close'),
           type: 'warning',
         }
       )
@@ -850,11 +885,11 @@ export default {
 
     confirmDeleteBonus(data) {
       this.$confirm(
-        'Bạn có chắc chắn muốn xóa tiền thưởng này không?',
-        'Cảnh báo',
+        this.$i18n.t('salary.confirmDeleteBonus'),
+        this.$i18n.t('salary.warning'),
         {
-          confirmButtonText: 'Xóa',
-          cancelButtonText: 'Đóng',
+          confirmButtonText: this.$i18n.t('salary.remove'),
+          cancelButtonText: this.$i18n.t('salary.close'),
           type: 'warning',
         }
       )
@@ -924,10 +959,14 @@ export default {
     },
 
     handleClickRejectSalary() {
-      this.$prompt('Nhập lý do từ chối:', 'Từ chối bảng lương', {
-        confirmButtonText: 'Xong',
-        cancelButtonText: 'Đóng',
-      })
+      this.$prompt(
+        this.$i18n.t('salary.enterReason'),
+        this.$i18n.t('salary.rejectPayroll'),
+        {
+          confirmButtonText: this.$i18n.t('salary.deductionDialog.confirm'),
+          cancelButtonText: this.$i18n.t('salary.deductionDialog.close'),
+        }
+      )
         .then(async ({ value }) => {
           await this.setListSalaryId([this.salaryDetail.salary_monthly_id])
           await this.rejectSalary(value)
@@ -943,11 +982,11 @@ export default {
     async openReviewComment() {
       let reason = ''
       if (this.salaryDetail.comment === null) {
-        reason = 'Không có lý do'
+        reason = 'No reason'
       } else {
         reason = this.salaryDetail.comment
       }
-      await this.$alert(reason, 'Lý do từ chối', {
+      await this.$alert(reason, this.$i18n.t('salary.reason'), {
         confirmButtonText: 'OK',
         callback: (action) => {},
       })

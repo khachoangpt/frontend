@@ -63,6 +63,39 @@ export default {
     ...mapGetters('user', ['listHoliday', 'enableEditCalendar']),
   },
 
+  watch: {
+    async enableEditCalendar() {
+      await this.getHoliday(new Date().getFullYear())
+      this.attributes = [
+        {
+          highlight: 'red',
+          dates: [
+            {
+              weekdays: [1, 7],
+            },
+          ],
+          popover: {
+            label: 'Weekend',
+          },
+        },
+        {
+          key: 'today',
+          highlight: true,
+          dates: {
+            start: new Date(),
+            end: new Date(),
+          },
+          popover: {
+            label: 'Today',
+          },
+        },
+      ]
+      for (let i = 0; i < this.listHoliday.length; i++) {
+        this.attributes.push(this.listHoliday[i])
+      }
+    },
+  },
+
   async mounted() {
     await this.getHoliday(new Date().getFullYear())
     for (let i = 0; i < this.listHoliday.length; i++) {

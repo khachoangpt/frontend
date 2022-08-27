@@ -840,7 +840,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestWorkingScheduleDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -899,7 +899,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestWorkingScheduleDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -944,7 +944,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestPaidLeaveDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -975,7 +975,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestNominationDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -1009,7 +1009,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestNominationDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -1043,7 +1043,7 @@ export default {
         await dispatch('getListRequestSend', 1)
         await commit('setRequestAdvanceDialogVisible', false)
         await commit('setFullscreenLoading', false)
-        Message.success('Gửi yêu cầu thành công.')
+        Message.success(this.$i18n.t('message.sendRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -1083,7 +1083,7 @@ export default {
       const res = await this.$repository.request.updateRejectRequest(data)
       if (res.code === 201) {
         await dispatch('getListRequestReceive', 1)
-        Message.success('Đã từ chối yêu cầu.')
+        Message.success(this.$i18n.t('message.rejectRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -1095,7 +1095,7 @@ export default {
       const res = await this.$repository.request.updateApproveRequest(data)
       if (res.code === 201) {
         await dispatch('getListRequestReceive', 1)
-        Message.success('Đã chấp nhận yêu cầu.')
+        Message.success(this.$i18n.t('message.approveRequestSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -1221,7 +1221,7 @@ export default {
       await this.$repository.request.reviewedRequest(params)
       await commit('setChooseManagerDialogVisible', false)
       await commit('setDetailRequestReceiveVisible', false)
-      Message.success('Chuyển tiếp thành công.')
+      Message.success(this.$i19n.t('message.forwardRequestSuccess'))
     } catch (error) {
       Message.error(error.response.data.message)
     }

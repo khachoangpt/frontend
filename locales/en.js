@@ -16,6 +16,7 @@ const en = {
     password: 'Password',
     forgotPassword: 'Forgot password?',
     loginIncorrect: 'Login information is incorrect',
+    loginError: 'Login error',
   },
 
   forgot: {
@@ -51,6 +52,7 @@ const en = {
   },
   datepicker: {
     chooseDay: 'Pick a day',
+    date: 'Date',
   },
 
   personnel: {
@@ -190,6 +192,9 @@ const en = {
       changeAvatar: 'Change avatar',
       seniority: 'Seniority',
       numberRelative: 'Number of dependents',
+      newSalary: 'New',
+      salaryApplyFrom: 'New working information apply from',
+      applyNow: 'Apply now',
     },
     table: {
       personnel: 'Personnel',
@@ -320,13 +325,38 @@ const en = {
       'Work late': 'Work late',
       'Leave soon': 'Leave soon',
       'Business responsibility': 'Business responsibility',
+      dateValidate: 'Date is not blank',
+      amountValidate: 'Amount is not blank',
+      numberValidate: 'Enter a number',
+      deductionTypeValidate: 'Choose a deduction type',
+      descriptionValidate: 'Description is not blank',
+    },
+    advanceDialog: {
+      editAdvance: 'Edit advance',
     },
     bonusDialog: {
+      editBonus: 'Edit bonus',
+      bonusType: 'Bonus type',
       'Project bonus': 'Project bonus',
       'Reward bonus': 'Reward bonus',
       'KPI bonus': 'KPI bonus',
       'Out source bonus': 'Out source bonus',
     },
+    confirmDeleteAdvance: 'Are you sure you want to delete this advance?',
+    confirmDeleteDeduction: 'Are you sure you want to delete this deduction?',
+    confirmDeleteBonus: 'Are you sure you want to delete this bonus?',
+    warning: 'Warning',
+    remove: 'Delete',
+    close: 'Close',
+    rejectPayroll: 'Reject payroll',
+    enterReason: 'Enter reason:',
+    reason: 'Reason',
+    forward: 'Forward',
+    reject: 'Reject',
+    approve: 'Approve',
+    forwardPayroll: 'Forward payroll',
+    enterManagerForward: 'Enter manager to forward',
+    manager: 'Manager',
   },
   synthetic: {
     syntheticHeader: 'Departmental employee management chart',
@@ -348,6 +378,28 @@ const en = {
       status: 'Status',
       description: 'Content',
     },
+  },
+
+  message: {
+    passwordChanged: 'Password was change. Check your email, please.',
+    passwordChangeSuccess: 'Password changed successfully.',
+    sendRequestSuccess: 'Submit request successfully',
+    rejectRequestSuccess: 'The request was rejected',
+    approveRequestSuccess: 'The request was approved',
+    forwardRequestSuccess: 'The request was forwarded',
+    editDeductionSuccess: 'Edit deduction successful',
+    removeDeductionSuccess: 'Remove deduction successful',
+    editAdvanceSuccess: 'Edit advance successful',
+    removeAdvanceSuccess: 'Remove advance successful',
+    editBonusSuccess: 'Edit bonus successful',
+    removeBonusSuccess: 'Remove bonus successful',
+    approvePayrollSuccess: 'Payroll was approved',
+    rejectPayrollSuccess: 'Payroll was rejected',
+    forwardPayrollSuccess: 'Payroll was forwarded',
+    reGenerateSuccess: 'Regenerate payroll successful',
+    addEmployeeSuccess: 'Add new employee successfully.',
+    changeInformationSuccess: 'Change information successful',
+    setHolidaySuccess: 'Set holiday successfully',
   },
 }
 

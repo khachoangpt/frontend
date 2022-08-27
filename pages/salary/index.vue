@@ -54,6 +54,7 @@
         placeholder="Tìm kiếm"
         format="MMMM - yyyy"
         :clearable="false"
+        :picker-options="pickerOptions"
         @input="selectMonth"
         @change="onChangeMonth"
       >
@@ -108,7 +109,13 @@
         ref="salary-table-1"
         :columns="salaryHistoryListHeader"
         :rows="salaryHistoryList"
-        :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+        :select-options="{
+          enabled: true,
+          selectOnCheckboxOnly: true,
+          selectionInfoClass: 'select-info-class',
+          selectionText: $i18n.t('request.table.rowSelected'),
+          clearSelectionText: $i18n.t('request.table.clear'),
+        }"
         :sort-options="{
           enabled: true,
           initialSortBy: { field: 'month', type: 'asc' },
@@ -135,7 +142,13 @@
             ref="salary-table-2"
             :columns="salaryHistoryListHeader"
             :rows="salaryHistoryList"
-            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+            :select-options="{
+              enabled: true,
+              selectOnCheckboxOnly: true,
+              selectionInfoClass: 'select-info-class',
+              selectionText: $i18n.t('request.table.rowSelected'),
+              clearSelectionText: $i18n.t('request.table.clear'),
+            }"
             :sort-options="{
               enabled: true,
               initialSortBy: { field: 'month', type: 'asc' },
@@ -157,7 +170,13 @@
             ref="salary-table-3"
             :columns="salaryListHeader"
             :rows="salaryList"
-            :select-options="{ enabled: true, selectOnCheckboxOnly: true }"
+            :select-options="{
+              enabled: true,
+              selectOnCheckboxOnly: true,
+              selectionInfoClass: 'select-info-class',
+              selectionText: $i18n.t('request.table.rowSelected'),
+              clearSelectionText: $i18n.t('request.table.clear'),
+            }"
             sort-options="{
           enabled: true,
         }"
@@ -171,8 +190,9 @@
               <el-pagination
                 background
                 layout="prev, pager, next"
-                :page-size="5"
+                :page-size="10"
                 :total="totalPage"
+                @current-change="currentChangeSalary"
               >
               </el-pagination>
             </template>
@@ -193,7 +213,7 @@
                 type="primary"
                 @click="handleClickCheckSalary"
               >
-                Chuyển tiếp
+                {{ $i18n.t('salary.forward') }}
               </el-button>
               <el-button
                 v-if="isShowReject && isEnoughLevelApprove === 'True'"
@@ -201,7 +221,7 @@
                 type="danger"
                 @click="handleClickRejectSalary"
               >
-                Từ chối
+                {{ $i18n.t('salary.reject') }}
               </el-button>
               <el-button
                 v-if="isShowApprove && isEnoughLevelApprove === 'True'"
@@ -209,7 +229,7 @@
                 type="success"
                 @click="approveSalary"
               >
-                Chốt bảng lương
+                {{ $i18n.t('salary.approve') }}
               </el-button>
             </div>
           </vue-good-table>
@@ -217,27 +237,29 @@
       </el-tabs>
     </div>
     <el-dialog
-      title="Chuyển tiếp bảng lương"
+      :title="$i18n.t('salary.forwardPayroll')"
       :visible.sync="checkDialogVisible"
       top="30vh"
       width="30%"
       :before-close="closeDialog"
     >
       <div class="dialog-check-salary__label">
-        Nhập tên người muốn chuyển tiếp:
+        {{ $i18n.t('salary.enterManagerForward') }}:
       </div>
       <el-autocomplete
         v-model="managerApprove"
         :clearable="true"
-        placeholder="Tên quản lý"
+        :placeholder="$i18n.t('salary.manager')"
         :fetch-suggestions="querySearchManager"
         @select="handleChangeManager"
         @clear="handleChangeManager"
       ></el-autocomplete>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="closeDialog">Đóng</el-button>
+        <el-button size="small" @click="closeDialog">{{
+          $i18n.t('salary.deductionDialog.close')
+        }}</el-button>
         <el-button size="small" type="primary" @click="submitCheckSalary">
-          Xác nhận
+          {{ $i18n.t('salary.deductionDialog.confirm') }}
         </el-button>
       </span>
     </el-dialog>
@@ -331,6 +353,14 @@ export default {
           sortable: false,
         },
       ],
+      pickerOptions: {
+        disabledDate(time) {
+          return (
+            time.getTime() >=
+            new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+          )
+        },
+      },
     }
   },
 
@@ -378,6 +408,7 @@ export default {
       'checkSalary',
       'getListPersonalSalary',
       'getManagerOfArea',
+      'currentChangeSalary',
     ]),
     ...mapMutations('salary', [
       'setMonthSearch',
@@ -427,10 +458,14 @@ export default {
     },
 
     handleClickRejectSalary() {
-      this.$prompt('Nhập lý do từ chối:', 'Từ chối bảng lương', {
-        confirmButtonText: 'Xong',
-        cancelButtonText: 'Đóng',
-      })
+      this.$prompt(
+        this.$i18n.t('salary.enterReason'),
+        this.$i18n.t('salary.rejectPayroll'),
+        {
+          confirmButtonText: this.$i18n.t('salary.deductionDialog.confirm'),
+          cancelButtonText: this.$i18n.t('salary.deductionDialog.close'),
+        }
+      )
         .then(({ value }) => {
           this.rejectSalary(value)
         })
@@ -519,8 +554,6 @@ export default {
     submitCheckSalary() {
       this.checkSalary()
     },
-
-    currentChange() {},
 
     exportRequestSelected(data) {
       this.exportSalary([this.activeName, data])
@@ -622,5 +655,9 @@ export default {
 }
 .dialog-check-salary__label {
   margin-bottom: 12px;
+}
+
+.header-actions__button {
+  margin-left: 16px;
 }
 </style>

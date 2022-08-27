@@ -22,12 +22,7 @@
         <h2 class="forgot-form__header">
           {{ $i18n.t('forgot.forgotPassword') }}
         </h2>
-        <el-form
-          ref="form"
-          :rules="rules"
-          :model="form"
-          @submit.native.prevent="forgot(form)"
-        >
+        <el-form ref="form" :model="form" @submit.native.prevent="forgot(form)">
           <el-form-item prop="email" :show-message="false">
             <el-input
               v-model="form.email"

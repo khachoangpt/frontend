@@ -16,6 +16,7 @@ const vi = {
     password: 'Mật khẩu',
     forgotPassword: 'Quên mật khẩu?',
     loginIncorrect: 'Thông tin đăng nhập không đúng',
+    loginError: 'Đăng nhập không thành công',
   },
 
   forgot: {
@@ -52,6 +53,7 @@ const vi = {
 
   datepicker: {
     chooseDay: 'Chọn một ngày',
+    date: 'Ngày',
   },
 
   personnel: {
@@ -192,6 +194,9 @@ const vi = {
       changeAvatar: 'Đổi avatar',
       seniority: 'Thâm niên',
       numberRelative: 'Số người phụ thuộc',
+      newSalary: 'New',
+      salaryApplyFrom: 'Thông tin công việc mới áp dụng từ',
+      applyNow: 'Áp dụng ngay',
     },
     table: {
       personnel: 'Nhân sự',
@@ -321,13 +326,38 @@ const vi = {
       'Work Late': 'Đi làm muộn',
       'Leave Soon': 'Về sớm',
       'Business responsibility': 'Trách nhiệm trong công việc',
+      dateValidate: 'Ngày không được để trống',
+      amountValidate: 'Số tiền không được để trống',
+      numberValidate: 'Nhập vào một số',
+      deductionTypeValidate: 'Chọn một loại khấu trừ',
+      descriptionValidate: 'Chi tiết không được để trống',
+    },
+    advanceDialog: {
+      editAdvance: 'Sửa tạm ứng',
     },
     bonusDialog: {
+      editBonus: 'Sửa tiền thưởng',
+      bonusType: 'Loại tiền thưởng',
       'Project bonus': 'Thưởng dự án',
       'Reward bonus': 'Thưởng',
       'KPI bonus': 'Thưởng KPI',
       'Out source bonus': 'Thưởng ngoài',
     },
+    confirmDeleteAdvance: 'Bạn có chắc chắn muốn xóa tạm ứng này không?',
+    confirmDeleteDeduction: 'Bạn có chắc chắn muốn xóa khấu trừ này không?',
+    confirmDeleteBonus: 'Bạn có chắc chắn muốn xóa tiền thưởng này không?',
+    warning: 'Cảnh báo',
+    remove: 'Xóa',
+    close: 'Đóng',
+    rejectPayroll: 'Từ chối bảng lương',
+    enterReason: 'Nhập lý do từ chối:',
+    reason: 'Lý do từ chối',
+    forward: 'Chuyển tiếp',
+    reject: 'Từ chối',
+    approve: 'Chốt bảng lương',
+    forwardPayroll: 'Chuyển tiếp bảng lương',
+    enterManagerForward: 'Nhập tên người muốn chuyển tiếp',
+    manager: 'Quản lý',
   },
 
   synthetic: {
@@ -351,6 +381,28 @@ const vi = {
       status: 'Trạng thái',
       description: 'Nội dung',
     },
+  },
+
+  message: {
+    passwordChanged: 'Mật khẩu đã thay đổi. Hãy kiểm tra email.',
+    passwordChangeSuccess: 'Thay đổi mật khẩu thành công',
+    sendRequestSuccess: 'Gửi yêu cầu thành công',
+    rejectRequestSuccess: 'Yêu cầu đã bị từ chối',
+    approveRequestSuccess: 'Yêu cầu đã được chấp thuận',
+    forwardRequestSuccess: 'Yêu cầu đã được chuyển tiếp',
+    editDeductionSuccess: 'Sửa khấu trừ thành công',
+    removeDeductionSuccess: 'Xóa khấu trừ thành công',
+    editAdvanceSuccess: 'Sửa tạm ứng thành công',
+    removeAdvanceSuccess: 'Xóa tạm ứng thành công',
+    editBonusSuccess: 'Sửa tiền thưởng thành công',
+    removeBonusSuccess: 'Xóa tiền thưởng thành công',
+    approvePayrollSuccess: 'Đã phê duyệt bảng lương',
+    rejectPayrollSuccess: 'Đã từ chối bảng lương',
+    forwardPayrollSuccess: 'Đã chuyển tiếp bảng lương',
+    reGenerateSuccess: 'Đã tạo lại bảng lương',
+    addEmployeeSuccess: 'Thêm nhân viên mới thành công',
+    changeInformationSuccess: 'Thay đổi thông tin thành công',
+    setHolidaySuccess: 'Thêm ngày nghỉ thành công',
   },
 }
 

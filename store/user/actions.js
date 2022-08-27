@@ -37,7 +37,7 @@ export default {
       value.endDate = format(new Date(value.endDate), 'yyyy-MM-dd')
       const res = await this.$repository.user.addEmployee(value)
       if (res.code === 201) {
-        Message.success('Thêm nhân viên mới thành công.')
+        Message.success(this.$i18n.t('message.addEmployeeSuccess'))
         const res = await this.$repository.user.getPersonnelList({
           searchText: state.searchText,
           page: 1,
@@ -161,7 +161,7 @@ export default {
       }
       const res = await this.$repository.user.editBankInfo(bankInfoUpdate)
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         await commit('setIsEditBankInfo', true)
       }
     } catch (error) {
@@ -204,7 +204,7 @@ export default {
       }
       const res = await this.$repository.user.updateMainInfo(mainInfo)
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         await commit('setIsEditMainInfo', true)
       }
     } catch (error) {
@@ -231,7 +231,7 @@ export default {
         await this.$repository.user.updateInsuranceInfo(insuranceInfo)
       }
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         await commit('setIsEditTaxInfo', true)
       }
     } catch (error) {
@@ -253,7 +253,7 @@ export default {
         workingHistory
       )
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         const res = await this.$repository.user.getWorkingHistory(
           state.personnelDetail.employee_id
         )
@@ -278,7 +278,7 @@ export default {
         workingHistory
       )
       if (res.code === 202) {
-        Message.success('Thêm lịch sử làm việc thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         const res = await this.$repository.user.getWorkingHistory(
           state.personnelDetail.employee_id
         )
@@ -304,7 +304,7 @@ export default {
       }
       const res = await this.$repository.user.updateRelativeInfo(relativeInfo)
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         const res = await this.$repository.user.getRelativeInfo(
           state.personnelDetail.employee_id
         )
@@ -331,7 +331,7 @@ export default {
       }
       const res = await this.$repository.user.updateEducationInfo(educationInfo)
       if (res.code === 202) {
-        Message.success('Thay đổi thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         const res = await this.$repository.user.getEducationInfo(
           state.personnelDetail.employee_id
         )
@@ -357,7 +357,7 @@ export default {
         workingHistory
       )
       if (res.code === 202) {
-        Message.success('Thêm thông tin học vấn thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
         const res = await this.$repository.user.getEducationInfo(
           state.personnelDetail.employee_id
         )
@@ -446,6 +446,26 @@ export default {
     try {
       const res = await this.$repository.user.getWorkingInfo(data)
       res.start_date = format(new Date(res.start_date), 'yyyy-MM')
+      if (res.newWorkingInfo === null) {
+        res.newWorkingInfo = {
+          final_salary: null,
+          base_salary: null,
+          office: null,
+          area: null,
+          position: null,
+          grade: null,
+          working_type: null,
+          start_date: null,
+          employee_type: null,
+          manager_id: null,
+          manager_name: null,
+          salary_contract_id: null,
+          working_contract_id: null,
+          working_place_id: null,
+          newWorkingInfo: null,
+        }
+      }
+      console.log(res)
       await commit('setWorkingInfo', res)
     } catch (error) {
       Message.error(error.response.data.message)
@@ -470,7 +490,7 @@ export default {
         }
         await commit('setImageUrl', data)
         await commit('setScreenLoadingAvatar', false)
-        Message.success('Đổi avatar thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -531,7 +551,7 @@ export default {
         if (state.roles.find((role) => role.authority === 'ROLE_ADMIN')) {
           await dispatch('getRoleByEmployee', employeeId)
         }
-        Message.success('Sửa thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -561,7 +581,7 @@ export default {
       if (res.code === 202) {
         await commit('setIsEditAdditionInfo', true)
         await dispatch('getAdditionInfo', employeeId)
-        Message.success('Sửa thông tin thành công.')
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -579,7 +599,7 @@ export default {
       if (res.code === 201) {
         await commit('setFullscreenLoading', false)
         await this.$router.push(this.localePath('/personnel'))
-        Message.success('Thêm nhân viên thành công.')
+        Message.success(this.$i18n.t('message.addEmployeeSuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -615,7 +635,7 @@ export default {
       const res = await this.$repository.user.insertHoliday(value)
       if (res.code === 201) {
         await dispatch('getHoliday', new Date().getFullYear())
-        Message.success('Set holiday successfully')
+        Message.success(this.$i18n.t('message.setHolidaySuccess'))
       }
     } catch (error) {
       Message.error(error.response.data.message)
@@ -666,6 +686,14 @@ export default {
         )
         link.click()
       }
+    } catch (error) {
+      Message.error(error.response.data.message)
+    }
+  },
+
+  async applyWorkingInfoNow({ state }) {
+    try {
+      await console.log(state.workingInfo.newWorkingInfo)
     } catch (error) {
       Message.error(error.response.data.message)
     }

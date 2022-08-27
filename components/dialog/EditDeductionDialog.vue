@@ -7,7 +7,9 @@
     :before-close="closeDialog"
   >
     <template slot="title">
-      <div class="dialog-title">Sửa khấu trừ</div>
+      <div class="dialog-title">
+        {{ $i18n.t('deductionDialog.editDeduction') }}
+      </div>
     </template>
     <el-form
       ref="deductionForm"
@@ -15,24 +17,42 @@
       :model="deductionForm"
       label-width="120px"
     >
-      <el-form-item label="Ngày" prop="date">
+      <el-form-item :label="$i18n.t('deductionDialog.date')" prop="date">
         <el-date-picker
           v-model="deductionForm.date"
           type="date"
-          placeholder="Chọn một ngày"
+          :placeholder="$i18n.t('datepicker.chooseDay')"
           class="deduction-dialog__input"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="Loại khấu trừ" prop="deductionType">
+      <el-form-item
+        :label="$i18n.t('datepicker.deductionType')"
+        prop="deductionType"
+      >
         <el-select
           v-model="deductionForm.deductionTypeId"
           class="deduction-dialog__input"
         >
-          <el-option label="Đi làm muộn" value="1"></el-option>
-          <el-option label="Về sớm" value="2"></el-option>
+          <el-option
+            :label="$i18n.t('salary.deductionDialog[\'Work late\']')"
+            value="1"
+          ></el-option>
+          <el-option
+            :label="$i18n.t('salary.deductionDialog[\'Leave soon\']')"
+            value="2"
+          ></el-option>
+          <el-option
+            :label="
+              $i18n.t('salary.deductionDialog[\'Business responsibility\']')
+            "
+            value="3"
+          ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Số tiền" prop="value">
+      <el-form-item
+        :label="$i18n.t('salary.deductionDialog.amount')"
+        prop="value"
+      >
         <el-input
           v-model.trim.number="deductionForm.value"
           class="deduction-dialog__input"
@@ -48,8 +68,12 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeDialog">Đóng</el-button>
-      <el-button type="primary" @click="editDeduction">Xác nhận</el-button>
+      <el-button @click="closeDialog">{{
+        $i18n.t('salary.deductionDialog.close')
+      }}</el-button>
+      <el-button type="primary" @click="editDeduction">{{
+        $i18n.t('salary.deductionDialog.confirm')
+      }}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -71,22 +95,27 @@ export default {
         date: [
           {
             required: true,
-            message: 'Ngày không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.dateValidate'),
             trigger: 'blur',
           },
         ],
         value: [
           {
             required: true,
-            message: 'Số tiền không được để trống',
+            message: this.$i18n.t('salary.deductionDialog.amountValidate'),
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số' },
+          {
+            type: 'number',
+            message: this.$i18n.t('salary.deductionDialog.numberValidate'),
+          },
         ],
         deductionType: [
           {
             required: true,
-            message: 'Chọn một loại khấu trừ',
+            message: this.$i18n.t(
+              'salary.deductionDialog.deductionTypeValidate'
+            ),
             trigger: 'blur',
           },
         ],
