@@ -448,24 +448,22 @@ export default {
       res.start_date = format(new Date(res.start_date), 'yyyy-MM')
       if (res.newWorkingInfo === null) {
         res.newWorkingInfo = {
-          final_salary: null,
-          base_salary: null,
-          office: null,
-          area: null,
-          position: null,
-          grade: null,
-          working_type: null,
-          start_date: null,
-          employee_type: null,
-          manager_id: null,
-          manager_name: null,
-          salary_contract_id: null,
-          working_contract_id: null,
-          working_place_id: null,
-          newWorkingInfo: null,
+          final_salary: '',
+          base_salary: '',
+          office: '',
+          area: '',
+          position: '',
+          grade: '',
+          working_type: '',
+          start_date: '',
+          employee_type: '',
+          manager_id: '',
+          manager_name: '',
+          salary_contract_id: '',
+          working_contract_id: '',
+          working_place_id: '',
         }
       }
-      console.log(res)
       await commit('setWorkingInfo', res)
     } catch (error) {
       Message.error(error.response.data.message)
@@ -530,7 +528,7 @@ export default {
         workingTypeId: state.workingTypes.find(
           (workingType) => workingType.name === state.workingInfo.working_type
         ).type_id,
-        startDate: state.workingInfo.start_date,
+        startDate: state.workingInfo.start_date + '-01',
         managerId: state.workingInfo.manager_id,
         employeeType: state.employeeTypes.find(
           (employeeType) =>
@@ -691,9 +689,29 @@ export default {
     }
   },
 
-  async applyWorkingInfoNow({ state }) {
+  async applyWorkingInfoNow({ state, dispatch }) {
     try {
-      await console.log(state.workingInfo.newWorkingInfo)
+      const data = {
+        employeeId: 'null',
+        baseSalary: 'null',
+        finalSalary: 'null',
+        area: null,
+        office: null,
+        position: null,
+        grade: null,
+        workingTypeId: null,
+        startDate: state.workingInfo.newWorkingInfo.start_date,
+        managerId: 'null',
+        employeeType: null,
+        salaryContractId: state.workingInfo.newWorkingInfo.salary_contract_id,
+        workingContractId: null,
+        workingPlaceId: state.workingInfo.newWorkingInfo.working_place_id,
+      }
+      const res = await this.$repository.user.applyWorkingInfoNow(data)
+      if (res.code === 202) {
+        Message.success(this.$i18n.t('message.changeInformationSuccess'))
+        await dispatch('getWorkingInfo', state.personnelDetail.employee_id)
+      }
     } catch (error) {
       Message.error(error.response.data.message)
     }

@@ -5,8 +5,14 @@
         <span id="sub-2" class="main-info-header__text">
           {{ $i18n.t('personnel.detail.jobInfo') }}
         </span>
-        <div v-if="workingInfo.newWorkingInfo !== null">
+        <div
+          v-if="
+            isEditWorkInfo &&
+            roles.find((role) => role.authority === 'ROLE_ADMIN')
+          "
+        >
           <el-popover
+            v-if="workingInfo.newWorkingInfo.final_salary !== ''"
             popper-class="popover-new-salary"
             placement="left-start"
             :visible-arrow="false"
@@ -22,6 +28,9 @@
                 type="primary"
                 size="medium"
                 class="new-salary-action"
+                :disabled="
+                  new Date(workingInfo.newWorkingInfo.start_date) > new Date()
+                "
                 @click="applyNewSalary"
               >
                 {{ $i18n.t('personnel.detail.applyNow') }}
