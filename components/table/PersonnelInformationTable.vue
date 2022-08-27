@@ -29,6 +29,21 @@
           {{ props.row.full_name }}
         </span>
       </span>
+      <span
+        v-else-if="props.column.field == 'working_status'"
+        class="working-status-column"
+      >
+        <span>
+          <i
+            v-if="props.row.working_status === 'Active'"
+            class="el-icon-success content-item__detail-status-icon"
+          ></i>
+          <i
+            v-if="props.row.working_status === 'Deactive'"
+            class="el-icon-error content-item__detail-status-icon"
+          ></i>
+        </span>
+      </span>
       <span v-else>
         {{ props.formattedRow[props.column.field] }}
       </span>
@@ -197,5 +212,9 @@ export default {
   margin-top: 16px;
   text-align: center;
   padding-bottom: 16px;
+}
+
+.content-item__detail-status-icon {
+  font-size: 20px;
 }
 </style>
