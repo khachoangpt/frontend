@@ -4,7 +4,16 @@
       <span id="sub-8" class="main-info-header__text">
         {{ $i18n.t('personnel.detail.educationInfo') }}
       </span>
-      <span class="main-info-header__edit" @click="openDialog">
+      <span
+        v-if="
+          !(
+            roles.find((role) => role.authority === 'ROLE_MANAGER') &&
+            personnelDetail.employee_id !== id
+          )
+        "
+        class="main-info-header__edit"
+        @click="openDialog"
+      >
         {{ $i18n.t('personnel.detail.addEducationInfo') }}
       </span>
     </div>
@@ -206,11 +215,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['roles']),
+    ...mapGetters('auth', ['roles', 'id']),
     ...mapGetters('user', [
       'educationInfo',
       'isEditLineEducation',
       'addEducationDialogVisible',
+      'personnelDetail',
     ]),
   },
 

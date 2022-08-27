@@ -4,7 +4,16 @@
       <span id="sub-6" class="main-info-header__text">
         {{ $i18n.t('personnel.detail.workingHistoryInfo') }}
       </span>
-      <span class="main-info-header__edit" @click="openDialog">
+      <span
+        v-if="
+          !(
+            roles.find((role) => role.authority === 'ROLE_MANAGER') &&
+            personnelDetail.employee_id !== id
+          )
+        "
+        class="main-info-header__edit"
+        @click="openDialog"
+      >
         {{ $i18n.t('personnel.detail.addWorkingHistory') }}
       </span>
     </div>
@@ -197,11 +206,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['roles']),
+    ...mapGetters('auth', ['roles', 'id']),
     ...mapGetters('user', [
       'workingHistory',
       'isEditLine',
       'addWorkingHistoryVisible',
+      'personnelDetail',
     ]),
   },
 

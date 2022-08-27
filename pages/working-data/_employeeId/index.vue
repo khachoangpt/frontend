@@ -113,7 +113,7 @@
         format(new Date(selectedDay.date || new Date()), 'dd-MM-yyyy')
       "
       :visible.sync="dialogTimekeepingDetailVisible"
-      width="30%"
+      custom-class="timekeeping-detail-dialog"
       center
     >
       <div class="dialog-timekeeping-detail__content">
@@ -541,5 +541,40 @@ export default {
   font-weight: 600;
   font-size: 18px;
   line-height: 28px;
+}
+
+.timekeeping-detail-dialog {
+  width: 30%;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .timekeeping-detail-dialog {
+    width: 90%;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .timekeeping-detail-dialog {
+    width: 60%;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .timekeeping-detail-dialog {
+    width: 50%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .timekeeping-detail-dialog {
+    width: 40%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .timekeeping-detail-dialog {
+    width: 30%;
+  }
 }
 </style>

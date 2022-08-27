@@ -5,7 +5,11 @@
         {{ $i18n.t('personnel.detail.additionalInfo') }}
       </span>
       <span
-        v-if="isEditAdditionInfo"
+        v-if="
+          isEditAdditionInfo &&
+          !(roles.find((role) => role.authority === 'ROLE_MANAGER') &&
+            personnelDetail.employee_id !== id)
+        "
         class="main-info-header__edit"
         @click="editAdditionInfo"
       >
@@ -278,8 +282,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['roles']),
-    ...mapGetters('user', ['additionInfo', 'isEditAdditionInfo']),
+    ...mapGetters('auth', ['roles', 'id']),
+    ...mapGetters('user', [
+      'additionInfo',
+      'isEditAdditionInfo',
+      'personnelDetail',
+    ]),
   },
 
   async mounted() {

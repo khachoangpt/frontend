@@ -89,4 +89,8 @@ export default {
 .select-info-class a {
   color: #f56c6c;
 }
+
+.day-status-weekend {
+  background-color: rgb(209, 209, 209);
+}
 </style>

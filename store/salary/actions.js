@@ -255,7 +255,7 @@ export default {
 
   async editBonus({ commit, dispatch, state }, data) {
     try {
-      const bonusTypeId = state.listDeductionType.find(
+      const bonusTypeId = state.listBonusType.find(
         (type) => type.bonus_type_name === data.bonusTypeId
       ).bonus_type_id
       data.bonusTypeId = bonusTypeId

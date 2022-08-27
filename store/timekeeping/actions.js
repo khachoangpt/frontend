@@ -330,7 +330,10 @@ export default {
         width: '50px',
         sortable: false,
         thClass: 'table-header-center',
-        tdClass: 'day-status',
+        tdClass:
+          date.getDay() === 6 || date.getDay() === 0
+            ? 'day-status-weekend'
+            : 'day-status',
         html: true,
       }
       days.push(day)
