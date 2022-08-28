@@ -41,7 +41,6 @@
                 placeholder="Month"
                 value-format="yyyy-MM-dd"
                 :disabled="!isEditPayroll"
-                :picker-options="pickerSalaryOptions"
               >
               </el-date-picker>
               <el-button
