@@ -228,4 +228,8 @@ export default {
 .table-header-center {
   text-align: center;
 }
+
+.vgt-left-align{
+  text-align: center !important;
+}
 </style>
