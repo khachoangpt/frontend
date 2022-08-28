@@ -217,4 +217,15 @@ export default {
 .content-item__detail-status-icon {
   font-size: 20px;
 }
+
+.el-icon-success {
+  color: #67c23a;
+}
+.el-icon-error {
+  color: #f56c6c;
+}
+
+.table-header-center {
+  text-align: center;
+}
 </style>
