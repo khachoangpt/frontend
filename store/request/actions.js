@@ -739,8 +739,10 @@ export default {
       requestStatusSearch: ERequestStatus[state.requestStatusFilter],
     }
     if (data.dateRange.length > 0) {
-      const dateFrom = new Date(data.dateRange[0]).setHours(0, 0, 1)
-      const dateTo = new Date(data.dateRange[1]).setHours(23, 59, 59)
+      let dateFrom = new Date(new Date(data.dateRange[0]).setHours(0, 0, 1))
+      let dateTo = new Date(new Date(data.dateRange[1]).setHours(23, 59, 59))
+      dateFrom = dateFrom.setTime(dateFrom.getTime() + 7 * 60 * 60 * 1000)
+      dateTo = dateTo.setTime(dateTo.getTime() + 7 * 60 * 60 * 1000)
       data.dateRange = [dateFrom, dateTo]
     }
     try {

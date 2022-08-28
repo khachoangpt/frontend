@@ -72,7 +72,10 @@ export default {
           new Date(
             new Date(state.yearSearch[1]).getFullYear(),
             new Date(state.yearSearch[1]).getMonth() + 1,
-            0
+            0,
+            23,
+            55,
+            55
           )
         ),
       }
@@ -108,7 +111,6 @@ export default {
   },
 
   async exportSalary({ state }, payload) {
-    console.log(state.listSalaryId[0])
     try {
       let res = []
       if (payload[0] === 'second') {

@@ -87,7 +87,7 @@
       >
         <el-option
           v-for="requestStatus in listRequestStatus"
-          :key="'status_' + requestStatus.request_status_name_id"
+          :key="'status_' + requestStatus.request_status_id"
           :class="'request-status-select__' + requestStatus.request_status_name"
           :label="requestStatus.request_status_name"
           :value="requestStatus.request_status_name"
