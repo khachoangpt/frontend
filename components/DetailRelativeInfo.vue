@@ -180,7 +180,7 @@ export default {
         parentName: [
           {
             required: true,
-            message: 'Tên không được để trống.',
+            message: 'Name is not blank.',
             trigger: 'blur',
           },
         ],

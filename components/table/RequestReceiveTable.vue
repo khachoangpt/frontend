@@ -85,7 +85,9 @@
           {{ $i18n.t('request.dialog.status') }}:
           <span
             class="request-detail-dialog__value"
-            :class="'request-status__' + requestReceiveDetail.request_status_name"
+            :class="
+              'request-status__' + requestReceiveDetail.request_status_name
+            "
           >
             <span>{{ requestReceiveDetail.request_status_name }}</span>
           </span>
@@ -332,10 +334,14 @@ export default {
     },
 
     open() {
-      this.$prompt('Nhập lý do từ chối', 'Tip', {
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Đóng',
-      })
+      this.$prompt(
+        this.$i18n.t('salary.enterReason'),
+        this.$i18n.t('salary.reason'),
+        {
+          confirmButtonText: this.$i18n.t('salary.deductionDialog.confirm'),
+          cancelButtonText: this.$i18n.t('salary.deductionDialog.close'),
+        }
+      )
         .then(({ value }) => {
           this.updateRejectRequest({
             requestId: this.requestReceiveDetail.application_request_id,
@@ -391,11 +397,11 @@ export default {
     async getRejectReason() {
       let reason = ''
       if (this.requestReceiveDetail.comment === null) {
-        reason = 'Không có lý do'
+        reason = 'No reason'
       } else {
         reason = this.requestReceiveDetail.comment
       }
-      await this.$alert(reason, 'Lý do từ chối', {
+      await this.$alert(reason, this.$i18n.t('salary.reason'), {
         confirmButtonText: 'OK',
         callback: (action) => {},
       })

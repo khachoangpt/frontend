@@ -107,28 +107,28 @@ export default {
         requestName: [
           {
             required: true,
-            message: 'Yêu cầu không được để trống.',
+            message: 'Request name is not blank.',
             trigger: 'blur',
           },
         ],
         requestDate: [
           {
             required: true,
-            message: 'Ngày không được để trống.',
+            message: 'Date is not blank.',
             trigger: 'blur',
           },
         ],
         requestAdvance: [
           {
             required: true,
-            message: 'Tạm ứng không được để trống.',
+            message: 'Advance is not blank.',
             trigger: 'blur',
           },
         ],
         requestDescription: [
           {
             required: true,
-            message: 'Ghi chú không được để trống.',
+            message: 'Note is not blank.',
             trigger: 'blur',
           },
         ],

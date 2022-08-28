@@ -38,7 +38,7 @@
             :label="$i18n.t('request.dialog.requestName')"
             :rules="{
               required: true,
-              message: 'Yêu cầu không được để trống.',
+              message: 'Request name is not blank.',
               trigger: 'change',
             }"
           >
@@ -292,43 +292,43 @@ export default {
       rules: {
         requestValidate: {
           required: true,
-          message: 'Yêu cầu không được để trống.',
+          message: 'Request name is not blank.',
           trigger: 'change',
         },
 
         employeeName: [
           {
             required: true,
-            message: 'Nhân viên không được để trống.',
+            message: 'Employee is not blank.',
             trigger: 'change',
           },
         ],
         requestDate: [
           {
             required: true,
-            message: 'Ngày không được để trống.',
+            message: 'Date is not blank.',
             trigger: 'blur',
           },
         ],
         bonusValue: [
           {
             required: true,
-            message: 'Tiền thưởng không được để trống.',
+            message: 'Bonus is not blank.',
             trigger: 'blur',
           },
         ],
         salary: [
           {
             required: true,
-            message: 'Lương mong muốn không được để trống.',
+            message: 'Salary is not blank.',
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số.' },
+          { type: 'number', message: 'Enter a number.' },
         ],
         type: [
           {
             required: true,
-            message: 'Loại không được để trống.',
+            message: 'Type is not blank.',
             trigger: 'change',
           },
         ],

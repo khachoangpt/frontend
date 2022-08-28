@@ -123,44 +123,45 @@ export default {
       },
 
       listReason: [
-        { reason_id: 1, reason_name: 'Việc gia đình' },
-        { reason_id: 2, reason_name: 'Bị bệnh' },
-        { reason_id: 3, reason_name: 'Khác' },
+        { reason_id: 1, reason_name: this.$i18n.t('familyReason') },
+        { reason_id: 2, reason_name: this.$i18n.t('unexpectedReason') },
+        { reason_id: 3, reason_name: this.$i18n.t('healthReason') },
+        { reason_id: 4, reason_name: this.$i18n.t('other') },
       ],
 
       rules: {
         requestName: [
           {
             required: true,
-            message: 'Yêu cầu không được để trống.',
+            message: 'Request name is not blank.',
             trigger: 'blur',
           },
         ],
         requestDate: [
           {
             required: true,
-            message: 'Ngày không được để trống.',
+            message: 'Date is not blank.',
             trigger: 'blur',
           },
         ],
         requestDescription: [
           {
             required: true,
-            message: 'Nội dung không được để trống.',
+            message: 'Content is not blank.',
             trigger: 'blur',
           },
         ],
         requestDateRange: [
           {
             required: true,
-            message: 'Ngày & Giờ không được để trống.',
+            message: 'Date & Time are not blank.',
             trigger: 'blur',
           },
         ],
         reason: [
           {
             required: true,
-            message: 'Chọn lý do xin nghỉ.',
+            message: 'Choose paid leave reason.',
             trigger: 'blur',
           },
         ],

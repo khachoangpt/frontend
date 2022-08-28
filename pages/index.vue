@@ -229,6 +229,7 @@ export default {
           )
         },
       },
+      enableEditPayroll: false,
     }
   },
 
@@ -382,8 +383,8 @@ export default {
     },
 
     onChangeEditPayroll() {
-      this.setEnableEditCalendar(!this.enableEditCalendar)
-      if (this.enableEditCalendar === true) {
+      this.enableEditPayroll = !this.enableEditPayroll
+      if (this.enableEditPayroll === true) {
         Message.success('Opened generate payroll')
       } else {
         Message.success('Closed generate payroll')

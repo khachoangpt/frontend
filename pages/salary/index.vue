@@ -281,6 +281,84 @@ export default {
       isShowReject: true,
       isShowApprove: true,
       loadingSalary: true,
+      salaryListHeader: [
+        {
+          label: this.$i18n.t('salary.employeeName'),
+          field: 'fullName',
+          width: '150px',
+          sortable: false,
+        },
+        {
+          label: 'ID',
+          field: 'employeeId',
+          width: '50px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.status'),
+          field: 'salaryStatus',
+          width: '80px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.position'),
+          field: 'position',
+          width: '80px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.standardWorkingDay'),
+          field: 'standardPoint',
+          width: '168px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.actualWorkingDay'),
+          field: 'actualPoint',
+          width: '148px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.otPoint'),
+          field: 'otPoint',
+          width: '70px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.deduction'),
+          field: 'totalDeduction',
+          width: '68px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.insurance'),
+          field: 'totalInsurance',
+          width: '74px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.tax'),
+          field: 'totalTax',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.bonus'),
+          field: 'totalBonus',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.advance'),
+          field: 'totalAdvance',
+          width: '70px',
+          sortable: false,
+        },
+        {
+          label: this.$i18n.t('salary.salaryReceived'),
+          field: 'finalSalary',
+          width: '140px',
+          sortable: false,
+        },
+      ],
       salaryHistoryListHeader: [
         {
           label: this.$i18n.t('salary.month'),
@@ -369,7 +447,6 @@ export default {
     ...mapGetters('salary', [
       'monthSearch',
       'yearSearch',
-      'salaryListHeader',
       'salaryList',
       'totalPage',
       'salaryDataList',

@@ -71,22 +71,22 @@ export default {
         date: [
           {
             required: true,
-            message: 'Ngày không được để trống',
+            message: 'Date is not blank.',
             trigger: 'blur',
           },
         ],
         value: [
           {
             required: true,
-            message: 'Số tiền không được để trống',
+            message: 'Amount is not blank',
             trigger: 'blur',
           },
-          { type: 'number', message: 'Nhập vào một số' },
+          { type: 'number', message: 'Enter a number' },
         ],
         deductionType: [
           {
             required: true,
-            message: 'Chọn một loại khấu trừ',
+            message: 'Choose a deduction type',
             trigger: 'blur',
           },
         ],

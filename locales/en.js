@@ -401,6 +401,12 @@ const en = {
     changeInformationSuccess: 'Change information successful',
     setHolidaySuccess: 'Set holiday successfully',
   },
+
+  familyReason: 'Family Reason',
+  unexpectedReason: 'Unexpected Reason',
+  healthReason: 'Health Reason',
+  other: 'Other',
+  payrollDetail: 'Payroll details',
 }
 
 export default {

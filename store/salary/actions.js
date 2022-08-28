@@ -68,7 +68,13 @@ export default {
       const salaryHistoryList = []
       const data = {
         startDate: Date.parse(state.yearSearch[0]),
-        endDate: Date.parse(state.yearSearch[1]),
+        endDate: Date.parse(
+          new Date(
+            new Date(state.yearSearch[1]).getFullYear(),
+            new Date(state.yearSearch[1]).getMonth() + 1,
+            0
+          )
+        ),
       }
       const res = await this.$repository.salary.getListPersonalSalary(data)
       for (let i = 0; i < res.salaryMonthlyResponses.length; i++) {
@@ -398,18 +404,14 @@ export default {
     try {
       const res = await this.$repository.salary.getListDeductionType()
       await commit('setListDeductionType', res)
-    } catch (error) {
-      Message.error(error.response.data.message)
-    }
+    } catch (error) {}
   },
 
   async getListBonusType({ commit }) {
     try {
       const res = await this.$repository.salary.getListBonusType()
       await commit('setListBonusType', res)
-    } catch (error) {
-      Message.error(error.response.data.message)
-    }
+    } catch (error) {}
   },
 
   async reGeneratePayroll({ commit }, data) {

@@ -260,11 +260,11 @@ export default {
     async getRejectReason() {
       let reason = ''
       if (this.requestSendDetail.comment === null) {
-        reason = 'Không có lý do'
+        reason = 'No reason'
       } else {
         reason = this.requestSendDetail.comment
       }
-      await this.$alert(reason, 'Lý do từ chối', {
+      await this.$alert(reason, this.$i18n.t('salary.reason'), {
         confirmButtonText: 'OK',
         callback: (action) => {},
       })

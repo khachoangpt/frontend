@@ -5,7 +5,9 @@
     type="primary"
   >
     <div class="salary-detail__header">
-      <div class="salary-detail__header-text">Chi tiết tiền lương</div>
+      <div class="salary-detail__header-text">
+        {{ $i18n.t('payrollDetail') }}
+      </div>
     </div>
 
     <div class="salary-detail__content">
@@ -21,7 +23,9 @@
           </div>
         </div>
         <div>
-          <span class="salary-status__label">Trạng thái:</span>
+          <span class="salary-status__label"
+            >{{ $i18n.t('salary.status') }}:</span
+          >
           <span :class="'salary-status__' + salaryDetail.salaryStatus">
             {{ salaryDetail.salaryStatus }}
           </span>
@@ -33,7 +37,7 @@
             class="reject-salary-comment"
             @click="openReviewComment"
           >
-            Xem lý do từ chối
+            {{ $i18n.t('request.dialog.rejectComment') }}
           </div>
         </div>
       </div>
@@ -683,7 +687,7 @@ export default {
         description: [
           {
             required: true,
-            message: 'Chi tiết không được để trống',
+            message: 'Description is not blank',
             trigger: 'blur',
           },
         ],
@@ -711,7 +715,7 @@ export default {
         description: [
           {
             required: true,
-            message: 'Chi tiết không được để trống',
+            message: 'Description is not blank',
             trigger: 'blur',
           },
         ],
@@ -752,7 +756,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['id']),
+    ...mapGetters('auth', ['id', 'roles']),
     ...mapGetters('user', ['personnelDetail']),
     ...mapGetters('salary', [
       'salaryDetail',

@@ -404,6 +404,12 @@ const vi = {
     changeInformationSuccess: 'Thay đổi thông tin thành công',
     setHolidaySuccess: 'Thêm ngày nghỉ thành công',
   },
+
+  familyReason: 'Việc gia đình',
+  unexpectedReason: 'Việc đột xuất',
+  healthReason: 'Vấn đề sức khỏe',
+  other: 'Lý do khác',
+  payrollDetail: 'Chi tiết tiền lương',
 }
 
 export default {
