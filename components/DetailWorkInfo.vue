@@ -6,13 +6,14 @@
           {{ $i18n.t('personnel.detail.jobInfo') }}
         </span>
         <div
-          v-if="
-            isEditWorkInfo &&
-            roles.find((role) => role.authority === 'ROLE_ADMIN')
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
           "
         >
           <el-popover
-            v-if="workingInfo.newWorkingInfo.final_salary !== ''"
+            v-if="isEditWorkInfo && workingInfo.newWorkingInfo.final_salary !== ''"
             popper-class="popover-new-salary"
             placement="left-start"
             :visible-arrow="false"
@@ -105,7 +106,7 @@
                   </div>
                 </div>
               </el-col>
-              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+              <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="grid-content">
                   <div class="main-info__content-item">
                     <span class="content-item__head">{{
@@ -132,7 +133,7 @@
                     </el-select>
                   </div>
                 </div>
-              </el-col>
+              </el-col> -->
             </el-row>
             <el-row class="main-info__content">
               <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
@@ -250,7 +251,7 @@
               </el-col>
             </el-row>
             <el-row class="main-info__content">
-              <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
+              <!-- <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="grid-content">
                   <div class="main-info__content-item">
                     <span class="content-item__head">{{
@@ -300,7 +301,7 @@
                     ></el-autocomplete>
                   </div>
                 </div>
-              </el-col>
+              </el-col> -->
               <el-col
                 v-if="roles.find((role) => role.authority === 'ROLE_ADMIN')"
                 :xs="24"
@@ -346,25 +347,32 @@
               {{ $i18n.t('personnel.detail.newSalary') }}
             </el-tag>
           </el-popover>
-          <span class="main-info-header__edit" @click="editWorkInfo">
-            {{ $i18n.t('personnel.detail.editJobInformation') }}
+          <div
+            v-if="
+              isEditWorkInfo &&
+              roles.find((role) => role.authority === 'ROLE_ADMIN')
+            "
+          >
+            <span class="main-info-header__edit" @click="editWorkInfo">
+              {{ $i18n.t('personnel.detail.editJobInformation') }}
+            </span>
+          </div>
+          <span
+            v-else-if="
+              isEditWorkInfo === false &&
+              roles.find((role) => role.authority === 'ROLE_ADMIN')
+            "
+          >
+            <el-button type="info" @click="closeEdit">{{
+              $i18n.t('personnel.detail.close')
+            }}</el-button>
+            <el-button
+              type="primary"
+              @click="confirmEditWorkingInfo($route.params.employeeId)"
+              >{{ $i18n.t('personnel.detail.confirm') }}</el-button
+            >
           </span>
         </div>
-        <span
-          v-else-if="
-            isEditWorkInfo === false &&
-            roles.find((role) => role.authority === 'ROLE_ADMIN')
-          "
-        >
-          <el-button type="info" @click="closeEdit">{{
-            $i18n.t('personnel.detail.close')
-          }}</el-button>
-          <el-button
-            type="primary"
-            @click="confirmEditWorkingInfo($route.params.employeeId)"
-            >{{ $i18n.t('personnel.detail.confirm') }}</el-button
-          >
-        </span>
       </div>
       <el-row class="main-info__content">
         <el-col :xs="24" :sm="12" :md="6" :lg="6" :xl="6">
