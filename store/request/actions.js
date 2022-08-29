@@ -1115,7 +1115,7 @@ export default {
             link.href = url
             link.setAttribute(
               'download',
-              'employees ' +
+              'request ' +
                 format(new Date(), 'dd-MM-yyyy') +
                 ' ' +
                 new Date().getHours() +
@@ -1164,7 +1164,7 @@ export default {
             link.href = url
             link.setAttribute(
               'download',
-              'employees ' +
+              'request ' +
                 format(new Date(), 'dd-MM-yyyy') +
                 ' ' +
                 new Date().getHours() +
