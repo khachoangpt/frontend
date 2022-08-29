@@ -224,8 +224,14 @@ export default {
         const insuranceInfo = {
           insuranceId: state.taxList.insuranceDtos[i].insuranceID,
           employeeId: state.personnelDetail.employee_id,
-          insuranceCode: state.taxList.insuranceDtos[i].insuranceCode,
-          insuranceAddress: state.taxList.insuranceDtos[i].address,
+          insuranceCode:
+            state.taxList.insuranceDtos[i].insuranceCode === null
+              ? ''
+              : state.taxList.insuranceDtos[i].insuranceCode,
+          insuranceAddress:
+            state.taxList.insuranceDtos[i].address === null
+              ? ''
+              : state.taxList.insuranceDtos[i].address,
           policyNameId: state.taxList.insuranceDtos[i].policyNameID,
         }
         await this.$repository.user.updateInsuranceInfo(insuranceInfo)
